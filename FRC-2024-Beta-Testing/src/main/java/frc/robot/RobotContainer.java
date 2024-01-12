@@ -19,16 +19,25 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  
+  public static RobotContainer instance = null;
+  
+  // The robot's controllers
+  private final XboxController xboxDriver;
+  private final XboxController xboxOperator;
+  private final XboxController xboxTester;
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
+  private final Shooter shooter = Shooter.getInstance();
+  // private final Drivetrain drive = new Drivetrain();
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
+    this.xboxDriver = new XboxController(3);
+    this.xboxOperator = new XboxController(2);
+    this.xboxTester = new XboxController(1);
+
+    this.shooter.setDefaultCommand(new ShooterController(shooter, xboxOperator));
+    
     configureBindings();
   }
 
@@ -51,11 +60,6 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
