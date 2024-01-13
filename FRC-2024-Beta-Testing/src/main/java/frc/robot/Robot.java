@@ -4,7 +4,16 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -14,25 +23,71 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer;
+
+  private Timer time;
 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  String logPath;
   @Override
-  public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+  public void robotInit() { 
+
+    Logger.getInstance().recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+
+    if (isReal()) {
+
+      Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda1/robot.wpilog")); // TODO: Check if the file path works
+       // Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda1/")); // Log to a USB stick
+        SmartDashboard.putBoolean("swerve/REAL", true);
+        Logger.getInstance().addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+        new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
+        setUseTiming(true);
+    } else {
+        setUseTiming(false); // Run as fast as possible
+        //logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+        SmartDashboard.putBoolean("swerve/REAL", false);
+
+        //logPath = "/Users/edan/Downloads/test.wpilog"; // specific to each user
+       // Logger.getInstance().setReplaySource(new WPILOGReader(logPath)); // Read replay log
+        //Logger.getInstance().addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
+        //System.err.println(logPath);
+    }
+
+    // Logger.getInstance().disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
+    Logger.getInstance().start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+
+
+    // Instantiate our RobotContainer.  This will perform all 
+    // CameraServer.startAutomaticCapture();
+    m_robotContainer = RobotContainer.getInstance();
+    time = new Timer();
+    CommandScheduler.getInstance().enable();
+
+    
   }
 
+   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+   @Override
+   public void autonomousInit() {
+     time.reset();
+     time.start();
+     
+     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+     
+     // schedule the autonomous command (example)
+     if (m_autonomousCommand != null) {
+       m_autonomousCommand.schedule();
+     }
+   }
+
   /**
-   * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
-   * that you want ran during disabled, autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for items like
+   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
    *
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
@@ -54,19 +109,24 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
-  @Override
-  public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
-  }
+  // @Override
+  // public void autonomousInit() {
+  //   time.reset();
+  //   time.start();
+    
+  //   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+  //   // m_robotContainer.prepareForAuto();
+    
+  //   // schedule the autonomous command (example)
+  //   if (m_autonomousCommand != null) {
+  //     m_autonomousCommand.schedule();
+  //   }
+  // }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
   public void teleopInit() {
@@ -77,11 +137,15 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    // m_robotContainer.switchToLow();
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // m_robotContainer.checkControllers();
+    //System.out.println(logPath);
+  }
 
   @Override
   public void testInit() {
@@ -100,4 +164,5 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
 }
