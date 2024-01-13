@@ -113,7 +113,7 @@ public class AutoRunner {
                  new HolonomicPathFollowerConfig(new PIDConstants(Constants.Auton.TRANSLATION_PID_CONFIG.kP,Constants.Auton.TRANSLATION_PID_CONFIG.kI, Constants.Auton.TRANSLATION_PID_CONFIG.kD ),
                      new PIDConstants(Constants.Auton.ANGLE_PID_CONFIG.kP, Constants.Auton.ANGLE_PID_CONFIG.kI, Constants.Auton.ANGLE_PID_CONFIG.kD), 7,
                          0.46736,
-                             new ReplanningConfig(true, true),
+                             new ReplanningConfig(true, true, 0.4, 0.4),
                                  0.02), 
                  (()->RobotContainer.isRed()),
                   swerveSubsystem); 

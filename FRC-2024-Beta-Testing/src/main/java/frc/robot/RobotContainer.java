@@ -200,13 +200,16 @@ public class RobotContainer {
   }
 
   public static Boolean isRed(){
+    try{
     Optional<Alliance> id = DriverStation.getAlliance();
     if(id.equals(AllianceStationID.Blue1) && id.equals(AllianceStationID.Blue2) && id.equals(AllianceStationID.Blue3)){
       return false;
     }
+  }catch(Exception e){
+    System.out.println(e);
+  }
     return true;
   }
 
   // Override commands and switch to manual control
-
 }
