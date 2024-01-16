@@ -1,12 +1,31 @@
 package frc.robot.lib.swervelib.parser.json;
 
+import com.revrobotics.SparkRelativeEncoder.Type;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort.Port;
+import frc.robot.lib.swervelib.encoders.AnalogAbsoluteEncoderSwerve;
 import frc.robot.lib.swervelib.encoders.CANCoderSwerve;
+import frc.robot.lib.swervelib.encoders.CanAndCoderSwerve;
+import frc.robot.lib.swervelib.encoders.PWMDutyCycleEncoderSwerve;
+import frc.robot.lib.swervelib.encoders.SparkMaxAnalogEncoderSwerve;
+import frc.robot.lib.swervelib.encoders.SparkMaxEncoderSwerve;
 import frc.robot.lib.swervelib.encoders.SwerveAbsoluteEncoder;
+import frc.robot.lib.swervelib.imu.ADIS16448Swerve;
+import frc.robot.lib.swervelib.imu.ADIS16470Swerve;
+import frc.robot.lib.swervelib.imu.ADXRS450Swerve;
+import frc.robot.lib.swervelib.imu.AnalogGyroSwerve;
 import frc.robot.lib.swervelib.imu.NavXSwerve;
+import frc.robot.lib.swervelib.imu.Pigeon2Swerve;
+import frc.robot.lib.swervelib.imu.PigeonSwerve;
 import frc.robot.lib.swervelib.imu.SwerveIMU;
+import frc.robot.lib.swervelib.motors.SparkFlexSwerve;
+import frc.robot.lib.swervelib.motors.SparkMaxBrushedMotorSwerve;
+import frc.robot.lib.swervelib.motors.SparkMaxSwerve;
 import frc.robot.lib.swervelib.motors.SwerveMotor;
 import frc.robot.lib.swervelib.motors.TalonFXSwerve;
+import frc.robot.lib.swervelib.motors.TalonSRXSwerve;
 
 /**
  * Device JSON parsed class. Used to access the JSON data.
@@ -30,12 +49,40 @@ public class DeviceJson
   /**
    * Create a {@link SwerveAbsoluteEncoder} from the current configuration.
    *
+   * @param motor {@link SwerveMotor} of which attached encoders will be created from, only used when the type is
+   *              "attached" or "canandencoder".
    * @return {@link SwerveAbsoluteEncoder} given.
    */
-  public SwerveAbsoluteEncoder createEncoder()
+  public SwerveAbsoluteEncoder createEncoder(SwerveMotor motor)
   {
+    if (id > 40)
+    {
+      DriverStation.reportWarning("CAN IDs greater than 40 can cause undefined behaviour, please use a CAN ID below 40!",
+                                  false);
+    }
     switch (type)
     {
+      case "none":
+        return null;
+      case "integrated":
+      case "attached":
+        return new SparkMaxEncoderSwerve(motor, 1);
+      case "sparkmax_analog":
+        return new SparkMaxAnalogEncoderSwerve(motor);
+      case "canandcoder":
+        return new SparkMaxEncoderSwerve(motor, 360);
+      case "canandcoder_can":
+        return new CanAndCoderSwerve(id);
+      case "ma3":
+      case "ctre_mag":
+      case "rev_hex":
+      case "throughbore":
+      case "am_mag":
+      case "dutycycle":
+        return new PWMDutyCycleEncoderSwerve(id);
+      case "thrifty":
+      case "analog":
+        return new AnalogAbsoluteEncoderSwerve(id);
       case "cancoder":
         return new CANCoderSwerve(id, canbus != null ? canbus : "");
       default:
@@ -50,17 +97,41 @@ public class DeviceJson
    */
   public SwerveIMU createIMU()
   {
+    if (id > 40)
+    {
+      DriverStation.reportWarning("CAN IDs greater than 40 can cause undefined behaviour, please use a CAN ID below 40!",
+                                  false);
+    }
     switch (type)
     {
-      case "navx_onborard":
-        return new NavXSwerve(Port.kOnboard);
+      case "adis16448":
+        return new ADIS16448Swerve();
+      case "adis16470":
+        return new ADIS16470Swerve();
+      case "adxrs450":
+        return new ADXRS450Swerve();
+      case "analog":
+        return new AnalogGyroSwerve(id);
+      case "navx":
+      case "navx_spi":
+        return new NavXSwerve(SPI.Port.kMXP);
+      case "navx_i2c":
+        DriverStation.reportWarning(
+            "WARNING: There exists an I2C lockup issue on the roboRIO that could occur, more information here: " +
+            "\nhttps://docs.wpilib.org/en/stable/docs/yearly-overview/known-issues" +
+            ".html#onboard-i2c-causing-system-lockups",
+            false);
+        return new NavXSwerve(I2C.Port.kMXP);
       case "navx_usb":
         return new NavXSwerve(Port.kUSB);
       case "navx_mxp":
-      case "navx":
         return new NavXSwerve(Port.kMXP);
+      case "pigeon":
+        return new PigeonSwerve(id);
+      case "pigeon2":
+        return new Pigeon2Swerve(id, canbus != null ? canbus : "");
       default:
-        throw new RuntimeException(type + " is not a recognized absolute encoder type.");
+        throw new RuntimeException(type + " is not a recognized imu/gyroscope type.");
     }
   }
 
@@ -72,29 +143,48 @@ public class DeviceJson
    */
   public SwerveMotor createMotor(boolean isDriveMotor)
   {
+    if (id > 40)
+    {
+      DriverStation.reportWarning("CAN IDs greater than 40 can cause undefined behaviour, please use a CAN ID below 40!",
+                                  false);
+    }
     switch (type)
     {
+      case "sparkmax_brushed":
+        switch (canbus)
+        {
+          case "greyhill_63r256":
+            return new SparkMaxBrushedMotorSwerve(id, isDriveMotor, Type.kQuadrature, 1024, false);
+          case "srx_mag_encoder":
+            return new SparkMaxBrushedMotorSwerve(id, isDriveMotor, Type.kQuadrature, 4096, false);
+          case "throughbore":
+            return new SparkMaxBrushedMotorSwerve(id, isDriveMotor, Type.kQuadrature, 8192, false);
+          case "throughbore_dataport":
+            return new SparkMaxBrushedMotorSwerve(id, isDriveMotor, Type.kNoSensor, 8192, true);
+          case "greyhill_63r256_dataport":
+            return new SparkMaxBrushedMotorSwerve(id, isDriveMotor, Type.kQuadrature, 1024, true);
+          case "srx_mag_encoder_dataport":
+            return new SparkMaxBrushedMotorSwerve(id, isDriveMotor, Type.kQuadrature, 4096, true);
+          default:
+            if (isDriveMotor)
+            {
+              throw new RuntimeException("Spark MAX " + id + " MUST have a encoder attached to the motor controller.");
+            }
+            // We are creating a motor for an angle motor which will use the absolute encoder attached to the data port.
+            return new SparkMaxBrushedMotorSwerve(id, isDriveMotor, Type.kNoSensor, 0, false);
+        }
+      case "neo":
+      case "sparkmax":
+        return new SparkMaxSwerve(id, isDriveMotor);
+      case "sparkflex":
+        return new SparkFlexSwerve(id, isDriveMotor);
+      case "falcon":
       case "talonfx":
         return new TalonFXSwerve(id, canbus != null ? canbus : "", isDriveMotor);
+      case "talonsrx":
+        return new TalonSRXSwerve(id, isDriveMotor);
       default:
-        throw new RuntimeException(type + " is not a recognized absolute encoder type.");
+        throw new RuntimeException(type + " is not a recognized motor type.");
     }
-  }
-
-  /**
-   * Create a {@link SwerveAbsoluteEncoder} from the data port on the motor controller.
-   *
-   * @param motor The motor to create the absolute encoder from.
-   * @return {@link SwerveAbsoluteEncoder} from the motor controller.4
-   */
-  public SwerveAbsoluteEncoder createIntegratedEncoder(SwerveMotor motor)
-  {
-    switch (type)
-    {
-      case "talonfx":
-        return null;
-    }
-    throw new RuntimeException(
-        "Could not create absolute encoder from data port of " + type + " id " + id);
   }
 }

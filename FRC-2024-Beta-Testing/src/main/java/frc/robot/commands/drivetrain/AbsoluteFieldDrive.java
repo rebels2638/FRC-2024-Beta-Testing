@@ -7,7 +7,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Utils.Constants;
 
 import java.util.List;
@@ -17,6 +16,7 @@ import javax.swing.plaf.DesktopIconUI;
 
 import frc.robot.lib.swervelib.SwerveController;
 import frc.robot.lib.swervelib.math.SwerveMath;
+import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
  * An example command that uses an example subsystem.

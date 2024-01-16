@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Optional;
@@ -37,12 +38,54 @@ public class NavXSwerve extends SwerveIMU
       /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
       /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
       /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-      gyro = new AHRS(I2C.Port.kMXP);
+      gyro = new AHRS(port);
       factoryDefault();
       SmartDashboard.putData(gyro);
     } catch (RuntimeException ex)
     {
-      DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+      DriverStation.reportError("Error instantiating navX:  " + ex.getMessage(), true);
+    }
+  }
+
+  /**
+   * Constructor for the NavX swerve.
+   *
+   * @param port SPI Port to connect to.
+   */
+  public NavXSwerve(SPI.Port port)
+  {
+    try
+    {
+      /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+      /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+      /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+      gyro = new AHRS(port);
+      factoryDefault();
+      SmartDashboard.putData(gyro);
+    } catch (RuntimeException ex)
+    {
+      DriverStation.reportError("Error instantiating navX:  " + ex.getMessage(), true);
+    }
+  }
+
+  /**
+   * Constructor for the NavX swerve.
+   *
+   * @param port I2C Port to connect to.
+   */
+  public NavXSwerve(I2C.Port port)
+  {
+    try
+    {
+      /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+      /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+      /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+      gyro = new AHRS(port);
+      factoryDefault();
+      SmartDashboard.putData(gyro);
+    } catch (RuntimeException ex)
+    {
+      DriverStation.reportError("Error instantiating navX:  " + ex.getMessage(), true);
     }
   }
 
@@ -53,10 +96,7 @@ public class NavXSwerve extends SwerveIMU
   public void factoryDefault()
   {
     // gyro.reset(); // Reported to be slow
-    offset = new Rotation3d(new Quaternion(gyro.getQuaternionW(),
-                                           gyro.getQuaternionX(),
-                                           gyro.getQuaternionY(),
-                                           gyro.getQuaternionZ()));
+    offset = gyro.getRotation3d();
   }
 
   /**
@@ -82,12 +122,10 @@ public class NavXSwerve extends SwerveIMU
    *
    * @return {@link Rotation3d} from the IMU.
    */
+  @Override
   public Rotation3d getRawRotation3d()
   {
-    return new Rotation3d(new Quaternion(gyro.getQuaternionW(),
-                                         gyro.getQuaternionX(),
-                                         gyro.getQuaternionY(),
-                                         gyro.getQuaternionZ()));
+    return gyro.getRotation3d();
   }
 
   /**
@@ -98,7 +136,7 @@ public class NavXSwerve extends SwerveIMU
   @Override
   public Rotation3d getRotation3d()
   {
-    return getRawRotation3d().minus(offset);
+    return gyro.getRotation3d().minus(offset);
   }
 
   /**

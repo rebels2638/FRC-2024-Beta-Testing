@@ -1,5 +1,7 @@
 package frc.robot.subsystems.Swerve;
 
+import edu.wpi.first.math.Matrix;
+
 // import com.pathplanner.lib.PathConstraints;
 // import com.pathplanner.lib.PathPlanner;
 // import com.pathplanner.lib.PathPlannerTrajectory;
@@ -11,6 +13,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.numbers.N2;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,13 +29,15 @@ import org.littletonrobotics.junction.Logger;
 
 import frc.robot.lib.swervelib.SwerveController;
 import frc.robot.lib.swervelib.SwerveDrive;
-import frc.robot.lib.swervelib.math.SwerveKinematics2;
-import frc.robot.lib.swervelib.math.SwerveModuleState2;
+// import frc.robot.lib.swervelib.math.SwerveKinematics2;
+// import frc.robot.lib.swervelib.math.SwerveModuleState2;
+import frc.robot.lib.swervelib.math.SwerveMath;
 import frc.robot.lib.swervelib.parser.SwerveControllerConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveDriveConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveParser;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import frc.robot.Utils.Constants;
 //import frc.robot.subsystems.aprilTagVision.AprilTagVision;
 // import frc.robot.subsystems.aprilTagVision.AprilTagVision;
 // import frc.robot.subsystems.aprilTagVision.AprilTagVision;
@@ -67,7 +75,7 @@ public class SwerveSubsystem extends SubsystemBase
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
     {
-      swerveDrive = new SwerveParser(directory).createSwerveDrive();
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC);
     } catch (Exception e)
     {
       throw new IllegalArgumentException("File not found.");
@@ -85,7 +93,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
   {
-    swerveDrive = new SwerveDrive(driveCfg, controllerCfg);
+    swerveDrive = new SwerveDrive(driveCfg, controllerCfg, Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC);
   }
 
   /**
@@ -156,7 +164,7 @@ public class SwerveSubsystem extends SubsystemBase
    *
    * @return {@link SwerveKinematics2} of the swerve drive.
    */
-  public SwerveKinematics2 getKinematics()
+  public SwerveDriveKinematics getKinematics()
   {
     return swerveDrive.kinematics;
   }
@@ -261,7 +269,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, Rotation2d angle)
   {
-    return swerveDrive.swerveController.getTargetSpeeds(xInput, yInput, angle.getRadians(), getYaw().getRadians());
+    return swerveDrive.swerveController.getTargetSpeeds(xInput, yInput, angle.getRadians(), getYaw().getRadians(), Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC);
   }
 
   /**
@@ -328,7 +336,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public void addFakeVisionReading()
   {
-    swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp(), true, 4);
+    swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
   }
 
   /**
@@ -417,7 +425,7 @@ public class SwerveSubsystem extends SubsystemBase
    * @param desiredStates A list of SwerveModuleStates to send to the modules.
    * @param isOpenLoop    Whether to use closed-loop velocity control. Set to true to disable closed-loop.
    */
-  public void setModuleStates(SwerveModuleState2[] desiredStates, boolean isOpenLoop)
+  public void setModuleStates(SwerveModuleState[] desiredStates, boolean isOpenLoop)
   {
     swerveDrive.setModuleStates(desiredStates, isOpenLoop);
   }
@@ -427,7 +435,7 @@ public class SwerveSubsystem extends SubsystemBase
    *
    * @return A list of SwerveModuleStates containing the current module states
    */
-  public SwerveModuleState2[] getStates()
+  public SwerveModuleState[] getStates()
   {
     return swerveDrive.getStates();
   }
