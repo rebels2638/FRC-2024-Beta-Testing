@@ -59,7 +59,6 @@ public class AutoRunner {
         PATH_CHOSEN_TO_NAME_HASH_MAP.put("Turn In Place","Turn In Place");
         PATH_CHOSEN_TO_NAME_HASH_MAP.put("Turn", "Turn");
 
-        
     }
 
     private SwerveSubsystem swerveSubsystem;

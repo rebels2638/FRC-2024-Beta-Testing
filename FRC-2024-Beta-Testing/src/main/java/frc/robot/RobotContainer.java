@@ -27,7 +27,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
-import frc.robot.Utils.Constants;
 import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.automation.AutoAlign;
 import frc.robot.commands.drivetrain.AbsoluteDrive;
@@ -36,7 +35,7 @@ import frc.robot.commands.AutoRunner;
 
 
 
-import frc.robot.commands.drivetrain.TeleopDrive;
+// import frc.robot.commands.drivetrain.TeleopDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -59,7 +58,7 @@ public class RobotContainer {
   // private final AprilTagVisionIO aprilTagVisionIO;
   // private final AprilTagVision aprilTagVision;
   private SwerveSubsystem swerveSubsystem;
-  private final TeleopDrive closedFieldRel;
+  // private final TeleopDrive closedFieldRel;
   private final AbsoluteDrive closedAbsoluteDrive;
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
   
@@ -119,11 +118,13 @@ public class RobotContainer {
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(),OperatorConstants.LEFT_X_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false); //TODO: tune the rightX value constant
 
+    /* 
     closedFieldRel = new TeleopDrive(
     swerveSubsystem,
     () -> MathUtil.applyDeadband(xboxDriver.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
     () -> MathUtil.applyDeadband(xboxDriver.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
     () -> MathUtil.applyDeadband(xboxDriver.getRightX(),OperatorConstants.RIGHT_X_DEADBAND), () -> true, false, true, xboxDriver);
+    */
 
     //System.out.println(xboxDriver.getRightX()+","+xboxDriver.getRightY());
 
