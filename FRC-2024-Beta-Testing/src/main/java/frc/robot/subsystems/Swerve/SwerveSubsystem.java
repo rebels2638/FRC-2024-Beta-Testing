@@ -137,20 +137,20 @@ public class SwerveSubsystem extends SubsystemBase
     //log all tlemetry to a log file
     // SmartDashboard.putBoolean("myMind", false);
     // Logger.getInstance().recordOutput("swerve/heading", getHeading().getDegrees());
-    Logger.getInstance().recordOutput("swerve/heading", getHeading().getDegrees());
-    Logger.getInstance().recordOutput("swerve/moduleCount", SwerveDriveTelemetry.moduleCount);
-    Logger.getInstance().recordOutput("swerve/wheelLocations", SwerveDriveTelemetry.wheelLocations);
-    Logger.getInstance().recordOutput("swerve/measuredStates", SwerveDriveTelemetry.measuredStates);
-    Logger.getInstance().recordOutput("swerve/desiredStates", SwerveDriveTelemetry.desiredStates);
-    Logger.getInstance().recordOutput("swerve/robotRotation", SwerveDriveTelemetry.robotRotation);
-    Logger.getInstance().recordOutput("swerve/maxSpeed", SwerveDriveTelemetry.maxSpeed);
-    Logger.getInstance().recordOutput("swerve/rotationUnit", SwerveDriveTelemetry.rotationUnit);
-    Logger.getInstance().recordOutput("swerve/sizeLeftRight", SwerveDriveTelemetry.sizeLeftRight);
-    Logger.getInstance().recordOutput("swerve/sizeFrontBack", SwerveDriveTelemetry.sizeFrontBack);
-    Logger.getInstance().recordOutput("swerve/forwardDirection", SwerveDriveTelemetry.forwardDirection);
-    Logger.getInstance().recordOutput("swerve/maxAngularVelocity", SwerveDriveTelemetry.maxAngularVelocity);
-    Logger.getInstance().recordOutput("swerve/measuredChassisSpeeds", SwerveDriveTelemetry.measuredChassisSpeeds);
-    Logger.getInstance().recordOutput("swerve/desiredChassisSpeeds", SwerveDriveTelemetry.desiredChassisSpeeds);
+    Logger.recordOutput("swerve/heading", getHeading().getDegrees());
+    Logger.recordOutput("swerve/moduleCount", SwerveDriveTelemetry.moduleCount);
+    Logger.recordOutput("swerve/wheelLocations", SwerveDriveTelemetry.wheelLocations);
+    Logger.recordOutput("swerve/measuredStates", SwerveDriveTelemetry.measuredStates);
+    Logger.recordOutput("swerve/desiredStates", SwerveDriveTelemetry.desiredStates);
+    Logger.recordOutput("swerve/robotRotation", SwerveDriveTelemetry.robotRotation);
+    Logger.recordOutput("swerve/maxSpeed", SwerveDriveTelemetry.maxSpeed);
+    Logger.recordOutput("swerve/rotationUnit", SwerveDriveTelemetry.rotationUnit);
+    Logger.recordOutput("swerve/sizeLeftRight", SwerveDriveTelemetry.sizeLeftRight);
+    Logger.recordOutput("swerve/sizeFrontBack", SwerveDriveTelemetry.sizeFrontBack);
+    Logger.recordOutput("swerve/forwardDirection", SwerveDriveTelemetry.forwardDirection);
+    Logger.recordOutput("swerve/maxAngularVelocity", SwerveDriveTelemetry.maxAngularVelocity);
+    Logger.recordOutput("swerve/measuredChassisSpeeds", SwerveDriveTelemetry.measuredChassisSpeeds);
+    Logger.recordOutput("swerve/desiredChassisSpeeds", SwerveDriveTelemetry.desiredChassisSpeeds);
   
   }
 
