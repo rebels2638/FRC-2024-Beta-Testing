@@ -1,10 +1,10 @@
 package frc.robot.lib.swervelib.parser;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.Utils.MotorConfigDouble;
 import frc.robot.lib.swervelib.encoders.SwerveAbsoluteEncoder;
 import frc.robot.lib.swervelib.motors.SwerveMotor;
-import frc.robot.lib.swervelib.parser.json.MotorConfigDouble;
-
+// import frc.robot.lib.swervelib.parser.json.*;
 /**
  * Swerve Module configuration class which is used to configure {@link swervelib.SwerveModule}.
  */

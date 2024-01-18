@@ -1,7 +1,8 @@
 package frc.robot.lib.swervelib.parser.json;
 
 import frc.robot.lib.swervelib.parser.SwerveModulePhysicalCharacteristics;
-
+import frc.robot.Utils.MotorConfigDouble;
+import frc.robot.Utils.MotorConfigInt;
 /**
  * {@link swervelib.parser.SwerveModulePhysicalCharacteristics} parsed data. Used to configure the SwerveModule.
  */

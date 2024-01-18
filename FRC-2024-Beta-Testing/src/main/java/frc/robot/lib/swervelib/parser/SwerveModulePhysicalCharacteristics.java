@@ -1,6 +1,8 @@
 package frc.robot.lib.swervelib.parser;
 
-import frc.robot.lib.swervelib.parser.json.MotorConfigDouble;
+// import frc.robot.lib.swervelib.parser.json.MotorConfigDouble;
+import frc.robot.Utils.MotorConfigDouble;
+
 
 /**
  * Configuration class which stores physical characteristics shared between every swerve module.

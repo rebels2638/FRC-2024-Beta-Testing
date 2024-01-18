@@ -10,6 +10,7 @@ import frc.robot.lib.swervelib.parser.SwerveModuleConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveModulePhysicalCharacteristics;
 import frc.robot.lib.swervelib.parser.json.modules.BoolMotorJson;
 import frc.robot.lib.swervelib.parser.json.modules.LocationJson;
+import frc.robot.Utils.MotorConfigDouble;
 
 /**
  * {@link swervelib.SwerveModule} JSON parsed class. Used to access the JSON data.
