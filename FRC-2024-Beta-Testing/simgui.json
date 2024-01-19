@@ -1,7 +1,11 @@
 {
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Auto/Path Chooser": "String Chooser",
+      "/Shuffleboard/Auto/Update Selected Command Output": "Command",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/navX-Sensor[4]": "Gyro"
     }
   },
   "NetworkTables Info": {
