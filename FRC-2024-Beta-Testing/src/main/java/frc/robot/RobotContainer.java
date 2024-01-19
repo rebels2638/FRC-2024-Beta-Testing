@@ -16,6 +16,8 @@ import java.util.function.Supplier;
 // import frc.robot.commands.pivot.RollIntake;
 // import frc.robot.commands.pivot.Turtle;
 import frc.robot.commands.drivetrain.AbsoluteFieldDrive;
+import frc.robot.commands.elevator.MoveElevatorAMP;
+import frc.robot.commands.elevator.MoveElevatorTurtle;
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
@@ -26,6 +28,10 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.lib.input.XboxController;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIONeo;
+import frc.robot.subsystems.elevator.ElevatorIOSim;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.automation.AutoAlign;
@@ -71,7 +77,16 @@ public class RobotContainer {
   //private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
+  private final Elevator elevator;
+
   public RobotContainer() {
+
+    if (RobotBase.isReal()) {
+      elevator = new Elevator(new ElevatorIONeo());
+    }
+    else {
+      elevator = new Elevator(new ElevatorIOSim());
+    }
 
     // AprilTagVisionIO aprilTagVisionIO = new AprilTagVisionIOSim();
     swerveSubsystem = new SwerveSubsystem(new File("src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
@@ -157,6 +172,8 @@ public class RobotContainer {
     // this.xboxDriver.getAButton().onTrue(new Turtle(pivotSubsystem));
     // this.xboxDriver.getBButton().onTrue(new PivotToCube(pivotSubsystem));
 
+    this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
+    this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
 
   }
   

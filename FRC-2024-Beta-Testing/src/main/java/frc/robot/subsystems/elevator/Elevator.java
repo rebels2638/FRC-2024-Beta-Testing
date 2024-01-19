@@ -20,7 +20,6 @@ public class Elevator extends SubsystemBase{
 
     private final ElevatorIO io;
     private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
-    private boolean velocityControlmode;
     PIDController positionFeedBackController;
     ElevatorFeedforward positionFeedForwardController;
 
@@ -55,8 +54,7 @@ public class Elevator extends SubsystemBase{
             velocityFeedForwardController = new ElevatorFeedforward(0, 0, 0);
 
 
-            io.configureController(positionFeedForwardController, positionFeedBackController,
-                velocityFeedForwardController, velocityFeedBackController);
+            io.configureController(positionFeedForwardController, positionFeedBackController);
         }
         
     }
@@ -73,44 +71,30 @@ public class Elevator extends SubsystemBase{
          vPoseSlide.getDouble(0), gPoseSlide.getDouble(0));
         
 
-        io.configureController(positionFeedForwardController, positionFeedBackController,
-            velocityFeedForwardController, velocityFeedBackController);
+        io.configureController(positionFeedForwardController, positionFeedBackController);
 
         io.updateInputs(inputs);
         Logger.processInputs("Elevator", inputs);
     }
 
-    public void setHightMeters(double angle) {
-        Logger.recordOutput("Elevator/desiredDegAngle", angle);
-        io.setHightMeters(Math.toRadians(angle), inputs.positionRad);
+    public void setHightMeters(double hightMeters) {
+        io.setHightMeters(hightMeters, inputs.hightMeters);
         return;
     }
 
-    public void setVelocityControlMode(boolean b){  
-        velocityControlmode = b;
-    };
-
-    public void setVelocitySetPoint(double setPoint){
-        io.setVelocity(setPoint, inputs.velocityRadSec);
-        return;
-    }
     public void setVoltage(double voltage){
         io.setVoltage(voltage);
         return;
     }
 
-    public double getDegAngle() {
-        return inputs.positionDeg;
-    }
-
-    public double getRadAngle() {
-        return inputs.positionRad;
+    public double getHightMeters() {
+        return inputs.hightMeters;
     }
 
     public void zeroHight() {
         io.zeroHight();
     }
     public boolean reachedSetpoint() {
-        return io.reachedSetpoint(velocityControlmode);
+        return io.reachedSetpoint();
     }
 }

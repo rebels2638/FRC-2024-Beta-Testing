@@ -37,17 +37,18 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() { 
 
-    Logger.getInstance().recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
     if (isReal()) {
 
-      Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda1/robot.wpilog")); // TODO: Check if the file path works
+      Logger.addDataReceiver(new WPILOGWriter("/media/sda1/robot.wpilog")); // TODO: Check if the file path works
        // Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda1/")); // Log to a USB stick
         SmartDashboard.putBoolean("swerve/REAL", true);
-        Logger.getInstance().addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
         new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
-        setUseTiming(true);
+        setUseTiming(false);
     } else {
+        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
         setUseTiming(false); // Run as fast as possible
         //logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
         SmartDashboard.putBoolean("swerve/REAL", false);
@@ -59,7 +60,7 @@ public class Robot extends LoggedRobot {
     }
 
     // Logger.getInstance().disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
-    Logger.getInstance().start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
 
 
     // Instantiate our RobotContainer.  This will perform all 
