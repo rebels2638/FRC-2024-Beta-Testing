@@ -8,7 +8,6 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -23,6 +22,7 @@ public class AutoAlignAMP extends Command {
         // Create a list of bezier points from poses. Each pose represents one waypoint.
         // The rotation component of the pose should be the direction of travel. Do not use holonomic rotation.
         List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(
+                swerveSubsystem.getPose(),
                 Constants.FeildConstants.autoAlightAMPPose
         );
 
@@ -53,6 +53,6 @@ public class AutoAlignAMP extends Command {
     }
     @Override   
     public boolean isFinished() {
-        return followPathHolonomic.isFinished();
+        return false;
     }
 }
