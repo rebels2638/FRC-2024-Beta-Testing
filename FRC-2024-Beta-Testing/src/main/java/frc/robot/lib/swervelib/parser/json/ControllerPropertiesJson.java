@@ -5,7 +5,7 @@ import frc.robot.lib.swervelib.parser.SwerveControllerConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveDriveConfiguration;
 
 /**
- * {@link swervelib.SwerveController} parsed class. Used to access the JSON data.
+ * {@link frc.robot.lib.swervelib.SwerveController} parsed class. Used to access the JSON data.
  */
 public class ControllerPropertiesJson
 {

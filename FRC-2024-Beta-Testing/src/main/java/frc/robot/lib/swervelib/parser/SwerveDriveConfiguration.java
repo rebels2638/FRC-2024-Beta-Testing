@@ -69,7 +69,7 @@ public class SwerveDriveConfiguration
    *
    * @param swerves          Swerve constants.
    * @param driveFeedforward Drive feedforward created using
-   *                         {@link swervelib.math.SwerveMath#createDriveFeedforward(double, double, double)}.
+   *                         {@link frc.robot.lib.swervelib.math.SwerveMath#createDriveFeedforward(double, double, double)}.
    * @return Swerve Modules.
    */
   public SwerveModule[] createModules(SwerveModuleConfiguration[] swerves, SimpleMotorFeedforward driveFeedforward)
@@ -83,13 +83,20 @@ public class SwerveDriveConfiguration
   }
 
   /**
-   * Assume the first module is the furthest. Usually front-left.
+   * Calculate the Drive Base Radius
    *
    * @return Drive base radius from center of robot to the farthest wheel in meters.
    */
   public double getDriveBaseRadiusMeters()
   {
-    Translation2d furthestModule = moduleLocationsMeters[0];
-    return Math.abs(Math.sqrt(Math.pow(furthestModule.getX(), 2) + Math.pow(furthestModule.getY(), 2)));
+    Translation2d centerOfModules = moduleLocationsMeters[0];
+
+    //Calculate the Center by adding all module offsets together.
+    for(int i=1; i<moduleLocationsMeters.length; i++){
+      centerOfModules = centerOfModules.plus(moduleLocationsMeters[i]);
+    }  
+    
+    //Return Largest Radius
+    return centerOfModules.getDistance(moduleLocationsMeters[0]);
   }
 }

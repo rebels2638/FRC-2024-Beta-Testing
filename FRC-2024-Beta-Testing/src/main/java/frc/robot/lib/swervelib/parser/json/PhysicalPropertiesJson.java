@@ -1,10 +1,9 @@
 package frc.robot.lib.swervelib.parser.json;
 
 import frc.robot.lib.swervelib.parser.SwerveModulePhysicalCharacteristics;
-import frc.robot.Utils.MotorConfigDouble;
-import frc.robot.Utils.MotorConfigInt;
+
 /**
- * {@link swervelib.parser.SwerveModulePhysicalCharacteristics} parsed data. Used to configure the SwerveModule.
+ * {@link frc.robot.lib.swervelib.parser.SwerveModulePhysicalCharacteristics} parsed data. Used to configure the SwerveModule.
  */
 public class PhysicalPropertiesJson
 {
@@ -12,8 +11,8 @@ public class PhysicalPropertiesJson
 
   /**
    * Conversion factor applied to the motor controllers PID loops. Can be calculated with
-   * {@link swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)} for angle motors or
-   * {@link swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} for drive motors.
+   * {@link frc.robot.lib.swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)} for angle motors or
+   * {@link frc.robot.lib.swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} for drive motors.
    */
   public MotorConfigDouble conversionFactor               = new MotorConfigDouble(0, 0);
   /**

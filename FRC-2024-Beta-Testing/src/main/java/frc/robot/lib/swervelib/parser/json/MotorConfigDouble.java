@@ -1,4 +1,5 @@
 package frc.robot.lib.swervelib.parser.json;
+
 /**
  * Used to store doubles for motor configuration.
  */
@@ -33,4 +34,3 @@ public class MotorConfigDouble
     this.drive = drive;
   }
 }
-

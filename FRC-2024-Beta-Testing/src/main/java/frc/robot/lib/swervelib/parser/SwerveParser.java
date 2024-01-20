@@ -129,7 +129,7 @@ public class SwerveParser
    * Create {@link SwerveDrive} from JSON configuration directory.
    *
    * @param maxSpeed Maximum speed of the robot in meters per second, used for both angular acceleration used in
-   *                 {@link swervelib.SwerveController} and drive feedforward in
+   *                 {@link frc.robot.lib.swervelib.SwerveController} and drive feedforward in
    *                 {@link SwerveMath#createDriveFeedforward(double, double, double)}.
    * @return {@link SwerveDrive} instance.
    */
@@ -145,7 +145,7 @@ public class SwerveParser
    * Create {@link SwerveDrive} from JSON configuration directory.
    *
    * @param maxSpeed                   Maximum speed of the robot in meters per second, used for both angular
-   *                                   acceleration used in {@link swervelib.SwerveController} and drive feedforward in
+   *                                   acceleration used in {@link frc.robot.lib.swervelib.SwerveController} and drive feedforward in
    *                                   {@link SwerveMath#createDriveFeedforward(double, double, double)}.
    * @param angleMotorConversionFactor Angle (AKA azimuth) motor conversion factor to convert motor controller PID loop
    *                                   units to degrees, usually created using
@@ -169,10 +169,10 @@ public class SwerveParser
    * Create {@link SwerveDrive} from JSON configuration directory.
    *
    * @param driveFeedforward           Drive feedforward to use for swerve modules, should be created using
-   *                                   {@link swervelib.math.SwerveMath#createDriveFeedforward(double, double,
+   *                                   {@link frc.robot.lib.swervelib.math.SwerveMath#createDriveFeedforward(double, double,
    *                                   double)}.
    * @param maxSpeed                   Maximum speed of the robot in meters per second for normal+angular acceleration
-   *                                   in {@link swervelib.SwerveController} of the robot.
+   *                                   in {@link frc.robot.lib.swervelib.SwerveController} of the robot.
    * @param angleMotorConversionFactor Angle (AKA azimuth) motor conversion factor to convert motor controller PID loop
    *                                   units to degrees, usually created using
    *                                   {@link SwerveMath#calculateDegreesPerSteeringRotation(double, double)}.
@@ -193,9 +193,9 @@ public class SwerveParser
    * Create {@link SwerveDrive} from JSON configuration directory.
    *
    * @param driveFeedforward Drive feedforward to use for swerve modules, should be created using
-   *                         {@link swervelib.math.SwerveMath#createDriveFeedforward(double, double, double)}.
+   *                         {@link frc.robot.lib.swervelib.math.SwerveMath#createDriveFeedforward(double, double, double)}.
    * @param maxSpeed         Maximum speed of the robot in meters per second for normal+angular acceleration in
-   *                         {@link swervelib.SwerveController} of the robot
+   *                         {@link frc.robot.lib.swervelib.SwerveController} of the robot
    * @return {@link SwerveDrive} instance.
    */
   public SwerveDrive createSwerveDrive(SimpleMotorFeedforward driveFeedforward, double maxSpeed)

@@ -6,7 +6,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- * Class to hold simulation data for {@link swervelib.SwerveModule}
+ * Class to hold simulation data for {@link frc.robot.lib.swervelib.SwerveModule}
  */
 public class SwerveModuleSimulation
 {
@@ -52,7 +52,7 @@ public class SwerveModuleSimulation
   }
 
   /**
-   * Update the position and state of the module. Called from {@link swervelib.SwerveModule#setDesiredState} function
+   * Update the position and state of the module. Called from {@link frc.robot.lib.swervelib.SwerveModule#setDesiredState} function
    * when simulated.
    *
    * @param desiredState State the swerve module is set to.

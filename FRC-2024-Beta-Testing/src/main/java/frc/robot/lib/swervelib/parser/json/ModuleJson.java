@@ -10,10 +10,9 @@ import frc.robot.lib.swervelib.parser.SwerveModuleConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveModulePhysicalCharacteristics;
 import frc.robot.lib.swervelib.parser.json.modules.BoolMotorJson;
 import frc.robot.lib.swervelib.parser.json.modules.LocationJson;
-import frc.robot.Utils.MotorConfigDouble;
 
 /**
- * {@link swervelib.SwerveModule} JSON parsed class. Used to access the JSON data.
+ * {@link frc.robot.lib.swervelib.SwerveModule} JSON parsed class. Used to access the JSON data.
  */
 public class ModuleJson
 {
@@ -30,8 +29,8 @@ public class ModuleJson
    * Conversion factor for the module, if different from the one in swervedrive.json
    * <p>
    * Conversion factor applied to the motor controllers PID loops. Can be calculated with
-   * {@link swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)} for angle motors or
-   * {@link swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} for drive motors.
+   * {@link frc.robot.lib.swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)} for angle motors or
+   * {@link frc.robot.lib.swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} for drive motors.
    */
   public MotorConfigDouble conversionFactor        = new MotorConfigDouble(0, 0);
   /**
@@ -117,7 +116,6 @@ public class ModuleJson
       throw new RuntimeException(
           "Conversion factors cannot be 0, please configure conversion factors in physicalproperties.json or the module JSON files.");
     }
-    System.out.println(conversionFactor.drive);
 
     return new SwerveModuleConfiguration(
         drive.createMotor(true),

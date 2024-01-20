@@ -1,20 +1,20 @@
 package frc.robot.lib.swervelib.parser;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.Utils.MotorConfigDouble;
 import frc.robot.lib.swervelib.encoders.SwerveAbsoluteEncoder;
 import frc.robot.lib.swervelib.motors.SwerveMotor;
-// import frc.robot.lib.swervelib.parser.json.*;
+import frc.robot.lib.swervelib.parser.json.MotorConfigDouble;
+
 /**
- * Swerve Module configuration class which is used to configure {@link swervelib.SwerveModule}.
+ * Swerve Module configuration class which is used to configure {@link frc.robot.lib.swervelib.SwerveModule}.
  */
 public class SwerveModuleConfiguration
 {
 
   /**
    * Conversion factor for drive motor onboard PID's and angle PID's. Use
-   * {@link swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} and
-   * {@link swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)} respectively to calculate the
+   * {@link frc.robot.lib.swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} and
+   * {@link frc.robot.lib.swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)} respectively to calculate the
    * conversion factors.
    */
   public final MotorConfigDouble                   conversionFactors;

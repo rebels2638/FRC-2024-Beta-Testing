@@ -1,7 +1,7 @@
 package frc.robot.lib.swervelib.parser.json;
 
 /**
- * {@link swervelib.SwerveDrive} JSON parsed class. Used to access parsed data from the swervedrive.json file.
+ * {@link frc.robot.lib.swervelib.SwerveDrive} JSON parsed class. Used to access parsed data from the swervedrive.json file.
  */
 public class SwerveDriveJson
 {

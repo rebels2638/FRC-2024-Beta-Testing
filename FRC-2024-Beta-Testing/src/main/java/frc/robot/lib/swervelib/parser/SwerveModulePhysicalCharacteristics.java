@@ -1,8 +1,6 @@
 package frc.robot.lib.swervelib.parser;
 
-// import frc.robot.lib.swervelib.parser.json.MotorConfigDouble;
-import frc.robot.Utils.MotorConfigDouble;
-
+import frc.robot.lib.swervelib.parser.json.MotorConfigDouble;
 
 /**
  * Configuration class which stores physical characteristics shared between every swerve module.
@@ -28,8 +26,8 @@ public class SwerveModulePhysicalCharacteristics
   public       double            optimalVoltage;
   /**
    * The conversion factors for the drive and angle motors, created by
-   * {@link swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} and
-   * {@link swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)}.
+   * {@link frc.robot.lib.swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} and
+   * {@link frc.robot.lib.swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)}.
    */
   public       MotorConfigDouble conversionFactor;
 
@@ -37,9 +35,9 @@ public class SwerveModulePhysicalCharacteristics
    * Construct the swerve module physical characteristics.
    *
    * @param conversionFactors              The conversion factors for the drive and angle motors, created by
-   *                                       {@link swervelib.math.SwerveMath#calculateMetersPerRotation(double, double,
+   *                                       {@link frc.robot.lib.swervelib.math.SwerveMath#calculateMetersPerRotation(double, double,
    *                                       double)} and
-   *                                       {@link swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double,
+   *                                       {@link frc.robot.lib.swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double,
    *                                       double)}.
    * @param wheelGripCoefficientOfFriction Wheel grip coefficient of friction on carpet given by manufacturer.
    * @param optimalVoltage                 Optimal robot voltage.
@@ -84,8 +82,8 @@ public class SwerveModulePhysicalCharacteristics
    * angle motor current limit is 20A.
    *
    * @param conversionFactors  The conversion factors for the drive and angle motors, created by
-   *                           {@link swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} and
-   *                           {@link swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)}.
+   *                           {@link frc.robot.lib.swervelib.math.SwerveMath#calculateMetersPerRotation(double, double, double)} and
+   *                           {@link frc.robot.lib.swervelib.math.SwerveMath#calculateDegreesPerSteeringRotation(double, double)}.
    * @param driveMotorRampRate The time in seconds to go from 0 to full throttle on the motor. (Prevents over drawing
    *                           power from battery)
    * @param angleMotorRampRate The time in seconds to go from 0 to full throttle on the motor. (Prevents overdrawing

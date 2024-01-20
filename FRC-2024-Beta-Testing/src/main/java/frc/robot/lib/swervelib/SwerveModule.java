@@ -5,13 +5,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.lib.swervelib.encoders.SwerveAbsoluteEncoder;
 import frc.robot.lib.swervelib.math.SwerveMath;
 import frc.robot.lib.swervelib.motors.SwerveMotor;
 import frc.robot.lib.swervelib.parser.SwerveModuleConfiguration;
 import frc.robot.lib.swervelib.simulation.SwerveModuleSimulation;
+import frc.robot.lib.swervelib.telemetry.Alert;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
@@ -33,6 +33,14 @@ public class SwerveModule
    * Absolute encoder for swerve drive.
    */
   private final SwerveAbsoluteEncoder  absoluteEncoder;
+  /**
+   * An {@link Alert} for if pushing the Absolute Encoder offset to the encoder fails.
+   */
+  private final Alert                  encoderOffsetWarning;
+  /**
+   * An {@link Alert} for if there is no Absolute Encoder on the module.
+   */
+  private final Alert                  noEncoderWarning;
   /**
    * Module number for kinematics, usually 0 to 3. front left -> front right -> back left -> back right.
    */
@@ -129,6 +137,15 @@ public class SwerveModule
     }
 
     lastState = getState();
+
+    noEncoderWarning = new Alert("Motors",
+                                 "There is no Absolute Encoder on module #" +
+                                 moduleNumber,
+                                 Alert.AlertType.WARNING);
+    encoderOffsetWarning = new Alert("Motors",
+                                     "Pushing the Absolute Encoder offset to the encoder failed on module #" +
+                                     moduleNumber,
+                                     Alert.AlertType.WARNING);
   }
 
   /**
@@ -378,6 +395,16 @@ public class SwerveModule
   }
 
   /**
+   * Get the {@link SwerveAbsoluteEncoder} for the {@link SwerveModule}.
+   *
+   * @return {@link SwerveAbsoluteEncoder} for the swerve module.
+   */
+  public SwerveAbsoluteEncoder getAbsoluteEncoder()
+  {
+    return absoluteEncoder;
+  }
+
+  /**
    * Fetch the {@link SwerveModuleConfiguration} for the {@link SwerveModule} with the parsed configurations.
    *
    * @return {@link SwerveModuleConfiguration} for the {@link SwerveModule}.
@@ -399,12 +426,11 @@ public class SwerveModule
         angleOffset = 0;
       } else
       {
-        DriverStation.reportWarning(
-            "Pushing the Absolute Encoder offset to the encoder failed on module #" + moduleNumber, false);
+        encoderOffsetWarning.set(true);
       }
     } else
     {
-      DriverStation.reportWarning("There is no Absolute Encoder on module #" + moduleNumber, false);
+      noEncoderWarning.set(true);
     }
   }
 
@@ -443,7 +469,8 @@ public class SwerveModule
       SmartDashboard.putNumber("Module[" + configuration.name + "] Raw Absolute Encoder",
                                absoluteEncoder.getAbsolutePosition());
     }
-    SmartDashboard.putNumber("Module[" + configuration.name + "] Raw Motor Encoder", angleMotor.getPosition());
+    SmartDashboard.putNumber("Module[" + configuration.name + "] Raw Angle Encoder", angleMotor.getPosition());
+    SmartDashboard.putNumber("Module[" + configuration.name + "] Raw Drive Encoder", driveMotor.getPosition());
     SmartDashboard.putNumber("Module[" + configuration.name + "] Adjusted Absolute Encoder", getAbsolutePosition());
     SmartDashboard.putNumber("Module[" + configuration.name + "] Absolute Encoder Read Issue",
                              getAbsoluteEncoderReadIssue() ? 1 : 0);

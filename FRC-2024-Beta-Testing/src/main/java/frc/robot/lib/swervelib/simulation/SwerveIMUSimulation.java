@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import java.util.Optional;
 
 /**
- * Simulation for {@link swervelib.SwerveDrive} IMU.
+ * Simulation for {@link frc.robot.lib.swervelib.SwerveDrive} IMU.
  */
 public class SwerveIMUSimulation
 {
@@ -90,7 +90,7 @@ public class SwerveIMUSimulation
   }
 
   /**
-   * Update the odometry of the simulated {@link swervelib.SwerveDrive} and post the {@link swervelib.SwerveModule}
+   * Update the odometry of the simulated {@link frc.robot.lib.swervelib.SwerveDrive} and post the {@link frc.robot.lib.swervelib.SwerveModule}
    * states to the {@link Field2d}.
    *
    * @param kinematics  {@link SwerveDriveKinematics} of the swerve drive.

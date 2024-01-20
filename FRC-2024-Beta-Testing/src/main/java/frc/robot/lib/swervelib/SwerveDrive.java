@@ -11,7 +11,6 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -29,11 +28,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import frc.robot.lib.swervelib.encoders.CANCoderSwerve;
+import frc.robot.lib.swervelib.imu.Pigeon2Swerve;
 import frc.robot.lib.swervelib.imu.SwerveIMU;
 import frc.robot.lib.swervelib.math.SwerveMath;
+import frc.robot.lib.swervelib.motors.TalonFXSwerve;
 import frc.robot.lib.swervelib.parser.SwerveControllerConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveDriveConfiguration;
 import frc.robot.lib.swervelib.simulation.SwerveIMUSimulation;
+import frc.robot.lib.swervelib.telemetry.Alert;
+import frc.robot.lib.swervelib.telemetry.Alert.AlertType;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
@@ -68,6 +72,10 @@ public class SwerveDrive
    */
   private final Lock                     odometryLock                                    = new ReentrantLock();
   /**
+   * Deadband for speeds in heading correction.
+   */
+  private       double                   HEADING_CORRECTION_DEADBAND                     = 0.01;
+  /**
    * Field object.
    */
   public        Field2d                  field                                           = new Field2d();
@@ -101,13 +109,13 @@ public class SwerveDrive
    */
   public        boolean                  chassisVelocityCorrection                       = true;
   /**
-   * Whether heading correction PID is currently active.
-   */
-  private       boolean                  correctionEnabled                               = false;
-  /**
    * Whether to correct heading when driving translationally. Set to true to enable.
    */
   public        boolean                  headingCorrection                               = false;
+  /**
+   * Whether heading correction PID is currently active.
+   */
+  private       boolean                  correctionEnabled                               = false;
   /**
    * Swerve IMU device for sensing the heading of the robot.
    */
@@ -120,10 +128,6 @@ public class SwerveDrive
    * Counter to synchronize the modules relative encoder with absolute encoder when not moving.
    */
   private       int                      moduleSynchronizationCounter                    = 0;
-  /**
-   * Deadband for speeds in heading correction.
-   */
-  private final double                   HEADING_CORRECTION_DEADBAND                     = 0.01;
   /**
    * The last heading set in radians.
    */
@@ -140,6 +144,13 @@ public class SwerveDrive
    * Maximum speed of the robot in meters per second.
    */
   private       double                   maxSpeedMPS;
+  /**
+   * Alert to recommend Tuner X if the configuration is compatible.
+   */
+  private final Alert                    tunerXRecommendation                            = new Alert("Swerve Drive",
+                                                                                                     "Your Swerve Drive is compatible with Tuner X swerve generator, please consider using that instead of YAGSL. More information here!\n" +
+                                                                                                     "https://pro.docs.ctr-electronics.com/en/latest/docs/tuner/tuner-swerve/index.html",
+                                                                                                     AlertType.WARNING);
 
   /**
    * Creates a new swerve drivebase subsystem. Robot is controlled via the {@link SwerveDrive#drive} method, or via the
@@ -223,6 +234,31 @@ public class SwerveDrive
     }
 
     odometryThread.startPeriodic(SwerveDriveTelemetry.isSimulation ? 0.01 : 0.02);
+
+    checkIfTunerXCompatible();
+  }
+
+  /**
+   * Check all components to ensure that Tuner X Swerve Generator is recommended instead.
+   */
+  private void checkIfTunerXCompatible()
+  {
+    boolean compatible = imu instanceof Pigeon2Swerve;
+    for (SwerveModule module : swerveModules)
+    {
+      compatible = compatible && module.getDriveMotor() instanceof TalonFXSwerve &&
+                   module.getAngleMotor() instanceof TalonFXSwerve &&
+                   module.getAbsoluteEncoder() instanceof CANCoderSwerve;
+      if (!compatible)
+      {
+        break;
+      }
+    }
+    if (compatible)
+    {
+      tunerXRecommendation.set(true);
+    }
+
   }
 
   /**
@@ -279,7 +315,19 @@ public class SwerveDrive
    */
   public void setHeadingCorrection(boolean state)
   {
+    setHeadingCorrection(state, HEADING_CORRECTION_DEADBAND);
+  }
+
+  /**
+   * Set the heading correction capabilities of YAGSL.
+   *
+   * @param state    {@link SwerveDrive#headingCorrection} state.
+   * @param deadband {@link SwerveDrive#HEADING_CORRECTION_DEADBAND} deadband.
+   */
+  public void setHeadingCorrection(boolean state, double deadband)
+  {
     headingCorrection = state;
+    HEADING_CORRECTION_DEADBAND = deadband;
   }
 
   /**
@@ -413,10 +461,10 @@ public class SwerveDrive
     if (headingCorrection)
     {
       if (Math.abs(velocity.omegaRadiansPerSecond) < HEADING_CORRECTION_DEADBAND
-          && (Math.abs(velocity.vxMetersPerSecond) > HEADING_CORRECTION_DEADBAND 
-          || Math.abs(velocity.vyMetersPerSecond) > HEADING_CORRECTION_DEADBAND)) 
+          && (Math.abs(velocity.vxMetersPerSecond) > HEADING_CORRECTION_DEADBAND
+              || Math.abs(velocity.vyMetersPerSecond) > HEADING_CORRECTION_DEADBAND))
       {
-        if (!correctionEnabled) 
+        if (!correctionEnabled)
         {
           lastHeadingRadians = getYaw().getRadians();
           correctionEnabled = true;
@@ -466,6 +514,29 @@ public class SwerveDrive
     setMaximumSpeed(attainableMaxModuleSpeedMetersPerSecond);
     this.attainableMaxTranslationalSpeedMetersPerSecond = attainableMaxTranslationalSpeedMetersPerSecond;
     this.attainableMaxRotationalVelocityRadiansPerSecond = attainableMaxRotationalVelocityRadiansPerSecond;
+    this.swerveController.config.maxAngularVelocity = attainableMaxRotationalVelocityRadiansPerSecond;
+  }
+
+  /**
+   * Get the maximum velocity from {@link SwerveDrive#attainableMaxTranslationalSpeedMetersPerSecond} or
+   * {@link SwerveDrive#maxSpeedMPS} whichever is higher.
+   *
+   * @return Maximum speed in meters/second.
+   */
+  public double getMaximumVelocity()
+  {
+    return Math.max(this.attainableMaxTranslationalSpeedMetersPerSecond, maxSpeedMPS);
+  }
+
+  /**
+   * Get the maximum angular velocity, either {@link SwerveDrive#attainableMaxRotationalVelocityRadiansPerSecond} or
+   * {@link SwerveControllerConfiguration#maxAngularVelocity}.
+   *
+   * @return Maximum angular velocity in radians per second.
+   */
+  public double getMaximumAngularVelocity()
+  {
+    return Math.max(this.attainableMaxRotationalVelocityRadiansPerSecond, swerveController.config.maxAngularVelocity);
   }
 
   /**

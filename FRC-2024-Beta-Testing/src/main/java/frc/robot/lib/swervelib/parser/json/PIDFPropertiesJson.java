@@ -3,7 +3,7 @@ package frc.robot.lib.swervelib.parser.json;
 import frc.robot.lib.swervelib.parser.PIDFConfig;
 
 /**
- * {@link swervelib.SwerveModule} PID with Feedforward for the drive motor and angle motor.
+ * {@link frc.robot.lib.swervelib.SwerveModule} PID with Feedforward for the drive motor and angle motor.
  */
 public class PIDFPropertiesJson
 {
