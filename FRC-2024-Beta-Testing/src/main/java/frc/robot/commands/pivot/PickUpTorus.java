@@ -6,18 +6,18 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 
-public class PickUpCube extends Command {
+public class PickUpTorus extends Command {
     private Intake intakeSubsystem;
     private Pivot pivotSubsystem;
 
-    public PickUpCube(Intake intakeSubsystem, Pivot pivotSubsystem) {
+    public PickUpTorus(Intake intakeSubsystem, Pivot pivotSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         this.pivotSubsystem = pivotSubsystem;
     }
     @Override
     public void initialize() {
         SequentialCommandGroup group = new SequentialCommandGroup(
-            new ParallelRaceGroup(new RollIntake(intakeSubsystem), new PivotToCube(pivotSubsystem)),
+            new ParallelRaceGroup(new RollIntake(intakeSubsystem), new PivotToTorus(pivotSubsystem)),
             new Turtle(pivotSubsystem)
         );
         group.schedule();

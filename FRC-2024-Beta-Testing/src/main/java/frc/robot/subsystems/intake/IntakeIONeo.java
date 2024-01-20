@@ -6,7 +6,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.revrobotics.Rev2mDistanceSensor;
 
 public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     private static final double kMotorToOutputShaftRatio = 0.01;
@@ -15,10 +17,16 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
 
+    private Rev2mDistanceSensor distanceSensor;
+    private double distanceTolerance;
     public IntakeIONeo() {
         m_motor.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_motor.clearFaults();
         m_motor.setInverted(true);
+        distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kMillimeters, Rev2mDistanceSensor.RangeProfile.kDefault);
+        distanceTolerance = 0.5; //0.5 meters TODO: change this value to actually fit the distance
+        distanceSensor.setEnabled(true);
+        // distanceSensor.setAutomaticMode(true); << Probably not required but keep note that we need this if we have several of these 2m dist devices
     }
 
     @Override
@@ -57,7 +65,18 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     @Override
     public boolean inIntake() {
         // TODO: WRITE THE BEAM BRAKE CODE
-        return true;
+        if(distanceSensor.isRangeValid()){
+            //distanceSensor.setMeasurementPeriod();
+            if(distanceSensor.getRange(Rev2mDistanceSensor.Unit.kMillimeters) < distanceTolerance){
+                return true;
+            }
+            return false;
+        }
+        else{
+            System.out.println("Out of range");
+            return false;
+        }
+        
     }
 
 }
