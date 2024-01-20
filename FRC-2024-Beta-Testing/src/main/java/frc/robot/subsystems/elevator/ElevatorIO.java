@@ -11,17 +11,13 @@ public interface ElevatorIO {
         public double hightMeters;
     }
 
-    public default void updateInputs(ElevatorIOInputs inputs) {
-        
-    }
-    public default void setHightMeters(double goalPositionRad, double currentHightMeters) {
-    }
+    public abstract void updateInputs(ElevatorIOInputs inputs);
 
-    public default void configureController(ElevatorFeedforward pff, PIDController pfb) {
-    }
-    public default void setVoltage(double voltage){
-        
-    };
+    public abstract void setHightMeters(double goalPositionRad, double currentHightMeters);
+
+    public abstract void configureController(ElevatorFeedforward pff, PIDController pfb);
+
+    public abstract void setVoltage(double voltage);
 
     public abstract boolean reachedSetpoint();
 

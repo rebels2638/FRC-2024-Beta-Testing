@@ -18,7 +18,6 @@ public class RollIntake extends Command {
 
     @Override
     public boolean isFinished() {
-        //return intakeSubsystem.isSpike();
-        return false;
+        return intakeSubsystem.inIntake();
     }
 }

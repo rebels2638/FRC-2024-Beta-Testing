@@ -1,57 +1,62 @@
 package frc.robot.subsystems.intake;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import org.littletonrobotics.junction.Logger;
+
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase{
-    private CANSparkMax m_motor = new CANSparkMax(19, MotorType.kBrushless); 
 
-    private static final double kMotorToOutputShaftRatio = 0.25;
-    private static final double kPulsePerRotation = 4096;//rev hub reports 4096, without, it is reported as 42
+    private static final double kVelocityRadSecTolerance = Math.toRadians(3);
 
-    private static final double kSpikeAMPS = 10;
+    private final IntakeIO io;
+    private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
 
+    PIDController velocityFeedBackController;
+    SimpleMotorFeedforward velocityFeedForwardController;
 
-    private final PIDController feedBackController = new PIDController(0, 0, 0);
-    private SimpleMotorFeedforward feedForwardController = new SimpleMotorFeedforward(1.2, 0.03, 0);
-
-    private double goalVelocityRadSec = 0;
-
-    private static final int currentLimit = 20;
-    private static final double voltageLimit = 12;
-
-    public Intake() {
-        m_motor.setSmartCurrentLimit(currentLimit);
+    public Intake(IntakeIO io)  {
+        this.io = io;
+        velocityFeedBackController = new PIDController(0, 0, 0);
+        velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
+        velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
+        io.configureController(velocityFeedForwardController, velocityFeedBackController);
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("intake/measuredVelocityRadSec", getVelocityRadSec());
-        double feedForwardVoltage = feedForwardController.calculate(getVelocityRadSec(), goalVelocityRadSec);
-        feedBackController.setSetpoint(goalVelocityRadSec);
-        double feedBackControllerVoltage = feedBackController.calculate(getVelocityRadSec());
-        double output = feedForwardVoltage + feedBackControllerVoltage;
-        SmartDashboard.putNumber("intake/goalVelocityRadSec", goalVelocityRadSec);
-        
-        m_motor.setVoltage(output);
-        
+        io.configureController(velocityFeedForwardController, velocityFeedBackController);
+
+        io.updateInputs(inputs);
+        Logger.processInputs("Intake", inputs);
+    }
+
+    public void setVelocityRadSec(double velo) {
+        Logger.recordOutput("Pivot/desiredVelocityRadSec", velo);
+        io.setVelocityRadSec(velo, inputs.velocityRadSec);
+        return;
+    }
+
+    public void setVoltage(double voltage){
+        io.setVoltage(voltage);
+        return;
+    }
+
+    public double getVelocityDegSec() {
+        return Math.toDegrees(inputs.velocityRadSec);
     }
 
     public double getVelocityRadSec() {
-        return m_motor.getEncoder().getVelocity() * 2 * Math.PI/kPulsePerRotation * kMotorToOutputShaftRatio;
+        return inputs.velocityRadSec;
+    }
+    
+    public boolean reachedSetpoint() {
+        return io.reachedSetpoint();
     }
 
-    public void setVelocityRadSec(double angle) {
-        goalVelocityRadSec = angle;
+    public boolean inIntake() {
+        return io.inIntake();
     }
-
-    public boolean isSpike() {
-        return m_motor.getOutputCurrent() >= kSpikeAMPS;
-    }
-
 }

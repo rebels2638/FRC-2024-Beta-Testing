@@ -32,6 +32,9 @@ import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIONeo;
 import frc.robot.subsystems.elevator.ElevatorIOSim;
+import frc.robot.subsystems.pivot.Pivot;
+import frc.robot.subsystems.pivot.PivotIONeo;
+import frc.robot.subsystems.pivot.PivotIOSim;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.automation.AutoAlign;
@@ -78,6 +81,7 @@ public class RobotContainer {
   // private AprilTagVision aprilTagVision;
 
   private final Elevator elevator;
+  private final Pivot pivot;
 
   public RobotContainer() {
 
@@ -86,6 +90,13 @@ public class RobotContainer {
     }
     else {
       elevator = new Elevator(new ElevatorIOSim());
+    }
+
+    if (RobotBase.isReal()) {
+      pivot = new Pivot(new PivotIONeo());
+    }
+    else {
+      pivot = new Pivot(new PivotIOSim());
     }
 
     // AprilTagVisionIO aprilTagVisionIO = new AprilTagVisionIOSim();
