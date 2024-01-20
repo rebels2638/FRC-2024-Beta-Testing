@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.761063675973507,
+        "x": 7.0,
         "y": 7.0
       },
       "prevControl": {
-        "x": 2.181063675973507,
-        "y": 7.0
+        "x": 6.800007088465521,
+        "y": 6.998316154412594
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,13 +30,70 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.45,
       "rotationDegrees": 180.0,
-      "rotateFast": true
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "PickUpTorus",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "sequential",
+              "data": {
+                "commands": [
+                  {
+                    "type": "race",
+                    "data": {
+                      "commands": [
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "PivotToCube"
+                          }
+                        },
+                        {
+                          "type": "wait",
+                          "data": {
+                            "waitTime": 5.0
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "race",
+                    "data": {
+                      "commands": [
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "PickUpCube"
+                          }
+                        },
+                        {
+                          "type": "wait",
+                          "data": {
+                            "waitTime": 4.0
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
