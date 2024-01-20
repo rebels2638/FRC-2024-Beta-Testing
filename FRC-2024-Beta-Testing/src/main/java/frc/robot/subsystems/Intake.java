@@ -1,8 +1,6 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.Utils.RebelUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -11,8 +9,6 @@ import edu.wpi.first.wpilibj.Timer;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.RelativeEncoder;
 
 public class Intake extends SubsystemBase {
     private static Intake instance = null;
@@ -37,7 +33,6 @@ public class Intake extends SubsystemBase {
     private double m_velocitySetpoint = 0;
     private double m_voltageSetpoint = 0;
 
-    private double m_lastVelocitySetpoint = 0;
     private double m_lastVelocity = 0;
     private double m_lastTime = Timer.getFPGATimestamp();
 
@@ -91,7 +86,6 @@ public class Intake extends SubsystemBase {
         m_voltageSetpoint = voltage;
         m_motor.setVoltage(m_voltageSetpoint);
 
-        m_lastVelocitySetpoint = getVelocitySetpoint();
         m_lastVelocity = getCurrentVelocity();
         m_lastTime = Timer.getFPGATimestamp();
     }

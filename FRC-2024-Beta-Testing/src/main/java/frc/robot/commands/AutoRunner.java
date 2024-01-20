@@ -135,7 +135,7 @@ public class AutoRunner {
         // Configure AutoBuilder last
         
 
-        return new PathPlannerAuto("TurnAuto");
+        return new PathPlannerAuto("ThreePeiceAuto");
 
         
         // return swerveSubsystem.creatPathPlannerCommand
