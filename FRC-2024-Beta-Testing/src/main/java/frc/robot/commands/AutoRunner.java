@@ -54,11 +54,8 @@ public class AutoRunner {
         PATH_CHOSEN_TO_NAME_HASH_MAP.put("TestAuto2024", "TestAuto2024");
 
     }
-
-    private SwerveSubsystem swerveSubsystem;
+    
     public AutoRunner ( SwerveSubsystem swerveSubsystem ) {
-        this.swerveSubsystem = swerveSubsystem;
-
         PATH_CHOSEN_TO_NAME_HASH_MAP.forEach((pathName, pathFile) -> pathChooser.addOption(pathName, pathFile));
 
         Shuffleboard.getTab("Auto").add("Path Chooser", pathChooser);
@@ -71,10 +68,10 @@ public class AutoRunner {
                 swerveSubsystem::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
                 swerveSubsystem::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
                 new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                        new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-                        4.5, // Max module speed, in m/s
-                        0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                        Constants.Auton.TRANSLATION_PID_CONFIG, // Translation PID constants
+                        Constants.Auton.ANGLE_PID_CONFIG, // Rotation PID constants
+                        Constants.Auton.MAX_SPEED, // Max module speed, in m/s
+                        .4, // Drive base radius in meters. Distance from robot center to furthest module.
                         new ReplanningConfig() // Default path replanning config. See the API for the options here
                 ),
                 () -> {
@@ -98,51 +95,6 @@ public class AutoRunner {
     }
 
     public Command getAutonomousCommand() {
-        // return pathPlanner.loadPath(pathChooser.getSelected(), Constants.Auton.MAX_SPEED, 
-        // Constants.Auton.MAX_ACCELERATION, false);
-        // traj = PathPlanner.fromPathFile(pathChosen);
-        // scc = new PPSwerveControllerCommand(traj, 
-        //                                             swerveSubsystem::getPose,
-        //                                             new PIDController(Constants.Auton.TRANSLATION_PID_CONFIG.kP,
-        //                                                     Constants.Auton.TRANSLATION_PID_CONFIG.kI,
-        //                                                     Constants.Auton.TRANSLATION_PID_CONFIG.kD), 
-        //                                             new PIDController(Constants.Auton.TRANSLATION_PID_CONFIG.kP,
-        //                                                     Constants.Auton.TRANSLATION_PID_CONFIG.kI,
-        //                                                     Constants.Auton.TRANSLATION_PID_CONFIG.kD), 
-        //                                             new PIDController(Constants.Auton.ANGLE_PID_CONFIG.kP,
-        //                                                     Constants.Auton.ANGLE_PID_CONFIG.kI,
-        //                                                     Constants.Auton.ANGLE_PID_CONFIG.kD), 
-        //                                             swerveSubsystem::setChassisSpeeds, swerveSubsystem);
-
-        //  return scc;
-        // return scc;
-
-        
-        // pathCommand = new PathfindThenFollowPathHolonomic(
-        //     path,
-        //      new PathConstraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION, 2 * Math.PI, 0.5 * Math.PI),
-        //       swerveSubsystem::getPose,
-        //        swerveSubsystem::getRobotVelocity,
-        //         swerveSubsystem::setChassisSpeeds,
-        //          new HolonomicPathFollowerConfig(new PIDConstants(Constants.Auton.TRANSLATION_PID_CONFIG.kP,Constants.Auton.TRANSLATION_PID_CONFIG.kI, Constants.Auton.TRANSLATION_PID_CONFIG.kD ),
-        //              new PIDConstants(Constants.Auton.ANGLE_PID_CONFIG.kP, Constants.Auton.ANGLE_PID_CONFIG.kI, Constants.Auton.ANGLE_PID_CONFIG.kD), 7,
-        //                  0.46736,
-        //                      new ReplanningConfig(true, true, 0.4, 0.4),
-        //                          0.02), 
-        //          (()->RobotContainer.isRed()),
-        //           swerveSubsystem); 
-
-        // Configure AutoBuilder last
-        
-
         return new PathPlannerAuto("ThreePeiceAuto");
-
-        
-        // return swerveSubsystem.creatPathPlannerCommand
-        //     (pathChosen, 
-        //     new PathConstraints(Constants.Auton.MAX_SPEED, 
-        //     Constants.Auton.MAX_ACCELERATION), EVENT_MAP, 
-        //     Constants.Auton.TRANSLATION_PID_CONFIG, 
-        //     Constants.Auton.ANGLE_PID_CONFIG, true);
     }
 } 

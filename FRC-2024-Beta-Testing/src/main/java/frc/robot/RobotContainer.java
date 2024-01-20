@@ -41,6 +41,7 @@ import frc.robot.Utils.Constants.OperatorConstants;
 import frc.robot.commands.drivetrain.AbsoluteDrive;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
+import frc.robot.commands.autoAligment.AutoAlignAMP;
 
 
 
@@ -171,7 +172,7 @@ public class RobotContainer {
     // }));
     //.xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
     this.xboxDriver.getBButton().onTrue(new InstantCommand(() -> closedFieldAbsoluteDrive.toggleRotationMode()) );
-    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    //this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
     //this.xboxDriver.getYButton().onTrue(new RollIntake(intakeSubsystem));
@@ -185,6 +186,7 @@ public class RobotContainer {
 
     this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
     this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
+    this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
 
   }
   
@@ -219,7 +221,7 @@ public class RobotContainer {
   public static Boolean isRed(){
     try{
     Optional<Alliance> id = DriverStation.getAlliance();
-    if(id.equals(AllianceStationID.Blue1) && id.equals(AllianceStationID.Blue2) && id.equals(AllianceStationID.Blue3)){
+    if(id.equals(AllianceStationID.Blue1) || id.equals(AllianceStationID.Blue2) || id.equals(AllianceStationID.Blue3)){
       return false;
     }
   }catch(Exception e){

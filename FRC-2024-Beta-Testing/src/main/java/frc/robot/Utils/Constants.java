@@ -4,12 +4,17 @@
 
 package frc.robot.Utils;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 // import com.pathplanner.lib.auto.PIDConstants;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.controller.HolonomicDriveController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -44,6 +49,16 @@ public final class Constants
 
     public static final double MAX_SPEED = 4;
     public static final double MAX_ACCELERATION = 1;
+    public static final double MAX_ANGULAR_VELO_RPS = 1.5;
+    public static final double MAX_ANGULAR_ACCEL_RPS_SQUARED = 1;
+    public static final HolonomicPathFollowerConfig DRIVE_CONTROLLER_CONFIG = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                        Constants.Auton.TRANSLATION_PID_CONFIG, // Translation PID constants
+                        Constants.Auton.ANGLE_PID_CONFIG, // Rotation PID constants
+                        Constants.Auton.MAX_SPEED, // Max module speed, in m/s
+                        .4, // Drive base radius in meters. Distance from robot center to furthest module.
+                        new ReplanningConfig() // Default path replanning config. See the API for the options here
+    );
+
   }
 
   public static final class Drivebase
@@ -77,6 +92,7 @@ public final class Constants
       new Translation2d(1.77, 3.85),
       new Translation2d(1.77, 4.42),
       new Translation2d(1.77, 4.97) };
+    public static final Pose2d autoAlightAMPPose = new Pose2d(new Translation2d(1.82, 7.33), new Rotation2d(Math.toRadians(90)));
     // public static final AprilTagFieldLayout aprilTagFieldLayout 
     // = new AprilTagFieldLayout();
     

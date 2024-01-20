@@ -3,7 +3,7 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Utils.Constants;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import frc.robot.subsystems.swerve.SwerveSubsystem;
 /**
  * An example command that uses an example subsystem.
  */
-public class AbsoluteDrive extends CommandBase
+public class AbsoluteDrive extends Command
 {
 
   private final SwerveSubsystem swerve;
