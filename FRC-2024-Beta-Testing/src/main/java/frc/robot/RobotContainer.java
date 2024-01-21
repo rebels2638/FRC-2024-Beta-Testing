@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 import frc.robot.commands.drivetrain.AbsoluteFieldDrive;
 import frc.robot.commands.elevator.MoveElevatorAMP;
 import frc.robot.commands.elevator.MoveElevatorTurtle;
+import frc.robot.commands.audio.playMusic;
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
@@ -36,6 +37,7 @@ import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.pivot.PivotIONeo;
 import frc.robot.subsystems.pivot.PivotIOSim;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
+import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.automation.AutoAlign;
 import frc.robot.commands.drivetrain.AbsoluteDrive;
@@ -83,6 +85,7 @@ public class RobotContainer {
 
   private final Elevator elevator;
   private final Pivot pivot;
+  private final AudioPlayer player;
 
   public RobotContainer() {
 
@@ -187,6 +190,7 @@ public class RobotContainer {
     this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
     this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
     this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
+    this.xboxOperator.getYButton().onTrue(new playMusic(player));
 
   }
   

@@ -21,6 +21,6 @@ public interface ElevatorIO {
 
     public abstract boolean reachedSetpoint();
 
-    public abstract void zeroHight();
+    public abstract void zeroHeight();
     
 }
