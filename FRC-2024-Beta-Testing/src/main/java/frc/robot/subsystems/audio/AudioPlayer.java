@@ -1,12 +1,8 @@
 package frc.robot.subsystems.audio;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import java.util.ArrayList;
 import java.util.Arrays
 
-import edu.wpi.first.wpilibj.Filesystem
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AudioPlayer extends SubsystemBase {
