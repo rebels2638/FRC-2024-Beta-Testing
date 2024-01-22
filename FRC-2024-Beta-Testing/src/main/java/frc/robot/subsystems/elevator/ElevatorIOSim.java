@@ -37,8 +37,9 @@ public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
     }
 
     @Override
-    public void zeroHight() {
-        desiredHightMeters = 0;
+    public void zeroHeight() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'zeroHeight'");
     }
 
 }
