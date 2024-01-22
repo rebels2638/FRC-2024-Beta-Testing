@@ -89,6 +89,7 @@ public class RobotContainer {
 
   public RobotContainer() {
 
+
     if (RobotBase.isReal()) {
       elevator = new Elevator(new ElevatorIONeo());
     }
@@ -102,6 +103,8 @@ public class RobotContainer {
     else {
       pivot = new Pivot(new PivotIOSim());
     }
+
+    
 
     // AprilTagVisionIO aprilTagVisionIO = new AprilTagVisionIOSim();
     swerveSubsystem = new SwerveSubsystem(new File("src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
@@ -190,8 +193,11 @@ public class RobotContainer {
     this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
     this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
     this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
+    player = new AudioPlayer();
     this.xboxOperator.getYButton().onTrue(new playMusic(player));
 
+
+    
   }
   
 
