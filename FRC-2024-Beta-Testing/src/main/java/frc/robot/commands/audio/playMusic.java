@@ -4,23 +4,25 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.audio.AudioPlayer;
 
 public class playMusic extends Command {
-    private AudioPlayer audioplayerSubsystem;
+    private AudioPlayer audioPlayerSubsystem;
     private int toggle;
     private int maxBound;
 
-    public playMusic(Audio audioplayerSubsystem) {
-        this.audioSubsystem = audioplayerSubsystem;
+    public playMusic(AudioPlayer audioplayerSubsystem) {
+        this.audioPlayerSubsystem = audioplayerSubsystem;
         this.toggle = 0;
         this.maxBound = 2; // exclusive, also maxBound is silent
+        addRequirements(audioplayerSubsystem);
     }
     
     @Override
     public void execute() {
         if (this.toggle == this.maxBound) {
-            this.audioplayerSubsystem.stop()
+            this.audioPlayerSubsystem.stop();
             this.toggle = 0;
+        }
         else {
-            this.audioplayerSubsystem.play(this.toggle);
+            this.audioPlayerSubsystem.play(this.toggle);
             this.toggle++;
         }
     }
