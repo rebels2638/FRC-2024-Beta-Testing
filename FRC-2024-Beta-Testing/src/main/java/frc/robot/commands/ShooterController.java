@@ -1,8 +1,8 @@
 package frc.robot.commands.elevator.falcon;
 
 import frc.robot.subsystems.Shooter;
-import frc.lib.RebelUtil;
-import frc.lib.input.XboxController;
+import frc.RebelUtil;
+import frc.input.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ShooterController extends CommandBase {
