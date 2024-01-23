@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.RebelUtil;
+import frc.robot.lib.input.RebelUtil;
 import frc.robot.Robot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -101,7 +101,7 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         double feedforward = m_feedforward.calculate(getVelocitySetpoint());
-        double pid = m_velocityController.calculate(getCurrentVelocity(), getVelocitySetpoint());
+        double pid = m_controller.calculate(getCurrentVelocity(), getVelocitySetpoint());
         double voltage = RebelUtil.constrain(feedforward + pid, -12.0, 12.0);
 
         m_voltageSetpoint = voltage;

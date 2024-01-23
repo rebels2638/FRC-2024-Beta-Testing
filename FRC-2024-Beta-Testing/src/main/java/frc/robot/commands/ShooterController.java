@@ -1,8 +1,8 @@
-package frc.robot.commands.elevator.falcon;
+package frc.robot.commands;
 
 import frc.robot.subsystems.Shooter;
-import frc.RebelUtil;
-import frc.input.XboxController;
+import frc.robot.lib.input.RebelUtil;
+import frc.robot.lib.input.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ShooterController extends CommandBase {
@@ -21,15 +21,15 @@ public class ShooterController extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-	System.out.println(“Shooter Initialized”);
+	System.out.println("Shooter Initialized");
   }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double desiredVelo = e_controller.getLeftY() * Shooter.kMaxSpeed;
+    double desiredVelo = s_controller.getLeftY() * Shooter.kMaxSpeed;
     m_shooter.setVelocitySetpoint(desiredVelo);
-    System.out.println("Controller: " + e_controller.getLeftY());
+    System.out.println("Controller: " + s_controller.getLeftY());
   }   
 
   // Called once the command ends or is interrupted.
