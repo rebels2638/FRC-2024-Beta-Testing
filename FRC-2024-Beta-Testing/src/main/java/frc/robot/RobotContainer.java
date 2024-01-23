@@ -42,6 +42,7 @@ import frc.robot.commands.drivetrain.AbsoluteDrive;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
 import frc.robot.commands.autoAligment.AutoAlignAMP;
+import frc.robot.commands.autoAligment.AutoAlignTrap;
 
 
 
@@ -171,7 +172,7 @@ public class RobotContainer {
     //   }
     // }));
     //.xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
-    this.xboxDriver.getBButton().onTrue(new InstantCommand(() -> closedFieldAbsoluteDrive.toggleRotationMode()) );
+    //this.xboxDriver.getBButton().onTrue(new InstantCommand(() -> closedFieldAbsoluteDrive.toggleRotationMode()) );
     //this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
@@ -187,6 +188,8 @@ public class RobotContainer {
     this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
     this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
     this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
+    this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
+
 
   }
   
