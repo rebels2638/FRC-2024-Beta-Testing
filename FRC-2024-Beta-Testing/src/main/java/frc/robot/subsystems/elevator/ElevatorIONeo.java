@@ -57,7 +57,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     }
 
     @Override
-    public void zeroHight() {
+    public void zeroHeight() {
         m_motor.getEncoder().setPosition(0.0);
     }
 
