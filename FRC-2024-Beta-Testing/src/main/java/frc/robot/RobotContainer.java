@@ -86,8 +86,6 @@ public class RobotContainer {
 
   private final Elevator elevator;
   private final Pivot pivot;
-  private final AudioPlayer player;
-
   public RobotContainer() {
 
 
