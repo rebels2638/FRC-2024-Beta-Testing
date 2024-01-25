@@ -108,13 +108,13 @@ public class RobotContainer {
     
 
     // AprilTagVisionIO aprilTagVisionIO = new AprilTagVisionIOSim();
-        System.out.println("Is directory? : " +new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isDirectory());
+  // System.out.println("Is directory? : " +new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isDirectory());
 
-            System.out.println("Is File? : " + new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
+  //System.out.println("Is File? : " + new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
 
     // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
     // System.out.println(new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
-    ;
+    
     // swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon"));
     swerveSubsystem = new SwerveSubsystem(new File("src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
     // aPlayer = new AudioPlayer();
