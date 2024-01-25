@@ -7,7 +7,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.Rev2mDistanceSensor;
 
 public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private static final double kMotorToOutputShaftRatio = 0.01;
@@ -17,8 +16,6 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
 
-    private Rev2mDistanceSensor distanceSensor;
-    private double distanceTolerance;
     public ShooterIONeo() {
         m_motor1.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_motor1.clearFaults();
