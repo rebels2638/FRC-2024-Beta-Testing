@@ -8,11 +8,11 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 public interface ShooterIO {
     @AutoLog
-    public static class IntakeIOInputs {
+    public static class ShooterIOInputs {
         public double velocityRadSec;
     }
 
-    public abstract void updateInputs(IntakeIOInputs inputs);
+    public abstract void updateInputs(ShooterIOInputs inputs);
 
     public abstract void setVelocityRadSec(double goalVelocityRadPerSec, double currentVelocityRadPerSec);
 

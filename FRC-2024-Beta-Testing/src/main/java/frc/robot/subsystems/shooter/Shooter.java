@@ -12,7 +12,7 @@ public class Shooter extends SubsystemBase{
     private static final double kVelocityRadSecTolerance = Math.toRadians(3);
 
     private final ShooterIO io;
-    private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
+    private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
     PIDController velocityFeedBackController;
     SimpleMotorFeedforward velocityFeedForwardController;
