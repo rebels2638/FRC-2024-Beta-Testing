@@ -28,7 +28,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     }
 
     @Override
-    public void updateInputs(IntakeIOInputs inputs) {
+    public void updateInputs(ShooterIOInputs inputs) {
         inputs.velocityRadSec = m_motor1.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
     }
 

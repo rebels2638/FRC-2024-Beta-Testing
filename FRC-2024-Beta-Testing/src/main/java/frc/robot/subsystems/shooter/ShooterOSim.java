@@ -9,7 +9,7 @@ public class ShooterOSim extends SubsystemBase implements ShooterIO {
     double desiredVelocityRadSec = 0;
 
     @Override
-    public void updateInputs(IntakeIOInputs inputs) {
+    public void updateInputs(ShooterIOInputs inputs) {
         inputs.velocityRadSec = desiredVelocityRadSec;
     }
 

@@ -84,33 +84,43 @@ public class RobotContainer {
   //private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
-  private final Elevator elevator;
-  private final Pivot pivot;
+  // private final Elevator elevator;
+  // private final Pivot pivot;
+  // private final AudioPlayer aPlayer;
+
   public RobotContainer() {
 
 
-    if (RobotBase.isReal()) {
-      elevator = new Elevator(new ElevatorIONeo());
-    }
-    else {
-      elevator = new Elevator(new ElevatorIOSim());
-    }
+    // if (RobotBase.isReal()) {
+    //   elevator = new Elevator(new ElevatorIONeo());
+    // }
+    // else {
+    //   elevator = new Elevator(new ElevatorIOSim());
+    // }
 
-    if (RobotBase.isReal()) {
-      pivot = new Pivot(new PivotIONeo());
-    }
-    else {
-      pivot = new Pivot(new PivotIOSim());
-    }
+    // if (RobotBase.isReal()) {
+    //   pivot = new Pivot(new PivotIONeo());
+    // }
+    // else {
+    //   pivot = new Pivot(new PivotIOSim());
+    // }
 
     
 
     // AprilTagVisionIO aprilTagVisionIO = new AprilTagVisionIOSim();
-    swerveSubsystem = new SwerveSubsystem(new File("src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
+  // System.out.println("Is directory? : " +new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isDirectory());
+
+  //System.out.println("Is File? : " + new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
+
+    // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
+    // System.out.println(new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
     
+    // swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon"));
+    swerveSubsystem = new SwerveSubsystem(new File("src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
+    // aPlayer = new AudioPlayer();
     if (RobotBase.isReal()) {
       // aprilTagVisionIO = new AprilTagVisionIOReal();
-      //swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
+      // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
     }
     
     autoRunner = new AutoRunner(swerveSubsystem);
@@ -189,10 +199,11 @@ public class RobotContainer {
     // this.xboxDriver.getAButton().onTrue(new Turtle(pivotSubsystem));
     // this.xboxDriver.getBButton().onTrue(new PivotToCube(pivotSubsystem));
 
-    this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
-    this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
-    this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
-    this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
+    // this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
+    // this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
+    // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
+    // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
+    // this.xboxOperator.getAButton().onTrue(new playMusic(aPlayer));
 
 
   }
