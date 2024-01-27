@@ -8,43 +8,26 @@ import edu.wpi.first.math.geometry.Pose2d;
 
 import java.io.File;
 import java.util.Optional;
-import java.util.function.Supplier;
-
 // import frc.robot.commands.pivot.PickUpCube;
 // import frc.robot.commands.pivot.PivotController;
 // import frc.robot.commands.pivot.PivotToCube;
 // import frc.robot.commands.pivot.RollIntake;
 // import frc.robot.commands.pivot.Turtle;
 import frc.robot.commands.drivetrain.AbsoluteFieldDrive;
-import frc.robot.commands.elevator.MoveElevatorAMP;
-import frc.robot.commands.elevator.MoveElevatorTurtle;
-import frc.robot.commands.audio.playMusic;
-import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.lib.input.XboxController;
-import frc.robot.subsystems.elevator.Elevator;
-import frc.robot.subsystems.elevator.ElevatorIO;
-import frc.robot.subsystems.elevator.ElevatorIONeo;
-import frc.robot.subsystems.elevator.ElevatorIOSim;
-import frc.robot.subsystems.pivot.Pivot;
-import frc.robot.subsystems.pivot.PivotIONeo;
-import frc.robot.subsystems.pivot.PivotIOSim;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
-import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.automation.AutoAlign;
 import frc.robot.commands.drivetrain.AbsoluteDrive;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
-import frc.robot.commands.autoAligment.AutoAlignAMP;
-import frc.robot.commands.autoAligment.AutoAlignTrap;
 
 
 
@@ -108,19 +91,21 @@ public class RobotContainer {
     
 
     // AprilTagVisionIO aprilTagVisionIO = new AprilTagVisionIOSim();
-  // System.out.println("Is directory? : " +new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isDirectory());
-
-  //System.out.println("Is File? : " + new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
+  System.out.println("Is directory? : " +new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon").isDirectory());
+  System.out.println("Deploy Directory : " + Filesystem.getDeployDirectory());
+  System.out.println("Is File? : " + new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon").isFile());
 
     // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
     // System.out.println(new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
     
-    // swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon"));
-    swerveSubsystem = new SwerveSubsystem(new File("src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
+   // swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
     // aPlayer = new AudioPlayer();
     if (RobotBase.isReal()) {
       // aprilTagVisionIO = new AprilTagVisionIOReal();
-      // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
+      System.out.println("Is directory? : " + new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isDirectory());
+      swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
+    }else{
+    swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon"));
     }
     
     autoRunner = new AutoRunner(swerveSubsystem);

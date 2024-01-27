@@ -1,5 +1,6 @@
 package frc.robot.lib.swervelib.parser.json;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.SparkRelativeEncoder.Type;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
@@ -124,6 +125,7 @@ public class DeviceJson
       case "analog":
         return new AnalogGyroSwerve(id);
       case "navx":
+        return new NavXSwerve(SPI.Port.kMXP);
       case "navx_spi":
         return new NavXSwerve(SPI.Port.kMXP);
       case "navx_i2c":

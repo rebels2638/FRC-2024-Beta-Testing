@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 import frc.robot.Utils.Constants;
+import frc.robot.commands.elevator.MoveElevatorAMP;
+import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -55,7 +57,7 @@ public class AutoRunner {
 
     }
     
-    public AutoRunner ( SwerveSubsystem swerveSubsystem ) {
+    public AutoRunner ( SwerveSubsystem swerveSubsystem) {
         PATH_CHOSEN_TO_NAME_HASH_MAP.forEach((pathName, pathFile) -> pathChooser.addOption(pathName, pathFile));
 
         Shuffleboard.getTab("Auto").add("Path Chooser", pathChooser);

@@ -42,8 +42,8 @@ public class NavXSwerve extends SwerveIMU
       /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
       /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
       /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-      gyro = new AHRS(port);
-      // gyro = new AHRS(I2C.Port.kOnboard);
+      // gyro = new AHRS(port);
+      gyro = new AHRS(SPI.Port.kMXP);
       factoryDefault();
       SmartDashboard.putData(gyro);
     } catch (RuntimeException ex)
@@ -65,8 +65,8 @@ public class NavXSwerve extends SwerveIMU
       /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
       /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
       /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-      // gyro = new AHRS(I2C.Port.kOnboard);
-      gyro = new AHRS(port);
+      gyro = new AHRS(SPI.Port.kMXP);
+      // gyro = new AHRS(port);
       factoryDefault();
       SmartDashboard.putData(gyro);
     } catch (RuntimeException ex)
@@ -88,8 +88,8 @@ public class NavXSwerve extends SwerveIMU
       /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
       /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXpP or SerialPort.Port.kUSB     */
       /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-      gyro = new AHRS(port);
-      // gyro = new AHRS(I2C.Port.kOnboard);
+      // gyro = new AHRS(port);
+      gyro = new AHRS(SPI.Port.kMXP);
       factoryDefault();
       SmartDashboard.putData(gyro);
     } catch (RuntimeException ex)
