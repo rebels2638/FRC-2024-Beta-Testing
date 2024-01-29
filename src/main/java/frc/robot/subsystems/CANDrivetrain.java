@@ -35,10 +35,10 @@ public class CANDrivetrain extends SubsystemBase {
 
     /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
      *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
-    // leftFront.set(kCurrentLimit);
-    // leftRear.set(kCurrentLimit);
-    // rightFront.set(kCurrentLimit);
-    // rightRear.set(kCurrentLimit);
+    leftFront.configFactoryDefault();
+    leftRear.configFactoryDefault();
+    rightFront.configFactoryDefault();
+    rightRear.configFactoryDefault();
 
     // Set the rear motors to follow the front motors.
     leftRear.follow(leftFront);
@@ -55,7 +55,7 @@ public class CANDrivetrain extends SubsystemBase {
 
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
    * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
-  public void arcadeDrive(double speed, double rotation) {
+  public void drive(double speed, double rotation) {
     m_drivetrain.arcadeDrive(speed, rotation);
   }
 
