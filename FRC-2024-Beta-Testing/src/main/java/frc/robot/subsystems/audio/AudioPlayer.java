@@ -8,7 +8,8 @@ import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 
-
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AudioPlayer extends SubsystemBase {
@@ -22,10 +23,11 @@ public class AudioPlayer extends SubsystemBase {
                 new TalonFX(4, "rio"), new TalonFX(5, "rio"), new TalonFX(6, "rio"), new TalonFX(7, "rio")));
 
         orchestra = new Orchestra(motors);
+
     }
 
     public void play(int songID) {
-        orchestra.loadMusic("src/main/java/frc/robot/subsystems/audio/tracks/"+Integer.toString(songID)+".chrp");
+        orchestra.loadMusic("0.chrp");
     }
 
     public void stop() {

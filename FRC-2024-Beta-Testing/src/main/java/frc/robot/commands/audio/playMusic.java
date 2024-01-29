@@ -17,14 +17,16 @@ public class playMusic extends Command {
     
     @Override
     public void execute() {
-        if (this.toggle == this.maxBound) {
-            this.audioPlayerSubsystem.stop();
-            this.toggle = 0;
-        }
-        else {
-            this.audioPlayerSubsystem.play(this.toggle);
-            this.toggle++;
-        }
+        // if (this.toggle == this.maxBound) {
+        //     this.audioPlayerSubsystem.stop();
+        //     this.toggle = 0;
+        // }
+        // else {
+        //     this.audioPlayerSubsystem.play(this.toggle);
+        //     this.toggle++;
+        // }
+
+        this.audioPlayerSubsystem.play(0);
     }
 
     @Override

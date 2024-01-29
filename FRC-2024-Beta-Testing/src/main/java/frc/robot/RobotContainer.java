@@ -72,7 +72,7 @@ public class RobotContainer {
 
   // private final Elevator elevator;
   // private final Pivot pivot;
-  // private final AudioPlayer aPlayer;
+  private final AudioPlayer aPlayer;
 
   public RobotContainer() {
 
@@ -102,7 +102,7 @@ public class RobotContainer {
     // System.out.println(new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
     
    // swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
-    //aPlayer = new AudioPlayer();
+    aPlayer = new AudioPlayer();
     if (RobotBase.isReal()) {
       // aprilTagVisionIO = new AprilTagVisionIOReal();
       System.out.println("Is directory? : " + new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isDirectory());
@@ -191,7 +191,7 @@ public class RobotContainer {
     // this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
     // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
-    //this.xboxOperator.getAButton().onTrue(new playMusic(aPlayer));
+    this.xboxOperator.getAButton().onTrue(new playMusic(aPlayer));
 
 
   }
