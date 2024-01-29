@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
 import org.littletonrobotics.junction.Logger;
 
+import frc.robot.Utils.Constants;
 import frc.robot.lib.swervelib.SwerveController;
 import frc.robot.lib.swervelib.SwerveDrive;
 import frc.robot.lib.swervelib.parser.SwerveControllerConfiguration;
@@ -28,10 +29,6 @@ import frc.robot.lib.swervelib.parser.SwerveDriveConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveParser;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
-import frc.robot.Utils.Constants;
-//import frc.robot.subsystems.aprilTagVision.AprilTagVision;
-// import frc.robot.subsystems.aprilTagVision.AprilTagVision;
-// import frc.robot.subsystems.aprilTagVision.AprilTagVision;
 
 
 public class SwerveSubsystem extends SubsystemBase

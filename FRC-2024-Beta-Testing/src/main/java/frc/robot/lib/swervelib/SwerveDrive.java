@@ -1,7 +1,6 @@
 package frc.robot.lib.swervelib;
 
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -72,9 +71,12 @@ public class SwerveDrive
    */
   private final Lock                     odometryLock                                    = new ReentrantLock();
   /**
-   * Deadband for speeds in heading correction.
+   * Alert to recommend Tuner X if the configuration is compatible.
    */
-  private       double                   HEADING_CORRECTION_DEADBAND                     = 0.01;
+  private final Alert                    tunerXRecommendation                            = new Alert("Swerve Drive",
+                                                                                                     "Your Swerve Drive is compatible with Tuner X swerve generator, please consider using that instead of YAGSL. More information here!\n" +
+                                                                                                     "https://pro.docs.ctr-electronics.com/en/latest/docs/tuner/tuner-swerve/index.html",
+                                                                                                     AlertType.WARNING);
   /**
    * Field object.
    */
@@ -83,26 +85,6 @@ public class SwerveDrive
    * Swerve controller for controlling heading of the robot.
    */
   public        SwerveController         swerveController;
-  /**
-   * Standard deviation of encoders and gyroscopes, usually should not change. (meters of position and degrees of
-   * rotation)
-   */
-  public        Matrix<N3, N1>           stateStdDevs                                    = VecBuilder.fill(0.1,
-                                                                                                           0.1,
-                                                                                                           0.1);
-  /**
-   * The standard deviation of the vision measurement, for best accuracy calculate the standard deviation at 2 or more
-   * points and fit a line to it and modify this using {@link SwerveDrive#addVisionMeasurement(Pose2d, double, Matrix)}
-   * with the calculated optimal standard deviation. (Units should be meters per pixel). By optimizing this you can get
-   * vision accurate to inches instead of feet.
-   */
-  public        Matrix<N3, N1>           visionMeasurementStdDevs                        = VecBuilder.fill(0.9,
-                                                                                                           0.9,
-                                                                                                           0.9);
-  /**
-   * Invert odometry readings of drive motor positions, used as a patch for debugging currently.
-   */
-  public        boolean                  invertOdometry                                  = false;
   /**
    * Correct chassis velocity in {@link SwerveDrive#drive(Translation2d, double, boolean, boolean)} using 254's
    * correction.
@@ -113,9 +95,9 @@ public class SwerveDrive
    */
   public        boolean                  headingCorrection                               = false;
   /**
-   * Whether heading correction PID is currently active.
+   * Deadband for speeds in heading correction.
    */
-  private       boolean                  correctionEnabled                               = false;
+  private       double                   HEADING_CORRECTION_DEADBAND                     = 0.01;
   /**
    * Swerve IMU device for sensing the heading of the robot.
    */
@@ -144,13 +126,6 @@ public class SwerveDrive
    * Maximum speed of the robot in meters per second.
    */
   private       double                   maxSpeedMPS;
-  /**
-   * Alert to recommend Tuner X if the configuration is compatible.
-   */
-  private final Alert                    tunerXRecommendation                            = new Alert("Swerve Drive",
-                                                                                                     "Your Swerve Drive is compatible with Tuner X swerve generator, please consider using that instead of YAGSL. More information here!\n" +
-                                                                                                     "https://pro.docs.ctr-electronics.com/en/latest/docs/tuner/tuner-swerve/index.html",
-                                                                                                     AlertType.WARNING);
 
   /**
    * Creates a new swerve drivebase subsystem. Robot is controlled via the {@link SwerveDrive#drive} method, or via the
@@ -194,11 +169,11 @@ public class SwerveDrive
             kinematics,
             getYaw(),
             getModulePositions(),
-            new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
-            stateStdDevs,
-            visionMeasurementStdDevs); // x,y,heading in radians; Vision measurement std dev, higher=less weight
+            new Pose2d(new Translation2d(0, 0),
+                       Rotation2d.fromDegrees(0))); // x,y,heading in radians; Vision measurement std dev, higher=less weight
 
     zeroGyro();
+    setMaximumSpeed(maxSpeedMPS);
 
     // Initialize Telemetry
     if (SwerveDriveTelemetry.verbosity.ordinal() >= TelemetryVerbosity.LOW.ordinal())
@@ -309,6 +284,16 @@ public class SwerveDrive
   }
 
   /**
+   * Fetch the latest odometry heading, should be trusted over {@link SwerveDrive#getYaw()}.
+   *
+   * @return {@link Rotation2d} of the robot heading.
+   */
+  public Rotation2d getOdometryHeading()
+  {
+    return swerveDrivePoseEstimator.getEstimatedPosition().getRotation();
+  }
+
+  /**
    * Set the heading correction capabilities of YAGSL.
    *
    * @param state {@link SwerveDrive#headingCorrection} state.
@@ -337,7 +322,7 @@ public class SwerveDrive
    */
   public void driveFieldOriented(ChassisSpeeds velocity)
   {
-    ChassisSpeeds fieldOrientedVelocity = ChassisSpeeds.fromFieldRelativeSpeeds(velocity, getYaw());
+    ChassisSpeeds fieldOrientedVelocity = ChassisSpeeds.fromFieldRelativeSpeeds(velocity, getOdometryHeading());
     drive(fieldOrientedVelocity);
   }
 
@@ -349,7 +334,7 @@ public class SwerveDrive
    */
   public void driveFieldOriented(ChassisSpeeds velocity, Translation2d centerOfRotationMeters)
   {
-    ChassisSpeeds fieldOrientedVelocity = ChassisSpeeds.fromFieldRelativeSpeeds(velocity, getYaw());
+    ChassisSpeeds fieldOrientedVelocity = ChassisSpeeds.fromFieldRelativeSpeeds(velocity, getOdometryHeading());
     drive(fieldOrientedVelocity, centerOfRotationMeters);
   }
 
@@ -401,7 +386,7 @@ public class SwerveDrive
     ChassisSpeeds velocity =
         fieldRelative
         ? ChassisSpeeds.fromFieldRelativeSpeeds(
-            translation.getX(), translation.getY(), rotation, getYaw())
+            translation.getX(), translation.getY(), rotation, getOdometryHeading())
         : new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
 
     drive(velocity, isOpenLoop, centerOfRotationMeters);
@@ -430,7 +415,7 @@ public class SwerveDrive
     ChassisSpeeds velocity =
         fieldRelative
         ? ChassisSpeeds.fromFieldRelativeSpeeds(
-            translation.getX(), translation.getY(), rotation, getYaw())
+            translation.getX(), translation.getY(), rotation, getOdometryHeading())
         : new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
 
     drive(velocity, isOpenLoop, new Translation2d());
@@ -464,16 +449,11 @@ public class SwerveDrive
           && (Math.abs(velocity.vxMetersPerSecond) > HEADING_CORRECTION_DEADBAND
               || Math.abs(velocity.vyMetersPerSecond) > HEADING_CORRECTION_DEADBAND))
       {
-        if (!correctionEnabled)
-        {
-          lastHeadingRadians = getYaw().getRadians();
-          correctionEnabled = true;
-        }
         velocity.omegaRadiansPerSecond =
-            swerveController.headingCalculate(lastHeadingRadians, getYaw().getRadians());
+            swerveController.headingCalculate(getOdometryHeading().getRadians(), lastHeadingRadians);
       } else
       {
-        correctionEnabled = false;
+        lastHeadingRadians = getOdometryHeading().getRadians();
       }
     }
 
@@ -554,20 +534,15 @@ public class SwerveDrive
                                                   maxSpeedMPS,
                                                   attainableMaxTranslationalSpeedMetersPerSecond,
                                                   attainableMaxRotationalVelocityRadiansPerSecond);
+    } else
+    {
+      SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, maxSpeedMPS);
     }
 
     // Sets states
     for (SwerveModule module : swerveModules)
     {
       module.setDesiredState(desiredStates[module.moduleNumber], isOpenLoop, false);
-
-      if (SwerveDriveTelemetry.verbosity.ordinal() >= TelemetryVerbosity.HIGH.ordinal())
-      {
-        SwerveDriveTelemetry.desiredStates[module.moduleNumber *
-                                           2] = module.lastState.angle.getDegrees();
-        SwerveDriveTelemetry.desiredStates[(module.moduleNumber * 2) +
-                                           1] = module.lastState.speedMetersPerSecond;
-      }
     }
   }
 
@@ -623,7 +598,7 @@ public class SwerveDrive
     // angle
     // given as the robot angle reverses the direction of rotation, and the conversion is reversed.
     return ChassisSpeeds.fromFieldRelativeSpeeds(
-        kinematics.toChassisSpeeds(getStates()), getYaw().unaryMinus());
+        kinematics.toChassisSpeeds(getStates()), getOdometryHeading().unaryMinus());
   }
 
   /**
@@ -646,7 +621,7 @@ public class SwerveDrive
   public void resetOdometry(Pose2d pose)
   {
     odometryLock.lock();
-    swerveDrivePoseEstimator.resetPosition(pose.getRotation(), getModulePositions(), pose);
+    swerveDrivePoseEstimator.resetPosition(getYaw(), getModulePositions(), pose);
     odometryLock.unlock();
     kinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, 0, pose.getRotation()));
   }
@@ -680,8 +655,7 @@ public class SwerveDrive
   }
 
   /**
-   * Gets the current module positions (azimuth and wheel position (meters)). Inverts the distance from each module if
-   * {@link #invertOdometry} is true.
+   * Gets the current module positions (azimuth and wheel position (meters)).
    *
    * @return A list of SwerveModulePositions containg the current module positions
    */
@@ -692,12 +666,35 @@ public class SwerveDrive
     for (SwerveModule module : swerveModules)
     {
       positions[module.moduleNumber] = module.getPosition();
-      if (invertOdometry)
-      {
-        positions[module.moduleNumber].distanceMeters *= -1;
-      }
     }
     return positions;
+  }
+
+  /**
+   * Getter for the {@link SwerveIMU}.
+   *
+   * @return generated {@link SwerveIMU}
+   */
+  public SwerveIMU getGyro()
+  {
+    return swerveDriveConfiguration.imu;
+  }
+
+  /**
+   * Set the expected gyroscope angle using a {@link Rotation3d} object. To reset gyro, set to a new {@link Rotation3d}
+   * subtracted from the current gyroscopic readings {@link SwerveIMU#getRotation3d()}.
+   *
+   * @param gyro expected gyroscope angle as {@link Rotation3d}.
+   */
+  public void setGyro(Rotation3d gyro)
+  {
+    if (SwerveDriveTelemetry.isSimulation)
+    {
+      setGyroOffset(simIMU.getGyroRotation3d().minus(gyro));
+    } else
+    {
+      setGyroOffset(imu.getRawRotation3d().minus(gyro));
+    }
   }
 
   /**
@@ -729,9 +726,7 @@ public class SwerveDrive
     // Read the imu if the robot is real or the accumulator if the robot is simulated.
     if (!SwerveDriveTelemetry.isSimulation)
     {
-      return swerveDriveConfiguration.invertedIMU
-             ? Rotation2d.fromRadians(imu.getRotation3d().unaryMinus().getZ())
-             : Rotation2d.fromRadians(imu.getRotation3d().getZ());
+      return Rotation2d.fromRadians(imu.getRotation3d().getZ());
     } else
     {
       return simIMU.getYaw();
@@ -748,9 +743,7 @@ public class SwerveDrive
     // Read the imu if the robot is real or the accumulator if the robot is simulated.
     if (!SwerveDriveTelemetry.isSimulation)
     {
-      return swerveDriveConfiguration.invertedIMU
-             ? Rotation2d.fromRadians(imu.getRotation3d().unaryMinus().getY())
-             : Rotation2d.fromRadians(imu.getRotation3d().getY());
+      return Rotation2d.fromRadians(imu.getRotation3d().getY());
     } else
     {
       return simIMU.getPitch();
@@ -767,9 +760,7 @@ public class SwerveDrive
     // Read the imu if the robot is real or the accumulator if the robot is simulated.
     if (!SwerveDriveTelemetry.isSimulation)
     {
-      return swerveDriveConfiguration.invertedIMU
-             ? Rotation2d.fromRadians(imu.getRotation3d().unaryMinus().getX())
-             : Rotation2d.fromRadians(imu.getRotation3d().getX());
+      return Rotation2d.fromRadians(imu.getRotation3d().getX());
     } else
     {
       return simIMU.getRoll();
@@ -786,9 +777,7 @@ public class SwerveDrive
     // Read the imu if the robot is real or the accumulator if the robot is simulated.
     if (!SwerveDriveTelemetry.isSimulation)
     {
-      return swerveDriveConfiguration.invertedIMU
-             ? imu.getRotation3d().unaryMinus()
-             : imu.getRotation3d();
+      return imu.getRotation3d();
     } else
     {
       return simIMU.getGyroRotation3d();
@@ -842,6 +831,7 @@ public class SwerveDrive
     swerveDriveConfiguration.physicalCharacteristics.optimalVoltage = optimalVoltage;
     for (SwerveModule module : swerveModules)
     {
+      module.maxSpeed = maximumSpeed;
       if (updateModuleFeedforward)
       {
         module.feedforward = SwerveMath.createDriveFeedforward(optimalVoltage,
@@ -953,7 +943,7 @@ public class SwerveDrive
         SwerveDriveTelemetry.measuredChassisSpeeds[1] = measuredChassisSpeeds.vyMetersPerSecond;
         SwerveDriveTelemetry.measuredChassisSpeeds[0] = measuredChassisSpeeds.vxMetersPerSecond;
         SwerveDriveTelemetry.measuredChassisSpeeds[2] = Math.toDegrees(measuredChassisSpeeds.omegaRadiansPerSecond);
-        SwerveDriveTelemetry.robotRotation = getYaw().getDegrees();
+        SwerveDriveTelemetry.robotRotation = getOdometryHeading().getDegrees();
       }
 
       if (SwerveDriveTelemetry.verbosity.ordinal() >= TelemetryVerbosity.LOW.ordinal())
@@ -969,7 +959,8 @@ public class SwerveDrive
         if (SwerveDriveTelemetry.verbosity == TelemetryVerbosity.HIGH)
         {
           module.updateTelemetry();
-          SmartDashboard.putNumber("Adjusted IMU Yaw", getYaw().getDegrees());
+          SmartDashboard.putNumber("Raw IMU Yaw", getYaw().getDegrees());
+          SmartDashboard.putNumber("Adjusted IMU Yaw", getOdometryHeading().getDegrees());
         }
         if (SwerveDriveTelemetry.verbosity.ordinal() >= TelemetryVerbosity.HIGH.ordinal())
         {
@@ -1029,28 +1020,6 @@ public class SwerveDrive
 
   /**
    * Add a vision measurement to the {@link SwerveDrivePoseEstimator} and update the {@link SwerveIMU} gyro reading with
-   * the given timestamp of the vision measurement. <br /> <b>IT IS HIGHLY RECOMMENDED TO UPDATE YOUR GYROSCOPE OFFSET
-   * AFTER USING THIS FUNCTION!</b> <br /> To update your gyroscope readings directly use
-   * {@link SwerveDrive#setGyroOffset(Rotation3d)}.
-   *
-   * @param robotPose Robot {@link Pose2d} as measured by vision.
-   * @param timestamp Timestamp the measurement was taken as time since startup, should be taken from
-   *                  {@link Timer#getFPGATimestamp()} or similar sources.
-   */
-  public void addVisionMeasurement(Pose2d robotPose, double timestamp)
-  {
-    odometryLock.lock();
-    swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp);
-    Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),
-                                    robotPose.getRotation());
-    odometryLock.unlock();
-
-    setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
-    resetOdometry(newOdometry);
-  }
-
-  /**
-   * Add a vision measurement to the {@link SwerveDrivePoseEstimator} and update the {@link SwerveIMU} gyro reading with
    * the given timestamp of the vision measurement.
    *
    * @param robotPose                Robot {@link Pose2d} as measured by vision.
@@ -1066,26 +1035,29 @@ public class SwerveDrive
   public void addVisionMeasurement(Pose2d robotPose, double timestamp,
                                    Matrix<N3, N1> visionMeasurementStdDevs)
   {
-    this.visionMeasurementStdDevs = visionMeasurementStdDevs;
-    addVisionMeasurement(robotPose, timestamp);
+    odometryLock.lock();
+    swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    odometryLock.unlock();
   }
 
-
   /**
-   * Set the expected gyroscope angle using a {@link Rotation3d} object. To reset gyro, set to a new {@link Rotation3d}
-   * subtracted from the current gyroscopic readings {@link SwerveIMU#getRotation3d()}.
+   * Add a vision measurement to the {@link SwerveDrivePoseEstimator} and update the {@link SwerveIMU} gyro reading with
+   * the given timestamp of the vision measurement.
    *
-   * @param gyro expected gyroscope angle as {@link Rotation3d}.
+   * @param robotPose Robot {@link Pose2d} as measured by vision.
+   * @param timestamp Timestamp the measurement was taken as time since startup, should be taken from
+   *                  {@link Timer#getFPGATimestamp()} or similar sources.
    */
-  public void setGyro(Rotation3d gyro)
+  public void addVisionMeasurement(Pose2d robotPose, double timestamp)
   {
-    if (SwerveDriveTelemetry.isSimulation)
-    {
-      setGyroOffset(simIMU.getGyroRotation3d().minus(gyro));
-    } else
-    {
-      setGyroOffset(imu.getRawRotation3d().minus(gyro));
-    }
+    odometryLock.lock();
+    swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp);
+//    Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),
+//                                    robotPose.getRotation());
+    odometryLock.unlock();
+
+//    setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
+//    resetOdometry(newOdometry);
   }
 
   /**
