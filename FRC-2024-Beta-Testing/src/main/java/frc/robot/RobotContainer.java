@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.Utils.Constants.OperatorConstants;
@@ -171,7 +172,7 @@ public class RobotContainer {
     //   }
     // }));
     //.xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
-    //this.xboxDriver.getBButton().onTrue(new InstantCommand(() -> closedFieldAbsoluteDrive.toggleRotationMode()) );
+    this.xboxDriver.getBButton().onTrue(new InstantCommand(() -> closedFieldAbsoluteDrive.toggleRotationMode()) );
     //this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));

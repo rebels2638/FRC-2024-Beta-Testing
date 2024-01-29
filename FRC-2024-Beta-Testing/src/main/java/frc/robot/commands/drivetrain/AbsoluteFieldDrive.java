@@ -29,7 +29,7 @@ public class AbsoluteFieldDrive extends Command
   private double lastHeading = 0;
   private double lastTime = 0;
   private Rotation2d desiredHeading = new Rotation2d(0);
-  PIDController translationPID = new PIDController(3,0, 0);
+  PIDController translationPID = new PIDController(0,0, 0);
   // PIDController translationPID = new PIDController(0,0, 0);
 
   /**
@@ -69,51 +69,30 @@ public class AbsoluteFieldDrive extends Command
   @Override
   public void execute()
   {
-    //TranslationalVelocity Correction Via PID controls.
-    translationPID.setTolerance(0.1); //Note : Moved the PID 
-    double xCorrection = 0;
-    double yCorrection = 0;
-    if (Math.abs(swerve.getFieldVelocity().vxMetersPerSecond) + Math.abs(swerve.getFieldVelocity().vyMetersPerSecond) > 1 && Math.abs(Math.toDegrees(swerve.getFieldVelocity().omegaRadiansPerSecond)) > 60) {
-      translationPID.setSetpoint(vX.getAsDouble() * Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC);
-      xCorrection = translationPID.calculate(swerve.getFieldVelocity().vxMetersPerSecond);
-  
-      translationPID.setSetpoint(vY.getAsDouble() * Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC);
-      yCorrection = translationPID.calculate(swerve.getFieldVelocity().vyMetersPerSecond);
-    }
     
 
-    SmartDashboard.putNumber("swerve/yCorrection", yCorrection);
-    SmartDashboard.putNumber("swerve/xCorrection", xCorrection);
-
-    desiredHeading = new Rotation2d(heading.getAsDouble() * Math.PI);
-    ChassisSpeeds desiredSpeeds; 
-    if (!resetRotation) {
-      desiredSpeeds = new ChassisSpeeds(vX.getAsDouble() * Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC + xCorrection,
-        vY.getAsDouble() * Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC + yCorrection, 
-        heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY));
-    } 
+    // Get the desired chassis speeds based on a 2 joystick module.
+    ChassisSpeeds desiredSpeeds;
+    if (resetRotation) {
+      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
+                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
+    }
     else {
-      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(), desiredHeading);
-      desiredSpeeds = new ChassisSpeeds(vX.getAsDouble() * Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC + xCorrection,
-      vY.getAsDouble() * Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC + yCorrection, desiredSpeeds.omegaRadiansPerSecond);
+        desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
+                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
+        desiredSpeeds.omegaRadiansPerSecond = heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY);
     }
 
-    // Limit velocity to prevent tipsy turby  
+    // Limit velocity to prevent tippy
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
     translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
                                            Constants.LOOP_TIME, Constants.ROBOT_MASS, List.of(Constants.CHASSIS),
                                            swerve.getSwerveDriveConfiguration());
-
-    
     SmartDashboard.putNumber("LimitedTranslation", translation.getX());
     SmartDashboard.putString("Translation", translation.toString());
 
     // Make the robot move
-    swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, true, isOpenLoop);
-    // lastHeading = swerve.getHeading().getRadians();
-    lastHeading = desiredHeading.getRadians();
-    lastTime = Timer.getFPGATimestamp();
-    return;
+    swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, true, false);
   }
 
   // Called once the command ends or is interrupted.
@@ -131,7 +110,6 @@ public class AbsoluteFieldDrive extends Command
 
   public void toggleRotationMode() {
       resetRotation = !resetRotation;
-      // resetRotation = false;
   }
 
 
