@@ -12,6 +12,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
+import frc.robot.lib.input.XboxController;
+import frc.robot.subsystems.CANDrivetrain;
+import frc.robot.subsystems.CANLauncher;
 import frc.robot.subsystems.PWMDrivetrain;
 import frc.robot.subsystems.PWMLauncher;
 
@@ -26,17 +29,17 @@ import frc.robot.subsystems.PWMLauncher;
  */
 public class RobotContainer {
   // The robot's subsystems are defined here.
-  private final PWMDrivetrain m_drivetrain = new PWMDrivetrain();
+  private final CANDrivetrain m_drivetrain = new CANDrivetrain();
   // private final CANDrivetrain m_drivetrain = new CANDrivetrain();
-  private final PWMLauncher m_launcher = new PWMLauncher();
+  private final CANLauncher m_launcher = new CANLauncher();
   // private final CANLauncher m_launcher = new CANLauncher();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final CommandXboxController m_operatorController =
-      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+  private final XboxController m_driverController =
+      new XboxController(OperatorConstants.kDriverControllerPort);
+  private final XboxController m_operatorController =
+      new XboxController(OperatorConstants.kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -61,7 +64,7 @@ public class RobotContainer {
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch
      * command for 1 seconds and then run the LaunchNote command */
     m_operatorController
-        .a()
+        .getAButton()
         .whileTrue(
             new PrepareLaunch(m_launcher)
                 .withTimeout(LauncherConstants.kLauncherDelay)
@@ -70,7 +73,7 @@ public class RobotContainer {
 
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
-    m_operatorController.leftBumper().whileTrue(m_launcher.getIntakeCommand());
+    m_operatorController.getLeftBumper().whileTrue(m_launcher.getIntakeCommand());
   }
 
   /**
@@ -80,6 +83,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_drivetrain);
+    return null;
   }
 }

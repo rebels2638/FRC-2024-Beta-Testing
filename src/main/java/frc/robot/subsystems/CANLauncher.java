@@ -6,22 +6,23 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.LauncherConstants.*;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CANLauncher extends SubsystemBase {
-  CANSparkMax m_launchWheel;
-  CANSparkMax m_feedWheel;
+  WPI_VictorSPX m_launchWheel;
+  WPI_VictorSPX m_feedWheel;
 
   /** Creates a new Launcher. */
   public CANLauncher() {
-    m_launchWheel = new CANSparkMax(kLauncherID, MotorType.kBrushed);
-    m_feedWheel = new CANSparkMax(kFeederID, MotorType.kBrushed);
+    m_launchWheel = new WPI_VictorSPX(kLauncherID);
+    m_feedWheel = new WPI_VictorSPX(kFeederID);
 
-    m_launchWheel.setSmartCurrentLimit(kLauncherCurrentLimit);
-    m_feedWheel.setSmartCurrentLimit(kFeedCurrentLimit);
+    // m_launchWheel.set(kLauncherCurrentLimit);
+    // m_feedWheel.set(kFeedCurrentLimit);
   }
 
   /**

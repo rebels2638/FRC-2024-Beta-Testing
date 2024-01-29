@@ -7,6 +7,7 @@ package frc.robot.commands;
 import static frc.robot.Constants.LauncherConstants.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.CANLauncher;
 import frc.robot.subsystems.PWMLauncher;
 
 // import frc.robot.subsystems.CANLauncher;
@@ -15,12 +16,12 @@ import frc.robot.subsystems.PWMLauncher;
  * will override.
  */
 public class LaunchNote extends Command {
-  PWMLauncher m_launcher;
+  CANLauncher m_launcher;
 
   // CANLauncher m_launcher;
 
   /** Creates a new LaunchNote. */
-  public LaunchNote(PWMLauncher launcher) {
+  public LaunchNote(CANLauncher launcher) {
     // save the launcher system internally
     m_launcher = launcher;
 
