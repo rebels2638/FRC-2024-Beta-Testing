@@ -55,17 +55,17 @@ public class RobotContainer {
    * below) or via the Trigger constructor for arbitary conditions
    */
   private void configureBindings() {
-    // // Set the default command for the drivetrain to drive using the joysticks
-    // m_drivetrain.setDefaultCommand(
-    //     new RunCommand(
-    //         () ->
-    //             m_drivetrain.drive(
-    //                 -m_driverController.getLeftY(), -m_driverController.getRightX()),
-    //         m_drivetrain));
+    // Set the default command for the drivetrain to drive using the joysticks
+    m_drivetrain.setDefaultCommand(
+        new RunCommand(
+            () ->
+                m_drivetrain.drive(
+                    -m_driverController.getLeftY(), -m_driverController.getRightX()),
+            m_drivetrain));
 
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch
      * command for 1 seconds and then run the LaunchNote command */
-    m_driverController
+    m_operatorController
         .getAButton()
         .whileTrue(
             new PrepareLaunch(m_launcher)
@@ -75,7 +75,7 @@ public class RobotContainer {
 
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
-    m_driverController.getLeftBumper().whileTrue(m_launcher.getIntakeCommand());
+    m_operatorController.getLeftBumper().whileTrue(m_launcher.getIntakeCommand());
   }
 
   /**

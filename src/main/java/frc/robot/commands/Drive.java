@@ -9,7 +9,7 @@ import frc.robot.lib.RebelUtil;
 import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.CANDrivetrain;
 import frc.robot.subsystems.CANDrivetrain;
-
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
@@ -17,8 +17,11 @@ public class Drive extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final CANDrivetrain m_driveSubsystem;
   private final XboxController xboxDriver;
-  private final double MAX_FORWARD_SPEED = 4;
-  private final double MAX_TURN_SPEED = 5.5;
+  private final double MAX_FORWARD_SPEED = 10;
+  private final double MAX_TURN_SPEED = 10;
+  private final SlewRateLimiter rateLimiter;
+  private double MAX_FORWARD_ACCEL = 7;
+  private double MAX_BACKWARD_ACCEL = -7;
   /**
    * Creates a new ExampleCommand.
    *
@@ -27,6 +30,8 @@ public class Drive extends Command {
   public Drive(CANDrivetrain driveSubsystem, XboxController controller) {
     xboxDriver = controller;
     m_driveSubsystem = driveSubsystem;
+    rateLimiter = new SlewRateLimiter(MAX_FORWARD_ACCEL, MAX_BACKWARD_ACCEL, 0);
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_driveSubsystem);
   }
@@ -38,9 +43,10 @@ public class Drive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forwardSpeed = RebelUtil.linearDeadband(xboxDriver.getLeftY(), 0.1) * MAX_FORWARD_SPEED;
-    double turnSpeed = RebelUtil.linearDeadband(-xboxDriver.getRightX(), 0.1) * MAX_TURN_SPEED;
+    double forwardSpeed = RebelUtil.linearDeadband(xboxDriver.getLeftY(), 0.1) * MAX_FORWARD_SPEED * (1.0 - xboxDriver.getLeftTrigger() / 2.0);
+    double turnSpeed = RebelUtil.linearDeadband(-xboxDriver.getRightX(), 0.1) * MAX_TURN_SPEED * (1.0 - xboxDriver.getRightTrigger() / 2.0);
     
+    forwardSpeed = rateLimiter.calculate(forwardSpeed);
     // System.out.println("fw " + forwardSpeed + " turnspeed:" + turnSpeed);
     m_driveSubsystem.drive(forwardSpeed, turnSpeed);
   }
