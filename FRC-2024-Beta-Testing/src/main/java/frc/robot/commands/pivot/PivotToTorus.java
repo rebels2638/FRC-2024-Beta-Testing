@@ -1,6 +1,6 @@
 package frc.robot.commands.pivot;
 
-import edu.wpi.first.wpilibj2.command.Command ;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.pivot.Pivot;
 
 public class PivotToTorus extends Command {
