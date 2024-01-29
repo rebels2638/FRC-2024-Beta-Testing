@@ -66,7 +66,7 @@ public class RobotContainer {
 
   // Auto
   private final AutoRunner autoRunner;
-  private final int[] autoAlignTargetNum = {0};
+ // private final int[] autoAlignTargetNum = {0};
   //private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
@@ -175,7 +175,7 @@ public class RobotContainer {
     // }));
     //.xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
     this.xboxDriver.getBButton().onTrue(new InstantCommand(() -> closedFieldAbsoluteDrive.toggleRotationMode()) );
-    //this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
     //this.xboxDriver.getYButton().onTrue(new RollIntake(intakeSubsystem));
