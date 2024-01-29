@@ -70,7 +70,7 @@ public class SwerveSubsystem extends SubsystemBase
     }
 
     swerveDrive.setMotorIdleMode(true);
-    swerveDrive.replaceSwerveModuleFeedforward(new SimpleMotorFeedforward(0.47, 1.8, 0.12));
+    swerveDrive.replaceSwerveModuleFeedforward(new SimpleMotorFeedforward(0.16, 1.92,  0.1));
   }
 
   /**
