@@ -63,7 +63,7 @@ public class AutoRunner {
         Shuffleboard.getTab("Auto").add("Path Chooser", pathChooser);
         Shuffleboard.getTab("Auto").add("Update Selected Command Output", 
             new InstantCommand( () -> loadPath()));
-
+        
         AutoBuilder.configureHolonomic(
                 swerveSubsystem::getPose, // Robot pose supplier
                 swerveSubsystem::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -97,6 +97,6 @@ public class AutoRunner {
     }
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("ThreePeiceAuto");
+        return new PathPlannerAuto("TurnAuto");
     }
 } 

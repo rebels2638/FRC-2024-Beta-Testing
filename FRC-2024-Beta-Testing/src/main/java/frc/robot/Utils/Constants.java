@@ -44,11 +44,11 @@ public final class Constants
   public static final class Auton
   {
 
-    public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(0.1, 0, 0);
-    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(5, 0, 0);
+    public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(0.4, 0, 0);
+    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(0, 0, 0);
 
-    public static final double MAX_SPEED = 1;
-    public static final double MAX_ACCELERATION = 1;
+    public static final double MAX_SPEED = 3;
+    public static final double MAX_ACCELERATION = 3;
     public static final double MAX_ANGULAR_VELO_RPS = 1.5;
     public static final double MAX_ANGULAR_ACCEL_RPS_SQUARED = 1;
 
