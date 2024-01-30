@@ -30,26 +30,23 @@ public class CANDrivetrain extends SubsystemBase {
   /*Class member variables. These variables represent things the class needs to keep track of and use between
   different method calls. */
   DifferentialDrive m_drivetrain;
-  public final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(kTrackWidth);
+  // public final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(kTrackWidth);
   WPI_VictorSPX leftFront = new WPI_VictorSPX(kLeftFrontID);
   WPI_VictorSPX leftRear = new WPI_VictorSPX(kLeftRearID);
   WPI_VictorSPX rightFront = new WPI_VictorSPX(kRightFrontID);
   WPI_VictorSPX rightRear = new WPI_VictorSPX(kRightRearID);
-  private final SimpleMotorFeedforward m_feedforwardLeft = new SimpleMotorFeedforward(1, 3);
-  private final SimpleMotorFeedforward m_feedforwardRight = new SimpleMotorFeedforward(1, 3);
+  // private final SimpleMotorFeedforward m_feedforwardLeft = new SimpleMotorFeedforward(1, 3);
+  // private final SimpleMotorFeedforward m_feedforwardRight = new SimpleMotorFeedforward(1, 3);
 
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
    */
   public CANDrivetrain() {
-    
 
-    /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
-     *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
-    leftFront.configFactoryDefault();
-    leftRear.configFactoryDefault();
-    rightFront.configFactoryDefault();
-    rightRear.configFactoryDefault();
+    // leftFront.configFactoryDefault();
+    // leftRear.configFactoryDefault();
+    // rightFront.configFactoryDefault();
+    // rightRear.configFactoryDefault();
 
     // Set the rear motors to follow the front motors.
     leftRear.follow(leftFront);
@@ -66,16 +63,27 @@ public class CANDrivetrain extends SubsystemBase {
 
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
    * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
-  public void drive(double input, double angVelo) {
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(input, 0.0, angVelo));
-    // final double leftFeedforward = m_feedforwardLeft.calculate(wheelSpeeds.leftMetersPerSecond);
-    // final double rightFeedforward = m_feedforwardRight.calculate(wheelSpeeds.rightMetersPerSecond);
+  // public void drive(double input, double angVelo) {
+  //   var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(input, 0.0, angVelo));
+  //   // final double leftFeedforward = m_feedforwardLeft.calculate(wheelSpeeds.leftMetersPerSecond);
+  //   // final double rightFeedforward = m_feedforwardRight.calculate(wheelSpeeds.rightMetersPerSecond);
 
-    leftFront.set(VictorSPXControlMode.Velocity, wheelSpeeds.leftMetersPerSecond);
-    rightFront.set(VictorSPXControlMode.Velocity, wheelSpeeds.rightMetersPerSecond);
+  //   leftFront.set(VictorSPXControlMode.Velocity, wheelSpeeds.leftMetersPerSecond);
+  //   rightFront.set(VictorSPXControlMode.Velocity, wheelSpeeds.rightMetersPerSecond);
 
-    // leftFront.set(VictorSPXControlMode.PercentOutput, input);
-    // rightFront.set(VictorSPXControlMode.PercentOutput, in);
+  //   // leftFront.set(VictorSPXControlMode.PercentOutput, input);
+  //   // rightFront.set(VictorSPXControlMode.PercentOutput, in);
+  // }
+
+  public void drive(double leftPercentPower, double rightPercentPower) {
+    leftFront.set(leftPercentPower);
+    leftRear.set(leftPercentPower);
+    rightFront.set(rightPercentPower);
+    rightRear.set(rightPercentPower);
+  }
+
+  public void stop() {
+    drive(0, 0);
   }
 
   // public void drive(double xSpeed, double rot) {

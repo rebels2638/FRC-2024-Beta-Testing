@@ -20,9 +20,6 @@ public class CANLauncher extends SubsystemBase {
   public CANLauncher() {
     m_launchWheel = new WPI_VictorSPX(kLauncherID);
     m_feedWheel = new WPI_VictorSPX(kFeederID);
-
-    m_launchWheel.configFactoryDefault();
-    m_feedWheel.configFactoryDefault();
   }
 
   /**
