@@ -43,8 +43,8 @@ public class Drive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forwardSpeed = RebelUtil.linearDeadband(xboxDriver.getLeftY(), 0.1) * MAX_FORWARD_SPEED * (1.0 - xboxDriver.getLeftTrigger() / 2.0);
-    double turnSpeed = RebelUtil.linearDeadband(-xboxDriver.getRightX(), 0.1) * MAX_TURN_SPEED * (1.0 - xboxDriver.getRightTrigger() / 2.0);
+    double forwardSpeed = RebelUtil.linearDeadband(xboxDriver.getLeftY(), 0.1) * MAX_FORWARD_SPEED;
+    double turnSpeed = RebelUtil.linearDeadband(-xboxDriver.getRightX(), 0.1) * MAX_TURN_SPEED;
     
     forwardSpeed = rateLimiter.calculate(forwardSpeed);
     // System.out.println("fw " + forwardSpeed + " turnspeed:" + turnSpeed);

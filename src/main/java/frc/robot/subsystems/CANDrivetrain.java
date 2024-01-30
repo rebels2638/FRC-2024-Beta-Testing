@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.DrivetrainConstants.*;
 import static frc.robot.Constants.LauncherConstants.kTrackWidth;
 
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -15,6 +16,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /* This class declares the subsystem for the robot drivetrain if controllers are connected via CAN. Make sure to go to
@@ -64,13 +66,16 @@ public class CANDrivetrain extends SubsystemBase {
 
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
    * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
-  public void drive(double speed, double rotation) {
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(speed, 0.0, rotation));
-    final double leftFeedforward = m_feedforwardLeft.calculate(wheelSpeeds.leftMetersPerSecond);
-    final double rightFeedforward = m_feedforwardRight.calculate(wheelSpeeds.rightMetersPerSecond);
+  public void drive(double input, double angVelo) {
+    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(input, 0.0, angVelo));
+    // final double leftFeedforward = m_feedforwardLeft.calculate(wheelSpeeds.leftMetersPerSecond);
+    // final double rightFeedforward = m_feedforwardRight.calculate(wheelSpeeds.rightMetersPerSecond);
 
-    leftFront.setVoltage(wheelSpeeds.leftMetersPerSecond * conversionConst);
-    rightFront.setVoltage(wheelSpeeds.rightMetersPerSecond * conversionConst);
+    leftFront.set(VictorSPXControlMode.Velocity, wheelSpeeds.leftMetersPerSecond);
+    rightFront.set(VictorSPXControlMode.Velocity, wheelSpeeds.rightMetersPerSecond);
+
+    // leftFront.set(VictorSPXControlMode.PercentOutput, input);
+    // rightFront.set(VictorSPXControlMode.PercentOutput, in);
   }
 
   // public void drive(double xSpeed, double rot) {
