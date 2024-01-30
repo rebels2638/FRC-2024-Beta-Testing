@@ -27,7 +27,9 @@ public class AudioPlayer extends SubsystemBase {
     }
 
     public void play(int songID) {
-        orchestra.loadMusic("0.chrp");
+        orchestra.loadMusic(Integer.toString(songID)+".chrp");
+        orchestra.play();
+        // System.out.println("here");
     }
 
     public void stop() {
