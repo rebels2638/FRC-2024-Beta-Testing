@@ -40,8 +40,8 @@ public class Elevator extends SubsystemBase{
         Logger.processInputs("Elevator", inputs);
     }
 
-    public void setHightMeters(double hightMeters) {
-        io.setHightMeters(hightMeters, inputs.hightMeters);
+    public void setHightMeters(double heightMeters) {
+        io.setHightMeters(heightMeters, inputs.heightMeters);
         return;
     }
 
@@ -50,8 +50,8 @@ public class Elevator extends SubsystemBase{
         return;
     }
 
-    public double getHightMeters() {
-        return inputs.hightMeters;
+    public double getHeightMeters() {
+        return inputs.heightMeters;
     }
 
     public void zeroHeight() {

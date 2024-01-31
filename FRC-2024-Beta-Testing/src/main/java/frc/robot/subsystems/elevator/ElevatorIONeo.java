@@ -25,7 +25,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.hightMeters = m_motor.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * 2 * kSproketDiameterMeters;
+        inputs.heightMeters = m_motor.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * 2 * kSproketDiameterMeters;
     }
 
     @Override

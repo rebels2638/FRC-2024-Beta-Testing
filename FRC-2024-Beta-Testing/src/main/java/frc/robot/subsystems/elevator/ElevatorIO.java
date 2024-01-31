@@ -8,7 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 public interface ElevatorIO {
     @AutoLog
     public static class ElevatorIOInputs {
-        public double hightMeters;
+        public double heightMeters;
     }
 
     public abstract void updateInputs(ElevatorIOInputs inputs);

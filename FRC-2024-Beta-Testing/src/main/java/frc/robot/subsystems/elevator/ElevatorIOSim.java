@@ -15,7 +15,7 @@ public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.hightMeters = desiredHightMeters;
+        inputs.heightMeters = desiredHightMeters;
     }
 
     @Override
