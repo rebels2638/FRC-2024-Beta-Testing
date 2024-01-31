@@ -1,5 +1,7 @@
 package frc.robot.lib.swervelib;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -70,6 +72,9 @@ public class SwerveModule
    */
   private       boolean                synchronizeEncoderQueued = false;
 
+  public double ANGLE_FF;
+
+
   /**
    * Construct the swerve module and initialize the swerve module motors and absolute encoder.
    *
@@ -85,6 +90,8 @@ public class SwerveModule
     //    speed = 0;
     //    omega = 0;
     //    fakePos = 0;
+    this.ANGLE_FF = moduleConfiguration.ANGLE_FF;
+    Logger.recordOutput("ANGLE_FF", ANGLE_FF);
     this.moduleNumber = moduleNumber;
     configuration = moduleConfiguration;
     angleOffset = moduleConfiguration.angleOffset;
@@ -223,11 +230,11 @@ public class SwerveModule
     {
       double absoluteEncoderPosition = getAbsolutePosition();
       angleMotor.setPosition(absoluteEncoderPosition);
-      angleMotor.setReference(desiredState.angle.getDegrees(), 0, absoluteEncoderPosition);
+      angleMotor.setReference(desiredState.angle.getDegrees(), ANGLE_FF * driveMotor.getVelocity(), absoluteEncoderPosition);
       synchronizeEncoderQueued = false;
     } else
     {
-      angleMotor.setReference(desiredState.angle.getDegrees(), 0);
+      angleMotor.setReference(desiredState.angle.getDegrees(), ANGLE_FF * driveMotor.getVelocity());
     }
 
     lastState = desiredState;
@@ -283,7 +290,7 @@ public class SwerveModule
    */
   public void setAngle(double angle)
   {
-    angleMotor.setReference(angle, 0);
+    angleMotor.setReference(angle, ANGLE_FF * driveMotor.getVelocity());
     lastState.angle = Rotation2d.fromDegrees(angle);
   }
 

@@ -58,6 +58,7 @@ public class ModuleJson
    */
   public boolean           useCosineCompensator    = true;
 
+  public double ANGLE_FF;
   /**
    * Create the swerve module configuration based off of parsed data.
    *
@@ -70,9 +71,12 @@ public class ModuleJson
   public SwerveModuleConfiguration createModuleConfiguration(
       PIDFConfig anglePIDF,
       PIDFConfig velocityPIDF,
+      double ANGLE_FF,
       SwerveModulePhysicalCharacteristics physicalCharacteristics,
       String name)
   {
+    this.ANGLE_FF = ANGLE_FF;
+    
     SwerveMotor           angleMotor = angle.createMotor(false);
     SwerveAbsoluteEncoder absEncoder = encoder.createEncoder(angleMotor);
 
@@ -136,6 +140,7 @@ public class ModuleJson
         inverted.drive,
         inverted.angle,
         name.replaceAll("\\.json", ""),
-        useCosineCompensator);
+        useCosineCompensator,
+        ANGLE_FF);
   }
 }
