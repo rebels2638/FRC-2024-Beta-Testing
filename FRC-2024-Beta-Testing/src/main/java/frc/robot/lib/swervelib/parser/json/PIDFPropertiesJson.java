@@ -16,4 +16,6 @@ public class PIDFPropertiesJson
    * The PIDF with Integral Zone used for the angle motor.
    */
   public PIDFConfig angle;
+
+  public double ANGLE_FF;
 }

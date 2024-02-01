@@ -209,6 +209,7 @@ public class SwerveParser
           module.createModuleConfiguration(
               pidfPropertiesJson.angle,
               pidfPropertiesJson.drive,
+              pidfPropertiesJson.ANGLE_FF,
               physicalPropertiesJson.createPhysicalProperties(),
               swerveDriveJson.modules[i]);
     }

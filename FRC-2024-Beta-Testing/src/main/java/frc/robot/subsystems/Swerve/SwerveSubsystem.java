@@ -114,7 +114,7 @@ public class SwerveSubsystem extends SubsystemBase
     Pose2d currentPose2d = swerveDrive.getPose();
     
 
-    //Removed vision as of 1/13/2024 simply because we have not installed the new camera yet, uncomment this when we are done with the setup.
+    //TODO: Removed vision as of 1/13/2024 simply because we have not installed the new camera yet, uncomment this when we are done with the setup.
 
     // Pose2d estimatedPose = aprilTagVision.getEstimatedRobotPose(currentPose2d);
     // if (estimatedPose != null) {
