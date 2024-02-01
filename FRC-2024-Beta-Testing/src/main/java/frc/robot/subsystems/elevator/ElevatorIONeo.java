@@ -39,7 +39,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
     @Override
     // sould be called periodically
-    public void setHightMeters(double goalPositionMeters, double currentPositionMeters) {
+    public void setHeightMeters(double goalPositionMeters, double currentPositionMeters) {
         double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters - currentPositionMeters, 0);
         
         positionFeedBackController.setSetpoint(goalPositionMeters);

@@ -20,7 +20,7 @@ public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
 
     @Override
     // sould be called periodically
-    public void setHightMeters(double goalPositionMeters, double currentPositionMeters) {
+    public void setHeightMeters(double goalPositionMeters, double currentPositionMeters) {
         desiredHeightMeters = goalPositionMeters;
     } 
 

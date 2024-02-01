@@ -14,7 +14,7 @@ public interface ElevatorIO {
 
     public abstract void updateInputs(ElevatorIOInputs inputs);
 
-    public abstract void setHightMeters(double goalPositionRad, double currentHightMeters);
+    public abstract void setHeightMeters(double goalPositionRad, double currentHightMeters);
 
     public abstract void configureController(ElevatorFeedforward pff, PIDController pfb);
 
