@@ -1,45 +1,33 @@
-package frc.robot.subsystems.elevator;
+// package frc.robot.subsystems.elevator;
 
-import org.littletonrobotics.junction.Logger;
+// import org.littletonrobotics.junction.Logger;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+// import com.revrobotics.CANSparkMax;
+// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// import edu.wpi.first.math.controller.ElevatorFeedforward;
+// import edu.wpi.first.math.controller.PIDController;
+// import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
+// public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
 
-    private double desiredHightMeters = 0;
+//     private double desiredHightMeters = 0;
 
-    @Override
-    public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.hightMeters = desiredHightMeters;
-    }
+//     @Override
+//     public void updateInputs(ElevatorIOInputs inputs) {
+//         inputs.hightMeters = desiredHightMeters;
+//     }
 
-    @Override
-    // sould be called periodically
-    public void setHightMeters(double goalPositionMeters, double currentPositionMeters) {
-        desiredHightMeters = goalPositionMeters;
-    } 
+//     public abstract void updateInputs(ElevatorIOInputs inputs);
 
-    public void setVoltage(double voltage){
-    }
+//     public abstract void setHightMeters(double goalPositionMeters, double currentHightMeters, 
+//                                             boolean isShooterHight, boolean isClimbing);
 
-    @Override
-    public void configureController(ElevatorFeedforward pff, PIDController pfb) {
-    }
+//     public abstract void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG);
 
-    @Override
-    public boolean reachedSetpoint() {
-        return true;
-    }
+//     public abstract void setVoltage(double voltage);
 
-    @Override
-    public void zeroHeight() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'zeroHeight'");
-    }
+//     public abstract boolean reachedSetpoint();
 
-}
+//     public abstract void zeroHeight();
+// }

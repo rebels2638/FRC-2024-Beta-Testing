@@ -17,6 +17,7 @@ public class Elevator extends SubsystemBase{
     PIDController velocityFeedBackController;
     ElevatorFeedforward velocityFeedForwardController;
     private static final double kPID_TOLERANCE_METERS = 0.01;
+    private static final double kCLIMB_KG = 12;
 
     public Elevator(ElevatorIO io)  {
         this.io = io;
@@ -30,20 +31,26 @@ public class Elevator extends SubsystemBase{
         
         positionFeedBackController.setTolerance(kPID_TOLERANCE_METERS);
 
-        io.configureController(positionFeedForwardController, positionFeedBackController);
+        io.configureController(positionFeedForwardController, positionFeedBackController, kCLIMB_KG);
     }
 
     @Override
     public void periodic() {
-        io.configureController(positionFeedForwardController, positionFeedBackController);
-
         io.updateInputs(inputs);
         Logger.processInputs("Elevator", inputs);
     }
 
-    public void setHightMeters(double hightMeters) {
-        Logger.recordOutput("Elevator/desiredHightMeters", hightMeters);
-        io.setHightMeters(hightMeters, inputs.hightMeters);
+    public void setHightMeters(double goalPositionMeters, boolean isShooterHight, boolean isClimbing) {
+        if (isShooterHight) {
+            Logger.recordOutput("Elevator/desiredShooterHight");
+            io.setHightMeters(goalPositionMeters, inputs.shooterHightMeters, isShooterHight, isClimbing);
+        }
+        else {
+            Logger.recordOutput("Elevator/desiredClimberHight");
+            io.setHightMeters(goalPositionMeters, inputs.climberHightMeters, isShooterHight, isClimbing);
+        }
+        Logger.recordOutput("Elavator/isClimbing", isClimbing);
+    
         return;
     }
 
@@ -52,8 +59,11 @@ public class Elevator extends SubsystemBase{
         return;
     }
 
-    public double getHeightMeters() {
-        return inputs.hightMeters;
+    public double getShooterHeightMeters() {
+        return inputs.shooterHightMeters;
+    }
+    public double getClimberHightMeters() {
+        return inputs.climberHightMeters;
     }
 
     public void zeroHeight() {
