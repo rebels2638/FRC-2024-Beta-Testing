@@ -20,9 +20,9 @@ public class Elevator extends SubsystemBase{
 
     public Elevator(ElevatorIO io)  {
         this.io = io;
-        positionFeedBackController = new PIDController(0.0, 0.034, 0.073);
+        positionFeedBackController = new PIDController(0.0, 0.034, 0.22);
         //
-        positionFeedForwardController = new ElevatorFeedforward(0.0, .31, 31);
+        positionFeedForwardController = new ElevatorFeedforward(0.008, .31, 31);
 
         // dont use
         velocityFeedBackController = new PIDController(0, 0, 0);
@@ -43,7 +43,7 @@ public class Elevator extends SubsystemBase{
 
     public void setHightMeters(double hightMeters) {
         Logger.recordOutput("Elevator/desiredHightMeters", hightMeters);
-        io.setHightMeters(hightMeters, inputs.hightMeters);
+        io.setHightMeters(hightMeters, inputs.heightMeters);
         return;
     }
 

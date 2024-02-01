@@ -11,17 +11,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
 
-    private double desiredHightMeters = 0;
+    private double desiredHeightMeters = 0;
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.heightMeters = desiredHightMeters;
+        inputs.heightMeters = desiredHeightMeters;
     }
 
     @Override
     // sould be called periodically
     public void setHightMeters(double goalPositionMeters, double currentPositionMeters) {
-        desiredHightMeters = goalPositionMeters;
+        desiredHeightMeters = goalPositionMeters;
     } 
 
     public void setVoltage(double voltage){
