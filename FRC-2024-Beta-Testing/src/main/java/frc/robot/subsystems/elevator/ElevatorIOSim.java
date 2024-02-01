@@ -1,27 +1,27 @@
-package frc.robot.subsystems.elevator;
+// package frc.robot.subsystems.elevator;
 
-import org.littletonrobotics.junction.Logger;
+// import org.littletonrobotics.junction.Logger;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+// import com.revrobotics.CANSparkMax;
+// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// import edu.wpi.first.math.controller.ElevatorFeedforward;
+// import edu.wpi.first.math.controller.PIDController;
+// import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
+// public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
 
-    private double desiredHeightMeters = 0;
+//     private double desiredHightMeters = 0;
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.heightMeters = desiredHeightMeters;
+        inputs.hightMeters = desiredHightMeters;
     }
 
     @Override
     // sould be called periodically
-    public void setHeightMeters(double goalPositionMeters, double currentPositionMeters) {
-        desiredHeightMeters = goalPositionMeters;
+    public void setHightMeters(double goalPositionMeters, double currentPositionMeters) {
+        desiredHightMeters = goalPositionMeters;
     } 
 
     public void setVoltage(double voltage){
