@@ -53,7 +53,7 @@ public class Elevator extends SubsystemBase{
     }
 
     public double getHeightMeters() {
-        return inputs.heightMeters;
+        return inputs.hightMeters;
     }
 
     public void zeroHeight() {
