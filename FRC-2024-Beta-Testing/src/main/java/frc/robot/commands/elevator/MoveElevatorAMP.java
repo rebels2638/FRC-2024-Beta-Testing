@@ -12,11 +12,11 @@ public class MoveElevatorAMP extends Command {
     
     @Override
     public void execute() { 
-       elevatorSubsystem.setHightMeters(1);
+       elevatorSubsystem.setHightMeters(0.25);
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return elevatorSubsystem.reachedSetpoint();
     }
 }

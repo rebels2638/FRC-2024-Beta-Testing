@@ -17,6 +17,6 @@ public class MoveElevatorTurtle extends Command {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return elevatorSubsystem.reachedSetpoint();
     }
 }

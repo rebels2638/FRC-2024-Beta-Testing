@@ -9,6 +9,7 @@ public interface ElevatorIO {
     @AutoLog
     public static class ElevatorIOInputs {
         public double hightMeters;
+        public double voltageOut;
     }
 
     public abstract void updateInputs(ElevatorIOInputs inputs);

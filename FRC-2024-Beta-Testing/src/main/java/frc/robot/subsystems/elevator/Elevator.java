@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase{
 
-    private static final double kHightMetersPositionTolerance = .03;
-
     private final ElevatorIO io;
     private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
     PIDController positionFeedBackController;
@@ -18,16 +16,19 @@ public class Elevator extends SubsystemBase{
 
     PIDController velocityFeedBackController;
     ElevatorFeedforward velocityFeedForwardController;
+    private static final double kPID_TOLERANCE_METERS = 0.01;
 
     public Elevator(ElevatorIO io)  {
         this.io = io;
-        positionFeedBackController = new PIDController(3, 0, 0);
-        positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
-        positionFeedBackController.setTolerance(kHightMetersPositionTolerance);
+        positionFeedBackController = new PIDController(0.0, 0.034, 0.073);
+        //
+        positionFeedForwardController = new ElevatorFeedforward(0.0, .31, 31);
 
+        // dont use
         velocityFeedBackController = new PIDController(0, 0, 0);
-        velocityFeedForwardController = new ElevatorFeedforward(0, 0, 0);
-
+        velocityFeedForwardController = new ElevatorFeedforward(0,0, 0);
+        
+        positionFeedBackController.setTolerance(kPID_TOLERANCE_METERS);
 
         io.configureController(positionFeedForwardController, positionFeedBackController);
     }
@@ -41,6 +42,7 @@ public class Elevator extends SubsystemBase{
     }
 
     public void setHightMeters(double hightMeters) {
+        Logger.recordOutput("Elevator/desiredHightMeters", hightMeters);
         io.setHightMeters(hightMeters, inputs.hightMeters);
         return;
     }
