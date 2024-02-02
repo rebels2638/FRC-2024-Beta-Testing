@@ -15,6 +15,8 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
+    
+    private static final double kMAX_VOLTAGE = 12;
 
     public ShooterIONeo() {
         m_motor1.setIdleMode(CANSparkMax.IdleMode.kCoast);
@@ -39,7 +41,15 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         
         velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
         double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
-        Logger.recordOutput("Shooter/voltageOut", feedForwardVoltage + feedBackControllerVoltage);
+        double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+            
+        if (outVoltage > kMAX_VOLTAGE) {
+            outVoltage = 12;
+        }
+        else if (outVoltage < -kMAX_VOLTAGE) {
+            outVoltage = -12;
+        }
+        Logger.recordOutput("Shooter/voltageOut", outVoltage);
         m_motor1.setVoltage(feedForwardVoltage + feedBackControllerVoltage);
 
     } 

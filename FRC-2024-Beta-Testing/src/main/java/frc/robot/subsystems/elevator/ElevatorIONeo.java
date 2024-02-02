@@ -75,6 +75,13 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+            
+            if (outVoltage > kMAX_VOLTAGE) {
+                outVoltage = 12;
+            }
+            else if (outVoltage < -kMAX_VOLTAGE) {
+                outVoltage = -12;
+            }
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             
             m_motor1.setVoltage(outVoltage);
@@ -92,10 +99,13 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            Logger.recordOutput("Elevator/voltageOut", outVoltage);
             if (outVoltage > kMAX_VOLTAGE) {
                 outVoltage = 12;
             }
+            else if (outVoltage < -kMAX_VOLTAGE) {
+                outVoltage = -12;
+            }
+            Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
             return;
         }
@@ -111,10 +121,13 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters) + kCLIMB_KG;
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            Logger.recordOutput("Elevator/voltageOut", outVoltage);
             if (outVoltage > kMAX_VOLTAGE) {
                 outVoltage = 12;
             }
+            else if (outVoltage < -kMAX_VOLTAGE) {
+                outVoltage = -12;
+            }
+            Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
         }
         
