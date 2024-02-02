@@ -39,9 +39,9 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.shooterHightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
+        inputs.shooterheightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
 
-        inputs.climberHightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
+        inputs.climberheightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
                                                             kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_COS;
         inputs.voltageOut = m_motor1.getAppliedOutput() * kMAX_VOLTAGE;
     }
@@ -49,8 +49,8 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     @Override
     // sould be called periodically
     // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
-    public void setHightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterHight, boolean isClimbing) {
-        if (isShooterHight) {
+    public void setheightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterheight, boolean isClimbing) {
+        if (isShooterheight) {
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters - currentPositionMeters, 0);
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
@@ -58,14 +58,12 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
-            if (outVoltage > kMAX_VOLTAGE) {
-                outVoltage = 12;
-            }
+            
             m_motor1.setVoltage(outVoltage);
             return;
         }
         // just move the climber up
-        else if (!isShooterHight && !isClimbing) {
+        else if (!isShooterheight && !isClimbing) {
             // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 

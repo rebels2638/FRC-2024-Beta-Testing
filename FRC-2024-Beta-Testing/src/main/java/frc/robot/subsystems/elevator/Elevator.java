@@ -21,7 +21,7 @@ public class Elevator extends SubsystemBase{
 
     public Elevator(ElevatorIO io)  {
         this.io = io;
-        positionFeedBackController = new PIDController(8, 0, 0); // 0 0 0 
+        positionFeedBackController = new PIDController(6, 0, 0); // 0 0 0 
         //
         positionFeedForwardController = new ElevatorFeedforward(0.33, 0.14, 0); //0.008 0.31 31
 
@@ -40,16 +40,16 @@ public class Elevator extends SubsystemBase{
         Logger.processInputs("Elevator", inputs);
     }
 
-    public void setHightMeters(double goalPositionMeters, boolean isShooterHight, boolean isClimbing) {
-        if (isShooterHight) {
-            Logger.recordOutput("Elevator/desiredShooterHight");
-            io.setHightMeters(goalPositionMeters, inputs.shooterHightMeters, isShooterHight, isClimbing);
+    public void setheightMeters(double goalPositionMeters, boolean isShooterheight, boolean isClimbing) {
+        if (isShooterheight) {
+            Logger.recordOutput("Elevator/desiredShooterheight");
+            io.setheightMeters(goalPositionMeters, inputs.shooterheightMeters, isShooterheight, isClimbing);
         }
-        else {
-            Logger.recordOutput("Elevator/desiredClimberHight");
-            io.setHightMeters(goalPositionMeters, inputs.climberHightMeters, isShooterHight, isClimbing);
-        }
-        Logger.recordOutput("Elavator/isClimbing", isClimbing);
+        // else {
+        //     Logger.recordOutput("Elevator/desiredClimberheight");
+        //     io.setheightMeters(goalPositionMeters, inputs.climberheightMeters, isShooterheight, isClimbing);
+        // }
+        // Logger.recordOutput("Elavator/isClimbing", isClimbing);
     
         return;
     }
@@ -59,8 +59,11 @@ public class Elevator extends SubsystemBase{
         return;
     }
 
-    public double getHeightMeters() {
-        return inputs.hightMeters;
+    public double getShooterHeightMeters() {
+        return inputs.shooterheightMeters;
+    }
+    public double getClimberHeightMeters(){
+        return inputs.climberheightMeters;
     }
 
     public void zeroHeight() {
