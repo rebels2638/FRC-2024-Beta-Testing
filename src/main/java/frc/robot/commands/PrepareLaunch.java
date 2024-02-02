@@ -28,7 +28,7 @@ public class PrepareLaunch extends Command {
   @Override
   public void initialize() {
     // Set launch wheel to speed, keep feed wheel at 0 to let launch wheel spin up.
-    m_launcher.setLaunchWheel(kLauncherSpeed);
+    m_launcher.setLaunchWheel(kLaunchFeederSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

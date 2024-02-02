@@ -53,8 +53,8 @@ public class CANDrivetrain extends SubsystemBase {
     rightRear.follow(rightFront);
 
     // Invert the left side so both side drive forward with positive motor outputs
-    leftFront.setInverted(true);
-    rightFront.setInverted(false);
+    rightFront.setInverted(true);
+    rightRear.setInverted(true);
 
     // Put the front motors into the differential drive object. This will control all 4 motors with
     // the rears set to follow the fronts
@@ -75,11 +75,8 @@ public class CANDrivetrain extends SubsystemBase {
   //   // rightFront.set(VictorSPXControlMode.PercentOutput, in);
   // }
 
-  public void drive(double leftPercentPower, double rightPercentPower) {
-    leftFront.set(leftPercentPower);
-    leftRear.set(leftPercentPower);
-    rightFront.set(rightPercentPower);
-    rightRear.set(rightPercentPower);
+  public void drive(double speed, double rotation) {
+    m_drivetrain.arcadeDrive(speed, rotation);
   }
 
   public void stop() {

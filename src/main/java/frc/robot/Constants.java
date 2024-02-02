@@ -22,10 +22,10 @@ public final class Constants {
 
   public static class DrivetrainConstants {
     // PWM ports/CAN IDs for motor controllers
-    public static final int kLeftRearID = 1;
-    public static final int kLeftFrontID = 2;
-    public static final int kRightRearID = 6;
-    public static final int kRightFrontID = 4;
+    public static final int kLeftRearID = 1; // 1 6
+    public static final int kLeftFrontID = 2; // 2  4
+    public static final int kRightRearID = 6; // 6 1
+    public static final int kRightFrontID = 4; // 4 2
     public static final int conversionConst = 1/2;
 
     // Current limit for drivetrain motors
@@ -43,10 +43,10 @@ public final class Constants {
 
     // Speeds for wheels when intaking and launching. Intake speeds are negative to run the wheels
     // in reverse
-    public static final double kLauncherSpeed = 1;
-    public static final double kLaunchFeederSpeed = 1;
-    public static final double kIntakeLauncherSpeed = -1;
-    public static final double kIntakeFeederSpeed = -.2;
+    public static final double kLauncherSpeed = 2.3;
+    public static final double kLaunchFeederSpeed = 2.3;
+    public static final double kIntakeLauncherSpeed = -2;
+    public static final double kIntakeFeederSpeed = -2;
 
     public static final double kTrackWidth = 0.68834;
     public static final double kLauncherDelay = 1;

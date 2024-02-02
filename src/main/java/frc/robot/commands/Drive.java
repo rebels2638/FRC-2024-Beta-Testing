@@ -44,10 +44,10 @@ public class Drive extends Command {
   @Override
   public void execute() {
     double drive_power = xboxDriver.getLeftY();
-    double turn_power = xboxDriver.getRightX();
+    double turn_power = xboxDriver.getRightX() * -1;
   
-    // drive_power = rateLimiter.calculate(drive_power);
-    m_driveSubsystem.drive(drive_power - turn_power, drive_power + turn_power);
+    drive_power = rateLimiter.calculate(drive_power);
+    m_driveSubsystem.drive(drive_power, turn_power);
   }
 
   // Called once the command ends or is interrupted.
