@@ -11,8 +11,8 @@ public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
     private static final double kSECOND_STAGE_TO_THIRD = 2;
 
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.shooterHightMeters = shooterHeightMeters;
-        inputs.climberHightMeters = climberHeightMeters;
+        inputs.shooterHeightMeters = shooterHeightMeters;
+        inputs.climberHeightMeters = climberHeightMeters;
     }
 
     public void setHeightMeters(double goalPositionMeters, double currentHightMeters, 

@@ -44,9 +44,9 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.shooterheightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
+        inputs.shooterHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
 
-        inputs.climberheightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
+        inputs.climberHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
                                                             kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_COS;
         inputs.voltageOut = m_motor1.getAppliedOutput() * kMAX_VOLTAGE;
     }
@@ -54,8 +54,8 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     @Override
     // sould be called periodically
     // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
-    public void setHeightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterHight, boolean isClimbing) {
-        if (isShooterHight) {
+    public void setHeightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterHeight, boolean isClimbing) {
+        if (isShooterHeight) {
             if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
                 goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
                     return;
@@ -68,7 +68,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             }
         }
         
-        if (isShooterHight) {
+        if (isShooterHeight) {
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters - currentPositionMeters, 0);
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
@@ -81,7 +81,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             return;
         }
         // just move the climber up
-        else if (!isShooterheight && !isClimbing) {
+        else if (!isShooterHeight && !isClimbing) {
             // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 

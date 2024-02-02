@@ -8,8 +8,8 @@ import edu.wpi.first.math.controller.PIDController;
 public interface ElevatorIO {
     @AutoLog
     public static class ElevatorIOInputs {
-        public double shooterheightMeters;
-        public double climberheightMeters;
+        public double shooterHeightMeters;
+        public double climberHeightMeters;
         public double voltageOut;
     }
 
