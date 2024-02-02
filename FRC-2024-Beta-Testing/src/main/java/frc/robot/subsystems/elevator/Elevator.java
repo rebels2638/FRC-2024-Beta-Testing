@@ -43,11 +43,11 @@ public class Elevator extends SubsystemBase{
     public void setHightMeters(double goalPositionMeters, boolean isShooterHight, boolean isClimbing) {
         if (isShooterHight) {
             Logger.recordOutput("Elevator/desiredShooterHight");
-            io.setHightMeters(goalPositionMeters, inputs.shooterHightMeters, isShooterHight, isClimbing);
+            io.setHeightMeters(goalPositionMeters, inputs.shooterHightMeters, isShooterHight, isClimbing);
         }
         else {
             Logger.recordOutput("Elevator/desiredClimberHight");
-            io.setHightMeters(goalPositionMeters, inputs.climberHightMeters, isShooterHight, isClimbing);
+            io.setHeightMeters(goalPositionMeters, inputs.climberHightMeters, isShooterHight, isClimbing);
         }
         Logger.recordOutput("Elavator/isClimbing", isClimbing);
     

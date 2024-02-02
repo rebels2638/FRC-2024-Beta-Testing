@@ -1,33 +1,39 @@
-// package frc.robot.subsystems.elevator;
+package frc.robot.subsystems.elevator;
 
-// import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-// import com.revrobotics.CANSparkMax;
-// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
 
-// import edu.wpi.first.math.controller.ElevatorFeedforward;
-// import edu.wpi.first.math.controller.PIDController;
-// import edu.wpi.first.wpilibj2.command.SubsystemBase;
+    private double shooterHeightMeters;
+    private double climberHeightMeters;
+    private static final double kSECOND_STAGE_TO_THIRD = 2;
 
-// public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
+    public void updateInputs(ElevatorIOInputs inputs) {
+        inputs.shooterHightMeters = shooterHeightMeters;
+        inputs.climberHightMeters = climberHeightMeters;
+    }
 
-//     private double desiredHightMeters = 0;
+    public void setHeightMeters(double goalPositionMeters, double currentHightMeters, 
+                                            boolean isShooterHight, boolean isClimbing) {
+        if (isShooterHight) {
+            shooterHeightMeters = goalPositionMeters;
+            climberHeightMeters = shooterHeightMeters * kSECOND_STAGE_TO_THIRD;
+        }
+        else {
+            climberHeightMeters = goalPositionMeters;
+            shooterHeightMeters = climberHeightMeters / kSECOND_STAGE_TO_THIRD;
+        }
+    }
 
-//     @Override
-//     public void updateInputs(ElevatorIOInputs inputs) {
-//         inputs.hightMeters = desiredHightMeters;
-//     }
+    public void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG) {}
 
-//     public abstract void updateInputs(ElevatorIOInputs inputs);
+    public void setVoltage(double voltage) {}
 
-//     public abstract void setHightMeters(double goalPositionMeters, double currentHightMeters, 
-//                                             boolean isShooterHight, boolean isClimbing);
+    public boolean reachedSetpoint() {
+        return true;
+    }
 
-//     public abstract void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG);
-
-//     public abstract void setVoltage(double voltage);
-
-//     public abstract boolean reachedSetpoint();
-
-//     public abstract void zeroHeight();
-// }
+    public void zeroHeight() {}
+}

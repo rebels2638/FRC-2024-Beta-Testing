@@ -1,7 +1,5 @@
 package frc.robot.subsystems.elevator;
 
-import javax.management.ConstructorParameters;
-
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.CANSparkMax;
@@ -10,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Utils.RebelUtil;
 
 public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kMotorToOutputShaftRatio = 1/6.0; 
@@ -21,7 +20,13 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kMAX_CURRENT_AMPS = 35;
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_COS = Math.cos(Math.toRadians(23));
- 
+    
+    private static final double kMIN_SHOOTER_HEIGHT = 0;
+    private static final double kMAX_SHOOTER_HEIGHT= 1001291238;
+
+    private static final double kMIN_CLIMBER_HEIGHT = 0;
+    private static final double kMAX_CLIMBER_HEIGHT= 1001291238;
+
     private double kCLIMB_KG = 12;
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
@@ -49,7 +54,20 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     @Override
     // sould be called periodically
     // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
-    public void setHightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterHight, boolean isClimbing) {
+    public void setHeightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterHight, boolean isClimbing) {
+        if (isShooterHight) {
+            if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
+                goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
+                    return;
+            }
+        }
+        else {
+            if (currentPositionMeters > kMAX_CLIMBER_HEIGHT || currentPositionMeters < kMIN_CLIMBER_HEIGHT || 
+                goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT) {
+                    return;
+            }
+        }
+        
         if (isShooterHight) {
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters - currentPositionMeters, 0);
             

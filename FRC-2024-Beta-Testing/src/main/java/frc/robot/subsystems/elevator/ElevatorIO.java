@@ -15,7 +15,7 @@ public interface ElevatorIO {
 
     public abstract void updateInputs(ElevatorIOInputs inputs);
 
-    public abstract void setHightMeters(double goalPositionMeters, double currentHightMeters, 
+    public abstract void setHeightMeters(double goalPositionMeters, double currentHightMeters, 
                                             boolean isShooterHight, boolean isClimbing);
 
     public abstract void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG);
