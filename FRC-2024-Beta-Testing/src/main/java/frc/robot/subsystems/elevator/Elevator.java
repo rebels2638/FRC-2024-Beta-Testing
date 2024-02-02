@@ -21,9 +21,9 @@ public class Elevator extends SubsystemBase{
 
     public Elevator(ElevatorIO io)  {
         this.io = io;
-        positionFeedBackController = new PIDController(0.0, 0.034, 0.073);
+        positionFeedBackController = new PIDController(6, 0, 0); // 0 0 0 
         //
-        positionFeedForwardController = new ElevatorFeedforward(0.0, .31, 31);
+        positionFeedForwardController = new ElevatorFeedforward(0.33, 0.14, 0); //0.008 0.31 31
 
         // dont use
         velocityFeedBackController = new PIDController(0, 0, 0);
@@ -60,10 +60,10 @@ public class Elevator extends SubsystemBase{
     }
 
     public double getShooterHeightMeters() {
-        return inputs.shooterHightMeters;
+        return inputs.shooterheightMeters;
     }
-    public double getClimberHightMeters() {
-        return inputs.climberHightMeters;
+    public double getClimberHeightMeters(){
+        return inputs.climberheightMeters;
     }
 
     public void zeroHeight() {

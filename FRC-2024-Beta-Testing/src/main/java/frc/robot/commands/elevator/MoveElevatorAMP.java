@@ -12,7 +12,7 @@ public class MoveElevatorAMP extends Command {
     
     @Override
     public void execute() { 
-       elevatorSubsystem.setHightMeters(0.25);
+       elevatorSubsystem.setheightMeters(0.6, true, false);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class MoveElevatorTurtle extends Command {
     
     @Override
     public void execute() { 
-       elevatorSubsystem.setHightMeters(0);
+       elevatorSubsystem.setheightMeters(0.01, true, false);
     }
 
     @Override

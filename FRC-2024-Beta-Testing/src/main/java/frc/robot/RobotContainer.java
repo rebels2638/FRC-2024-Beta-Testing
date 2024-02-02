@@ -35,7 +35,7 @@ import frc.robot.commands.audio.*;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIONeo;
-import frc.robot.subsystems.elevator.ElevatorIOSim;;
+// import frc.robot.subsystems.elevator.ElevatorIOSim;;
 
 
 
@@ -86,8 +86,10 @@ public class RobotContainer {
       elevator = new Elevator(new ElevatorIONeo());
     }
     else {
-      elevator = new Elevator(new ElevatorIOSim());
+      // elevator = new Elevator(new ElevatorIOSim());
+      elevator = new Elevator(new ElevatorIONeo());
     }
+
 
     // if (RobotBase.isReal()) {
     //   pivot = new Pivot(new PivotIONeo());
@@ -192,6 +194,7 @@ public class RobotContainer {
     // this.xboxDriver.getAButton().onTrue(new Turtle(pivotSubsystem));
     // this.xboxDriver.getBButton().onTrue(new PivotToCube(pivotSubsystem));
 
+    //TODO: ELEVATOR
     this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
     this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
     this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevator.zeroHeight()));
