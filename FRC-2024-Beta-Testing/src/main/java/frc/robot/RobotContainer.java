@@ -30,7 +30,7 @@ import frc.robot.commands.drivetrain.AbsoluteDrive;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
 import frc.robot.commands.audio.*;
-import frc.robot.subsystems.audio.AudioPlayer;;
+import frc.robot.subsystems.audio.AudioPlayer;
 
 
 
@@ -94,9 +94,9 @@ public class RobotContainer {
     
 
     // AprilTagVisionIO aprilTagVisionIO = new AprilTagVisionIOSim();
-  System.out.println("Is directory? : " +new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/deploy/swerve/falcon").isDirectory());
+  // System.out.println("Is directory? : " +new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/deploy/swerve/falcon").isDirectory());
   System.out.println("Deploy Directory : " + Filesystem.getDeployDirectory());
-  System.out.println("Is File? : " + new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/deploy/swerve/falcon").isFile());
+  // System.out.println("Is File? : " + new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/deploy/swerve/falcon").isFile());
 
     // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
     // System.out.println(new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
@@ -148,6 +148,8 @@ public class RobotContainer {
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(),OperatorConstants.LEFT_X_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false); //TODO: tune the rightX value constant
 
+
+
     /* 
     closedFieldRel = new TeleopDrive(
     swerveSubsystem,
@@ -162,7 +164,7 @@ public class RobotContainer {
 
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     
-    // this.xboxDriver.getRightBumper().onTrue(new InstantCommand( () ->  {
+    // this.xboxDriver.getRightBumper().onTrue(new InstantCommand(() ->  {
     //     if (autoAlignTargetNum[0] > 0) {
     //       autoAlignTargetNum[0]--;
     //     }
@@ -191,8 +193,7 @@ public class RobotContainer {
     // this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
     // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
-    //this.xboxOperator.getAButton().onTrue(new playMusic(aPlayer));
-
+    // this.xboxOperator.getAButton().onTrue(new playMusic(aPlayer));
 
   }
   
