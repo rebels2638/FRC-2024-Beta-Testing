@@ -19,6 +19,9 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
 
     private Rev2mDistanceSensor distanceSensor;
     private double distanceTolerance;
+
+    private static final double kMAX_VOLTAGE = 12;
+
     public IntakeIONeo() {
         m_motor.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_motor.clearFaults();
@@ -41,7 +44,17 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         
         velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
         double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
-        Logger.recordOutput("Pivot/voltageOut", feedForwardVoltage + feedBackControllerVoltage);
+
+        double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+            
+        if (outVoltage > kMAX_VOLTAGE) {
+            outVoltage = 12;
+        }
+        else if (outVoltage < -kMAX_VOLTAGE) {
+            outVoltage = -12;
+        }
+        Logger.recordOutput("Intake/voltageOut", outVoltage);
+        
         m_motor.setVoltage(feedForwardVoltage + feedBackControllerVoltage);
 
     } 

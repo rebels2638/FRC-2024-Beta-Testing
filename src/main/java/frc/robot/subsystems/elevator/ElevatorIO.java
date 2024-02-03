@@ -8,14 +8,15 @@ import edu.wpi.first.math.controller.PIDController;
 public interface ElevatorIO {
     @AutoLog
     public static class ElevatorIOInputs {
-        public double shooterheightMeters;
-        public double climberheightMeters;
+        public double shooterHeightMeters;
+        public double climberHeightMeters;
         public double voltageOut;
     }
 
     public abstract void updateInputs(ElevatorIOInputs inputs);
 
-    public abstract void setheightMeters(double goalPositionRad, double currentheightMeters, boolean b, boolean c);
+    public abstract void setHeightMeters(double goalPositionMeters, double currentHightMeters, 
+                                            boolean isShooterHight, boolean isClimbing);
 
     public abstract void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG);
 

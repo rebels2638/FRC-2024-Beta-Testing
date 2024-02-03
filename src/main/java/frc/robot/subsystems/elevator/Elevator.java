@@ -40,16 +40,16 @@ public class Elevator extends SubsystemBase{
         Logger.processInputs("Elevator", inputs);
     }
 
-    public void setheightMeters(double goalPositionMeters, boolean isShooterheight, boolean isClimbing) {
-        if (isShooterheight) {
-            Logger.recordOutput("Elevator/desiredShooterheight");
-            io.setheightMeters(goalPositionMeters, inputs.shooterheightMeters, isShooterheight, isClimbing);
+    public void setHeightMeters(double goalPositionMeters, boolean isShooterHight, boolean isClimbing) {
+        if (isShooterHight) {
+            Logger.recordOutput("Elevator/desiredShooterHeight");
+            io.setHeightMeters(goalPositionMeters, inputs.shooterHeightMeters, isShooterHight, isClimbing);
         }
-        // else {
-        //     Logger.recordOutput("Elevator/desiredClimberheight");
-        //     io.setheightMeters(goalPositionMeters, inputs.climberheightMeters, isShooterheight, isClimbing);
-        // }
-        // Logger.recordOutput("Elavator/isClimbing", isClimbing);
+        else {
+            Logger.recordOutput("Elevator/desiredClimberHeight");
+            io.setHeightMeters(goalPositionMeters, inputs.climberHeightMeters, isShooterHight, isClimbing);
+        }
+        Logger.recordOutput("Elavator/isClimbing", isClimbing);
     
         return;
     }
@@ -60,10 +60,10 @@ public class Elevator extends SubsystemBase{
     }
 
     public double getShooterHeightMeters() {
-        return inputs.shooterheightMeters;
+        return inputs.shooterHeightMeters;
     }
     public double getClimberHeightMeters(){
-        return inputs.climberheightMeters;
+        return inputs.climberHeightMeters;
     }
 
     public void zeroHeight() {

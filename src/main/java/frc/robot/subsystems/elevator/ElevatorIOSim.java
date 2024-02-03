@@ -1,45 +1,39 @@
-// // package frc.robot.subsystems.elevator;
+package frc.robot.subsystems.elevator;
 
-// // import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-// // import com.revrobotics.CANSparkMax;
-// // import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
 
-// // import edu.wpi.first.math.controller.ElevatorFeedforward;
-// // import edu.wpi.first.math.controller.PIDController;
-// // import edu.wpi.first.wpilibj2.command.SubsystemBase;
+    private double shooterHeightMeters;
+    private double climberHeightMeters;
+    private static final double kSECOND_STAGE_TO_THIRD = 2;
 
-// // public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
+    public void updateInputs(ElevatorIOInputs inputs) {
+        inputs.shooterHeightMeters = shooterHeightMeters;
+        inputs.climberHeightMeters = climberHeightMeters;
+    }
 
-// //     private double desiredheightMeters = 0;
+    public void setHeightMeters(double goalPositionMeters, double currentHightMeters, 
+                                            boolean isShooterHight, boolean isClimbing) {
+        if (isShooterHight) {
+            shooterHeightMeters = goalPositionMeters;
+            climberHeightMeters = shooterHeightMeters * kSECOND_STAGE_TO_THIRD;
+        }
+        else {
+            climberHeightMeters = goalPositionMeters;
+            shooterHeightMeters = climberHeightMeters / kSECOND_STAGE_TO_THIRD;
+        }
+    }
 
-//     @Override
-//     public void updateInputs(ElevatorIOInputs inputs) {
-//         inputs.heightMeters = desiredheightMeters;
-//     }
+    public void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG) {}
 
-//     @Override
-//     // sould be called periodically
-//     public void setheightMeters(double goalPositionMeters, double currentPositionMeters) {
-//         desiredheightMeters = goalPositionMeters;
-//     } 
+    public void setVoltage(double voltage) {}
 
-//     public void setVoltage(double voltage){
-//     }
+    public boolean reachedSetpoint() {
+        return true;
+    }
 
-//     @Override
-//     public void configureController(ElevatorFeedforward pff, PIDController pfb) {
-//     }
-
-//     @Override
-//     public boolean reachedSetpoint() {
-//         return true;
-//     }
-
-//     @Override
-//     public void zeroHeight() {
-//         // TODO Auto-generated method stub
-//         throw new UnsupportedOperationException("Unimplemented method 'zeroHeight'");
-//     }
-
-// }
+    public void zeroHeight() {}
+}

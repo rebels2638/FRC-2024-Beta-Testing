@@ -1,7 +1,5 @@
 package frc.robot.subsystems.elevator;
 
-import javax.management.ConstructorParameters;
-
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.CANSparkMax;
@@ -10,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Utils.RebelUtil;
 
 public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kMotorToOutputShaftRatio = 1/6.0; 
@@ -21,7 +20,13 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kMAX_CURRENT_AMPS = 35;
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_COS = Math.cos(Math.toRadians(23));
- 
+    
+    private static final double kMIN_SHOOTER_HEIGHT = 0;
+    private static final double kMAX_SHOOTER_HEIGHT= 1001291238;
+
+    private static final double kMIN_CLIMBER_HEIGHT = 0;
+    private static final double kMAX_CLIMBER_HEIGHT= 1001291238;
+
     private double kCLIMB_KG = 12;
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
@@ -39,9 +44,9 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.shooterheightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
+        inputs.shooterHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
 
-        inputs.climberheightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
+        inputs.climberHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
                                                             kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_COS;
         inputs.voltageOut = m_motor1.getAppliedOutput() * kMAX_VOLTAGE;
     }
@@ -49,21 +54,41 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     @Override
     // sould be called periodically
     // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
-    public void setheightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterheight, boolean isClimbing) {
-        if (isShooterheight) {
+    public void setHeightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterHeight, boolean isClimbing) {
+        if (isShooterHeight) {
+            if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
+                goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
+                    return;
+            }
+        }
+        else {
+            if (currentPositionMeters > kMAX_CLIMBER_HEIGHT || currentPositionMeters < kMIN_CLIMBER_HEIGHT || 
+                goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT) {
+                    return;
+            }
+        }
+        
+        if (isShooterHeight) {
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters - currentPositionMeters, 0);
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+            
+            if (outVoltage > kMAX_VOLTAGE) {
+                outVoltage = 12;
+            }
+            else if (outVoltage < -kMAX_VOLTAGE) {
+                outVoltage = -12;
+            }
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             
             m_motor1.setVoltage(outVoltage);
             return;
         }
         // just move the climber up
-        else if (!isShooterheight && !isClimbing) {
+        else if (!isShooterHeight && !isClimbing) {
             // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
@@ -74,10 +99,13 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            Logger.recordOutput("Elevator/voltageOut", outVoltage);
             if (outVoltage > kMAX_VOLTAGE) {
                 outVoltage = 12;
             }
+            else if (outVoltage < -kMAX_VOLTAGE) {
+                outVoltage = -12;
+            }
+            Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
             return;
         }
@@ -93,10 +121,13 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters) + kCLIMB_KG;
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            Logger.recordOutput("Elevator/voltageOut", outVoltage);
             if (outVoltage > kMAX_VOLTAGE) {
                 outVoltage = 12;
             }
+            else if (outVoltage < -kMAX_VOLTAGE) {
+                outVoltage = -12;
+            }
+            Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
         }
         

@@ -17,6 +17,9 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
     private ArmFeedforward positionFeedForwardController = new ArmFeedforward(0, 0, 0);
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
     private ArmFeedforward velocityFeedForwardController = new ArmFeedforward(0, 0, 0);
+    private static final double kMAX_POSITION_RAD = Math.toRadians(120);
+    private static final double kMIN_POSITION_RAD = Math.toRadians(0);
+    private static final double kMAX_VOLTAGE = 12;
 
     public PivotIONeo() {
         m_motor.setIdleMode(CANSparkMax.IdleMode.kCoast);
@@ -36,13 +39,25 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
     @Override
     // sould be called periodically
     public void setPosition(double goalPositionRad, double currentRadAngle) {
+        if (goalPositionRad > kMAX_POSITION_RAD || goalPositionRad < kMIN_POSITION_RAD ||
+               currentRadAngle > kMAX_POSITION_RAD || currentRadAngle < kMIN_POSITION_RAD) {
+            return;
+        }
+
         double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionRad, 0);
         
         positionFeedBackController.setSetpoint(goalPositionRad);
         double feedBackControllerVoltage = positionFeedBackController.calculate(currentRadAngle);
-        System.out.println("CALLED");
-        Logger.recordOutput("Pivot/voltageOut", feedForwardVoltage + feedBackControllerVoltage);
-        m_motor.setVoltage(feedForwardVoltage + feedBackControllerVoltage);
+        double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+
+        if (outVoltage > kMAX_VOLTAGE) {
+            outVoltage = 12;
+        }
+        else if (outVoltage < -kMAX_VOLTAGE) {
+            outVoltage = -12;
+        }
+        Logger.recordOutput("Pivot/voltageOut", outVoltage);
+        m_motor.setVoltage(outVoltage);
     } 
 
     @Override
@@ -52,8 +67,15 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
         
         velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
         double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
-        Logger.getInstance().recordOutput("Pivot/voltageOut", feedForwardVoltage + feedBackControllerVoltage);
-        m_motor.setVoltage(feedForwardVoltage + feedBackControllerVoltage);
+        double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+        if (outVoltage > kMAX_VOLTAGE) {
+            outVoltage = 12;
+        }
+        else if (outVoltage < -kMAX_VOLTAGE) {
+            outVoltage = -12;
+        }
+        Logger.recordOutput("Pivot/voltageOut", outVoltage);
+        m_motor.setVoltage(outVoltage);
 
     } 
 
