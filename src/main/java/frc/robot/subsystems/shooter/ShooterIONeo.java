@@ -3,15 +3,15 @@ package frc.robot.subsystems.shooter;
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+// import com.revrobotics.CANSparkMaxLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private static final double kMotorToOutputShaftRatio = 0.01;
-    private CANSparkMax m_motor1 = new CANSparkMax(21, MotorType.kBrushless); 
-    private CANSparkMax m_motor2 = new CANSparkMax(21, MotorType.kBrushless); 
+    private CANSparkMax m_motor1 = new CANSparkMax(21, CANSparkMax.MotorType.kBrushless); 
+    private CANSparkMax m_motor2 = new CANSparkMax(21, CANSparkMax.MotorType.kBrushless); 
 
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);

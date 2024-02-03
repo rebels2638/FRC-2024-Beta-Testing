@@ -3,7 +3,7 @@ package frc.robot.subsystems.intake;
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.I2C.Port;
@@ -12,7 +12,7 @@ import com.revrobotics.Rev2mDistanceSensor;
 
 public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     private static final double kMotorToOutputShaftRatio = 0.01;
-    private CANSparkMax m_motor = new CANSparkMax(21, MotorType.kBrushless); 
+    private CANSparkMax m_motor = new CANSparkMax(21, CANSparkMax.MotorType.kBrushless); 
 
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);

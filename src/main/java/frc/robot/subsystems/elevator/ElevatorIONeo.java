@@ -3,7 +3,7 @@ package frc.robot.subsystems.elevator;
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -15,17 +15,17 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kSproketDiameterMeters = 0.035;
     private static final double kFIRST_STAGE_TO_SECOND = 2;
     private static final double kSECOND_STAGE_TO_THIRD = 2;
-    private CANSparkMax m_motor1 = new CANSparkMax(15, MotorType.kBrushless); 
-    private CANSparkMax m_motor2 = new CANSparkMax(16, MotorType.kBrushless);
+    private CANSparkMax m_motor1 = new CANSparkMax(15, CANSparkMax.MotorType.kBrushless); 
+    private CANSparkMax m_motor2 = new CANSparkMax(16, CANSparkMax.MotorType.kBrushless);
     private static final double kMAX_CURRENT_AMPS = 35;
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_COS = Math.cos(Math.toRadians(23));
     
     private static final double kMIN_SHOOTER_HEIGHT = 0;
-    private static final double kMAX_SHOOTER_HEIGHT= 1001291238;
+    private static final double kMAX_SHOOTER_HEIGHT= 12;
 
     private static final double kMIN_CLIMBER_HEIGHT = 0;
-    private static final double kMAX_CLIMBER_HEIGHT= 1001291238;
+    private static final double kMAX_CLIMBER_HEIGHT= 12;
 
     private double kCLIMB_KG = 12;
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
