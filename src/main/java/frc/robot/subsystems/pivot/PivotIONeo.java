@@ -3,7 +3,7 @@ package frc.robot.subsystems.pivot;
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+// import com.revrobotics.CANSparkMaxLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PivotIONeo extends SubsystemBase implements PivotIO {
     private static final double kMotorToOutputShaftRatio = 0.01;
-    private CANSparkMax m_motor = new CANSparkMax(21, MotorType.kBrushless); 
+    private CANSparkMax m_motor = new CANSparkMax(21, CANSparkMax.MotorType.kBrushless); 
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ArmFeedforward positionFeedForwardController = new ArmFeedforward(0, 0, 0);
