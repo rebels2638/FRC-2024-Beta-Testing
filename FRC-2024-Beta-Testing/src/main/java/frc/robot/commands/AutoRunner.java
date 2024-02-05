@@ -97,6 +97,6 @@ public class AutoRunner {
     }
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("TurnAuto");
+        return new PathPlannerAuto("AMPSideThreePieceFar");
     }
 } 
