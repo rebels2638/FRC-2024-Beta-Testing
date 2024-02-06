@@ -1,0 +1,128 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7167669684840067,
+        "y": 6.722020177278586
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.3023087957730821,
+        "y": 6.8157068696448375
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.64958220358666,
+        "y": 7.483224552754384
+      },
+      "prevControl": {
+        "x": 7.619770191776784,
+        "y": 7.915498723997591
+      },
+      "nextControl": {
+        "x": 7.696425549769787,
+        "y": 6.8039960330990565
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.4311279977766789,
+        "y": 5.539225686154654
+      },
+      "prevControl": {
+        "x": 1.2086221034068305,
+        "y": 5.550936522700437
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 60.42216131873865,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Shoot1",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pickup",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot2",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 1.4320961841647986,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
