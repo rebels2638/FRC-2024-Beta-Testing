@@ -14,24 +14,18 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MideSideAMPNote"
+            "pathName": "AMPSideAMPNote"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MidSideMidNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MidSideSourceNote"
+            "pathName": "AMPSideFar1"
           }
         }
       ]
     }
   },
-  "folder": "AMPSide",
+  "folder": null,
   "choreoAuto": false
 }

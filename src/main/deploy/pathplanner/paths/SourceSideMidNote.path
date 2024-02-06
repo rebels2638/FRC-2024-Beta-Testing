@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.756624920600531,
-        "y": 6.604641402238395
+        "x": 0.7504864129176964,
+        "y": 4.481405256838079
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6098774885145488,
-        "y": 6.923794693684334
+        "x": 0.7482298065526319,
+        "y": 4.461392721442638
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.4779606909902956,
-        "y": 6.979581451505935
+        "x": 2.5954853761559376,
+        "y": 5.277430290971693
       },
       "prevControl": {
-        "x": 1.9808397848036132,
-        "y": 6.810846152320176
+        "x": 2.573114988805289,
+        "y": 5.307679725755823
       },
       "nextControl": {
-        "x": 3.105189788955598,
-        "y": 7.192478733004383
+        "x": 2.617855763506586,
+        "y": 5.247180856187563
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.756624920600531,
-        "y": 6.604641402238395
+        "x": 0.7504864129176964,
+        "y": 4.481405256838079
       },
       "prevControl": {
-        "x": 2.2071297320236294,
-        "y": 7.023434950392118
+        "x": 0.8660341348460462,
+        "y": 4.286720712330314
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,13 +46,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": -1.6529705009379763,
-      "rotateFast": true
+      "waypointRelativePos": 0.0,
+      "rotationDegrees": -60.0,
+      "rotateFast": false
     },
     {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 0,
+      "waypointRelativePos": 0.0,
+      "rotationDegrees": 31.444451358382324,
       "rotateFast": false
     }
   ],
@@ -66,13 +66,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 60.0,
+    "rotation": -60.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AMPSide",
+  "folder": "SourceSide",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
