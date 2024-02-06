@@ -1,15 +1,13 @@
-<<<<<<<< HEAD:src/main/java/frc/robot/commands/Intake/RollIntake.java
+
 package frc.robot.commands.Intake;
-========
-package frc.robot.commands.intake;
->>>>>>>> 5cdc2de8944ad8ef3f84ad3968e0e3f4e35c16a2:src/main/java/frc/robot/commands/intake/RollIntakeIn.java
+
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 
-public class RollIntakeIn extends Command {
+public class RollIntake extends Command {
     private final Intake intakeSubsystem;
-    public RollIntakeIn(Intake intakeSubsystem) {
+    public RollIntake(Intake intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
 
         addRequirements(intakeSubsystem);
