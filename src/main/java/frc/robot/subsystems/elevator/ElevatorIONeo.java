@@ -99,12 +99,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            if (outVoltage > kMAX_VOLTAGE) {
-                outVoltage = 12;
-            }
-            else if (outVoltage < -kMAX_VOLTAGE) {
-                outVoltage = -12;
-            }
+            outVoltage = RebelUtil.constrain(outVoltage, 12, -12);
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
             return;

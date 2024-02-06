@@ -16,9 +16,9 @@ public interface PivotIO {
 
     public abstract void updateInputs(PivotIOInputs inputs);
 
-    public abstract void setPosition(double goalPositionRad, double currentRadAngle);
+    public abstract void setPosition(double goalPositionRad);
 
-    public abstract void setVelocity(double goalVelocityRadPerSec, double currentVelocityRadPerSec);
+    public abstract void setVelocity(double goalVelocityRadPerSec);
 
     public abstract void configureController(ArmFeedforward pff, PIDController pfb, 
                                                     ArmFeedforward vff, PIDController vfb);

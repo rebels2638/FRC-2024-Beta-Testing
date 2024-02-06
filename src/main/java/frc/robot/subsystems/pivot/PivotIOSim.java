@@ -16,25 +16,30 @@ public class PivotIOSim extends SubsystemBase implements PivotIO {
     double desiredVelocityRadSec = 0;
     double desiredVelocityDegSec = 0;
 
+    private static double currentRadAngle;
+    private static double currentVelocityRadPerSec;
+
     @Override
     public void updateInputs(PivotIOInputs inputs) {
         inputs.positionRad = desiredPositionRad;
         inputs.positionDeg = desiredPositionDeg;
+        currentRadAngle = inputs.positionRad;
 
         inputs.velocityRadSec = desiredVelocityRadSec;
+        currentVelocityRadPerSec = inputs.velocityRadSec;
         inputs.velocityDegSec = desiredVelocityDegSec;
     }
 
     @Override
     // sould be called periodically
-    public void setPosition(double goalPositionRad, double currentRadAngle) {
+    public void setPosition(double goalPositionRad) {
         desiredPositionRad = goalPositionRad;
         desiredPositionDeg = Math.toDegrees(goalPositionRad);
     } 
 
     @Override
     // sould be called periodically
-    public void setVelocity(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {
+    public void setVelocity(double goalVelocityRadPerSec) {
         desiredVelocityRadSec = goalVelocityRadPerSec;
         desiredVelocityDegSec = Math.toDegrees(goalVelocityRadPerSec);
     } 

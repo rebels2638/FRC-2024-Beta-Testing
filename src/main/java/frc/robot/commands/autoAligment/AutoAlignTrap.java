@@ -39,7 +39,7 @@ public class AutoAlignTrap extends Command {
 
     @Override   
     public boolean isFinished() {
-        System.out.println("running");
+        System.out.println("AutoAlignTrap");
         System.out.println(followPathHolonomic.isFinished());
         return followPathHolonomic.isFinished();
     }

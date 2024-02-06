@@ -14,6 +14,10 @@ public class MoveElevatorAMP extends Command {
     public void execute() { 
        elevatorSubsystem.setHeightMeters(0.6, true, false);
     }
+    @Override
+    public void end(boolean isInterrupted){
+        //Add end if need be
+    }
 
     @Override
     public boolean isFinished() {

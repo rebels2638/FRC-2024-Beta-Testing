@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.Rev2mDistanceSensor;
 
 public class IntakeIONeo extends SubsystemBase implements IntakeIO {
-    private static final double kMotorToOutputShaftRatio = 0.01;
+    private static final double kMotorToOutputShaftRatio = 0.008;   
     private CANSparkMax m_motor = new CANSparkMax(21, CANSparkMax.MotorType.kBrushless); 
 
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
@@ -27,7 +27,7 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         m_motor.clearFaults();
         m_motor.setInverted(true);
         distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kMillimeters, Rev2mDistanceSensor.RangeProfile.kDefault);
-        distanceTolerance = 0.5; //0.5 meters TODO: change this value to actually fit the distance
+        distanceTolerance = 0.57; //Approximate distance assuming some tolerance, CHECK AGAIN
         distanceSensor.setEnabled(true);
         // distanceSensor.setAutomaticMode(true); << Probably not required but keep note that we need this if we have several of these 2m dist devices
     }
@@ -78,8 +78,10 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     @Override
     public boolean inIntake() {
         // TODO: WRITE THE BEAM BRAKE CODE
+        //Valid range(?) check aka 2m or less
         if(distanceSensor.isRangeValid()){
             //distanceSensor.setMeasurementPeriod();
+            //Using default measurementperiod, we get its range at that moment.
             if(distanceSensor.getRange(Rev2mDistanceSensor.Unit.kMillimeters) < distanceTolerance){
                 return true;
             }

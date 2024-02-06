@@ -3,6 +3,12 @@ package frc.robot.Utils;
 public class RebelUtil {
     public static final double EPSILON = 1e-12;
 
+    /**
+     * @param toConstrain
+     * @param min
+     * @param max
+     * @return
+     */
     public static double constrain (double toConstrain, double min, double max) {
         if (toConstrain > max) {
             return max;
