@@ -34,8 +34,13 @@ import frc.robot.commands.AutoRunner;
 import frc.robot.commands.audio.*;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIONeo;
 // import frc.robot.subsystems.elevator.ElevatorIOSim;;
+import frc.robot.subsystems.elevator.ElevatorIOSim;
+import frc.robot.subsystems.limelight.PoseLimelight;
+import frc.robot.subsystems.limelight.PoseLimelightIOReal;
+import frc.robot.subsystems.limelight.PoseLimelightIOSim;
 
 
 
@@ -75,20 +80,28 @@ public class RobotContainer {
   //private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
-  // private final Elevator elevator;
+  private final Elevator elevatorSubsystem;
+  private final PoseLimelight poseLimelightSubsystem; 
   // private final Pivot pivot;
   //private final AudioPlayer aPlayer;
 
   public RobotContainer() {
 
 
-    // if (RobotBase.isReal()) {
-    //   elevator = new Elevator(new ElevatorIONeo());
-    // }
-    // else {
-    //   // elevator = new Elevator(new ElevatorIOSim());
-    //   elevator = new Elevator(new ElevatorIONeo());
-    // }
+    if (RobotBase.isReal()) {
+      elevatorSubsystem = new Elevator(new ElevatorIONeo());
+    }
+    else {
+      // elevator = new Elevator(new ElevatorIOSim());
+      elevatorSubsystem = new Elevator(new ElevatorIOSim());
+    }
+
+    if (RobotBase.isReal()) {
+      poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal());
+    }
+    else {
+      poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim());
+    }
 
 
     // if (RobotBase.isReal()) {
@@ -113,12 +126,12 @@ public class RobotContainer {
     if (RobotBase.isReal()) {
       // aprilTagVisionIO = new AprilTagVisionIOReal();
       System.out.println("Is directory? : " + new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isDirectory());
-      swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
-    }else{
-      swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"));
+      swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
+    } else{
+      swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
     }
     
-    autoRunner = new AutoRunner(swerveSubsystem);
+    autoRunner = new AutoRunner(swerveSubsystem, elevatorSubsystem);
     
     //PivotIONeo pivotIO = new PivotIONeo();
     // if (RobotBase.isReal()) {

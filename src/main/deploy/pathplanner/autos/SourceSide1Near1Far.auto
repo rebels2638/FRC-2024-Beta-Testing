@@ -14,13 +14,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SourceSideFar5"
+            "pathName": "SourceSideSourceNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "MoveElevatorAMP"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "SourceSideSourceNote"
+            "pathName": "SourceSideFar5"
           }
         }
       ]
