@@ -11,5 +11,5 @@ public interface PoseLimelightIO {
         public double cl;
     }
 
-    public abstract void updateInputs(PoseLimelightIOInputs inputs);
+    public default void updateInputs(PoseLimelightIOInputs inputs) {}
 }

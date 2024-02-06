@@ -23,6 +23,8 @@ public class PivotIOSim extends SubsystemBase implements PivotIO {
 
         inputs.velocityRadSec = desiredVelocityRadSec;
         inputs.velocityDegSec = desiredVelocityDegSec;
+
+        inputs.reachedSetpoint = true;
     }
 
     @Override
@@ -45,11 +47,6 @@ public class PivotIOSim extends SubsystemBase implements PivotIO {
     @Override
     public void configureController(ArmFeedforward pff, PIDController pfb, 
                                         ArmFeedforward vff, PIDController vfb ) {
-    }
-
-    @Override
-    public boolean reachedSetpoint(boolean isPositionalControl) {
-        return true;
     }
 
     @Override

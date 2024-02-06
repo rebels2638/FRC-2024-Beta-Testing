@@ -34,6 +34,8 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
 
         inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2;
         inputs.velocityDegSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * 360;
+
+        inputs.reachedSetpoint = reachedSetpoint(true);
     }
 
     @Override
@@ -92,8 +94,7 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
         velocityFeedForwardController = vff;
     }
 
-    @Override
-    public boolean reachedSetpoint(boolean isPositionalControl) {
+    private boolean reachedSetpoint(boolean isPositionalControl) {
         if (isPositionalControl) {
             return positionFeedBackController.atSetpoint();
         } else{

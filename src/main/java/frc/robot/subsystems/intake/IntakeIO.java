@@ -9,18 +9,16 @@ public interface IntakeIO {
     @AutoLog
     public static class IntakeIOInputs {
         public double velocityRadSec;
+        public boolean inIntake; 
+        public boolean reachedSetpoint;
     }
 
-    public abstract void updateInputs(IntakeIOInputs inputs);
+    public default void updateInputs(IntakeIOInputs inputs) {}
 
-    public abstract void setVelocityRadSec(double goalVelocityRadPerSec, double currentVelocityRadPerSec);
+    public default void setVelocityRadSec(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {}
 
-    public abstract void configureController(SimpleMotorFeedforward vff, PIDController vfb);
+    public default void configureController(SimpleMotorFeedforward vff, PIDController vfb) {}
 
-    public abstract void setVoltage(double voltage);
-
-    public abstract boolean reachedSetpoint();
-
-    public abstract boolean inIntake();
+    public default void setVoltage(double voltage) {}
     
 }

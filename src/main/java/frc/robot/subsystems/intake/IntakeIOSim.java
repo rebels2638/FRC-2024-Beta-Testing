@@ -11,6 +11,8 @@ public class IntakeIOSim extends SubsystemBase implements IntakeIO {
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
         inputs.velocityRadSec = desiredVelocityRadSec;
+        inputs.inIntake = true;
+        inputs.reachedSetpoint = true;
     }
 
     @Override
@@ -25,16 +27,6 @@ public class IntakeIOSim extends SubsystemBase implements IntakeIO {
 
     @Override
     public void configureController(SimpleMotorFeedforward vff, PIDController vfb ) {
-    }
-
-    @Override
-    public boolean reachedSetpoint() {
-        return true;
-    }
-
-    @Override
-    public boolean inIntake() {
-        return true;
     }
 
 }

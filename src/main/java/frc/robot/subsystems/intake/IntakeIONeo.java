@@ -6,7 +6,6 @@ import com.revrobotics.CANSparkMax;
 // import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.Rev2mDistanceSensor;
 
@@ -35,6 +34,8 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
         inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
+        inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
+        inputs.inIntake = inIntake();
     }
 
     @Override
@@ -70,13 +71,7 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         velocityFeedForwardController = vff;
     }
 
-    @Override
-    public boolean reachedSetpoint() {
-        return velocityFeedBackController.atSetpoint();
-    }
-
-    @Override
-    public boolean inIntake() {
+    private boolean inIntake() {
         // TODO: WRITE THE BEAM BRAKE CODE
         if(distanceSensor.isRangeValid()){
             //distanceSensor.setMeasurementPeriod();

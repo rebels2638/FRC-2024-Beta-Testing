@@ -49,6 +49,8 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
         inputs.climberHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
                                                             kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_COS;
         inputs.voltageOut = m_motor1.getAppliedOutput() * kMAX_VOLTAGE;
+
+        inputs.reachedSetpoint = positionFeedBackController.atSetpoint();
     }
 
     @Override
@@ -142,11 +144,6 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
         this.kCLIMB_KG = kCLIMB_KG;
         positionFeedBackController = pfb;
         positionFeedForwardController = pff;
-    }
-
-    @Override
-    public boolean reachedSetpoint() {
-        return positionFeedBackController.atSetpoint();
     }
 
     @Override

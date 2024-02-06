@@ -74,6 +74,6 @@ public class Pivot extends SubsystemBase{
         io.zeroAngle();
     }
     public boolean reachedSetpoint() {
-        return io.reachedSetpoint(velocityControlmode);
+        return inputs.reachedSetpoint;
     }
 }
