@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.commands.PathfindThenFollowPathHolonomic;
 import com.pathplanner.lib.path.PathConstraints;
@@ -57,7 +58,9 @@ public class AutoRunner {
 
     }
     
-    public AutoRunner ( SwerveSubsystem swerveSubsystem) {
+    public AutoRunner ( SwerveSubsystem swerveSubsystem, Elevator elevatorSubsystem) {
+        NamedCommands.registerCommand("MoveElevatorAMP", new MoveElevatorAMP(elevatorSubsystem));
+
         PATH_CHOSEN_TO_NAME_HASH_MAP.forEach((pathName, pathFile) -> pathChooser.addOption(pathName, pathFile));
 
         Shuffleboard.getTab("Auto").add("Path Chooser", pathChooser);
@@ -97,6 +100,6 @@ public class AutoRunner {
     }
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("TurnAuto");
+        return new PathPlannerAuto("SourceSide1Near1Far");
     }
 } 

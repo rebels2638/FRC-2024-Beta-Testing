@@ -29,6 +29,7 @@ import frc.robot.lib.swervelib.parser.SwerveDriveConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveParser;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import frc.robot.subsystems.limelight.PoseLimelight;
 
 
 public class SwerveSubsystem extends SubsystemBase
@@ -54,11 +55,10 @@ public class SwerveSubsystem extends SubsystemBase
    */
   //private static final SimpleMotorFeedforward FEEDFORWARD = new SimpleMotorFeedforward(0.16026, 0.0023745, 2.774E-05);
 
-  // public SwerveSubsystem(File directory, AprilTagVision aprilTagVision)
-  public SwerveSubsystem(File directory /* ,AprilTagVision aprilTagVision */)
+  private PoseLimelight poseLimelightSubsystem;
+  public SwerveSubsystem(File directory, PoseLimelight poseLimelightSubsystem)
   {
-    // this.aprilTagVision = aprilTagVision;
-    //this.aprilTagVision = aprilTagVision;
+    this.poseLimelightSubsystem = poseLimelightSubsystem;
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
@@ -111,8 +111,9 @@ public class SwerveSubsystem extends SubsystemBase
   {
     swerveDrive.updateOdometry();
 
-    Pose2d currentPose2d = swerveDrive.getPose();
-    
+    if (poseLimelightSubsystem.hasValidTargets()) {
+      swerveDrive.addVisionMeasurement(poseLimelightSubsystem.getEstimatedRobotPose(), poseLimelightSubsystem.getTimestampSeconds());
+    }
 
     //TODO: Removed vision as of 1/13/2024 simply because we have not installed the new camera yet, uncomment this when we are done with the setup.
 

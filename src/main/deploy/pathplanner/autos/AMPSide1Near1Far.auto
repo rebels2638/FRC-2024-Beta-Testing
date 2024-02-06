@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2239863415408307,
-      "y": 7.004626562851901
+      "x": 0.756624920600531,
+      "y": 6.604641402238395
     },
-    "rotation": 0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ThreePeice"
+            "pathName": "AMPSideAMPNote"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 10.0
+            "pathName": "AMPSideFar1"
           }
         }
       ]

@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": -0.6080960310068768,
-        "y": 7.989692988645237
+        "x": 0.756624920600531,
+        "y": 6.604641402238395
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.3919039689931205,
-        "y": 7.489692988645237
+        "x": 1.6098774885145488,
+        "y": 6.923794693684334
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.0,
-        "y": 5.0
+        "x": 7.7583541078261335,
+        "y": 7.42720143173824
       },
       "prevControl": {
-        "x": 4.0,
-        "y": 6.0
+        "x": 7.335484590571019,
+        "y": 7.354668824957865
       },
       "nextControl": {
-        "x": 6.0,
-        "y": 4.0
+        "x": 8.411195893807655,
+        "y": 7.5391799845073395
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.08,
-        "y": 3.995262184968815
+        "x": 0.756624920600531,
+        "y": 6.604641402238395
       },
       "prevControl": {
-        "x": 5.830174307154423,
-        "y": 5.494591075904442
+        "x": 2.2071297320236294,
+        "y": 7.023434950392118
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 2,
-      "rotationDegrees": 179.34841577104706,
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -1.6529705009379763,
+      "rotateFast": true
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
@@ -57,15 +62,18 @@
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 7.695343950206252,
+    "rotation": 60.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
-  "previewStartingState": null,
+  "folder": "AMPSide",
+  "previewStartingState": {
+    "rotation": 60.0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }
