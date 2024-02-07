@@ -29,6 +29,10 @@ public class playMusic extends Command {
 
         // this.audioPlayerSubsystem.play(0);
     }
+    @Override
+    public void end(boolean isInterrupted){
+        audioPlayerSubsystem.stop();
+    }
 
     @Override
     public boolean isFinished() {

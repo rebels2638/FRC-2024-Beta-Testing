@@ -3,10 +3,10 @@ package frc.robot.commands.pivot;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.pivot.Pivot;
 
-public class Turtle extends Command {
+public class PivotTurtle extends Command {
 
     private final Pivot pivotSubsystem;
-    public Turtle(Pivot pivotSubsystem) {
+    public PivotTurtle(Pivot pivotSubsystem) {
         this.pivotSubsystem = pivotSubsystem;
 
         addRequirements(pivotSubsystem);

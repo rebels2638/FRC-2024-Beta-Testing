@@ -18,7 +18,7 @@ public class PivotController extends Command {
     public void execute() { 
     //     pivotSubsystem.setVelocityControlMode(true);
     //    pivotSubsystem.setVelocitySetPoint(0.1 * controller.getRightY());
-       pivotSubsystem.setVoltage(3 * controller.getRightY());
+       pivotSubsystem.setVoltage(12 * controller.getRightY());
     }
 
     @Override

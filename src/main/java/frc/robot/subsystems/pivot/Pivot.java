@@ -45,7 +45,7 @@ public class Pivot extends SubsystemBase{
 
     public void setDegAngle(double angle) {
         Logger.recordOutput("Pivot/desiredDegAngle", angle);
-        io.setPosition(Math.toRadians(angle), inputs.positionRad);
+        io.setPosition(Math.toRadians(angle));
         return;
     }
 
@@ -54,7 +54,7 @@ public class Pivot extends SubsystemBase{
     };
 
     public void setVelocitySetPoint(double setPoint){
-        io.setVelocity(setPoint, inputs.velocityRadSec);
+        io.setVelocity(setPoint);
         return;
     }
     public void setVoltage(double voltage){

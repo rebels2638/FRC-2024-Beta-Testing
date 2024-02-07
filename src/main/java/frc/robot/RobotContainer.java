@@ -31,15 +31,20 @@ import frc.robot.subsystems.swerve.SwerveSubsystemIORunning;
 import frc.robot.Utils.Constants;
 import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.automation.AutoAlign;
-import frc.robot.commands.drivetrain.AbsoluteDrive;
+// import frc.robot.commands.drivetrain.AbsoluteDrive;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
+import frc.robot.commands.Intake.RollIntake;
 import frc.robot.commands.audio.*;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIONeo;
 // import frc.robot.subsystems.elevator.ElevatorIOSim;;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIONeo;
+import frc.robot.subsystems.intake.IntakeIOSim;
 import frc.robot.subsystems.elevator.ElevatorIOSim;
 import frc.robot.subsystems.limelight.PoseLimelight;
 import frc.robot.subsystems.limelight.PoseLimelightIOReal;
@@ -74,7 +79,7 @@ public class RobotContainer {
   // private final AbsoluteDrive closedAbsoluteDrive;
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
   
-  //private final Intake intakeSubsystem;
+  private final Intake intakeSubsystem;
   // private final Pivot pivotSubsystem;
 
   // Auto
@@ -149,7 +154,11 @@ public class RobotContainer {
     // }
     // pivotSubsystem = new Pivot(pivotIO);
     // PivotController pivotController;
-    //intakeSubsystem = new Intake();
+    IntakeIONeo intakeIO = new IntakeIONeo();  
+    if(RobotBase.isReal()){
+      intakeIO = new IntakeIONeo();
+    }
+    intakeSubsystem = new Intake(intakeIO);
     
     // Instantiate our controllers with proper ports.
     this.xboxTester = new XboxController(1);
@@ -228,6 +237,7 @@ public class RobotContainer {
     // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
     // this.xboxOperator.getAButton().onTrue(new playMusic(aPlayer));
 
+    this.xboxOperator.getAButton().onTrue(new RollIntake(intakeSubsystem));
   }
   
 

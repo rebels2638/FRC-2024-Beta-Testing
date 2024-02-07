@@ -1,11 +1,13 @@
-package frc.robot.commands.intake;
+
+package frc.robot.commands.Intake;
+
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 
-public class RollIntakeIn extends Command {
+public class RollIntake extends Command {
     private final Intake intakeSubsystem;
-    public RollIntakeIn(Intake intakeSubsystem) {
+    public RollIntake(Intake intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
 
         addRequirements(intakeSubsystem);
@@ -13,7 +15,11 @@ public class RollIntakeIn extends Command {
 
     @Override
     public void execute() { 
-        intakeSubsystem.setVelocityRadSec(Math.toRadians(150));
+        intakeSubsystem.setVelocityRadSec(2*Math.PI); //Use radians directly.
+    }
+    @Override
+    public void end(boolean isInterrupted){
+        intakeSubsystem.setVelocityRadSec(0);
     }
 
     @Override
