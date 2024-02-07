@@ -34,14 +34,14 @@ public class PivotIOSim extends SubsystemBase implements PivotIO {
 
     @Override
     // sould be called periodically
-    public void setPosition(double goalPositionRad) {
+    public void setPosition(double goalPositionRad, double currentRadAngle) {
         desiredPositionRad = goalPositionRad;
         desiredPositionDeg = Math.toDegrees(goalPositionRad);
     } 
 
     @Override
     // sould be called periodically
-    public void setVelocity(double goalVelocityRadPerSec) {
+    public void setVelocity(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {
         desiredVelocityRadSec = goalVelocityRadPerSec;
         desiredVelocityDegSec = Math.toDegrees(goalVelocityRadPerSec);
     } 
