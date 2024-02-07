@@ -2,6 +2,8 @@ package frc.robot.subsystems.swerve;
 
 
 
+import edu.wpi.first.math.controller.PIDController;
+
 // import com.pathplanner.lib.PathConstraints;
 // import com.pathplanner.lib.PathPlanner;
 // import com.pathplanner.lib.PathPlannerTrajectory;
@@ -13,9 +15,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
@@ -58,6 +58,8 @@ public class SwerveSubsystem extends SubsystemBase
   private PoseLimelight poseLimelightSubsystem;
   private SwerveSubsystemIO io;
   private SwerveSubsystemIOInputsAutoLogged inputs;
+
+  private static final PIDController translationPIDController = new PIDController(0, 0, 0);
   public SwerveSubsystem(File directory, PoseLimelight poseLimelightSubsystem)
   {
     this.poseLimelightSubsystem = poseLimelightSubsystem;
@@ -73,7 +75,7 @@ public class SwerveSubsystem extends SubsystemBase
 
     swerveDrive.setMotorIdleMode(true);
     //swerveDrive.chassisVelocityCorrection = true;
-    swerveDrive.setHeadingCorrection(true, 2);
+    swerveDrive.setHeadingCorrection(true, 0.3);
     swerveDrive.replaceSwerveModuleFeedforward(new SimpleMotorFeedforward(0.16, 1.92,  0.1));
   }
 
@@ -107,8 +109,18 @@ public class SwerveSubsystem extends SubsystemBase
    * @param fieldRelative Drive mode.  True for field-relative, false for robot-relative.
    * @param isOpenLoop    Whether to use closed-loop velocity control.  Set to true to disable closed-loop.
    */
-  public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop)
+  public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop, boolean chassisVelocityCorrection)
   {
+    double xCorrection = 0;
+    double yCorrection = 0;
+    if (fieldRelative) {
+      translationPIDController.setSetpoint(inputs.desiredChassisSpeeds[0]);
+      xCorrection = translationPIDController.calculate(inputs.measuredChassisSpeeds[0]);
+
+      translationPIDController.setSetpoint(inputs.desiredChassisSpeeds[1]);
+      yCorrection = translationPIDController.calculate(inputs.measuredChassisSpeeds[1]);
+    }
+    translation = new Translation2d(translation.getX() + xCorrection, translation.getY() + yCorrection);
     swerveDrive.drive(translation, rotation, fieldRelative, isOpenLoop);
   }
 
@@ -124,19 +136,8 @@ public class SwerveSubsystem extends SubsystemBase
       swerveDrive.addVisionMeasurement(poseLimelightSubsystem.getEstimatedRobotPose(), poseLimelightSubsystem.getTimestampSeconds());
     }
 
-    //TODO: Removed vision as of 1/13/2024 simply because we have not installed the new camera yet, uncomment this when we are done with the setup.
-
-    // Pose2d estimatedPose = aprilTagVision.getEstimatedRobotPose(currentPose2d);
-    // if (estimatedPose != null) {
-    //   swerveDrive.addVisionMeasurement(estimatedPose, aprilTagVision.getTimestampSeconds(), false, 1);
-    // }
-
-
-
     
     //log all tlemetry to a log file
-    // SmartDashboard.putBoolean("myMind", false);
-    // Logger.getInstance().recordOutput("swerve/heading", getHeading().getDegrees());
     Logger.recordOutput("swerve/moduleCount", SwerveDriveTelemetry.moduleCount);
     Logger.recordOutput("swerve/wheelLocations", SwerveDriveTelemetry.wheelLocations);
     Logger.recordOutput("swerve/measuredStates", SwerveDriveTelemetry.measuredStates);
