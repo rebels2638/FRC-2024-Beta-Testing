@@ -9,15 +9,15 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 public interface SwerveSubsystemIO {
     @AutoLog
     public static class SwerveSubsystemIOInputs {
-        public Pose2d pose;
-        public Rotation2d yaw;
-        public ChassisSpeeds fieldVelocity;
-        public ChassisSpeeds robotVelocity;
-        public Rotation2d pitch;
-        public double[] desiredModuleStates;
-        public double[] measuredModuleStates;
-        public double[] measuredChassisSpeeds;
-        public double[] desiredChassisSpeeds;
+        public Pose2d pose = new Pose2d();
+        public Rotation2d yaw = new Rotation2d();
+        public ChassisSpeeds fieldVelocity = new ChassisSpeeds();
+        public ChassisSpeeds robotVelocity = new ChassisSpeeds();
+        public Rotation2d pitch = new Rotation2d();
+        public double[] desiredModuleStates = new double[8];
+        public double[] measuredModuleStates = new double[8];
+        public double[] measuredChassisSpeeds = new double[3];
+        public double[] desiredChassisSpeeds = new double[3];
     } 
 
     public default void updateInputs(SwerveSubsystemIOInputs inputs) {}

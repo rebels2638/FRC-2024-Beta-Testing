@@ -47,6 +47,7 @@ import frc.robot.subsystems.intake.IntakeIONeo;
 import frc.robot.subsystems.intake.IntakeIOSim;
 import frc.robot.subsystems.elevator.ElevatorIOSim;
 import frc.robot.subsystems.limelight.PoseLimelight;
+import frc.robot.subsystems.limelight.PoseLimelightIO;
 import frc.robot.subsystems.limelight.PoseLimelightIOReal;
 import frc.robot.subsystems.limelight.PoseLimelightIOSim;
 
@@ -79,7 +80,7 @@ public class RobotContainer {
   // private final AbsoluteDrive closedAbsoluteDrive;
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
   
-  private final Intake intakeSubsystem;
+  // private final Intake intakeSubsystem;
   // private final Pivot pivotSubsystem;
 
   // Auto
@@ -95,20 +96,32 @@ public class RobotContainer {
 
   public RobotContainer() {
 
+    switch (Constants.currentMode) {
+      case REPLAY:
+        elevatorSubsystem = new Elevator(new ElevatorIO() {});
+        break;
 
-    if (RobotBase.isReal()) {
-      elevatorSubsystem = new Elevator(new ElevatorIONeo());
-    }
-    else {
-      // elevator = new Elevator(new ElevatorIOSim());
-      elevatorSubsystem = new Elevator(new ElevatorIOSim());
+      case SIM:
+        elevatorSubsystem = new Elevator(new ElevatorIOSim());
+        break;
+
+      default:
+        elevatorSubsystem = new Elevator(new ElevatorIONeo());
+        break;
     }
 
-    if (RobotBase.isReal()) {
-      poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal());
-    }
-    else {
-      poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim());
+    switch (Constants.currentMode) {
+      case SIM:
+        poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim());
+        break;
+
+      case REPLAY:
+        poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIO() {});
+        break;
+        
+      default:
+        poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal());
+        break;
     }
 
 
@@ -119,46 +132,30 @@ public class RobotContainer {
     //   pivot = new Pivot(new PivotIOSim());
     // }
 
-    
-
-    // AprilTagVisionIO aprilTagVisionIO = new AprilTagVisionIOSim();
-  // System.out.println("Is directory? : " +new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/deploy/swerve/falcon").isDirectory());
-  // System.out.println("Deploy Directory : " + Filesystem.getDeployDirectory());
-  // System.out.println("Is File? : " + new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/deploy/swerve/falcon").isFile());
-
     // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
     // System.out.println(new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
     
-   //swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
-  //  aPlayer = new AudioPlayer();
+    //swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
+    //  aPlayer = new AudioPlayer();
   
     switch (Constants.currentMode) {
-      case REAL:
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
-        swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
-        break;
       case SIM:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
         break;
+        
       case REPLAY:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
+        
+      default:
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
+        swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
+        break;
     }
     
     autoRunner = new AutoRunner(swerveSubsystem, elevatorSubsystem);
-    
-    //PivotIONeo pivotIO = new PivotIONeo();
-    // if (RobotBase.isReal()) {
-    //   pivotIO = new PivotIONeo();
-    // }
-    // pivotSubsystem = new Pivot(pivotIO);
-    // PivotController pivotController;
-    IntakeIONeo intakeIO = new IntakeIONeo();  
-    if(RobotBase.isReal()){
-      intakeIO = new IntakeIONeo();
-    }
-    intakeSubsystem = new Intake(intakeIO);
+
     
     // Instantiate our controllers with proper ports.
     this.xboxTester = new XboxController(1);
@@ -236,8 +233,6 @@ public class RobotContainer {
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
     // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
     // this.xboxOperator.getAButton().onTrue(new playMusic(aPlayer));
-
-    this.xboxOperator.getAButton().onTrue(new RollIntake(intakeSubsystem));
   }
   
 

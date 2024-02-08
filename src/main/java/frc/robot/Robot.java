@@ -8,16 +8,15 @@ import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Utils.Constants;
 import frc.robot.commands.autoAligment.LocalADStarAK;
 
 /**
@@ -36,31 +35,35 @@ public class Robot extends LoggedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  String logPath;
+  String logPath = "/Users/edan/Downloads/";
   @Override
   public void robotInit() { 
     Pathfinding.setPathfinder(new LocalADStarAK());
 
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
-    if (isReal()) {
+  // Set up data receivers & replay source
+    switch (Constants.currentMode) {
+      // Running on a real robot, log to a USB stick
+      case REAL:
+        Logger.addDataReceiver(new WPILOGWriter("/media/sda1/"));
+        Logger.addDataReceiver(new NT4Publisher());
+        break;
 
-      // Logger.addDataReceiver(new WPILOGWriter("/media/sda1/robot.wpilog")); // TODO: Check if the file path works
-       // Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda1/")); // Log to a USB stick
-        SmartDashboard.putBoolean("swerve/REAL", true);
-        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-        new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
-        setUseTiming(false);
-    } else {
-        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-        setUseTiming(false); // Run as fast as possible
-        //logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
-        SmartDashboard.putBoolean("swerve/REAL", false);
+      // Running a physics simulator, log to local folder
+      case SIM:
+        Logger.addDataReceiver(new WPILOGWriter(logPath));
+        Logger.addDataReceiver(new NT4Publisher());
+        break;
 
-        //logPath = "/Users/edan/Downloads/test.wpilog"; // specific to each user
-       // Logger.getInstance().setReplaySource(new WPILOGReader(logPath)); // Read replay log
-        //Logger.getInstance().addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
-        //System.err.println(logPath);
+      // Replaying a log, set up replay source
+      case REPLAY:
+        setUseTiming(true);
+        String logPath = LogFileUtil.findReplayLog();
+        Logger.setReplaySource(new WPILOGReader(logPath));
+        Logger.addDataReceiver(new NT4Publisher());
+        Logger.addDataReceiver(new WPILOGWriter(logPath));
+        break;
     }
 
     // Logger.getInstance().disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page

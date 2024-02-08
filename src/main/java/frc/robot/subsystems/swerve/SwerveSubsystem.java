@@ -57,7 +57,7 @@ public class SwerveSubsystem extends SubsystemBase
 
   private PoseLimelight poseLimelightSubsystem;
   private SwerveSubsystemIO io;
-  private SwerveSubsystemIOInputsAutoLogged inputs;
+  private SwerveSubsystemIOInputsAutoLogged inputs = new SwerveSubsystemIOInputsAutoLogged();
 
   private static final PIDController translationPIDController = new PIDController(0, 0, 0);
   public SwerveSubsystem(File directory, PoseLimelight poseLimelightSubsystem)
