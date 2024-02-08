@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PivotIONeo extends SubsystemBase implements PivotIO {
     private static final double kMotorToOutputShaftRatio = 0.01;
-    private CANSparkMax m_motor = new CANSparkMax(15, CANSparkMax.MotorType.kBrushless); //TODO: Get Motor IDs
+    private CANSparkMax m_motor = new CANSparkMax(15, CANSparkMax.MotorType.kBrushless); //Motor IDs DONE 2/8/2024
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ArmFeedforward positionFeedForwardController = new ArmFeedforward(0, 0, 0);

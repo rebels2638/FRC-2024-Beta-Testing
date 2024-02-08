@@ -34,7 +34,7 @@ import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.drivetrain.AbsoluteDrive;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
-import frc.robot.commands.Intake.RollIntake;
+import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.audio.*;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
@@ -230,7 +230,7 @@ public class RobotContainer {
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
-    this.xboxDriver.getYButton().onTrue(new RollIntake(intakeSubsystem));
+    this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem));
     
     // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
     //this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
