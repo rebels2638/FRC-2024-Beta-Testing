@@ -79,8 +79,8 @@ public class RobotContainer {
   // private final TeleopDrive closedFieldRel;
   // private final AbsoluteDrive closedAbsoluteDrive;
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
-  
-  // private final Intake intakeSubsystem;
+
+  private final Intake intakeSubsystem;
   // private final Pivot pivotSubsystem;
 
   // Auto
@@ -89,38 +89,52 @@ public class RobotContainer {
   //private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
-  private final Elevator elevatorSubsystem;
+  // private final Elevator elevatorSubsystem;
   private final PoseLimelight poseLimelightSubsystem; 
   // private final Pivot pivot;
   //private final AudioPlayer aPlayer;
 
   public RobotContainer() {
 
-    switch (Constants.currentMode) {
-      case REPLAY:
-        elevatorSubsystem = new Elevator(new ElevatorIO() {});
-        break;
+    // switch (Constants.currentMode) {
+    //   case REPLAY:
+    //     elevatorSubsystem = new Elevator(new ElevatorIO() {});
+    //     break;
 
-      case SIM:
-        elevatorSubsystem = new Elevator(new ElevatorIOSim());
-        break;
+    //   case SIM:
+    //     elevatorSubsystem = new Elevator(new ElevatorIOSim());
+    //     break;
 
-      default:
-        elevatorSubsystem = new Elevator(new ElevatorIONeo());
-        break;
-    }
+    //   default:
+    //     elevatorSubsystem = new Elevator(new ElevatorIONeo());
+    //     break;
+    // }
+        poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim() {});
 
-    switch (Constants.currentMode) {
-      case SIM:
-        poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim());
-        break;
+    // switch (Constants.currentMode) {
+    //   case SIM:
+    //     poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim());
+    //     break;
 
-      case REPLAY:
-        poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIO() {});
-        break;
+    //   case REPLAY:
+    //     break;
         
+    //   default:
+    //     poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal());
+    //     break;
+    // }
+
+    switch (Constants.currentMode) {
+      case REPLAY:
+        intakeSubsystem = new Intake(new IntakeIO(){});
+        break;
+
+      case SIM:
+        intakeSubsystem = new Intake(new IntakeIOSim(){});
+        break;
+
       default:
-        poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal());
+        intakeSubsystem = new Intake(new IntakeIONeo(){});
         break;
     }
 
@@ -154,7 +168,7 @@ public class RobotContainer {
         break;
     }
     
-    autoRunner = new AutoRunner(swerveSubsystem, elevatorSubsystem);
+    autoRunner = new AutoRunner(swerveSubsystem);
 
     
     // Instantiate our controllers with proper ports.
@@ -213,10 +227,10 @@ public class RobotContainer {
     // }));
     //.xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
    // this.xboxDriver.getBButton().onTrue(new InstantCommand(() -> closedFieldAbsoluteDrive.toggleRotationMode()) );
-    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
-    //this.xboxDriver.getYButton().onTrue(new RollIntake(intakeSubsystem));
+    this.xboxDriver.getYButton().onTrue(new RollIntake(intakeSubsystem));
     
     // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
     //this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));

@@ -1,8 +1,5 @@
 package frc.robot.subsystems.limelight;
 
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-
 public class PoseLimelightIOSim implements PoseLimelightIO{
     public void updateInputs(PoseLimelightIOInputs inputs) {
         inputs.botpose_wpiblue = new double[] {0, 0, 0, 0, 0, 0, 0};

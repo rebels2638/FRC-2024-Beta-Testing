@@ -58,8 +58,8 @@ public class AutoRunner {
 
     }
     
-    public AutoRunner ( SwerveSubsystem swerveSubsystem, Elevator elevatorSubsystem) {
-        NamedCommands.registerCommand("MoveElevatorAMP", new MoveElevatorAMP(elevatorSubsystem));
+    public AutoRunner ( SwerveSubsystem swerveSubsystem) {
+        //NamedCommands.registerCommand("MoveElevatorAMP", new MoveElevatorAMP(elevatorSubsystem));
 
         PATH_CHOSEN_TO_NAME_HASH_MAP.forEach((pathName, pathFile) -> pathChooser.addOption(pathName, pathFile));
 

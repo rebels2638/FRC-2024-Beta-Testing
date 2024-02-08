@@ -87,7 +87,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
             return false;
         }
         else{
-            System.out.println("Out of range");
+            // System.out.println("Out of range");
             return false;
         }
     }

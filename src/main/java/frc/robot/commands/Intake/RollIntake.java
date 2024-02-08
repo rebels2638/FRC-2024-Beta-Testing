@@ -15,7 +15,8 @@ public class RollIntake extends Command {
 
     @Override
     public void execute() { 
-        intakeSubsystem.setVelocityRadSec(2*Math.PI); //Use radians directly.
+        intakeSubsystem.setVelocityRadSec(Math.toRadians(1000)); //Use radians directly.
+        // System.out.println("CALLLEELDLEDLAKDJASBKND");
     }
     @Override
     public void end(boolean isInterrupted){
@@ -24,6 +25,6 @@ public class RollIntake extends Command {
 
     @Override
     public boolean isFinished() {
-        return intakeSubsystem.inIntake();
+        return false;
     }
 }
