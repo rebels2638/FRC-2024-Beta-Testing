@@ -53,10 +53,10 @@ public class Intake extends SubsystemBase{
     }
     
     public boolean reachedSetpoint() {
-        return io.reachedSetpoint();
+        return inputs.reachedSetpoint;
     }
 
     public boolean inIntake() {
-        return io.inIntake();
+        return inputs.inIntake;
     }
 }

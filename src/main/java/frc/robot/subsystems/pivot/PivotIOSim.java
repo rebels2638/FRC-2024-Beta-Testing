@@ -28,18 +28,20 @@ public class PivotIOSim extends SubsystemBase implements PivotIO {
         inputs.velocityRadSec = desiredVelocityRadSec;
         currentVelocityRadPerSec = inputs.velocityRadSec;
         inputs.velocityDegSec = desiredVelocityDegSec;
+
+        inputs.reachedSetpoint = true;
     }
 
     @Override
     // sould be called periodically
-    public void setPosition(double goalPositionRad) {
+    public void setPosition(double goalPositionRad, double currentRadAngle) {
         desiredPositionRad = goalPositionRad;
         desiredPositionDeg = Math.toDegrees(goalPositionRad);
     } 
 
     @Override
     // sould be called periodically
-    public void setVelocity(double goalVelocityRadPerSec) {
+    public void setVelocity(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {
         desiredVelocityRadSec = goalVelocityRadPerSec;
         desiredVelocityDegSec = Math.toDegrees(goalVelocityRadPerSec);
     } 
@@ -50,11 +52,6 @@ public class PivotIOSim extends SubsystemBase implements PivotIO {
     @Override
     public void configureController(ArmFeedforward pff, PIDController pfb, 
                                         ArmFeedforward vff, PIDController vfb ) {
-    }
-
-    @Override
-    public boolean reachedSetpoint(boolean isPositionalControl) {
-        return true;
     }
 
     @Override

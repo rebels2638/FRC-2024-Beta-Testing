@@ -70,6 +70,6 @@ public class Elevator extends SubsystemBase{
         io.zeroHeight();
     }
     public boolean reachedSetpoint() {
-        return io.reachedSetpoint();
+        return inputs.reachedSetpoint;
     }
 }

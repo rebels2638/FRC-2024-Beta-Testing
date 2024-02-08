@@ -2,6 +2,8 @@ package frc.robot.subsystems.swerve;
 
 
 
+import edu.wpi.first.math.controller.PIDController;
+
 // import com.pathplanner.lib.PathConstraints;
 // import com.pathplanner.lib.PathPlanner;
 // import com.pathplanner.lib.PathPlannerTrajectory;
@@ -13,9 +15,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
@@ -56,6 +56,10 @@ public class SwerveSubsystem extends SubsystemBase
   //private static final SimpleMotorFeedforward FEEDFORWARD = new SimpleMotorFeedforward(0.16026, 0.0023745, 2.774E-05);
 
   private PoseLimelight poseLimelightSubsystem;
+  private SwerveSubsystemIO io;
+  private SwerveSubsystemIOInputsAutoLogged inputs;
+
+  private static final PIDController translationPIDController = new PIDController(0, 0, 0);
   public SwerveSubsystem(File directory, PoseLimelight poseLimelightSubsystem)
   {
     this.poseLimelightSubsystem = poseLimelightSubsystem;
@@ -71,11 +75,15 @@ public class SwerveSubsystem extends SubsystemBase
 
     swerveDrive.setMotorIdleMode(true);
     //swerveDrive.chassisVelocityCorrection = true;
-    swerveDrive.setHeadingCorrection(true, 2);
+    swerveDrive.setHeadingCorrection(true, 0.3);
     swerveDrive.replaceSwerveModuleFeedforward(new SimpleMotorFeedforward(0.16, 1.92,  0.1));
   }
 
-  /**
+  public void setIO(SwerveSubsystemIO io) {
+    this.io = io;
+  }
+
+   /**
    * Construct the swerve drive.
    *
    * @param driveCfg      SwerveDriveConfiguration for the swerve.
@@ -101,34 +109,35 @@ public class SwerveSubsystem extends SubsystemBase
    * @param fieldRelative Drive mode.  True for field-relative, false for robot-relative.
    * @param isOpenLoop    Whether to use closed-loop velocity control.  Set to true to disable closed-loop.
    */
-  public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop)
+  public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop, boolean chassisVelocityCorrection)
   {
+    double xCorrection = 0;
+    double yCorrection = 0;
+    if (fieldRelative) {
+      translationPIDController.setSetpoint(inputs.desiredChassisSpeeds[0]);
+      xCorrection = translationPIDController.calculate(inputs.measuredChassisSpeeds[0]);
+
+      translationPIDController.setSetpoint(inputs.desiredChassisSpeeds[1]);
+      yCorrection = translationPIDController.calculate(inputs.measuredChassisSpeeds[1]);
+    }
+    translation = new Translation2d(translation.getX() + xCorrection, translation.getY() + yCorrection);
     swerveDrive.drive(translation, rotation, fieldRelative, isOpenLoop);
   }
 
   @Override
   public void periodic()
   {
+    io.updateInputs(inputs);
+    Logger.processInputs("Swerve", inputs);
+
     swerveDrive.updateOdometry();
 
     if (poseLimelightSubsystem.hasValidTargets()) {
       swerveDrive.addVisionMeasurement(poseLimelightSubsystem.getEstimatedRobotPose(), poseLimelightSubsystem.getTimestampSeconds());
     }
 
-    //TODO: Removed vision as of 1/13/2024 simply because we have not installed the new camera yet, uncomment this when we are done with the setup.
-
-    // Pose2d estimatedPose = aprilTagVision.getEstimatedRobotPose(currentPose2d);
-    // if (estimatedPose != null) {
-    //   swerveDrive.addVisionMeasurement(estimatedPose, aprilTagVision.getTimestampSeconds(), false, 1);
-    // }
-
-
-
     
     //log all tlemetry to a log file
-    // SmartDashboard.putBoolean("myMind", false);
-    // Logger.getInstance().recordOutput("swerve/heading", getHeading().getDegrees());
-    Logger.recordOutput("swerve/heading", getHeading().getDegrees());
     Logger.recordOutput("swerve/moduleCount", SwerveDriveTelemetry.moduleCount);
     Logger.recordOutput("swerve/wheelLocations", SwerveDriveTelemetry.wheelLocations);
     Logger.recordOutput("swerve/measuredStates", SwerveDriveTelemetry.measuredStates);
@@ -145,21 +154,6 @@ public class SwerveSubsystem extends SubsystemBase
   
   }
 
-  @Override
-  public void simulationPeriodic()
-  {
-  }
-
-  /**
-   * Get the swerve drive kinematics object.
-   *
-   * @return {@link SwerveKinematics2} of the swerve drive.
-   */
-  public SwerveDriveKinematics getKinematics()
-  {
-    return swerveDrive.kinematics;
-  }
-
   /**
    * Resets odometry to the given pose. Gyro angle and module positions do not need to be reset when calling this
    * method.  However, if either gyro angle or module position is reset, this must be called in order for odometry to
@@ -167,6 +161,7 @@ public class SwerveSubsystem extends SubsystemBase
    *
    * @param initialHolonomicPose The pose to set the odometry to
    */
+
   public void resetOdometry(Pose2d initialHolonomicPose)
   {
     swerveDrive.resetOdometry(initialHolonomicPose);
@@ -179,7 +174,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Pose2d getPose()
   {
-    return swerveDrive.getPose();
+    return inputs.pose;
   }
 
   /**
@@ -193,31 +188,11 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
   /**
-   * Post the trajectory to the field.
-   *
-   * @param trajectory The trajectory to post.
-   */
-  public void postTrajectory(Trajectory trajectory)
-  {
-    swerveDrive.postTrajectory(trajectory);
-  }
-
-  /**
    * Resets the gyro angle to zero and resets odometry to the same position, but facing toward 0.
    */
   public void zeroGyro()
   {
     swerveDrive.zeroGyro();
-  }
-
-  /**
-   * Sets the drive motors to brake/coast mode.
-   *
-   * @param brake True to set motors to brake mode, false for coast.
-   */
-  public void setMotorBrake(boolean brake)
-  {
-    swerveDrive.setMotorIdleMode(brake);
   }
 
   /**
@@ -227,11 +202,6 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Rotation2d getYaw() {
     return swerveDrive.getYaw();
-  }
-  public Rotation2d getHeading()
-  {
-    // YAGSl doesent return the heading but instead gyro yaw??
-    return new Rotation2d(-Math.atan2(swerveDrive.getFieldVelocity().vyMetersPerSecond, swerveDrive.getRobotVelocity().vxMetersPerSecond));
   }
 
   /**
@@ -246,7 +216,6 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, double headingX, double headingY)
   {
-    
     return swerveDrive.swerveController.getTargetSpeeds(xInput, yInput, headingX, headingY, getYaw().getRadians());
   }
 
@@ -270,7 +239,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public ChassisSpeeds getFieldVelocity()
   {
-    return swerveDrive.getFieldVelocity();
+    return inputs.fieldVelocity;
   }
 
   /**
@@ -280,7 +249,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public ChassisSpeeds getRobotVelocity()
   {
-    return swerveDrive.getRobotVelocity();
+    return inputs.robotVelocity;
   }
 
   /**
@@ -306,10 +275,8 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Lock the swerve drive to prevent it from moving.
    */
-  public void lock()
-  {
+  public void lock() {
     swerveDrive.lockPose();
-    
   }
 
   /**
@@ -319,7 +286,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Rotation2d getPitch()
   {
-    return swerveDrive.getPitch();
+    return inputs.pitch;
   }
 
   /**
@@ -421,14 +388,7 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setModuleStates(desiredStates, isOpenLoop);
   }
 
-  /**
-   * Gets the current module states (azimuth and velocity)
-   *
-   * @return A list of SwerveModuleStates containing the current module states
-   */
-  public SwerveModuleState[] getStates()
-  {
-    return swerveDrive.getStates();
+  public SwerveDrive getSwerveDrive() {
+    return swerveDrive;
   }
-
 }

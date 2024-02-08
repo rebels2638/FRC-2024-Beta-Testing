@@ -26,6 +26,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
+import frc.robot.subsystems.swerve.SwerveSubsystemIO;
+import frc.robot.subsystems.swerve.SwerveSubsystemIORunning;
+import frc.robot.Utils.Constants;
 import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.automation.AutoAlign;
 // import frc.robot.commands.drivetrain.AbsoluteDrive;
@@ -128,12 +131,19 @@ public class RobotContainer {
     
    //swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
   //  aPlayer = new AudioPlayer();
-    if (RobotBase.isReal()) {
-      // aprilTagVisionIO = new AprilTagVisionIOReal();
-      System.out.println("Is directory? : " + new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isDirectory());
-      swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
-    } else{
-      swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
+  
+    switch (Constants.currentMode) {
+      case REAL:
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
+        swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
+        break;
+      case SIM:
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
+        swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
+        break;
+      case REPLAY:
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
+        swerveSubsystem.setIO(new SwerveSubsystemIO() {});
     }
     
     autoRunner = new AutoRunner(swerveSubsystem, elevatorSubsystem);
