@@ -57,9 +57,11 @@ import frc.robot.subsystems.limelight.PoseLimelightIO;
 import frc.robot.subsystems.limelight.PoseLimelightIOReal;
 import frc.robot.subsystems.limelight.PoseLimelightIOSim;
 import frc.robot.subsystems.pivot.Pivot;
+import frc.robot.subsystems.pivot.PivotIO;
 import frc.robot.subsystems.pivot.PivotIONeo;
 import frc.robot.subsystems.pivot.PivotIOSim;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIONeo;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.commands.shooter.ShooterStop;
@@ -85,157 +87,92 @@ public class RobotContainer {
   private final XboxController xboxOperator;
   private final XboxController xboxTester;
   
-  // // Robot Subsystems
+  // Robot Subsystems
   // private final AprilTagVisionIO aprilTagVisionIO;
   // private final AprilTagVision aprilTagVision;
   private SwerveSubsystem swerveSubsystem;
-  // private final TeleopDrive closedFieldRel;
-  // private final AbsoluteDrive closedAbsoluteDrive;
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
   private final PivotController pivotController;
-
   private final Intake intakeSubsystem;
   private final Shooter shooterSubsystem;
-  // private final Pivot pivotSubsystem;
-
-  // Auto
- private final AutoRunner autoRunner;
- // private final int[] autoAlignTargetNum = {0};
-  //private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
+  private final AutoRunner autoRunner;
+  // private final int[] autoAlignTargetNum = {0};
+  // private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
   // private final Elevator elevatorSubsystem;
   private final PoseLimelight poseLimelightSubsystem; 
-  private final Pivot pivot;
-  //private final AudioPlayer aPlayer;
+  private final Pivot pivotSubsytem;
+  // private final AudioPlayer aPlayer;
 
   public RobotContainer() {
 
-    // switch (Constants.currentMode) {
-    //   case REPLAY:
-    //     elevatorSubsystem = new Elevator(new ElevatorIO() {});
-    //     break;
-
-    //   case SIM:
-    //     elevatorSubsystem = new Elevator(new ElevatorIOSim());
-    //     break;
-
-    //   default:
-    //     elevatorSubsystem = new Elevator(new ElevatorIONeo());
-    //     break;
-    // }
-        poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim() {});
-        
-
-    // switch (Constants.currentMode) {
-    //   case SIM:
-    //     poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim());
-    //     break;
-
-    //   case REPLAY:
-    //     break;
-        
-    //   default:
-    //     poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal());
-    //     break;
-    // }
-
-    switch (Constants.currentMode) {
-      case REPLAY:
-        intakeSubsystem = new Intake(new IntakeIO(){});
-        break;
-
-      case SIM:
-        intakeSubsystem = new Intake(new IntakeIOSim(){});
-        break;
-
-      default:
-        intakeSubsystem = new Intake(new IntakeIONeo(){});
-        break;
-    }
-
-
-    if (RobotBase.isReal()) {
-      pivot = new Pivot(new PivotIONeo());
-    }
-    else {
-      pivot = new Pivot(new PivotIOSim());
-    }
-
-    if(RobotBase.isReal()){
-      shooterSubsystem = new Shooter(new ShooterIONeo());
-    }else{
-      shooterSubsystem = new Shooter(new ShooterIOSim());
-    }
-    // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
-    // System.out.println(new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
+    // Instantiate our controllers with proper ports.
+    this.xboxTester = new XboxController(1);
+    this.xboxOperator = new XboxController(2);
+    this.xboxDriver = new XboxController(3);
     
-    //swerveSubsystem = new SwerveSubsystem(new File("C:/Users/RebelRobotics/Documents/2024/FRC-2024-Beta-Testing/FRC-2024-Beta-Testing/src/main/java/deploy/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO)*/);
-    //  aPlayer = new AudioPlayer();
-  
+    // not sim'ed or replayed
+    // aPlayer = new AudioPlayer();
+    poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim() {});
+
     switch (Constants.currentMode) {
       case SIM:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
+
+        intakeSubsystem = new Intake(new IntakeIOSim() {});
+
+        shooterSubsystem = new Shooter(new ShooterIOSim());
+
+        // elevatorSubsystem = new Elevator(new ElevatorIOSim());
+
+        pivotSubsytem = new Pivot(new PivotIOSim());
         break;
         
       case REPLAY:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
         
+        shooterSubsystem = new Shooter(new ShooterIO(){});
+
+        intakeSubsystem = new Intake(new IntakeIO() {});
+        pivotSubsytem = new Pivot(new PivotIO() {});
+        // elevatorSubsystem = new Elevator(new ElevatorIO() {});
+        break;
+        
       default:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
+
+        intakeSubsystem = new Intake(new IntakeIONeo() {});
+
+        // elevatorSubsystem = new Elevator(new ElevatorIONeo());
+
+        pivotSubsytem = new Pivot(new PivotIONeo());
         break;
     }
-    
     autoRunner = new AutoRunner(swerveSubsystem);
 
-    
-    // Instantiate our controllers with proper ports.
-    this.xboxTester = new XboxController(1);
-    this.xboxOperator = new XboxController(2);
-    this.xboxDriver = new XboxController(3);
-    pivotController =  new PivotController(pivot, xboxOperator);
-    // try {
-    //   JsonChanger jsonChanger = new JsonChanger();
-    //  }
-    // catch (IOException e) {
-    //   e.printStackTrace();;
-    // }
+    pivotController = new PivotController(pivotSubsytem, xboxOperator);
 
     closedFieldAbsoluteDrive = new AbsoluteFieldDrive(swerveSubsystem,
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(),OperatorConstants.LEFT_X_DEADBAND),
-    () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false); //TODO: tune the rightX value constant
-
-    // swerveSubsystem.setDefaultCommand(!RobotBase.isSimulation() ? closedAbsoluteDrive : closedFieldAbsoluteDrive);
+    () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
 
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     
-    // this.xboxDriver.getRightBumper().onTrue(new InstantCommand(() ->  {
-    //     if (autoAlignTargetNum[0] > 0) {
-    //       autoAlignTargetNum[0]--;
-    //     }
-    //   } 
-    // ));
-    // this.xboxDriver.getLeftBumper().onTrue(new InstantCommand(() -> {
-    //   if (autoAlignTargetNum[0] < 8) {
-    //     autoAlignTargetNum[0]++;
-    //   }
-    // }));
-    //.xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
-   // this.xboxDriver.getBButton().onTrue(new InstantCommand(() -> closedFieldAbsoluteDrive.toggleRotationMode()) );
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
-    this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivot));
+    this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsytem));
     this.xboxDriver.getAButton().onTrue(new StopIntake(intakeSubsystem));
     
-    this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivot));
-    this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivot));
+    this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
+    this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivotSubsytem));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(()-> pivot.toggleMode()));
-    this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivot.zeroAngle()));
+    this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivotSubsytem.zeroAngle()));
 
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
     this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
@@ -255,9 +192,21 @@ public class RobotContainer {
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
     // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
     // this.xboxOperator.getAButton().onTrue(new playMusic(aPlayer));
+
+    // this.xboxDriver.getRightBumper().onTrue(new InstantCommand(() ->  {
+    //     if (autoAlignTargetNum[0] > 0) {
+    //       autoAlignTargetNum[0]--;
+    //     }
+    //   } 
+    // ));
+    // this.xboxDriver.getLeftBumper().onTrue(new InstantCommand(() -> {
+    //   if (autoAlignTargetNum[0] < 8) {
+    //     autoAlignTargetNum[0]++;
+    //   }
+    // }));
+    //xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
   }
   
-
   public static RobotContainer getInstance() {
     if (instance == null) {
       instance = new RobotContainer();
