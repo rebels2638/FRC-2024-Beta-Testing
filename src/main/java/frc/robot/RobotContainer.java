@@ -150,8 +150,6 @@ public class RobotContainer {
         intakeSubsystem = new Intake(new IntakeIONeo() {});
 
         // elevatorSubsystem = new Elevator(new ElevatorIONeo());
-        shooterSubsystem = new Shooter(new ShooterIONeo(){});
-
 
         pivotSubsytem = new Pivot(new PivotIONeo());
         break;
