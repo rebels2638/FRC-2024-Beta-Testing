@@ -8,10 +8,11 @@ import frc.robot.subsystems.pivot.Pivot;
 
 public class RollIntakeIn extends Command {
     private final Intake intakeSubsystem;
-    private Pivot pivotSubsystem;
+    private final Pivot pivotSubsystem;
     public RollIntakeIn(Intake intakeSubsystem, Pivot pivotSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         this.pivotSubsystem = pivotSubsystem;
+        
         addRequirements(intakeSubsystem);
     }
 
@@ -24,6 +25,7 @@ public class RollIntakeIn extends Command {
             intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 4)); //Use radians directly.
         }
     }
+    
     @Override
     public void end(boolean isInterrupted){
         // intakeSubsystem.setVelocityRadSec(0);
