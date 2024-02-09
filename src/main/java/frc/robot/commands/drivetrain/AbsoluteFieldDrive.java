@@ -78,16 +78,16 @@ public class AbsoluteFieldDrive extends Command
                                                          new Rotation2d(heading.getAsDouble() * Math.PI));
     }
     else {
-        desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
+        desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble()/2, vY.getAsDouble()/2,
                                                          new Rotation2d(heading.getAsDouble() * Math.PI));
         desiredSpeeds.omegaRadiansPerSecond = heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY);
     }
 
     // Limit velocity to prevent tippy
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
-    translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
-                                           Constants.LOOP_TIME, Constants.ROBOT_MASS, List.of(Constants.CHASSIS),
-                                           swerve.getSwerveDriveConfiguration());
+    // translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
+    //                                        Constants.LOOP_TIME, Constants.ROBOT_MASS, List.of(Constants.CHASSIS),
+    //                                        swerve.getSwerveDriveConfiguration());
     SmartDashboard.putNumber("LimitedTranslation", translation.getX());
     SmartDashboard.putString("Translation", translation.toString());
     

@@ -14,7 +14,7 @@ public interface ShooterIO {
 
     public abstract void updateInputs(ShooterIOInputs inputs);
 
-    public abstract void setVelocityRadSec(double goalVelocityRadPerSec, double currentVelocityRadPerSec);
+    public abstract void setVelocityRadSec(double goalVelocityRadPerSec);
 
     public abstract void configureController(SimpleMotorFeedforward vff, PIDController vfb);
 

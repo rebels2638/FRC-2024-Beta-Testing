@@ -16,6 +16,9 @@ import java.util.Optional;
 import frc.robot.commands.drivetrain.AbsoluteFieldDrive;
 import frc.robot.commands.elevator.MoveElevatorAMP;
 import frc.robot.commands.elevator.MoveElevatorTurtle;
+import frc.robot.commands.pivot.PivotController;
+import frc.robot.commands.pivot.PivotToTorus;
+import frc.robot.commands.pivot.PivotTurtle;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,6 +38,7 @@ import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
 import frc.robot.commands.Intake.RollIntakeIn;
+import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.audio.*;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
@@ -50,6 +54,9 @@ import frc.robot.subsystems.limelight.PoseLimelight;
 import frc.robot.subsystems.limelight.PoseLimelightIO;
 import frc.robot.subsystems.limelight.PoseLimelightIOReal;
 import frc.robot.subsystems.limelight.PoseLimelightIOSim;
+import frc.robot.subsystems.pivot.Pivot;
+import frc.robot.subsystems.pivot.PivotIONeo;
+import frc.robot.subsystems.pivot.PivotIOSim;
 
 
 
@@ -79,6 +86,7 @@ public class RobotContainer {
   // private final TeleopDrive closedFieldRel;
   // private final AbsoluteDrive closedAbsoluteDrive;
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
+  private final PivotController pivotController;
 
   private final Intake intakeSubsystem;
   // private final Pivot pivotSubsystem;
@@ -91,7 +99,7 @@ public class RobotContainer {
 
   // private final Elevator elevatorSubsystem;
   private final PoseLimelight poseLimelightSubsystem; 
-  // private final Pivot pivot;
+  private final Pivot pivot;
   //private final AudioPlayer aPlayer;
 
   public RobotContainer() {
@@ -110,6 +118,7 @@ public class RobotContainer {
     //     break;
     // }
         poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim() {});
+        
 
     // switch (Constants.currentMode) {
     //   case SIM:
@@ -139,13 +148,12 @@ public class RobotContainer {
     }
 
 
-    // if (RobotBase.isReal()) {
-    //   pivot = new Pivot(new PivotIONeo());
-    // }
-    // else {
-    //   pivot = new Pivot(new PivotIOSim());
-    // }
-
+    if (RobotBase.isReal()) {
+      pivot = new Pivot(new PivotIONeo());
+    }
+    else {
+      pivot = new Pivot(new PivotIOSim());
+    }
     // swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon") /* , new AprilTagVision(aprilTagVisionIO) */);
     // System.out.println(new File(Filesystem.getDeployDirectory(),"/swerve/falcon").isFile());
     
@@ -175,8 +183,7 @@ public class RobotContainer {
     this.xboxTester = new XboxController(1);
     this.xboxOperator = new XboxController(2);
     this.xboxDriver = new XboxController(3);
-
-    //pivotController = new PivotController(pivotSubsystem, xboxOperator);
+    pivotController =  new PivotController(pivot, xboxOperator);
     // try {
     //   JsonChanger jsonChanger = new JsonChanger();
     //  }
@@ -184,31 +191,10 @@ public class RobotContainer {
     //   e.printStackTrace();;
     // }
 
-    // Controller Throttle Mappings
-    // this.drive.setDefaultCommand(new FalconDrive(drive, limelight, xboxDriver));
-    
-    // closedAbsoluteDrive = new AbsoluteDrive(swerveSubsystem, 
-    // () -> MathUtil.applyDeadband(-xboxDriver.getLeftY(), OperatorConstants.LEFT_X_DEADBAND),
-    // () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(), OperatorConstants.LEFT_Y_DEADBAND),
-    // () -> xboxDriver.getRightX(),
-    // () -> xboxDriver.getRightY(), false);
-
     closedFieldAbsoluteDrive = new AbsoluteFieldDrive(swerveSubsystem,
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(),OperatorConstants.LEFT_X_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false); //TODO: tune the rightX value constant
-
-
-
-    /* 
-    closedFieldRel = new TeleopDrive(
-    swerveSubsystem,
-    () -> MathUtil.applyDeadband(xboxDriver.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-    () -> MathUtil.applyDeadband(xboxDriver.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-    () -> MathUtil.applyDeadband(xboxDriver.getRightX(),OperatorConstants.RIGHT_X_DEADBAND), () -> true, false, true, xboxDriver);
-    */
-
-    //System.out.println(xboxDriver.getRightX()+","+xboxDriver.getRightY());
 
     // swerveSubsystem.setDefaultCommand(!RobotBase.isSimulation() ? closedAbsoluteDrive : closedFieldAbsoluteDrive);
 
@@ -231,11 +217,17 @@ public class RobotContainer {
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
     this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem));
+    this.xboxDriver.getAButton().onTrue(new StopIntake(intakeSubsystem));
     
+    this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivot));
+    this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivot));
+    // this.xboxDriver.getAButton().onTrue(new InstantCommand(()-> pivot.toggleMode()));
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(()-> pivot.zeroAngle()));
+
     // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
     //this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
     // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
-    // this.pivotSubsystem.setDefaultCommand(pivotController);
+   // this.pivot.setDefaultCommand(pivotController);
     // this.xboxDriver.getAButton().onTrue(new Turtle(pivotSubsystem));
     // this.xboxDriver.getBButton().onTrue(new PivotToCube(pivotSubsystem));
 

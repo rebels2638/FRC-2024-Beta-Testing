@@ -20,7 +20,8 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
     private Rev2mDistanceSensor distanceSensor;
     private double distanceTolerance;
-    
+    private double currentVelocityRadPerSec;
+
     private static final double kMAX_VOLTAGE = 12;
 
     public ShooterIONeo() {
@@ -40,12 +41,21 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
         inputs.velocityRadSec = m_motor1.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
+        currentVelocityRadPerSec = inputs.velocityRadSec;
     }
 
     @Override
     // should be called periodically
-    public void setVelocityRadSec(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {
-        double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, 0);
+    public void setVelocityRadSec(double goalVelocityRadPerSec) {
+        double ffVelo = 0;
+        if (goalVelocityRadPerSec > currentVelocityRadPerSec) {
+            ffVelo = 1;
+        }
+        else if (goalVelocityRadPerSec < currentVelocityRadPerSec) {
+            ffVelo = -1;
+        }
+
+        double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, ffVelo);
         velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
         double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
         double outVoltage = feedForwardVoltage + feedBackControllerVoltage;

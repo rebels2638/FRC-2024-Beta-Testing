@@ -62,7 +62,7 @@ public class SwerveSubsystem extends SubsystemBase
   private static final PIDController translationPIDController = new PIDController(0, 0, 0);
   public SwerveSubsystem(File directory, PoseLimelight poseLimelightSubsystem)
   {
-    translationPIDController.setTolerance(.6);
+    translationPIDController.setTolerance(0.6);
     this.poseLimelightSubsystem = poseLimelightSubsystem;
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -75,7 +75,7 @@ public class SwerveSubsystem extends SubsystemBase
     }
 
     swerveDrive.setMotorIdleMode(true);
-    //swerveDrive.chassisVelocityCorrection = true;
+    swerveDrive.chassisVelocityCorrection = true;
     swerveDrive.setHeadingCorrection(true, 0.3);
     swerveDrive.replaceSwerveModuleFeedforward(new SimpleMotorFeedforward(0.16, 1.92,  0.1));
   }
