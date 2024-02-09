@@ -27,9 +27,4 @@ public class ShooterIOSim extends SubsystemBase implements ShooterIO {
     public void configureController(SimpleMotorFeedforward vff, PIDController vfb ) {
     }
 
-    @Override
-    public boolean reachedSetpoint() {
-        return true;
-    }
-
 }

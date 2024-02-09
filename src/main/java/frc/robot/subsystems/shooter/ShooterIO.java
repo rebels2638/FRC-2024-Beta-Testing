@@ -10,16 +10,14 @@ public interface ShooterIO {
     @AutoLog
     public static class ShooterIOInputs {
         public double velocityRadSec;
+        public boolean reachedSetpoint;
     }
 
-    public abstract void updateInputs(ShooterIOInputs inputs);
+    public default void updateInputs(ShooterIOInputs inputs) {}
 
-    public abstract void setVelocityRadSec(double goalVelocityRadPerSec);
+    public default void setVelocityRadSec(double goalVelocityRadPerSec) {}
 
-    public abstract void configureController(SimpleMotorFeedforward vff, PIDController vfb);
+    public default void configureController(SimpleMotorFeedforward vff, PIDController vfb) {}
 
-    public abstract void setVoltage(double voltage);
-
-    public abstract boolean reachedSetpoint();
-    
+    public default void setVoltage(double voltage) {}
 }

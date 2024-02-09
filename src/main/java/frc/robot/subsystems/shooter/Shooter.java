@@ -56,7 +56,7 @@ public class Shooter extends SubsystemBase{
     }
     
     public boolean reachedSetpoint() {
-        return io.reachedSetpoint();
+        return inputs.reachedSetpoint;
     }
 
 }

@@ -43,6 +43,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     public void updateInputs(ShooterIOInputs inputs) {
         inputs.velocityRadSec = m_motor1.getVelocity().getValueAsDouble()*2*Math.PI*kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
         currentVelocityRadPerSec = inputs.velocityRadSec;
+        inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
     }
 
     @Override
@@ -89,11 +90,6 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     public void configureController(SimpleMotorFeedforward vff, PIDController vfb ) {
         velocityFeedBackController = vfb;
         velocityFeedForwardController = vff;
-    }
-
-    @Override
-    public boolean reachedSetpoint() {
-        return velocityFeedBackController.atSetpoint();
     }
 
     public boolean isInShooter(){
