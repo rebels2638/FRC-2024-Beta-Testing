@@ -4,7 +4,6 @@ import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.Rev2mDistanceSensor;
 
 // import com.revrobotics.CANSparkMaxLevel.MotorType;
@@ -12,7 +11,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShooterIONeo extends SubsystemBase implements ShooterIO {
+public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
     private static final double kMotorToOutputShaftRatio = 1; //Last Checked 2/6/2024
     private TalonFX m_motor1 = new TalonFX(13); //TODO: Get Motor IDs
     private TalonFX m_motor2 = new TalonFX(14); 
@@ -26,7 +25,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
     private static final double kMAX_VOLTAGE = 12;
 
-    public ShooterIONeo() {
+    public ShooterIOFalcon() {
         m_motor1.setNeutralMode(NeutralModeValue.Brake);
         m_motor1.clearStickyFault_BootDuringEnable();
         m_motor1.setInverted(false);
@@ -44,6 +43,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         inputs.velocityRadSec = m_motor1.getVelocity().getValueAsDouble()*2*Math.PI*kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
         currentVelocityRadPerSec = inputs.velocityRadSec;
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
+        inputs.inShooter = isInShooter();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         velocityFeedForwardController = vff;
     }
 
-    public boolean isInShooter(){
+    private boolean isInShooter(){
         if(distanceSensor.isRangeValid()){
             //distanceSensor.setMeasurementPeriod();
             //Using default measurementperiod, we get its range at that moment.

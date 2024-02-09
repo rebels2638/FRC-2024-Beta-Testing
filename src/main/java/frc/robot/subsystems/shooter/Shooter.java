@@ -59,4 +59,8 @@ public class Shooter extends SubsystemBase{
         return inputs.reachedSetpoint;
     }
 
+    public boolean inShooter() {
+        return inputs.inShooter;
+    }
+
 }

@@ -62,7 +62,7 @@ import frc.robot.subsystems.pivot.PivotIONeo;
 import frc.robot.subsystems.pivot.PivotIOSim;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIO;
-import frc.robot.subsystems.shooter.ShooterIONeo;
+import frc.robot.subsystems.shooter.ShooterIOFalcon;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.commands.shooter.ShooterStop;
 
@@ -144,6 +144,8 @@ public class RobotContainer {
       default:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
+
+        shooterSubsystem = new Shooter(new ShooterIOFalcon(){});
 
         intakeSubsystem = new Intake(new IntakeIONeo() {});
 
