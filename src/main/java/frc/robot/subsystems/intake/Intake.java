@@ -19,9 +19,9 @@ public class Intake extends SubsystemBase{
 
     public Intake(IntakeIO io)  {
         this.io = io;
-        velocityFeedBackController = new PIDController(0,0,0); // 3,0,1.77
+        velocityFeedBackController = new PIDController(0.02,0,0); // 3,0,1.77
         velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
-        velocityFeedForwardController = new SimpleMotorFeedforward(6.4, 0, 0);
+        velocityFeedForwardController = new SimpleMotorFeedforward(0.005, .1, 0);
         io.configureController(velocityFeedForwardController, velocityFeedBackController);
     }
 

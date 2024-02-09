@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.Rev2mDistanceSensor;
 
 public class IntakeIONeo extends SubsystemBase implements IntakeIO {
-    private final double kMotorToOutputShaftRatio = .25;
+    private final double kMotorToOutputShaftRatio = 0.25;
     private CANSparkMax m_motor = new CANSparkMax(16, CANSparkMax.MotorType.kBrushless); 
 
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
@@ -33,7 +33,7 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
+        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2; // we divide by 60 because the motor out is in RPM
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
         inputs.inIntake = inIntake();
     }

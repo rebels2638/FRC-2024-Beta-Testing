@@ -4,23 +4,29 @@ package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.pivot.Pivot;
 
 public class RollIntakeIn extends Command {
     private final Intake intakeSubsystem;
-    public RollIntakeIn(Intake intakeSubsystem) {
+    private Pivot pivotSubsystem;
+    public RollIntakeIn(Intake intakeSubsystem, Pivot pivotSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
-
+        this.pivotSubsystem = pivotSubsystem;
         addRequirements(intakeSubsystem);
     }
 
     @Override
     public void execute() { 
-        intakeSubsystem.setVelocityRadSec(Math.toRadians(1000)); //Use radians directly.
-        // System.out.println("CALLLEELDLEDLAKDJASBKND");
+        if (pivotSubsystem.getDegAngle() < 45) {
+            intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 20)); //Use radians directly.
+        }
+        else {
+            intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 4)); //Use radians directly.
+        }
     }
     @Override
     public void end(boolean isInterrupted){
-        intakeSubsystem.setVelocityRadSec(0);
+        // intakeSubsystem.setVelocityRadSec(0);
     }
 
     @Override

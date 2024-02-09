@@ -18,7 +18,7 @@ public class PickUpTorus extends Command {
     @Override
     public void initialize() {
         SequentialCommandGroup group = new SequentialCommandGroup(
-            new ParallelCommandGroup(new RollIntakeIn(intakeSubsystem), new PivotToTorus(pivotSubsystem)),
+            new ParallelCommandGroup(new RollIntakeIn(intakeSubsystem, pivotSubsystem), new PivotToTorus(pivotSubsystem)),
             new PivotTurtle(pivotSubsystem)
         );
         group.schedule();
