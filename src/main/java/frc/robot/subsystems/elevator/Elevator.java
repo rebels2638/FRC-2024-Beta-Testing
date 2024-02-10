@@ -21,9 +21,9 @@ public class Elevator extends SubsystemBase{
 
     public Elevator(ElevatorIO io)  {
         this.io = io;
-        positionFeedBackController = new PIDController(6, 0, 0); // 0 0 0 
+        positionFeedBackController = new PIDController(0, 0, 0); // 0 0 0 
         //
-        positionFeedForwardController = new ElevatorFeedforward(0.33, 0.14, 0); //0.008 0.31 31
+        positionFeedForwardController = new ElevatorFeedforward(4, 0, 0); //0.33, 0.14, 0
 
         
         // velocityFeedBackController = new PIDController(0, 0, 0);
@@ -42,11 +42,11 @@ public class Elevator extends SubsystemBase{
 
     public void setHeightMeters(double goalPositionMeters, boolean isShooterHight, boolean isClimbing) {
         if (isShooterHight) {
-            Logger.recordOutput("Elevator/desiredShooterHeight");
+            Logger.recordOutput("Elevator/desiredShooterHeight", goalPositionMeters);
             io.setHeightMeters(goalPositionMeters, inputs.shooterHeightMeters, isShooterHight, isClimbing);
         }
         else {
-            Logger.recordOutput("Elevator/desiredClimberHeight");
+            Logger.recordOutput("Elevator/desiredClimberHeight", goalPositionMeters);
             io.setHeightMeters(goalPositionMeters, inputs.climberHeightMeters, isShooterHight, isClimbing);
         }
         Logger.recordOutput("Elavator/isClimbing", isClimbing);

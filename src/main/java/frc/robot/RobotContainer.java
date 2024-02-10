@@ -100,7 +100,7 @@ public class RobotContainer {
   // private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
-  // private final Elevator elevatorSubsystem;
+  private final Elevator elevatorSubsystem;
   private final PoseLimelight poseLimelightSubsystem; 
   private final Pivot pivotSubsytem;
   // private final AudioPlayer aPlayer;
@@ -125,7 +125,7 @@ public class RobotContainer {
 
         shooterSubsystem = new Shooter(new ShooterIOSim());
 
-        // elevatorSubsystem = new Elevator(new ElevatorIOSim());
+        elevatorSubsystem = new Elevator(new ElevatorIOSim());
 
         pivotSubsytem = new Pivot(new PivotIOSim());
         break;
@@ -138,7 +138,7 @@ public class RobotContainer {
 
         intakeSubsystem = new Intake(new IntakeIO() {});
         pivotSubsytem = new Pivot(new PivotIO() {});
-        // elevatorSubsystem = new Elevator(new ElevatorIO() {});
+        elevatorSubsystem = new Elevator(new ElevatorIO() {});
         break;
         
       default:
@@ -149,7 +149,7 @@ public class RobotContainer {
 
         intakeSubsystem = new Intake(new IntakeIONeo() {});
 
-        // elevatorSubsystem = new Elevator(new ElevatorIONeo());
+        elevatorSubsystem = new Elevator(new ElevatorIONeo());
 
         pivotSubsytem = new Pivot(new PivotIONeo());
         break;
@@ -165,19 +165,19 @@ public class RobotContainer {
 
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     
-    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
-    this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsytem));
-    this.xboxDriver.getAButton().onTrue(new StopIntake(intakeSubsystem));
+    // this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsytem));
+    // this.xboxDriver.getAButton().onTrue(new StopIntake(intakeSubsystem));
     
-    this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
-    this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivotSubsytem));
+    // this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
+    // this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivotSubsytem));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(()-> pivot.toggleMode()));
-    this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivotSubsytem.zeroAngle()));
+    // this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivotSubsytem.zeroAngle()));
 
-    this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
-    this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
+    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
+    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
 
     // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
     //this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
@@ -187,9 +187,9 @@ public class RobotContainer {
     // this.xboxDriver.getBButton().onTrue(new PivotToCube(pivotSubsystem));
 
     // //TODO: ELEVATOR
-    // this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevator));
-    // this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevator));
-    // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevator.zeroHeight()));
+    this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevatorSubsystem));
+    this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevatorSubsystem));
+    this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
 
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
     // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));

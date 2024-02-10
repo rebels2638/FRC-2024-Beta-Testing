@@ -31,7 +31,7 @@ import frc.robot.lib.swervelib.math.Matter;
  */
 public final class Constants
 {
-  public static final Mode currentMode = Mode.SIM;
+  public static final Mode currentMode = Mode.REAL;
 
   public static enum Mode {
     /** Running on a real robot. */

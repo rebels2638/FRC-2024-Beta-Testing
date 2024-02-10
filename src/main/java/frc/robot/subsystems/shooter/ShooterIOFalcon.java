@@ -20,7 +20,7 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
 
     private Rev2mDistanceSensor distanceSensor;
-    private double distanceTolerance;
+    //private double distanceTolerance;
     private double currentVelocityRadPerSec;
 
     private static final double kMAX_VOLTAGE = 12;
@@ -93,18 +93,19 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
     }
 
     private boolean isInShooter(){
-        if(distanceSensor.isRangeValid()){
-            //distanceSensor.setMeasurementPeriod();
-            //Using default measurementperiod, we get its range at that moment.
-            if(distanceSensor.getRange(Rev2mDistanceSensor.Unit.kMillimeters) < distanceTolerance){
-                return true;
-            }
-            return false;
-        }
-        else{
-            // System.out.println("Out of range");
-            return false;
-        }
+        // if(distanceSensor.isRangeValid()){
+        //     //distanceSensor.setMeasurementPeriod();
+        //     //Using default measurementperiod, we get its range at that moment.
+        //     if(distanceSensor.getRange(Rev2mDistanceSensor.Unit.kMillimeters) < distanceTolerance){
+        //         return true;
+        //     }
+        //     return false;
+        // }
+        // else{
+        //     // System.out.println("Out of range");
+        //     return false;
+        // }
+        return false;
     }
 
 }

@@ -12,32 +12,32 @@ import frc.robot.Utils.RebelUtil;
 
 public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kMotorToOutputShaftRatio = 1/6.0; 
-    private static final double kSproketDiameterMeters = 0.035;
-    private static final double kFIRST_STAGE_TO_SECOND = 2;
-    private static final double kSECOND_STAGE_TO_THIRD = 2;
-    private CANSparkMax m_motor1 = new CANSparkMax(18, CANSparkMax.MotorType.kBrushless); 
-    private CANSparkMax m_motor2 = new CANSparkMax(19, CANSparkMax.MotorType.kBrushless);
-    private static final double kMAX_CURRENT_AMPS = 35;
+    private static final double kSproketDiameterMeters = 0.032;
+    private static final double kFIRST_STAGE_TO_SECOND = 2.054054054054054;
+    private static final double kSECOND_STAGE_TO_THIRD = 1.513157894736842;
+    private CANSparkMax m_motor1 = new CANSparkMax(17, CANSparkMax.MotorType.kBrushless); 
+    private CANSparkMax m_motor2 = new CANSparkMax(18, CANSparkMax.MotorType.kBrushless);
+    // private static final double kMAX_CURRENT_AMPS = 35; //Let the smart current handler in the motorControllers handle it. 
     private static final double kMAX_VOLTAGE = 12;
-    private static final double kELEVATOR_ANGLE_COS = Math.cos(Math.toRadians(23));
+    private static final double kELEVATOR_ANGLE_SIN = Math.sin(Math.toRadians(23));
     
     private static final double kMIN_SHOOTER_HEIGHT = 0;
-    private static final double kMAX_SHOOTER_HEIGHT= 12;
+    private static final double kMAX_SHOOTER_HEIGHT= 0.47;
 
     private static final double kMIN_CLIMBER_HEIGHT = 0;
-    private static final double kMAX_CLIMBER_HEIGHT= 12;
+    private static final double kMAX_CLIMBER_HEIGHT= 0.7;
 
     private double kCLIMB_KG = 12;
-    private PIDController positionFeedBackController = new PIDController(0, 0, 0);
+    private PIDController positionFeedBackController = new PIDController(12, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
 
     public ElevatorIONeo() {
-        m_motor1.setInverted(true);
-        m_motor2.setInverted(true);
+        m_motor1.setInverted(false);
+        m_motor2.setInverted(false);
         m_motor1.clearFaults();
         m_motor2.clearFaults();
-        m_motor1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_motor2.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_motor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_motor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_motor2.follow(m_motor1);
 
     }
@@ -47,7 +47,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
         inputs.shooterHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
 
         inputs.climberHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
-                                                            kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_COS;
+                                                            kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_SIN;
         inputs.voltageOut = m_motor1.getAppliedOutput() * kMAX_VOLTAGE;
 
         inputs.reachedSetpoint = positionFeedBackController.atSetpoint();
@@ -86,7 +86,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             }
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             
-            m_motor1.setVoltage(outVoltage);
+            m_motor1.setVoltage(4);
             return;
         }
         // just move the climber up

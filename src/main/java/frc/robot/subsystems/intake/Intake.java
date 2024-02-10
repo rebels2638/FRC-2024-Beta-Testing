@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase{
     double desiredVelocityRadSec = 0;
 
     public Intake(IntakeIO io)  {
-        this.io = io;
+        this.io = io;   
         velocityFeedBackController = new PIDController(0.02,0,0); // 3,0,1.77
         velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
         velocityFeedForwardController = new SimpleMotorFeedforward(0.005, .1, 0);
@@ -34,12 +34,12 @@ public class Intake extends SubsystemBase{
         Logger.processInputs("Intake", inputs);
 
         Logger.recordOutput("Pivot/desiredVelocityRadSec", desiredVelocityRadSec);
-        io.setVelocityRadSec(desiredVelocityRadSec, inputs.velocityRadSec);
+        io.setVelocityRadSec(desiredVelocityRadSec);
     }
 
     public void setVelocityRadSec(double velo) {
         Logger.recordOutput("Intake/desiredVelocityRadSec", velo);
-        io.setVelocityRadSec(velo, inputs.velocityRadSec);
+        io.setVelocityRadSec(velo);
         return;
     }
 

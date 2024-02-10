@@ -17,7 +17,7 @@ public class IntakeIOSim extends SubsystemBase implements IntakeIO {
 
     @Override
     // sould be called periodically
-    public void setVelocityRadSec(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {
+    public void setVelocityRadSec(double goalVelocityRadPerSec) {
         desiredVelocityRadSec = goalVelocityRadPerSec;
     } 
 

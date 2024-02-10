@@ -15,7 +15,7 @@ public interface IntakeIO {
 
     public default void updateInputs(IntakeIOInputs inputs) {}
 
-    public default void setVelocityRadSec(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {}
+    public default void setVelocityRadSec(double goalVelocityRadPerSec) {}
 
     public default void configureController(SimpleMotorFeedforward vff, PIDController vfb) {}
 
