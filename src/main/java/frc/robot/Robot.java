@@ -58,10 +58,10 @@ public class Robot extends LoggedRobot {
 
       // Replaying a log, set up replay source
       case REPLAY:
-        setUseTiming(true);
+        setUseTiming(false);
         String logPath = LogFileUtil.findReplayLog();
         Logger.setReplaySource(new WPILOGReader(logPath));
-        Logger.addDataReceiver(new NT4Publisher());
+        // Logger.addDataReceiver(new NT4Publisher());
         Logger.addDataReceiver(new WPILOGWriter(logPath));
         break;
     }
