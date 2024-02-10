@@ -10,7 +10,6 @@ import frc.robot.commands.pivot.PivotToTorus;
 import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
-import frc.robot.subsystems.shooter.Shooter;
 
 public class IntakeNote extends Command {
     private final Intake intakeSubsystem;
@@ -32,7 +31,7 @@ public class IntakeNote extends Command {
 
             commandGroup.schedule();
     }
-    
+
     @Override
     public boolean isFinished() {
         return true;
