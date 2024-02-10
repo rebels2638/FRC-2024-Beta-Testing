@@ -18,12 +18,11 @@ public class Shooter extends SubsystemBase{
     SimpleMotorFeedforward velocityFeedForwardController;
 
     double desiredVelocityRadSec = 0;
-
     public Shooter(ShooterIO io)  {
         this.io = io;
-        velocityFeedBackController = new PIDController(0, 0, 0);
+        velocityFeedBackController = new PIDController(1, 0, 0);
         velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
-        velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
+        velocityFeedForwardController = new SimpleMotorFeedforward(0.5, 0, 6);
         io.configureController(velocityFeedForwardController, velocityFeedBackController);
     }
 
@@ -33,7 +32,7 @@ public class Shooter extends SubsystemBase{
         Logger.processInputs("Shooter", inputs);
 
         Logger.recordOutput("Shooter/desiredVelocityRadSec", desiredVelocityRadSec);
-        io.setVelocityRadSec(desiredVelocityRadSec, inputs.velocityRadSec);
+        io.setVelocityRadSec(desiredVelocityRadSec);
     }
 
     public void setVelocityRadSec(double velo) {
@@ -55,7 +54,11 @@ public class Shooter extends SubsystemBase{
     }
     
     public boolean reachedSetpoint() {
-        return io.reachedSetpoint();
+        return inputs.reachedSetpoint;
+    }
+
+    public boolean inShooter() {
+        return inputs.inShooter;
     }
 
 }

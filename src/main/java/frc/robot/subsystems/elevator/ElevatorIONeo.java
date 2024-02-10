@@ -15,8 +15,8 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kSproketDiameterMeters = 0.035;
     private static final double kFIRST_STAGE_TO_SECOND = 2;
     private static final double kSECOND_STAGE_TO_THIRD = 2;
-    private CANSparkMax m_motor1 = new CANSparkMax(15, CANSparkMax.MotorType.kBrushless); 
-    private CANSparkMax m_motor2 = new CANSparkMax(16, CANSparkMax.MotorType.kBrushless);
+    private CANSparkMax m_motor1 = new CANSparkMax(18, CANSparkMax.MotorType.kBrushless); 
+    private CANSparkMax m_motor2 = new CANSparkMax(19, CANSparkMax.MotorType.kBrushless);
     private static final double kMAX_CURRENT_AMPS = 35;
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_COS = Math.cos(Math.toRadians(23));

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pivot extends SubsystemBase{
 
-    private static final double kRadPositionTolerance = Math.toRadians(8);
+    private static final double kRadPositionTolerance = Math.toRadians(4);
 
     private final PivotIO io;
     private final PivotIOInputsAutoLogged inputs = new PivotIOInputsAutoLogged();
@@ -19,16 +19,15 @@ public class Pivot extends SubsystemBase{
 
     PIDController velocityFeedBackController;
     ArmFeedforward velocityFeedForwardController;
-
+    double desiredDegAngle = 0;
     public Pivot(PivotIO io)  {
         this.io = io;
         positionFeedBackController = new PIDController(3, 0, 0);
-        positionFeedForwardController = new ArmFeedforward(0, 0, 0);
+        positionFeedForwardController = new ArmFeedforward(0.0,-.4, 6); // 8
         positionFeedBackController.setTolerance(kRadPositionTolerance);
 
         velocityFeedBackController = new PIDController(0, 0, 0);
         velocityFeedForwardController = new ArmFeedforward(0, 0, 0);
-
 
         io.configureController(positionFeedForwardController, positionFeedBackController,
             velocityFeedForwardController, velocityFeedBackController);
@@ -38,12 +37,13 @@ public class Pivot extends SubsystemBase{
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Pivot", inputs);
+
+        Logger.recordOutput("Pivot/desiredDegAngle", desiredDegAngle);
+        io.setPosition(Math.toRadians(desiredDegAngle));
     }
 
     public void setDegAngle(double angle) {
-        Logger.recordOutput("Pivot/desiredDegAngle", angle);
-        io.setPosition(Math.toRadians(angle));
-        return;
+        desiredDegAngle = angle;
     }
 
     public void setVelocityControlMode(boolean b){  
@@ -51,7 +51,7 @@ public class Pivot extends SubsystemBase{
     };
 
     public void setVelocitySetPoint(double goalVelocityRadPerSec){
-        io.setVelocity(goalVelocityRadPerSec, inputs.velocityRadSec);
+        io.setVelocity(goalVelocityRadPerSec);
         return;
     }
     public void setVoltage(double voltage){
@@ -72,5 +72,8 @@ public class Pivot extends SubsystemBase{
     }
     public boolean reachedSetpoint() {
         return inputs.reachedSetpoint;
+    }
+    public void toggleMode() {
+        io.toggleMode();
     }
 }

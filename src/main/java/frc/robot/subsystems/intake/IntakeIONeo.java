@@ -6,11 +6,12 @@ import com.revrobotics.CANSparkMax;
 // import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.Rev2mDistanceSensor;
 
 public class IntakeIONeo extends SubsystemBase implements IntakeIO {
-    private final double kMotorToOutputShaftRatio = 4;
+    private final double kMotorToOutputShaftRatio = 0.25;
     private CANSparkMax m_motor = new CANSparkMax(16, CANSparkMax.MotorType.kBrushless); 
 
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
@@ -18,6 +19,8 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
 
     private Rev2mDistanceSensor distanceSensor;
     private double distanceTolerance;
+
+    private DigitalInput lineBreakSensor; 
 
     private static final double kMAX_VOLTAGE = 12;
 
@@ -28,12 +31,14 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kMillimeters, Rev2mDistanceSensor.RangeProfile.kDefault);
         distanceTolerance = 0.57; //Approximate distance assuming some tolerance, CHECK AGAIN
         distanceSensor.setEnabled(true);
+
+        lineBreakSensor = new DigitalInput(0);
         // distanceSensor.setAutomaticMode(true); << Probably not required but keep note that we need this if we have several of these 2m dist devices
     }
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
+        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2; // we divide by 60 because the motor out is in RPM
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
         inputs.inIntake = inIntake();
     }
@@ -56,7 +61,7 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         }
         Logger.recordOutput("Intake/voltageOut", outVoltage);
         
-        m_motor.setVoltage(feedForwardVoltage + feedBackControllerVoltage);
+        m_motor.setVoltage(outVoltage);
 
     } 
 
@@ -70,10 +75,13 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         velocityFeedBackController = vfb;
         velocityFeedForwardController = vff;
     }
-
-    private boolean inIntake() {
+    
+    public boolean inIntake() {
         // TODO: WRITE THE BEAM BRAKE CODE
         //Valid range(?) check aka 2m or less
+
+
+        /* //Uncomment this whenever you rhe 2mDistance sensor is there
         if(distanceSensor.isRangeValid()){
             //distanceSensor.setMeasurementPeriod();
             //Using default measurementperiod, we get its range at that moment.
@@ -83,10 +91,18 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
             return false;
         }
         else{
-            System.out.println("Out of range");
+            // System.out.println("Out of range");
             return false;
         }
-        
+        */
+
+        if(!lineBreakSensor.get()){
+            return true; //Line is broken
+        }else{
+            return false; //Line is NOT broken
+        }
+
+
     }
 
 }

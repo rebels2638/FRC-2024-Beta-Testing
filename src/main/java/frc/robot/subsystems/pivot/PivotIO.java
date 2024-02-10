@@ -17,14 +17,16 @@ public interface PivotIO {
 
     public default void updateInputs(PivotIOInputs inputs) {}
 
-    public default void setPosition(double goalPositionRad, double currentRadAngle) {}
+    public default void setPosition(double goalPositionRad) {}
 
-    public default void setVelocity(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {}
+    public default void setVelocity(double goalVelocityRadPerSec) {}
 
     public default void configureController(ArmFeedforward pff, PIDController pfb, 
                                                     ArmFeedforward vff, PIDController vfb) {}
     public default void setVoltage(double voltage) {}
 
     public default void zeroAngle() {}
+
+    public default void toggleMode() {}
     
 }

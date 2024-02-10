@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase{
 
-    private static final double kVelocityRadSecTolerance = Math.toRadians(3);
+    private static final double kVelocityRadSecTolerance = Math.toRadians(.1);
 
     private final IntakeIO io;
     private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
@@ -20,9 +20,9 @@ public class Intake extends SubsystemBase{
 
     public Intake(IntakeIO io)  {
         this.io = io;
-        velocityFeedBackController = new PIDController(0, 0, 0);
+        velocityFeedBackController = new PIDController(0.02,0,0); // 3,0,1.77
         velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
-        velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
+        velocityFeedForwardController = new SimpleMotorFeedforward(0.005, .1, 0);
         io.configureController(velocityFeedForwardController, velocityFeedBackController);
     }
 
@@ -38,7 +38,8 @@ public class Intake extends SubsystemBase{
     }
 
     public void setVelocityRadSec(double velo) {
-        desiredVelocityRadSec = velo;
+        Logger.recordOutput("Intake/desiredVelocityRadSec", velo);
+        io.setVelocityRadSec(velo, inputs.velocityRadSec);
         return;
     }
 

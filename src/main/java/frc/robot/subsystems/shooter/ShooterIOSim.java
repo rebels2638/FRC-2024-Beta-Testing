@@ -4,7 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShooterOSim extends SubsystemBase implements ShooterIO {
+public class ShooterIOSim extends SubsystemBase implements ShooterIO {
 
     double desiredVelocityRadSec = 0;
 
@@ -15,7 +15,7 @@ public class ShooterOSim extends SubsystemBase implements ShooterIO {
 
     @Override
     // sould be called periodically
-    public void setVelocityRadSec(double goalVelocityRadPerSec, double currentVelocityRadPerSec) {
+    public void setVelocityRadSec(double goalVelocityRadPerSec) {
         desiredVelocityRadSec = goalVelocityRadPerSec;
     } 
 
@@ -25,11 +25,6 @@ public class ShooterOSim extends SubsystemBase implements ShooterIO {
 
     @Override
     public void configureController(SimpleMotorFeedforward vff, PIDController vfb ) {
-    }
-
-    @Override
-    public boolean reachedSetpoint() {
-        return true;
     }
 
 }
