@@ -93,7 +93,7 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.09;
   }
 
-  public static final class FeildConstants {
+  public static final class FieldConstants {
     public static final Translation2d[] autoAlignTranslationArr = 
       { new Translation2d(1.77, 0.50),
       new Translation2d(1.77, 1.07),

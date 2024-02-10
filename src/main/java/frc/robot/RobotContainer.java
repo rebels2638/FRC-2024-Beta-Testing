@@ -21,6 +21,8 @@ import frc.robot.commands.pivot.PivotToTorus;
 import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterWindup;
+import frc.robot.commands.shooter.ShooterToggle;
+import frc.robot.commands.Intake.IntakeToggle;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -164,6 +166,8 @@ public class RobotContainer {
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
 
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
+    intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
     
     // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));

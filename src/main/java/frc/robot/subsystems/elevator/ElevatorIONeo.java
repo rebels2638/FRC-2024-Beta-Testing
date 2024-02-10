@@ -3,8 +3,6 @@ package frc.robot.subsystems.elevator;
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -57,6 +55,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     // sould be called periodically
     // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
     public void setHeightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterHeight, boolean isClimbing) {
+        // cheking for over extension
         if (isShooterHeight) {
             if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
                 goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
@@ -71,7 +70,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
         }
         
         if (isShooterHeight) {
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters - currentPositionMeters, 0);
+            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, 0);
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
@@ -95,7 +94,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
 
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters - currentPositionMeters, 0);
+            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, 0);
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
@@ -112,7 +111,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
             
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters - currentPositionMeters, 0);
+            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, 0);
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters) + kCLIMB_KG;
