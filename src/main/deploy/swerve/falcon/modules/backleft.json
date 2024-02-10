@@ -22,5 +22,6 @@
     "location": {
       "front": -15,
       "left": 15
-    }
+    },
+    "useCosineCompensator" : false
   }
