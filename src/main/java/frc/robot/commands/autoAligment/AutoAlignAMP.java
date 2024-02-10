@@ -18,9 +18,12 @@ public class AutoAlignAMP extends Command {
         addRequirements(swerveSubsystem);
     }
     // Called when the command is initially scheduled.
+    /**
+     * Builds a follow path holonomic path using field constants.
+     */
     @Override
     public void initialize() {
-        followPathHolonomic = AutoBuilder.pathfindToPose(Constants.FeildConstants.autoAlignAMPPose, new PathConstraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION, 
+        followPathHolonomic = AutoBuilder.pathfindToPose(Constants.FieldConstants.autoAlignAMPPose, new PathConstraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION, 
             Constants.Auton.MAX_ANGULAR_VELO_RPS, Constants.Auton.MAX_ANGULAR_ACCEL_RPS_SQUARED));
         CommandScheduler.getInstance().schedule(followPathHolonomic);
     }

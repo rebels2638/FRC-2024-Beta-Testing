@@ -22,11 +22,11 @@ public class AutoAlignTrap extends Command {
     @Override
     public void initialize() {
         Pose2d currentPose = swerveSubsystem.getPose();
-        Pose2d bestPose2d = Constants.FeildConstants.autoAlignTrapPose[0];
+        Pose2d bestPose2d = Constants.FieldConstants.autoAlignTrapPose[0];
         for (int i = 1; i < 3; i++) {
-            double dist = calculateDistance(currentPose, Constants.FeildConstants.autoAlignTrapPose[i]);
+            double dist = calculateDistance(currentPose, Constants.FieldConstants.autoAlignTrapPose[i]);
             if (dist < calculateDistance(currentPose, bestPose2d)) {
-                bestPose2d = Constants.FeildConstants.autoAlignTrapPose[i];
+                bestPose2d = Constants.FieldConstants.autoAlignTrapPose[i];
             }
         }
 
