@@ -36,16 +36,13 @@ public class Pivot extends SubsystemBase{
 
     @Override
     public void periodic() {
-        io.configureController(positionFeedForwardController, positionFeedBackController,
-            velocityFeedForwardController, velocityFeedBackController);
-
         io.updateInputs(inputs);
         Logger.processInputs("Pivot", inputs);
     }
 
     public void setDegAngle(double angle) {
         Logger.recordOutput("Pivot/desiredDegAngle", angle);
-        io.setPosition(Math.toRadians(angle), inputs.positionRad);
+        io.setPosition(Math.toRadians(angle));
         return;
     }
 

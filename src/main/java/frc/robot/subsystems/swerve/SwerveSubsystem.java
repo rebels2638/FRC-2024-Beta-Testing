@@ -174,7 +174,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Pose2d getPose()
   {
-    return inputs.pose;
+    return new Pose2d(new Translation2d(inputs.pose[0], inputs.pose[1]), new Rotation2d(inputs.pose[2]));
   }
 
   /**
@@ -201,7 +201,7 @@ public class SwerveSubsystem extends SubsystemBase
    * @return The yaw angle
    */
   public Rotation2d getYaw() {
-    return swerveDrive.getYaw();
+    return new Rotation2d(inputs.yaw);
   }
 
   /**
@@ -239,7 +239,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public ChassisSpeeds getFieldVelocity()
   {
-    return inputs.fieldVelocity;
+    return new ChassisSpeeds(inputs.fieldVelocity[0], inputs.fieldVelocity[1], inputs.fieldVelocity[2]);
   }
 
   /**
@@ -249,7 +249,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public ChassisSpeeds getRobotVelocity()
   {
-    return inputs.robotVelocity;
+    return new ChassisSpeeds(inputs.robotVelocity[0], inputs.robotVelocity[1], inputs.robotVelocity[2]);
   }
 
   /**
@@ -286,7 +286,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Rotation2d getPitch()
   {
-    return inputs.pitch;
+    return new Rotation2d(inputs.pitch);
   }
 
   /**
