@@ -31,7 +31,7 @@ import frc.robot.lib.swervelib.math.Matter;
  */
 public final class Constants
 {
-  public static final Mode currentMode = Mode.REAL;
+  public static final Mode currentMode = Mode.SIM;
 
   public static enum Mode {
     /** Running on a real robot. */
@@ -45,7 +45,7 @@ public final class Constants
   }
 
   public static final double ROBOT_MASS = (60) * 0.453592; // 32lbs * kg per pound
-  public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
+  public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(0)), ROBOT_MASS);
   public static final double LOOP_TIME  = 0.2; //s, 20ms + 110ms sprk max velocity lag
 
   public static final class Telop {

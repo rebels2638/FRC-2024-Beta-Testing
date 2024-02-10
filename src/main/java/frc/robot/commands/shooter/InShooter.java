@@ -1,26 +1,25 @@
 package frc.robot.commands.shooter;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class ShooterWindReverse extends Command {
-    
-    private double velocitySetPoint = -2;
-    private final Shooter shooterSubsystem;
+public class InShooter extends Command{
+    private Shooter shooterSubsystem;
+    private boolean isIn = false;
 
-    public ShooterWindReverse(Shooter shooterSubsystem){
+    public InShooter(Shooter shooterSubsystem){
         this.shooterSubsystem = shooterSubsystem;
         addRequirements(shooterSubsystem);
     }
-
     @Override
     public void execute(){
-        shooterSubsystem.setVelocityRadSec(velocitySetPoint);
+        isIn = shooterSubsystem.inShooter();
     }
-
+    @Override
+    public void end(boolean isInterrupted){
+        return;
+    }
     @Override
     public boolean isFinished(){
-        return true;
+        return isIn;
     }
-    
 }

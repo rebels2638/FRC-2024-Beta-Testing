@@ -129,7 +129,7 @@ public class SwerveSubsystem extends SubsystemBase
   public void periodic()
   {
     io.updateInputs(inputs);
-    Logger.processInputs("Swerve", inputs);
+    Logger.processInputs("swerve", inputs);
 
     swerveDrive.updateOdometry();
 

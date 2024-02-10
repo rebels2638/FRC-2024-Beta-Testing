@@ -101,8 +101,6 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         }else{
             return false; //Line is NOT broken
         }
-
-
     }
 
 }
