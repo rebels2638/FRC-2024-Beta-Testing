@@ -21,6 +21,8 @@ import frc.robot.commands.pivot.PivotToTorus;
 import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterWindup;
+import frc.robot.commands.shooter.ShooterToggle;
+import frc.robot.commands.Intake.IntakeToggle;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -164,20 +166,22 @@ public class RobotContainer {
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
 
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
+    intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
     
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
-    this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsytem));
-    this.xboxDriver.getAButton().onTrue(new StopIntake(intakeSubsystem));
+    // this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsytem));
+    // this.xboxDriver.getAButton().onTrue(new StopIntake(intakeSubsystem));
     
     this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
     this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivotSubsytem));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(()-> pivot.toggleMode()));
     this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivotSubsytem.zeroAngle()));
 
-    this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
-    this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
+    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
+    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
 
     // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
     //this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
