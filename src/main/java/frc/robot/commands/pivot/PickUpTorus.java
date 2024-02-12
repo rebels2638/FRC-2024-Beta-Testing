@@ -22,7 +22,7 @@ public class PickUpTorus extends Command {
         SequentialCommandGroup group = new SequentialCommandGroup(
             //Race the rolling intake in and InIntake, rolling intake never finishes, therefore it only ends when the InIntake ends. 
             new ParallelCommandGroup(new ParallelRaceGroup(new RollIntakeIn(intakeSubsystem, pivotSubsystem), new InIntake(intakeSubsystem)),
-             new PivotToTorus(pivotSubsystem))
+            new PivotToTorus(pivotSubsystem))
         );
         group.schedule();
     }
