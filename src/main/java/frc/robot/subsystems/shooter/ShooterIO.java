@@ -21,7 +21,4 @@ public interface ShooterIO {
     public default void configureController(SimpleMotorFeedforward vff, PIDController vfb) {}
 
     public default void setVoltage(double voltage) {}
-
-    public void setFlywheelVelocity(double velocity) {}
-    public double getFlywheelVelocity() {}
 }
