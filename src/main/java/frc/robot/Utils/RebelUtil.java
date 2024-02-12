@@ -34,7 +34,7 @@ public class RebelUtil {
     }
 
     public boolean driveRobotToPose(Pose2d pose) {
-        this.followPathHolonomic = AutoBuilder.pathfindToPose(pose, new PathConstraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION, 
+        Command followPathHolonomic = AutoBuilder.pathfindToPose(pose, new PathConstraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION, 
             Constants.Auton.MAX_ANGULAR_VELO_RPS, Constants.Auton.MAX_ANGULAR_ACCEL_RPS_SQUARED));
 
         CommandScheduler.getInstance().schedule(followPathHolonomic);

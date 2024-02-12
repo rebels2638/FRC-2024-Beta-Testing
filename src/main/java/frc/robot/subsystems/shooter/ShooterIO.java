@@ -22,6 +22,6 @@ public interface ShooterIO {
 
     public default void setVoltage(double voltage) {}
 
-    public void setFlywheelVelocity(double velocity) {}
-    public double getFlywheelVelocity() {}
+    public default void setFlywheelVelocity(double velocity) {}
+    public default double getFlywheelVelocity() {return 0.0;}
 }
