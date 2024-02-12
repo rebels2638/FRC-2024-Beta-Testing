@@ -23,7 +23,7 @@ public class Elevator extends SubsystemBase{
         this.io = io;
         positionFeedBackController = new PIDController(0, 0, 0); // 0 0 0 
         //
-        positionFeedForwardController = new ElevatorFeedforward(4, 0, 0); //0.33, 0.14, 0
+        positionFeedForwardController = new ElevatorFeedforward(0.348, 0.7, 0); //0.33, 0.14, 0
 
         
         // velocityFeedBackController = new PIDController(0, 0, 0);

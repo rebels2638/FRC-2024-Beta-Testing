@@ -14,6 +14,7 @@ import java.util.Optional;
 // import frc.robot.commands.pivot.RollIntake;
 // import frc.robot.commands.pivot.Turtle;
 import frc.robot.commands.drivetrain.AbsoluteFieldDrive;
+import frc.robot.commands.elevator.ElevatorControlRaw;
 import frc.robot.commands.elevator.MoveElevatorAMP;
 import frc.robot.commands.elevator.MoveElevatorTurtle;
 import frc.robot.commands.pivot.PivotController;
@@ -68,8 +69,6 @@ import frc.robot.subsystems.shooter.ShooterIOFalcon;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.commands.shooter.ShooterStop;
 
-
-
 // import frc.robot.commands.drivetrain.TeleopDrive;
 
 /**
@@ -94,9 +93,9 @@ public class RobotContainer {
   // private final AprilTagVision aprilTagVision;
   private SwerveSubsystem swerveSubsystem;
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
-  private final PivotController pivotController;
-  private final Intake intakeSubsystem;
-  private final Shooter shooterSubsystem;
+  // private final PivotController pivotController;
+  // private final Intake intakeSubsystem;
+  // private final Shooter shooterSubsystem;
   private final AutoRunner autoRunner;
   // private final int[] autoAlignTargetNum = {0};
   // private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
@@ -104,7 +103,7 @@ public class RobotContainer {
 
   private final Elevator elevatorSubsystem;
   private final PoseLimelight poseLimelightSubsystem; 
-  private final Pivot pivotSubsytem;
+  // private final Pivot pivotSubsytem;
   // private final AudioPlayer aPlayer;
 
   public RobotContainer() {
@@ -123,23 +122,24 @@ public class RobotContainer {
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
-        intakeSubsystem = new Intake(new IntakeIOSim() {});
+        // intakeSubsystem = new Intake(new IntakeIOSim() {});
 
-        shooterSubsystem = new Shooter(new ShooterIOSim());
+        // shooterSubsystem = new Shooter(new ShooterIOSim());
 
         elevatorSubsystem = new Elevator(new ElevatorIOSim());
 
-        pivotSubsytem = new Pivot(new PivotIOSim());
+        // pivotSubsytem = new Pivot(new PivotIOSim());
         break;
-        
+      
       case REPLAY:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
         
-        shooterSubsystem = new Shooter(new ShooterIO(){});
+        // shooterSubsystem = new Shooter(new ShooterIO(){});
 
-        intakeSubsystem = new Intake(new IntakeIO() {});
-        pivotSubsytem = new Pivot(new PivotIO() {});
+        // intakeSubsystem = new Intake(new IntakeIO() {});
+        // pivotSubsytem = new Pivot(new PivotIO() {});
+
         elevatorSubsystem = new Elevator(new ElevatorIO() {});
         break;
         
@@ -147,31 +147,33 @@ public class RobotContainer {
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
-        shooterSubsystem = new Shooter(new ShooterIOFalcon(){});
+        // shooterSubsystem = new Shooter(new ShooterIOFalcon(){});
 
-        intakeSubsystem = new Intake(new IntakeIONeo() {});
+        // intakeSubsystem = new Intake(new IntakeIONeo() {});
 
         elevatorSubsystem = new Elevator(new ElevatorIONeo());
 
-        pivotSubsytem = new Pivot(new PivotIONeo());
+        // pivotSubsytem = new Pivot(new PivotIONeo());
         break;
     }
+
     autoRunner = new AutoRunner(swerveSubsystem);
 
-    pivotController = new PivotController(pivotSubsytem, xboxOperator);
+    // pivotController = new PivotController(pivotSubsytem, xboxOperator);
 
     closedFieldAbsoluteDrive = new AbsoluteFieldDrive(swerveSubsystem,
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(),OperatorConstants.LEFT_X_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
 
-    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
-    intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
+    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    // shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
+    // intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
+    elevatorSubsystem.setDefaultCommand(new ElevatorControlRaw(elevatorSubsystem, xboxDriver));
     
     // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    //this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
-    //this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
+    // this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
+    // this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
     // this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsytem));
     // this.xboxDriver.getAButton().onTrue(new StopIntake(intakeSubsystem));
     
@@ -186,7 +188,7 @@ public class RobotContainer {
     // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
     //this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
     // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
-   // this.pivot.setDefaultCommand(pivotController);
+    // this.pivot.setDefaultCommand(pivotController);
     // this.xboxDriver.getAButton().onTrue(new Turtle(pivotSubsystem));
     // this.xboxDriver.getBButton().onTrue(new PivotToCube(pivotSubsystem));
 
@@ -194,6 +196,7 @@ public class RobotContainer {
     this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevatorSubsystem));
     this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevatorSubsystem));
     this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
+    
 
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
     // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));

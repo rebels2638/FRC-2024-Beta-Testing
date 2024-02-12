@@ -20,13 +20,13 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kELEVATOR_ANGLE_SIN = Math.sin(Math.toRadians(23));
     
     private static final double kMIN_SHOOTER_HEIGHT = 0;
-    private static final double kMAX_SHOOTER_HEIGHT= 0.47;
+    private static final double kMAX_SHOOTER_HEIGHT= 0.52;
 
     private static final double kMIN_CLIMBER_HEIGHT = 0;
     private static final double kMAX_CLIMBER_HEIGHT= 0.7;
 
     private double kCLIMB_KG = 12;
-    private PIDController positionFeedBackController = new PIDController(12, 0, 0);
+    private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
 
     public ElevatorIONeo() {
@@ -70,22 +70,18 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
         }
         
         if (isShooterHeight) {
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, 0);
+            
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
-            
+            double accel = feedBackControllerVoltage < 0 ? -1: 1;
+            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
+
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            
-            if (outVoltage > kMAX_VOLTAGE) {
-                outVoltage = 12;
-            }
-            else if (outVoltage < -kMAX_VOLTAGE) {
-                outVoltage = -12;
-            }
+            outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
+
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
-            
-            m_motor1.setVoltage(4);
+            m_motor1.setVoltage(outVoltage);
             return;
         }
         // just move the climber up
@@ -94,13 +90,21 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
 
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, 0);
+            double accel = 0;
+            if (goalPositionMeters > currentPositionMeters) {
+                accel = 0.1;
+            }
+            else if (goalPositionMeters < currentPositionMeters) {
+                accel = -0.1;
+            }
+            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            outVoltage = RebelUtil.constrain(outVoltage, 12, -12);
+            outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
+
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
             return;
@@ -111,25 +115,27 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
             
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, 0);
-            
+            double accel = 0;
+            if (goalPositionMeters > currentPositionMeters) {
+                accel = 0.1;
+            }
+            else if (goalPositionMeters < currentPositionMeters) {
+                accel = -0.1;
+            }
+            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);            
             positionFeedBackController.setSetpoint(goalPositionMeters);
-            double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters) + kCLIMB_KG;
+            double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            if (outVoltage > kMAX_VOLTAGE) {
-                outVoltage = 12;
-            }
-            else if (outVoltage < -kMAX_VOLTAGE) {
-                outVoltage = -12;
-            }
+            outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
+
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
         }
-        
     } 
 
     public void setVoltage(double voltage){
+        Logger.recordOutput("Elevator/voltageOut", voltage);
         m_motor1.setVoltage(voltage);
     }
 

@@ -2,8 +2,6 @@ package frc.robot.subsystems.swerve;
 
 import org.littletonrobotics.junction.AutoLog;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-
 public interface SwerveSubsystemIO {
     @AutoLog
     public static class SwerveSubsystemIOInputs {
