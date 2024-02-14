@@ -19,10 +19,10 @@ public class RollIntakeIn extends Command {
     @Override
     public void execute() { 
         if (pivotSubsystem.getDegAngle() < 45) {
-            intakeSubsystem.setVelocityRadSec(Math.toRadians(360 *2)); //Use radians directly.
+            intakeSubsystem.setVelocityRadSec(18); //Use radians directly.
         }
         else {
-            intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 2)); //Use radians directly.
+            intakeSubsystem.setVelocityRadSec(4); //Use radians directly.
         }
     }
     

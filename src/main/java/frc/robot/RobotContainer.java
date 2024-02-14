@@ -57,9 +57,9 @@ import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIONeo;
 import frc.robot.subsystems.intake.IntakeIOSim;
 import frc.robot.subsystems.elevator.ElevatorIOSim;
-import frc.robot.subsystems.limelight.PoseLimelight;
-import frc.robot.subsystems.limelight.PoseLimelightIO;
-import frc.robot.subsystems.limelight.PoseLimelightIOReal;
+// import frc.robot.subsystems.limelight.PoseLimelight;
+// import frc.robot.subsystems.limelight.PoseLimelightIO;
+// import frc.robot.subsystems.limelight.PoseLimelightIOReal;
 // import frc.robot.subsystems.limelight.PoseLimelightIOSim;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.pivot.PivotIO;
@@ -105,7 +105,7 @@ public class RobotContainer {
   // private AprilTagVision aprilTagVision;
 
   private final Elevator elevatorSubsystem;
-  private final PoseLimelight poseLimelightSubsystem; 
+  // private final PoseLimelight poseLimelightSubsystem; 
   private final Pivot pivotSubsystem;
   // private final AudioPlayer aPlayer;
 
@@ -118,11 +118,11 @@ public class RobotContainer {
     
     // not sim'ed or replayed
     // aPlayer = new AudioPlayer();
-    poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal() {});
+    // poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal() {});
 
     switch (Constants.currentMode) {
       case SIM:
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
         intakeSubsystem = new Intake(new IntakeIOSim() {});
@@ -135,7 +135,7 @@ public class RobotContainer {
         break;
       
       case REPLAY:
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
         
         shooterSubsystem = new Shooter(new ShooterIO(){});
@@ -147,7 +147,7 @@ public class RobotContainer {
         break;
         
       default:
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
         shooterSubsystem = new Shooter(new ShooterIOFalcon(){});

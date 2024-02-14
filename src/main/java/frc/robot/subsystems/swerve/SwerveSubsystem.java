@@ -29,7 +29,7 @@ import frc.robot.lib.swervelib.parser.SwerveDriveConfiguration;
 import frc.robot.lib.swervelib.parser.SwerveParser;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
-import frc.robot.subsystems.limelight.PoseLimelight;
+// import frc.robot.subsystems.limelight.PoseLimelight;
 
 
 public class SwerveSubsystem extends SubsystemBase
@@ -55,15 +55,15 @@ public class SwerveSubsystem extends SubsystemBase
    */
   //private static final SimpleMotorFeedforward FEEDFORWARD = new SimpleMotorFeedforward(0.16026, 0.0023745, 2.774E-05);
 
-  private PoseLimelight poseLimelightSubsystem;
+  // private PoseLimelight poseLimelightSubsystem;
   private SwerveSubsystemIO io;
   private SwerveSubsystemIOInputsAutoLogged inputs = new SwerveSubsystemIOInputsAutoLogged();
 
   private static final PIDController translationPIDController = new PIDController(0, 0, 0);
-  public SwerveSubsystem(File directory, PoseLimelight poseLimelightSubsystem)
+  public SwerveSubsystem(File directory/* , PoseLimelight poseLimelightSubsystem*/)
   {
     translationPIDController.setTolerance(0.6);
-    this.poseLimelightSubsystem = poseLimelightSubsystem;
+    // this.poseLimelightSubsystem = poseLimelightSubsystem;
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
@@ -133,9 +133,9 @@ public class SwerveSubsystem extends SubsystemBase
 
     swerveDrive.updateOdometry();
 
-    if (poseLimelightSubsystem.hasValidTargets()) {
-      swerveDrive.addVisionMeasurement(poseLimelightSubsystem.getEstimatedRobotPose(), poseLimelightSubsystem.getTimestampSeconds());
-    }
+    // if (poseLimelightSubsystem.hasValidTargets()) {
+    //   swerveDrive.addVisionMeasurement(poseLimelightSubsystem.getEstimatedRobotPose(), poseLimelightSubsystem.getTimestampSeconds());
+    // }
 
     
     //log all tlemetry to a log file

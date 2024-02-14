@@ -32,13 +32,13 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         // distanceTolerance = 0.57; //Approximate distance assuming some tolerance, CHECK AGAIN
         // distanceSensor.setEnabled(true);
 
-        lineBreakSensor = new DigitalInput(0);
+        lineBreakSensor = new DigitalInput(1);
         //distanceSensor.setAutomaticMode(true); << Probably not required but keep note that we need this if we have several of these 2m dist devices
     }
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2; // we divide by 60 because the motor out is in RPM
+        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
         inputs.inIntake = inIntake();
         currentVelocityRadPerSec = inputs.velocityRadSec;
@@ -62,23 +62,23 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
 
         double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
             
-        // if (outVoltage > kMAX_VOLTAGE) {
-        //     outVoltage = 12;
-        // }
-        // else if (outVoltage < -kMAX_VOLTAGE) {
-        //     outVoltage = -12;
-        // }
+        if (outVoltage > kMAX_VOLTAGE) {
+            outVoltage = 12;
+        }
+        else if (outVoltage < -kMAX_VOLTAGE) {
+            outVoltage = -12;
+        }
         Logger.recordOutput("Intake/voltageOut", outVoltage);
 
-        if (goalVelocityRadPerSec == 0) {
-            m_motor.setVoltage(0);
+        // if (goalVelocityRadPerSec == 0) {
+        //     m_motor.setVoltage(0);
 
-        }
-        else {
-            m_motor.setVoltage(8);
-        }
+        // }
+        // else {
+        //     m_motor.setVoltage(4);
+        // }
 
-        // m_motor.setVoltage(outVoltage);
+        m_motor.setVoltage(outVoltage);
 
     } 
 
