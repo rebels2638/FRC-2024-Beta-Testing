@@ -14,11 +14,11 @@ public class PivotToTorus extends Command {
 
     @Override
     public void execute() { 
-        pivotSubsystem.setDegAngle(78);
+        pivotSubsystem.setDegAngle(87);
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return pivotSubsystem.reachedSetpoint();
     }
 }

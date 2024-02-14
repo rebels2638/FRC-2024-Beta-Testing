@@ -5,9 +5,10 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 
-public class StopIntake extends Command {
+public class RollIntakeOut extends Command {
     private final Intake intakeSubsystem;
-    public StopIntake(Intake intakeSubsystem) {
+
+    public RollIntakeOut(Intake intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
 
         addRequirements(intakeSubsystem);
@@ -15,16 +16,16 @@ public class StopIntake extends Command {
 
     @Override
     public void execute() { 
-        intakeSubsystem.setVelocityRadSec(Math.toRadians(0)); //Use radians directly.
-        // System.out.println("CALLLEELDLEDLAKDJASBKND");
+        intakeSubsystem.setVelocityRadSec(Math.toRadians(-360 * 2)); //Use radians directly.
     }
+    
     @Override
     public void end(boolean isInterrupted){
-        intakeSubsystem.setVelocityRadSec(0);
+        // intakeSubsystem.setVelocityRadSec(0);
     }
 
     @Override
     public boolean isFinished() {
-        return intakeSubsystem.reachedSetpoint();
+        return false;
     }
 }

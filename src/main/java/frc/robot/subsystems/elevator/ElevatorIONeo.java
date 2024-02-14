@@ -29,6 +29,9 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
 
+    private double lastShooterHeightMeters;
+    private double lastClimberHeightMeters;
+
     public ElevatorIONeo() {
         m_motor1.setInverted(false);
         m_motor2.setInverted(false);
@@ -46,15 +49,27 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
         inputs.climberHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
                                                             kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_SIN;
+
         inputs.voltageOut = m_motor1.getAppliedOutput() * kMAX_VOLTAGE;
 
         inputs.reachedSetpoint = positionFeedBackController.atSetpoint();
+
+        lastClimberHeightMeters = inputs.climberHeightMeters;
+        lastShooterHeightMeters = inputs.shooterHeightMeters;
     }
 
     @Override
     // sould be called periodically
     // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
-    public void setHeightMeters(double goalPositionMeters, double currentPositionMeters, boolean isShooterHeight, boolean isClimbing) {
+    public void setHeightMeters(double goalPositionMeters, boolean isShooterHeight, boolean isClimbing) {
+        double currentPositionMeters;
+        if (isShooterHeight) {
+            currentPositionMeters = lastShooterHeightMeters;
+        }
+        else {
+            currentPositionMeters = lastClimberHeightMeters;
+        }
+        
         // cheking for over extension
         if (isShooterHeight) {
             if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 

@@ -8,7 +8,7 @@ public class InIntake extends Command{
 
     public InIntake(Intake intakeSubsystem){
         intakeNeo = intakeSubsystem;
-        addRequirements(intakeSubsystem);
+        // addRequirements(intakeSubsystem);
     }
     @Override
     public void execute(){

@@ -18,12 +18,16 @@ public class Elevator extends SubsystemBase{
     // ElevatorFeedforward velocityFeedForwardController; //Literally never gonna be used
     private static final double kPID_TOLERANCE_METERS = 0.01; //this is 1cm 
     private static final double kCLIMB_KG = 12;
+    
+    private double goalPositionMeters = 0;
+    private boolean isShooterHeight = true;
+    private boolean isClimbing = false;
 
     public Elevator(ElevatorIO io)  {
         this.io = io;
         positionFeedBackController = new PIDController(0, 0, 0); // 0 0 0 
         //
-        positionFeedForwardController = new ElevatorFeedforward(0.348, 0.7, 0); //0.33, 0.14, 0
+        positionFeedForwardController = new ElevatorFeedforward(0.348, 0, 0); //0.33, 0.14, 0
 
         
         // velocityFeedBackController = new PIDController(0, 0, 0);
@@ -38,20 +42,23 @@ public class Elevator extends SubsystemBase{
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Elevator", inputs);
-    }
 
-    public void setHeightMeters(double goalPositionMeters, boolean isShooterHight, boolean isClimbing) {
-        if (isShooterHight) {
+        if (isShooterHeight) {
             Logger.recordOutput("Elevator/desiredShooterHeight", goalPositionMeters);
-            io.setHeightMeters(goalPositionMeters, inputs.shooterHeightMeters, isShooterHight, isClimbing);
+            io.setHeightMeters(goalPositionMeters, isShooterHeight, isClimbing);
         }
         else {
             Logger.recordOutput("Elevator/desiredClimberHeight", goalPositionMeters);
-            io.setHeightMeters(goalPositionMeters, inputs.climberHeightMeters, isShooterHight, isClimbing);
+            io.setHeightMeters(goalPositionMeters, isShooterHeight, isClimbing);
         }
         Logger.recordOutput("Elavator/isClimbing", isClimbing);
     
-        return;
+    }
+
+    public void setHeightMeters(double goalPositionMeters, boolean isShooterHeight, boolean isClimbing) {
+        this.goalPositionMeters = goalPositionMeters;
+        this.isShooterHeight = isShooterHeight;
+        this.isClimbing = isClimbing;
     }
 
     public void setVoltage(double voltage){

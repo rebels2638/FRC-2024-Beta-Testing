@@ -43,8 +43,10 @@ import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
 import frc.robot.commands.Intake.RollIntakeIn;
+import frc.robot.commands.Intake.RollIntakeOut;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.audio.*;
+import frc.robot.commands.compositions.IntakeNote;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
@@ -93,9 +95,10 @@ public class RobotContainer {
   // private final AprilTagVision aprilTagVision;
   private SwerveSubsystem swerveSubsystem;
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
-  // private final PivotController pivotController;
-  // private final Intake intakeSubsystem;
-  // private final Shooter shooterSubsystem;
+  private final PivotController pivotController;
+  
+  private final Intake intakeSubsystem;
+  private final Shooter shooterSubsystem;
   private final AutoRunner autoRunner;
   // private final int[] autoAlignTargetNum = {0};
   // private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
@@ -103,7 +106,7 @@ public class RobotContainer {
 
   private final Elevator elevatorSubsystem;
   private final PoseLimelight poseLimelightSubsystem; 
-  // private final Pivot pivotSubsytem;
+  private final Pivot pivotSubsystem;
   // private final AudioPlayer aPlayer;
 
   public RobotContainer() {
@@ -122,23 +125,23 @@ public class RobotContainer {
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
-        // intakeSubsystem = new Intake(new IntakeIOSim() {});
+        intakeSubsystem = new Intake(new IntakeIOSim() {});
 
-        // shooterSubsystem = new Shooter(new ShooterIOSim());
+        shooterSubsystem = new Shooter(new ShooterIOSim());
 
         elevatorSubsystem = new Elevator(new ElevatorIOSim());
 
-        // pivotSubsytem = new Pivot(new PivotIOSim());
+        pivotSubsystem = new Pivot(new PivotIOSim());
         break;
       
       case REPLAY:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
         
-        // shooterSubsystem = new Shooter(new ShooterIO(){});
+        shooterSubsystem = new Shooter(new ShooterIO(){});
 
-        // intakeSubsystem = new Intake(new IntakeIO() {});
-        // pivotSubsytem = new Pivot(new PivotIO() {});
+        intakeSubsystem = new Intake(new IntakeIO() {});
+        pivotSubsystem = new Pivot(new PivotIO() {});
 
         elevatorSubsystem = new Elevator(new ElevatorIO() {});
         break;
@@ -147,55 +150,60 @@ public class RobotContainer {
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon"), poseLimelightSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
-        // shooterSubsystem = new Shooter(new ShooterIOFalcon(){});
+        shooterSubsystem = new Shooter(new ShooterIOFalcon(){});
 
-        // intakeSubsystem = new Intake(new IntakeIONeo() {});
+        intakeSubsystem = new Intake(new IntakeIONeo() {});
 
         elevatorSubsystem = new Elevator(new ElevatorIONeo());
 
-        // pivotSubsytem = new Pivot(new PivotIONeo());
+        pivotSubsystem = new Pivot(new PivotIONeo());
         break;
     }
 
     autoRunner = new AutoRunner(swerveSubsystem);
 
-    // pivotController = new PivotController(pivotSubsytem, xboxOperator);
+    pivotController = new PivotController(pivotSubsystem, xboxOperator);
 
     closedFieldAbsoluteDrive = new AbsoluteFieldDrive(swerveSubsystem,
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(),OperatorConstants.LEFT_X_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
 
-    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+
     // shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
     // intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
-    elevatorSubsystem.setDefaultCommand(new ElevatorControlRaw(elevatorSubsystem, xboxDriver));
+    // elevatorSubsystem.setDefaultCommand(new ElevatorControlRaw(elevatorSubsystem, xboxDriver));
     
-    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     // this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
-    // this.xboxDriver.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsytem));
-    // this.xboxDriver.getAButton().onTrue(new StopIntake(intakeSubsystem));
+    this.xboxOperator.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsystem));
+    this.xboxOperator.getAButton().onTrue(new StopIntake(intakeSubsystem));
+    this.xboxOperator.getXButton().onTrue(new RollIntakeOut(intakeSubsystem));
+
     
     // this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
     // this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivotSubsytem));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(()-> pivot.toggleMode()));
     // this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivotSubsytem.zeroAngle()));
 
-    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
-    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
+    this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
+    this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
 
+    this.xboxDriver.getAButton().onTrue(new IntakeNote(intakeSubsystem, pivotSubsystem));
     // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
-    //this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
     // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
     // this.pivot.setDefaultCommand(pivotController);
-    // this.xboxDriver.getAButton().onTrue(new Turtle(pivotSubsystem));
-    // this.xboxDriver.getBButton().onTrue(new PivotToCube(pivotSubsystem));
+    this.xboxDriver.getLeftBumper().onTrue(new PivotTurtle(pivotSubsystem));
+    this.xboxDriver.getRightBumper().onTrue(new PivotToTorus(pivotSubsystem)); 
+
+
 
     // //TODO: ELEVATOR
-    this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevatorSubsystem));
-    this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevatorSubsystem));
-    this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
+    // this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevatorSubsystem));
+    // this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevatorSubsystem));
+    // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
     
 
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
