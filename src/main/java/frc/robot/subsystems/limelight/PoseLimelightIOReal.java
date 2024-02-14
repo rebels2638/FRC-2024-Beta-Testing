@@ -3,6 +3,7 @@ package frc.robot.subsystems.limelight;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Utils.LimelightHelpers;
+import frc.robot.Utils.LimelightHelpers.Results;
 
 public class PoseLimelightIOReal implements PoseLimelightIO {
     private NetworkTable table;
@@ -25,12 +26,14 @@ public class PoseLimelightIOReal implements PoseLimelightIO {
     }
 
     public void setID(int number) {
-        for (int i = 0; getID() != number) && i < 6; i++)
+        for (int i = 0; getID() != number && i < 6; i++){
             Results.targets_Fiducials.getNext();
+        }
+            
     }
 
     public double getID() {
-        return Results.getFiducialID("limelight");
+        return LimelightHelpers.getFiducialID("limelight");
     }
 
     public double getV() { return inputs.tv; }
