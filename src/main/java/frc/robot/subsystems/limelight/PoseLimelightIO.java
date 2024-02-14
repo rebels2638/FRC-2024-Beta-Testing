@@ -13,7 +13,7 @@ public interface PoseLimelightIO {
 
     public default void updateInputs(PoseLimelightIOInputs inputs) {}
 
-    public void setID();
+    // public void setID();
 
     public double getID();
 

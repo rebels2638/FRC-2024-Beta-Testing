@@ -8,6 +8,8 @@ import frc.robot.Utils.LimelightHelpers.Results;
 public class PoseLimelightIOReal implements PoseLimelightIO {
     private NetworkTable table;
     private int pipelineNumber = 0; // configure in limelight application
+    private Results results = new Results();
+    private PoseLimelightIOInputs inputs;
 
     public PoseLimelightIOReal() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -15,6 +17,7 @@ public class PoseLimelightIOReal implements PoseLimelightIO {
     }
 
     public void updateInputs(PoseLimelightIOInputs inputs) {
+        this.inputs = inputs;
         inputs.botpose_wpiblue = table.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
         inputs.botpose_wpired = table.getEntry("botpose_wpired").getDoubleArray(new double[6]);
         inputs.cl = table.getEntry("cl").getDouble(0);
@@ -26,10 +29,9 @@ public class PoseLimelightIOReal implements PoseLimelightIO {
     }
 
     public void setID(int number) {
-        for (int i = 0; getID() != number && i < 6; i++){
-            Results.targets_Fiducials.getNext();
-        }
-            
+        // for (int i = 0; getID() != number && i < 6; i++){
+        //     results.targets_Fiducials.getNext();
+        // }
     }
 
     public double getID() {

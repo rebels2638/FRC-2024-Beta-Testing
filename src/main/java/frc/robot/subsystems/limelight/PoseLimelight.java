@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.limelight.PoseLimelightIO.PoseLimelightIOInputs;
+import java.util.Optional;
 
 public class PoseLimelight extends SubsystemBase{
     private final PoseLimelightIOInputs inputs = new PoseLimelightIOInputs();
     private PoseLimelightIO io;
 
-    public final var alliance = DriverStation.getAlliance();
+    public final Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 
     // apriltag constants,, fix all 
     private final Pose3d defaultShotPoint;
@@ -27,12 +28,14 @@ public class PoseLimelight extends SubsystemBase{
 
     public PoseLimelight(PoseLimelightIO poseLimelightIOReal) {
         this.io = poseLimelightIOReal;
+        defaultShotPoint = (alliance.get() == DriverStation.Alliance.Red) ? new Pose3d(16.579342, 5.547868, 2.1, new Rotation3d(0, 0, 0)) : new Pose3d(-0.0381, 5.547868, 2.1, new Rotation3d(0, 0, 0));
+
     }
 
     @Override
     public void periodic() {
         io.updateInputs(inputs);
-        Logger.processInputs("PoseLimelight", inputs);
+        // Logger.processInputs("PoseLimelight", inputs);
     }
 
     public boolean hasValidTargets() {
@@ -53,17 +56,16 @@ public class PoseLimelight extends SubsystemBase{
 
     // apriltag methods
     public Pose3d getValidShotPoint() {
-        defaultShotPoint = (alliance.get() == DriverStation.Alliance.Red) ? new Pose3d(16.579342, 5.547868, 2.1, new Rotation3d(0, 0, 0) : new Pose3d(-0.0381, 5.547868, 2.1, new Rotation3d(0, 0, 0))
-
+        
         double x = defaultShotPoint.getX();
 
-        // double proportionX = Math.abs(io.getXLimelight() / max_delta_tx);
+        // double proportionX = Math.abs(io.getX() / max_delta_tx);
         // double y = defaultShotPoint.getY() + (proportionX * maxTranslationY);
 
-        double proportionA = io.getALimelight() / max_ta;
+        double proportionA = io.getA() / max_ta;
         double z = defaultShotPoint.getZ() + (proportionA * maxTranslationZ);
 
-        return new Pose3d(x, y, z, new Rotation3d(0, 0, 0));
+        return new Pose3d(x, defaultShotPoint.getY(), z, new Rotation3d(0, 0, 0));
     }
 
 }

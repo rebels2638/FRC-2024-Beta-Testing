@@ -60,7 +60,7 @@ import frc.robot.subsystems.elevator.ElevatorIOSim;
 import frc.robot.subsystems.limelight.PoseLimelight;
 import frc.robot.subsystems.limelight.PoseLimelightIO;
 import frc.robot.subsystems.limelight.PoseLimelightIOReal;
-import frc.robot.subsystems.limelight.PoseLimelightIOSim;
+// import frc.robot.subsystems.limelight.PoseLimelightIOSim;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.pivot.PivotIO;
 import frc.robot.subsystems.pivot.PivotIONeo;
@@ -118,7 +118,7 @@ public class RobotContainer {
     
     // not sim'ed or replayed
     // aPlayer = new AudioPlayer();
-    poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOSim() {});
+    poseLimelightSubsystem = new PoseLimelight(new PoseLimelightIOReal() {});
 
     switch (Constants.currentMode) {
       case SIM:
