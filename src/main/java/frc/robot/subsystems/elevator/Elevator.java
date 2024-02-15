@@ -13,6 +13,7 @@ public class Elevator extends SubsystemBase{
     private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
     PIDController positionFeedBackController;
     ElevatorFeedforward positionFeedForwardController;
+    ElevatorFeedforward climbFeedForwardController;
 
     // PIDController velocityFeedBackController;
     // ElevatorFeedforward velocityFeedForwardController; //Literally never gonna be used
@@ -26,16 +27,15 @@ public class Elevator extends SubsystemBase{
     public Elevator(ElevatorIO io)  {
         this.io = io;
         positionFeedBackController = new PIDController(0, 0, 0); // 0 0 0 
-        //
-        positionFeedForwardController = new ElevatorFeedforward(0.348, 0, 0); //0.33, 0.14, 0
-
+        positionFeedForwardController = new ElevatorFeedforward(0.348, 0, 0); //0.33, 0.14, 0 
+        climbFeedForwardController = new ElevatorFeedforward(0,0,0); //TODO: Tune later, use the raw elevator control or a setVoltage initially to give Build team measurements.
         
         // velocityFeedBackController = new PIDController(0, 0, 0);
         // velocityFeedForwardController = new ElevatorFeedforward(0,0, 0);
         
         positionFeedBackController.setTolerance(kPID_TOLERANCE_METERS);
 
-        io.configureController(positionFeedForwardController, positionFeedBackController, kCLIMB_KG);
+        io.configureController(positionFeedForwardController, positionFeedBackController, climbFeedForwardController, kCLIMB_KG);
     }
 
     @Override

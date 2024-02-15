@@ -28,6 +28,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private double kCLIMB_KG = 12;
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
+    private ElevatorFeedforward climbElevatorFeedforwardController = new ElevatorFeedforward(0,0,0);
 
     private double lastShooterHeightMeters;
     private double lastClimberHeightMeters;
@@ -89,7 +90,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
-            double accel = feedBackControllerVoltage < 0 ? -1: 1;
+            double accel = feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
 
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
@@ -99,23 +100,17 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             m_motor1.setVoltage(outVoltage);
             return;
         }
-        // just move the climber up
+        // Not Shooterheight and Not climbing. When will we ever use this. This is default case. But we should consider this at a later date.
         else if (!isShooterHeight && !isClimbing) {
             // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
 
-            double accel = 0;
-            if (goalPositionMeters > currentPositionMeters) {
-                accel = 0.1;
-            }
-            else if (goalPositionMeters < currentPositionMeters) {
-                accel = -0.1;
-            }
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
-            
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
+            
+            double accel = feedBackControllerVoltage < 0 ? -1: 1;
+            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
             outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
@@ -130,16 +125,11 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
             
-            double accel = 0;
-            if (goalPositionMeters > currentPositionMeters) {
-                accel = 0.1;
-            }
-            else if (goalPositionMeters < currentPositionMeters) {
-                accel = -0.1;
-            }
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);            
-            positionFeedBackController.setSetpoint(goalPositionMeters);
+                positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
+            double accel = feedBackControllerVoltage < 0 ? -1: 1;
+            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);            
+       
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
             outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
@@ -155,10 +145,11 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     }
 
     @Override
-    public void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG) {
+    public void configureController(ElevatorFeedforward pff, PIDController pfb, ElevatorFeedforward Climbff,double kCLIMB_KG) {
         this.kCLIMB_KG = kCLIMB_KG;
         positionFeedBackController = pfb;
         positionFeedForwardController = pff;
+        climbElevatorFeedforwardController = Climbff;
     }
 
     @Override
