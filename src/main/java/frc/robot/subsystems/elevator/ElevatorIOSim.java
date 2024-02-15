@@ -26,7 +26,7 @@ public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
         }
     }
 
-    public void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG) {}
+    public void configureController(ElevatorFeedforward pff, PIDController pfb, ElevatorFeedforward cff, double kCLIMB_KG) {}
 
     public void setVoltage(double voltage) {}
 
