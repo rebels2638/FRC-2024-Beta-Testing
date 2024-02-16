@@ -22,7 +22,7 @@ public class IntakeToggle extends Command {
 
     @Override
     public void execute() {
-        if (this.m_controller.getBButton().getAsBoolean()) {
+        if (this.m_controller.getYButton().getAsBoolean()) {
             this.tapped++;
             
             switch(tapped) {

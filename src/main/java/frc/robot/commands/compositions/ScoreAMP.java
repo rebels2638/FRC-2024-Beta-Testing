@@ -1,9 +1,6 @@
 package frc.robot.commands.compositions;
 
-import javax.swing.GroupLayout.ParallelGroup;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Intake.RollIntakeIn;
@@ -12,7 +9,6 @@ import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.commands.shooter.InShooter;
 import frc.robot.commands.shooter.ShooterHold;
 import frc.robot.commands.shooter.ShooterWindReverse;
-import frc.robot.commands.shooter.ShooterWindup;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
@@ -29,6 +25,7 @@ public class ScoreAMP extends Command {
         this.intakeSubsystem = intakeSubsystem;
         this.pivotSubsystem = pivotSubsystem;
         this.elevatorSubsystem = elevatorSubsystem;
+        
         addRequirements(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem);
     }
 
@@ -43,6 +40,7 @@ public class ScoreAMP extends Command {
             new MoveElevatorAMP(elevatorSubsystem),
             new ShooterWindReverse(shooterSubsystem)
             );
+
         commandGroup.schedule();
     }
 

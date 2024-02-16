@@ -16,10 +16,9 @@ public interface ElevatorIO {
 
     public default void updateInputs(ElevatorIOInputs inputs) {}
 
-    public default void setHeightMeters(double goalPositionMeters, double currentHightMeters, 
-                                            boolean isShooterHight, boolean isClimbing) {}
+    public default void setHeightMeters(double goalPositionMeters, boolean isShooterHeight, boolean isClimbing) {}
 
-    public default void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG) {}
+    public default void configureController(ElevatorFeedforward pff, PIDController pfb, ElevatorFeedforward cff,  double kCLIMB_KG) {}
 
     public default void setVoltage(double voltage) {}
     

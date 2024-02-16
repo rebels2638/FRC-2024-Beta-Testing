@@ -20,25 +20,25 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     // private Rev2mDistanceSensor distanceSensor;
     private double distanceTolerance;
     private double currentVelocityRadPerSec;
-    // private DigitalInput lineBreakSensor; 
+    private DigitalInput lineBreakSensor; 
 
     private static final double kMAX_VOLTAGE = 12;
 
     public IntakeIONeo() {
         m_motor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_motor.clearFaults();
-        m_motor.setInverted(true);
+        m_motor.clearFaults(); //TODO: ALWAYS CHECK FOR FAULTS IN COMPETITION DO NOT IGNORE THEM
+        m_motor.setInverted(false);
         // distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kMillimeters, Rev2mDistanceSensor.RangeProfile.kDefault);
         // distanceTolerance = 0.57; //Approximate distance assuming some tolerance, CHECK AGAIN
         // distanceSensor.setEnabled(true);
 
-        // lineBreakSensor = new DigitalInput(0);
-        // distanceSensor.setAutomaticMode(true); << Probably not required but keep note that we need this if we have several of these 2m dist devices
+        lineBreakSensor = new DigitalInput(1);
+        //distanceSensor.setAutomaticMode(true); << Probably not required but keep note that we need this if we have several of these 2m dist devices
     }
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2; // we divide by 60 because the motor out is in RPM
+        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
         inputs.inIntake = inIntake();
         currentVelocityRadPerSec = inputs.velocityRadSec;
@@ -49,10 +49,10 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     public void setVelocityRadSec(double goalVelocityRadPerSec) {
         double accel = 0;
         if (goalVelocityRadPerSec > currentVelocityRadPerSec) {
-            accel = 0.1;
+            accel = 1;
         }
         else if (goalVelocityRadPerSec < currentVelocityRadPerSec) {
-            accel = -0.1;
+            accel = -1;
         }
 
         double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, accel);
@@ -69,7 +69,15 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
             outVoltage = -12;
         }
         Logger.recordOutput("Intake/voltageOut", outVoltage);
-        
+
+        // if (goalVelocityRadPerSec == 0) {
+        //     m_motor.setVoltage(0);
+
+        // }
+        // else {
+        //     m_motor.setVoltage(4);
+        // }
+
         m_motor.setVoltage(outVoltage);
 
     } 
@@ -105,12 +113,12 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         }
         */
 
-        // if(!lineBreakSensor.get()){
-        //     return true; //Line is broken
-        // }else{
-        //     return false; //Line is NOT broken
-        // }
-        return false;
+        if(!lineBreakSensor.get()){
+            return true; //Line is broken
+        }else{
+            return false; //Line is NOT broken
+        }
+
     }
 
 }

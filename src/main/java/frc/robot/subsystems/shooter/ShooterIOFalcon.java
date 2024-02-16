@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
     private static final double kMotorToOutputShaftRatio = 1; //Last Checked 2/6/2024
-    private final double wheelVelo = 0.0;
-    private TalonFX m_motor1 = new TalonFX(13); //TODO: Get Motor IDs
+    private double wheelVelo = 0.0;
+    private TalonFX m_motor1 = new TalonFX(13);
     private TalonFX m_motor2 = new TalonFX(14); 
 
     private PIDController velocityFeedBackController = new PIDController(6, 0, 0);

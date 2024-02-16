@@ -15,8 +15,7 @@ public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
         inputs.climberHeightMeters = climberHeightMeters;
     }
 
-    public void setHeightMeters(double goalPositionMeters, double currentHightMeters, 
-                                            boolean isShooterHight, boolean isClimbing) {
+    public void setHeightMeters(double goalPositionMeters, boolean isShooterHight, boolean isClimbing) {
         if (isShooterHight) {
             shooterHeightMeters = goalPositionMeters;
             climberHeightMeters = shooterHeightMeters * kSECOND_STAGE_TO_THIRD;
@@ -27,7 +26,7 @@ public class ElevatorIOSim extends SubsystemBase implements ElevatorIO {
         }
     }
 
-    public void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG) {}
+    public void configureController(ElevatorFeedforward pff, PIDController pfb, ElevatorFeedforward cff, double kCLIMB_KG) {}
 
     public void setVoltage(double voltage) {}
 

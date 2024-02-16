@@ -23,7 +23,7 @@ public class ShooterToggle extends Command {
 
     @Override
     public void execute() {
-        if (this.m_controller.getAButton().getAsBoolean()) {
+        if (this.m_controller.getLeftBumper().getAsBoolean()) {
             this.tapped++;
             double desiredSpeed = 0;
             

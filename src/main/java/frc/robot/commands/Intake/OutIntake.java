@@ -2,13 +2,12 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 
-public class InIntake extends Command{
+public class OutIntake extends Command{
     private Intake intakeNeo;
     private boolean isIn = false;
 
-    public InIntake(Intake intakeSubsystem){
+    public OutIntake(Intake intakeSubsystem){
         intakeNeo = intakeSubsystem;
-        // addRequirements(intakeSubsystem);
     }
     @Override
     public void execute(){
@@ -20,6 +19,6 @@ public class InIntake extends Command{
     }
     @Override
     public boolean isFinished(){
-        return isIn;
+        return !isIn;
     }
 }
