@@ -26,8 +26,8 @@ public class Elevator extends SubsystemBase{
 
     public Elevator(ElevatorIO io)  {
         this.io = io;
-        positionFeedBackController = new PIDController(0, 0, 0); // 0 0 0 
-        positionFeedForwardController = new ElevatorFeedforward(0.348, 0, 0); //0.33, 0.14, 0 
+        positionFeedBackController = new PIDController(5, 0, 0); // 0 0 0 
+        positionFeedForwardController = new ElevatorFeedforward(0.348, 0.24, 0); //0.33, 0.14, 0 
         climbFeedForwardController = new ElevatorFeedforward(0,0,0); //TODO: Tune later, use the raw elevator control or a setVoltage initially to give Build team measurements.
         
         // velocityFeedBackController = new PIDController(0, 0, 0);

@@ -71,26 +71,26 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             currentPositionMeters = lastClimberHeightMeters;
         }
         
-        // cheking for over extension
-        if (isShooterHeight) {
-            if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
-                goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
-                    return;
-            }
-        }
-        else {
-            if (currentPositionMeters > kMAX_CLIMBER_HEIGHT || currentPositionMeters < kMIN_CLIMBER_HEIGHT || 
-                goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT) {
-                    return;
-            }
-        }
+        // // cheking for over extension
+        // if (isShooterHeight) {
+        //     if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
+        //         goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
+        //             return;
+        //     }
+        // }
+        // else {
+        //     if (currentPositionMeters > kMAX_CLIMBER_HEIGHT || currentPositionMeters < kMIN_CLIMBER_HEIGHT || 
+        //         goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT) {
+        //             return;
+        //     }
+        // }
         
         if (isShooterHeight) {
             
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
-            double accel = feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
+            double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
 
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
@@ -109,7 +109,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             
-            double accel = feedBackControllerVoltage < 0 ? -1: 1;
+            double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
             
             double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
@@ -127,7 +127,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             
                 positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
-            double accel = feedBackControllerVoltage < 0 ? -1: 1;
+            double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);            
        
             

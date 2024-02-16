@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Intake.InIntake;
+import frc.robot.commands.Intake.OutIntake;
 import frc.robot.commands.Intake.RollIntakeIn;
+import frc.robot.commands.Intake.RollIntakeOut;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.pivot.PivotToTorus;
 import frc.robot.commands.pivot.PivotTurtle;
@@ -29,7 +31,9 @@ public class IntakeNote extends Command {
             SequentialCommandGroup commandGroup = new SequentialCommandGroup(new PivotToTorus(pivotSubsystem), 
             new ParallelDeadlineGroup(new InIntake(intakeSubsystem), new RollIntakeIn(intakeSubsystem, pivotSubsystem)),
             new StopIntake(intakeSubsystem),
-            new PivotTurtle(pivotSubsystem));
+            new PivotTurtle(pivotSubsystem),
+            new ParallelRaceGroup(new RollIntakeOut(intakeSubsystem), new OutIntake(intakeSubsystem)), 
+            new StopIntake(intakeSubsystem));
 
             commandGroup.schedule();
         }

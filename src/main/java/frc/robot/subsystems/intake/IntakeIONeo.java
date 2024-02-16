@@ -49,10 +49,10 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     public void setVelocityRadSec(double goalVelocityRadPerSec) {
         double accel = 0;
         if (goalVelocityRadPerSec > currentVelocityRadPerSec) {
-            accel = 3;
+            accel = 1;
         }
         else if (goalVelocityRadPerSec < currentVelocityRadPerSec) {
-            accel = -3;
+            accel = -1;
         }
 
         double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, accel);
