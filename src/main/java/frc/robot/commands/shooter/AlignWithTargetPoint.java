@@ -22,8 +22,8 @@ public class AlignWithTargetPoint extends Command {
         this.shooterSubsystem = shooterSubsystem;
         this.swerveSubsystem = swerveSubsystem;
         this.llsubsystem = llsubsystem;
-        this.shooterPose = new Pose3d(0,0,0,new Rotation3d(0,0,0)); // first three zeroes are real measurments, no euler angles (rot. at tip)
-        addRequirements(shooterSubsystem, swerveSubsystem, llsubsystem);
+        this.shooterPose = new Pose3d(-0.301828,0,0.577596,new Rotation3d(0,0,0)); // first three zeroes are real measurments, no euler angles (rot. at tip)
+        addRequirements(shooterSubsystem, swerveSubsystem, llsubsystem); // F_g = mg moment
     }
 
     @Override
@@ -38,9 +38,7 @@ public class AlignWithTargetPoint extends Command {
     }
 
     private static void calcFlywheelSpeed(Pose3d initial, Pose3d desired) {
-        double wheelSpeed = 0.0;
-        // actually implement physics for linear freefall to calc v_angular
-        RebelUtil.flywheelSpeed = wheelSpeed;
+        RebelUtil.flywheelSpeed = Math.sqrt((8/3)*9.8*Math.abs(initial.getZ()-desired.getZ()));
     }
 
     @Override
