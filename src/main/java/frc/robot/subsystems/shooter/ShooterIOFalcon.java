@@ -93,16 +93,6 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
         velocityFeedForwardController = vff;
     }
 
-    @Override
-    public double getFlywheelVelocity() {
-        return this.wheelVelo;
-    }
-
-    @Override
-    public void setFlywheelVelocity(double velocity) {
-        this.wheelVelo = velocity;
-    }
-
     private boolean isInShooter(){
         // if(distanceSensor.isRangeValid()){
         //     //distanceSensor.setMeasurementPeriod();
