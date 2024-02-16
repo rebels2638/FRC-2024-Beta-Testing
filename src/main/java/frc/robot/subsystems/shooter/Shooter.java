@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase{
 
-    private static final double kVelocityRadSecTolerance = Math.toRadians(3);
+    private static final double kVelocityRadSecTolerance = Math.toRadians(0);
 
     private final ShooterIO io;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
@@ -20,9 +20,9 @@ public class Shooter extends SubsystemBase{
     double desiredVelocityRadSec = 0;
     public Shooter(ShooterIO io)  {
         this.io = io;
-        velocityFeedBackController = new PIDController(1, 0, 0);
+        velocityFeedBackController = new PIDController(0.68, 0, 0.2);
         velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
-        velocityFeedForwardController = new SimpleMotorFeedforward(0.5, 0, 6);
+        velocityFeedForwardController = new SimpleMotorFeedforward(0.14, 0, 0);
         io.configureController(velocityFeedForwardController, velocityFeedBackController);
     }
 

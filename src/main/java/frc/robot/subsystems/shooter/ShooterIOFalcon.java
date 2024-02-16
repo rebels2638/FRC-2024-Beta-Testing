@@ -4,7 +4,6 @@ import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.Rev2mDistanceSensor;
 
 // import com.revrobotics.CANSparkMaxLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
@@ -17,10 +16,9 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
     private TalonFX m_motor1 = new TalonFX(13);
     private TalonFX m_motor2 = new TalonFX(14); 
 
-    private PIDController velocityFeedBackController = new PIDController(6, 0, 0);
+    private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
 
-    private Rev2mDistanceSensor distanceSensor;
     //private double distanceTolerance;
     private double currentVelocityRadPerSec;
 
@@ -41,7 +39,7 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
 
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
-        inputs.velocityRadSec = m_motor1.getVelocity().getValueAsDouble() * 2 * Math.PI * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
+        inputs.velocityRadSec = m_motor1.getVelocity().getValueAsDouble() * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
         currentVelocityRadPerSec = inputs.velocityRadSec;
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
         inputs.inShooter = isInShooter();
@@ -50,19 +48,19 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
     @Override
     // should be called periodically
     public void setVelocityRadSec(double goalVelocityRadPerSec) {
-        // double ffVelo = 0;
-        // if (goalVelocityRadPerSec > currentVelocityRadPerSec) {
-        //     ffVelo = 1;
-        // }
-        // else if (goalVelocityRadPerSec < currentVelocityRadPerSec) {
-        //     ffVelo = -1;
-        // }
+        double ffVelo = 0;
+        if (goalVelocityRadPerSec > currentVelocityRadPerSec) {
+            ffVelo = 1;
+        }
+        else if (goalVelocityRadPerSec < currentVelocityRadPerSec) {
+            ffVelo = -1;
+        }
 
-        // double feedForwardVoltage = velocityFeedForwardController.calculate(currentVelocityRadPerSec 0 );
+        double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, ffVelo );
         velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
-        double feedBackControllerVoltage = velocityFeedBackController.calculate(goalVelocityRadPerSec - currentVelocityRadPerSec);
-        // double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-        double outVoltage = feedBackControllerVoltage;
+        double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
+        double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+        // double outVoltage = feedBackControllerVoltage;
             
         if (outVoltage > kMAX_VOLTAGE) {
             outVoltage = 12;
@@ -70,15 +68,16 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
         else if (outVoltage < -kMAX_VOLTAGE) {
             outVoltage = -12;
         }
-        if (goalVelocityRadPerSec > 0) {
-             outVoltage = 6;
-        }
-        else {
-            outVoltage = 0;
-        }
+        // if (goalVelocityRadPerSec > 0) {
+        //      outVoltage = 6;
+        // }
+        // else {
+        //     outVoltage = 0;
+        // }
         Logger.recordOutput("Shooter/voltageOut", outVoltage);
         m_motor1.setVoltage(outVoltage);
         m_motor2.setVoltage(outVoltage);
+
 
     } 
 
