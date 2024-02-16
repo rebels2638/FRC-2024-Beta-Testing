@@ -34,7 +34,6 @@ public class IntakeNote extends Command {
             new PivotTurtle(pivotSubsystem),
             new ParallelRaceGroup(new RollIntakeOut(intakeSubsystem), new OutIntake(intakeSubsystem)), 
             new StopIntake(intakeSubsystem));
-
             commandGroup.schedule();
         }
     }

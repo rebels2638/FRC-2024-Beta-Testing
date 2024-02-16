@@ -2,6 +2,7 @@ package frc.robot.commands.compositions;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Intake.InIntake;
@@ -29,7 +30,7 @@ public class ShootNote extends Command {
         if (intakeSubsystem.inIntake() == true) {
             SequentialCommandGroup commandGroup = new SequentialCommandGroup(
                 new WaitCommand(0.7),
-                new ParallelDeadlineGroup(
+                new ParallelRaceGroup(
                     new InIntake(intakeSubsystem),
                     new RollIntakeIn(intakeSubsystem, pivotSubsystem), 
                     new ShooterWindup(shooterSubsystem)));
