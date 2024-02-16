@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase{
 
-    private final ElevatorIO io;
+    private static ElevatorIO io;
     private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
     PIDController positionFeedBackController;
     ElevatorFeedforward positionFeedForwardController;
@@ -20,14 +20,15 @@ public class Elevator extends SubsystemBase{
     private static final double kPID_TOLERANCE_METERS = 0.01; //this is 1cm 
     private static final double kCLIMB_KG = 12;
     
+    private static Elevator instance = null;
     private double goalPositionMeters = 0;
     private boolean isShooterHeight = true;
     private boolean isClimbing = false;
 
     public Elevator(ElevatorIO io)  {
-        this.io = io;
-        positionFeedBackController = new PIDController(5, 0, 0); // 0 0 0 
-        positionFeedForwardController = new ElevatorFeedforward(0.348, 0.24, 0); //0.33, 0.14, 0 
+        Elevator.io = io;
+        positionFeedBackController = new PIDController(12, 2, 0); // 0 0 0 
+        positionFeedForwardController = new ElevatorFeedforward(0.11, 0.24, 0); //0.33, 0.14, 0 
         climbFeedForwardController = new ElevatorFeedforward(0,0,0); //TODO: Tune later, use the raw elevator control or a setVoltage initially to give Build team measurements.
         
         // velocityFeedBackController = new PIDController(0, 0, 0);
@@ -78,5 +79,11 @@ public class Elevator extends SubsystemBase{
     }
     public boolean reachedSetpoint() {
         return inputs.reachedSetpoint;
+    }
+    public static Elevator getInstance(){
+        if(instance == null){
+            return new Elevator(Elevator.io);
+        }
+        return null;
     }
 }

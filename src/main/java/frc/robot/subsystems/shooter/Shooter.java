@@ -9,9 +9,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase{
 
-    private static final double kVelocityRadSecTolerance = Math.toRadians(3);
+    private static final double kVelocityRadSecTolerance = Math.toRadians(0);
 
-    private final ShooterIO io;
+    private static ShooterIO io;
+    private static Shooter instance = null;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
     PIDController velocityFeedBackController;
@@ -19,10 +20,10 @@ public class Shooter extends SubsystemBase{
 
     double desiredVelocityRadSec = 0;
     public Shooter(ShooterIO io)  {
-        this.io = io;
-        velocityFeedBackController = new PIDController(1, 0, 0);
+        Shooter.io = io;
+        velocityFeedBackController = new PIDController(.0001 , 0, 0.1);
         velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
-        velocityFeedForwardController = new SimpleMotorFeedforward(0.5, 0, 6);
+        velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
         io.configureController(velocityFeedForwardController, velocityFeedBackController);
     }
 
@@ -60,5 +61,12 @@ public class Shooter extends SubsystemBase{
     public boolean inShooter() {
         return inputs.inShooter;
     }
+    public static Shooter getInstance(){
+        if(instance == null){
+            return new Shooter(Shooter.io);
+        }
+        return null;
+    }
+
 
 }

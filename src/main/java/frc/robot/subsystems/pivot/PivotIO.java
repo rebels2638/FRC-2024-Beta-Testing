@@ -28,5 +28,8 @@ public interface PivotIO {
     public default void zeroAngle() {}
 
     public default void toggleMode() {}
+
+    public static Pivot getInstance(){
+        return null;}
     
 }

@@ -5,7 +5,7 @@ import frc.robot.subsystems.shooter.Shooter;
 
 public class ShooterWindup extends Command {
     
-    private double velocitySetPoint = 5;
+    private double velocitySetPoint = 2;
     private final Shooter shooterSubsystem;
 
     public ShooterWindup(Shooter shooterSubsystem, double setpoint){

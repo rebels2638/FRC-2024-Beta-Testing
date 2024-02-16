@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Intake.OutIntake;
 import frc.robot.commands.Intake.RollIntakeIn;
+import frc.robot.commands.Intake.RollIntakeInSlow;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.elevator.MoveElevatorAMP;
 import frc.robot.commands.pivot.PivotTurtle;
@@ -19,13 +20,13 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class ScoreAMP extends Command {
+public class FeedAndHoldNote extends Command {
     private final Shooter shooterSubsystem;
     private final Intake intakeSubsystem;
     private final Pivot pivotSubsystem;
     private final Elevator elevatorSubsystem;
 
-    public ScoreAMP(Shooter shooterSubsystem, Intake intakeSubsystem, Pivot pivotSubsystem, Elevator elevatorSubsystem) {
+    public FeedAndHoldNote(Shooter shooterSubsystem, Intake intakeSubsystem, Pivot pivotSubsystem, Elevator elevatorSubsystem) {
         this.shooterSubsystem = shooterSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         this.pivotSubsystem = pivotSubsystem;
@@ -37,18 +38,15 @@ public class ScoreAMP extends Command {
     @Override
     public void initialize() {
         SequentialCommandGroup commandGroup = new SequentialCommandGroup(
-            new PivotTurtle(pivotSubsystem),
-            new ParallelRaceGroup(
+             new ParallelRaceGroup(
                 new RollIntakeIn(intakeSubsystem, pivotSubsystem), 
-                new WaitCommand(0.1)),
+                new WaitCommand(0.04)),
             new ParallelRaceGroup(
                 new OutIntake(intakeSubsystem),
-                new RollIntakeIn(intakeSubsystem, pivotSubsystem), 
+                new RollIntakeInSlow(intakeSubsystem, pivotSubsystem), 
                 new ShooterHold(shooterSubsystem)),
             new StopIntake(intakeSubsystem),
-            new ShooterStop(shooterSubsystem),
-            new MoveElevatorAMP(elevatorSubsystem),
-            new ShooterWindReverse(shooterSubsystem)
+            new ShooterStop(shooterSubsystem)
             );
 
         commandGroup.schedule();
