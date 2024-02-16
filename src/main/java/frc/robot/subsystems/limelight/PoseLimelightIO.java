@@ -1,27 +1,27 @@
-// package frc.robot.subsystems.limelight;
+package frc.robot.subsystems.limelight;
 
-// import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLog;
 
-// public interface PoseLimelightIO {
-//     @AutoLog
-//     public static class PoseLimelightIOInputs {
-//         public double[] botpose_wpiblue;
-//         public double[] botpose_wpired;
-//         public double tv, tx, ty, ta;
-//         public double cl;
-//     }
+public interface PoseLimelightIO {
+    @AutoLog
+    public static class PoseLimelightIOInputs {
+        public double[] botpose_wpiblue;
+        public double[] botpose_wpired;
+        public double tv, tx, ty, ta;
+        public double cl;
+    }
 
-//     public default void updateInputs(PoseLimelightIOInputs inputs) {}
+    public default void updateInputs(PoseLimelightIOInputs inputs) {}
 
-//     // public void setID();
+    // public void setID();
 
-//     public double getID();
+    public default double getID() {return 0.0;}
 
-//     public double getV();
+    public default double getV() {return 0.0;}
 
-//     public double getX();
+    public default double getX() {return 0.0;}
     
-//     public double getY();
+    public default double getY() {return 0.0;}
 
-//     public double getA();
-// }
+    public default double getA() {return 0.0;}
+}
