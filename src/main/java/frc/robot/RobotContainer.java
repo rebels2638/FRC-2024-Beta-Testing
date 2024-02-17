@@ -114,9 +114,9 @@ public class RobotContainer {
   // private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
-  private  Elevator elevatorSubsystem;
+  private final Elevator elevatorSubsystem;
   // private final PoseLimelight poseLimelightSubsystem; 
-  private  Pivot pivotSubsystem;
+  private final Pivot pivotSubsystem;
   // private final AudioPlayer aPlayer;
 
   public RobotContainer() {
@@ -144,6 +144,7 @@ public class RobotContainer {
         pivotSubsystem = new Pivot(new PivotIOSim());
 
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
+        
         break;
       
       case REPLAY:
