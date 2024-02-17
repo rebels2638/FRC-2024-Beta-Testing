@@ -43,7 +43,7 @@ public class FeedAndHoldNote extends Command {
                 new WaitCommand(0.04)),
             new ParallelRaceGroup(
                 new OutIntake(intakeSubsystem),
-                new RollIntakeInSlow(intakeSubsystem, pivotSubsystem), 
+                new RollIntakeInSlow(intakeSubsystem), 
                 new ShooterHold(shooterSubsystem)),
             new StopIntake(intakeSubsystem),
             new ShooterStop(shooterSubsystem)
