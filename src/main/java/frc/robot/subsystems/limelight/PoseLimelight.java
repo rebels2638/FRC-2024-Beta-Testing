@@ -8,16 +8,17 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.limelight.PoseLimelightIO.PoseLimelightIOInputs;
 import java.util.Optional;
 
 public class PoseLimelight extends SubsystemBase{
-    private final PoseLimelightIOInputs inputs = new PoseLimelightIOInputs();
+    private final PoseLimelightIOInputsAutoLogged inputs = new PoseLimelightIOInputsAutoLogged();
     private PoseLimelightIO io;
-
     public final Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+
 
     // apriltag constants,, fix all 
     private final Pose3d defaultShotPoint;
@@ -28,14 +29,21 @@ public class PoseLimelight extends SubsystemBase{
 
     public PoseLimelight(PoseLimelightIO poseLimelightIOReal) {
         this.io = poseLimelightIOReal;
-        defaultShotPoint = (alliance.get() == DriverStation.Alliance.Red) ? new Pose3d(16.579342, 5.547868, 2.1, new Rotation3d(0, 0, 0)) : new Pose3d(-0.0381, 5.547868, 2.1, new Rotation3d(0, 0, 0));
+        if (alliance.isPresent()) {
+            defaultShotPoint = (alliance.get() == DriverStation.Alliance.Red)
+                ? new Pose3d(16.579342, 5.547868, 2.1, new Rotation3d(0, 0, 0)
+                ) : new Pose3d(-0.0381, 5.547868, 2.1, new Rotation3d(0, 0, 0));
+        }
+        else {
+            defaultShotPoint = new Pose3d(16.579342, 5.547868, 2.1, new Rotation3d(0, 0, 0));
+        }
 
     }
 
     @Override
     public void periodic() {
         io.updateInputs(inputs);
-        // Logger.processInputs("PoseLimelight", inputs);
+        Logger.processInputs("PoseLimelight", inputs);
     }
 
     public boolean hasValidTargets() {

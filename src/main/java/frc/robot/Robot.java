@@ -35,7 +35,7 @@ public class Robot extends LoggedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  String logPath = "/Users/edan/Downloads/";
+  String logPath = "/Users/conne/Downloads/"; // TODO: Remember to change this value guys (Edan)
   @Override
   public void robotInit() { 
     Pathfinding.setPathfinder(new LocalADStarAK());
@@ -52,7 +52,7 @@ public class Robot extends LoggedRobot {
 
       // Running a physics simulator, log to local folder
       case SIM:
-        Logger.addDataReceiver(new WPILOGWriter(logPath));
+        // Logger.addDataReceiver(new WPILOGWriter(logPath));
         Logger.addDataReceiver(new NT4Publisher());
         break;
 

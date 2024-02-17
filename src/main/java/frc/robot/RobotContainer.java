@@ -36,8 +36,14 @@ import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystemIO;
 import frc.robot.subsystems.swerve.SwerveSubsystemIORunning;
+import frc.robot.subsystems.limelight.PoseLimelight;
+import frc.robot.subsystems.limelight.PoseLimelightIO;
+import frc.robot.subsystems.limelight.PoseLimelightIOReal;
+import frc.robot.subsystems.limelight.PoseLimelightIOSim;
+import frc.robot.subsystems.limelight.PoseLimelightIOInputsAutoLogged;
 import frc.robot.Utils.Constants;
 import frc.robot.Utils.Constants.OperatorConstants;
+import frc.robot.commands.compositions.ShootSpeaker;
 // import frc.robot.commands.automation.AutoAlign;
 // import frc.robot.commands.drivetrain.AbsoluteDrive;
 // import frc.robot.commands.pivot.RollIntake;
@@ -99,6 +105,7 @@ public class RobotContainer {
   
   private final Intake intakeSubsystem;
   private final Shooter shooterSubsystem;
+  private final PoseLimelight visionSubsystem;
   private final AutoRunner autoRunner;
   // private final int[] autoAlignTargetNum = {0};
   // private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
@@ -132,6 +139,8 @@ public class RobotContainer {
         elevatorSubsystem = new Elevator(new ElevatorIOSim());
 
         pivotSubsystem = new Pivot(new PivotIOSim());
+
+        visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
         break;
       
       case REPLAY:
@@ -144,6 +153,8 @@ public class RobotContainer {
         pivotSubsystem = new Pivot(new PivotIO() {});
 
         elevatorSubsystem = new Elevator(new ElevatorIO() {});
+        visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
+
         break;
         
       default:
@@ -157,6 +168,9 @@ public class RobotContainer {
         elevatorSubsystem = new Elevator(new ElevatorIONeo());
 
         pivotSubsystem = new Pivot(new PivotIONeo());
+
+        visionSubsystem = new PoseLimelight(new PoseLimelightIOReal());
+
         break;
     }
 
@@ -178,9 +192,13 @@ public class RobotContainer {
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
     // this.xboxDriver.getYButton().onTrue(new PickUpCube(intakeSubsystem, pivotSubsystem));
+
+    // TODO: uncomment this chunk before push
     this.xboxOperator.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsystem));
     this.xboxOperator.getAButton().onTrue(new StopIntake(intakeSubsystem));
     this.xboxOperator.getXButton().onTrue(new RollIntakeOut(intakeSubsystem));
+
+    // this.xboxDriver.getYButton().onTrue(new ShootSpeaker(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem, visionSubsystem, swerveSubsystem));
 
     
     // this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
