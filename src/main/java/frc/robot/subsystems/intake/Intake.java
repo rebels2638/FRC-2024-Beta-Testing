@@ -11,15 +11,18 @@ public class Intake extends SubsystemBase{
 
     private static final double kVelocityRadSecTolerance = Math.toRadians(.1);
 
-    private final IntakeIO io;
+    private static IntakeIO io;
+    private static Intake instance;
     private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
 
     PIDController velocityFeedBackController;
     SimpleMotorFeedforward velocityFeedForwardController;
     double desiredVelocityRadSec = 0;
 
+
+
     public Intake(IntakeIO io)  {
-        this.io = io;   
+        Intake.io = io;   
         velocityFeedBackController = new PIDController(0.1,0,0.0); // 1 0 0
         velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
         velocityFeedForwardController = new SimpleMotorFeedforward(0.3, .5, 0);
@@ -59,5 +62,11 @@ public class Intake extends SubsystemBase{
 
     public boolean inIntake() {
         return inputs.inIntake;
+    }
+    public static Intake getInstance(){
+        if(instance == null){
+            return new Intake(Intake.io);
+        }
+        return null;
     }
 }

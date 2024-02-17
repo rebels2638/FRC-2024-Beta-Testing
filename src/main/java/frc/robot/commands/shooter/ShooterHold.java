@@ -15,7 +15,7 @@ public class ShooterHold extends Command {
 
     @Override
     public void execute(){
-        shooterSubsystem.setVelocityRadSec(velocitySetPoint);
+        shooterSubsystem.setVelocityRadSec(0.5);
     }
 
     @Override

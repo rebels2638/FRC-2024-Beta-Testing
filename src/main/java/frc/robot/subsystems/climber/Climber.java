@@ -9,7 +9,7 @@
 
 // public class Climber extends SubsystemBase{
 
-//     private final ClimberIO io;
+//     private static ClimberIO io;
 //     private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
 //     PIDController positionFeedBackController;
 //     ElevatorFeedforward positionFeedForwardController;
@@ -19,8 +19,11 @@
 //     private static final double kPID_TOLERANCE_METERS = 0.01; //this is 1cm 
 //     private static final double kCLIMB_KG = 12;
 
+//     private static Climber instance == null;
+//             
+
 //     public Climber(ClimberIO io)  {
-//         this.io = io;
+//         Climber.io = io;
 //         positionFeedBackController = new PIDController(6, 0, 0); // 0 0 0 
 //         //
 //         positionFeedForwardController = new ElevatorFeedforward(0.33, 0.14, 0); //0.008 0.31 31
@@ -61,5 +64,11 @@
 //     }
 //     public boolean reachedSetpoint() {
 //         return inputs.reachedSetpoint;
+//     }
+//     public static Climber getInstance(){
+//      if(instance == null){
+//      return new Climber(Climber.io)
+//     }
+//      return null;
 //     }
 // }

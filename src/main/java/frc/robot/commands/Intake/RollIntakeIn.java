@@ -15,11 +15,17 @@ public class RollIntakeIn extends Command {
         
         addRequirements(intakeSubsystem);
     }
+    public RollIntakeIn(Intake intakeSubsystem, Pivot pivotSubsystem, double Velo) {
+        this.intakeSubsystem = intakeSubsystem;
+        this.pivotSubsystem = pivotSubsystem;
+        
+        addRequirements(intakeSubsystem);
+    }
 
     @Override
     public void execute() { 
         if (pivotSubsystem.getDegAngle() < 45) {
-            intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 17)); //Use radians directly.
+            intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 15)); //Use radians directly.
         }
         else {
             intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 10)); //Use radians directly.

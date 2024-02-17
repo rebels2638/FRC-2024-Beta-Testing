@@ -24,17 +24,15 @@ public class ShootNote extends Command {
 
         addRequirements(intakeSubsystem, shooterSubsystem);
     }
-
+    //Will change later. Singleton class structure must be maintained.
     @Override
     public void execute() {
         if (intakeSubsystem.inIntake() == true) {
             SequentialCommandGroup commandGroup = new SequentialCommandGroup(
-                new WaitCommand(0.7),
+                new ShooterWindup(shooterSubsystem),
                 new ParallelRaceGroup(
-                    new InIntake(intakeSubsystem),
-                    new RollIntakeIn(intakeSubsystem, pivotSubsystem), 
-                    new ShooterWindup(shooterSubsystem)));
-
+                new WaitCommand(1), //Modify this later on.
+                new RollIntakeIn(intakeSubsystem, pivotSubsystem)));
             commandGroup.schedule();
         }
     }

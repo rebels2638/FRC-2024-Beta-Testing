@@ -5,7 +5,7 @@ import frc.robot.subsystems.shooter.Shooter;
 
 public class ShooterStop extends Command {
     
-    private double velocitySetPoint = 0;
+    // private double velocitySetPoint = 0;
     private final Shooter shooterSubsystem;
 
     public ShooterStop(Shooter shooterSubsystem){
@@ -15,7 +15,7 @@ public class ShooterStop extends Command {
 
     @Override
     public void execute(){
-        shooterSubsystem.setVelocityRadSec(velocitySetPoint);
+        shooterSubsystem.setVelocityRadSec(0);
     }
 
     @Override

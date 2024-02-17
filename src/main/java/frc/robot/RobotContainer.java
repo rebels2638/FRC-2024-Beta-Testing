@@ -23,6 +23,7 @@ import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterWindup;
 import frc.robot.commands.shooter.ShooterToggle;
+import frc.robot.commands.shooter.ShooterWindReverse;
 import frc.robot.commands.Intake.IntakeToggle;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
@@ -46,6 +47,7 @@ import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.Intake.RollIntakeOut;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.audio.*;
+import frc.robot.commands.compositions.FeedAndHoldNote;
 import frc.robot.commands.compositions.IntakeNote;
 import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.subsystems.audio.AudioPlayer;
@@ -98,20 +100,20 @@ public class RobotContainer {
   private final AbsoluteFieldDrive closedFieldAbsoluteDrive;
   private final PivotController pivotController;
   
-  private final Intake intakeSubsystem;
-  private final Shooter shooterSubsystem;
+  private  Intake intakeSubsystem;
+  private  Shooter shooterSubsystem; 
   private final AutoRunner autoRunner;
   // private final int[] autoAlignTargetNum = {0};
   // private final SmartDashboardLogger smartDashboardLogger = new SmartDashboardLogger();
   // private AprilTagVision aprilTagVision;
 
-  private final Elevator elevatorSubsystem;
+  private  Elevator elevatorSubsystem;
   // private final PoseLimelight poseLimelightSubsystem; 
-  private final Pivot pivotSubsystem;
+  private  Pivot pivotSubsystem;
   // private final AudioPlayer aPlayer;
 
   public RobotContainer() {
-
+    // setInstances();
     // Instantiate our controllers with proper ports.
     this.xboxTester = new XboxController(1);
     this.xboxOperator = new XboxController(2);
@@ -204,8 +206,9 @@ public class RobotContainer {
 
     // //TODO: ELEVATOR
     // this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevatorSubsystem));
-    // this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevatorSubsystem));
-    // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
+    this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevatorSubsystem));
+    this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
+    
     
 
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
@@ -262,6 +265,13 @@ public class RobotContainer {
   }
     return true;
   }
+  // public void setInstances(){
+  //   pivotSubsystem = Pivot.getInstance();
+  //   elevatorSubsystem = Elevator.getInstance();
+  //   shooterSubsystem = Shooter.getInstance();
+  //   intakeSubsystem = Intake.getInstance();
+  //   shooterSubsystem =  Shooter.getInstance();
+  // }
 
   // Override commands and switch to manual control
 }

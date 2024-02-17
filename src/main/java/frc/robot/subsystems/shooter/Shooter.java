@@ -11,7 +11,8 @@ public class Shooter extends SubsystemBase{
 
     private static final double kVelocityRadSecTolerance = Math.toRadians(0);
 
-    private final ShooterIO io;
+    private static ShooterIO io;
+    private static Shooter instance = null;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
     PIDController velocityFeedBackController;
@@ -56,4 +57,16 @@ public class Shooter extends SubsystemBase{
     public boolean reachedSetpoint() {
         return inputs.reachedSetpoint;
     }
+
+    public boolean inShooter() {
+        return inputs.inShooter;
+    }
+    public static Shooter getInstance(){
+        if(instance == null){
+            return new Shooter(Shooter.io);
+        }
+        return null;
+    }
+
+
 }
