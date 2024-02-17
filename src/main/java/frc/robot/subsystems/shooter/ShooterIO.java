@@ -11,7 +11,6 @@ public interface ShooterIO {
     public static class ShooterIOInputs {
         public double velocityRadSec;
         public boolean reachedSetpoint;
-        public boolean inShooter;
     }
 
     public default void updateInputs(ShooterIOInputs inputs) {}

@@ -11,17 +11,18 @@ public class Pivot extends SubsystemBase{
 
     private static final double kRadPositionTolerance = Math.toRadians(4);
 
-    private final PivotIO io;
+    private static PivotIO io;
     private final PivotIOInputsAutoLogged inputs = new PivotIOInputsAutoLogged();
     private boolean velocityControlmode;
     PIDController positionFeedBackController;
     ArmFeedforward positionFeedForwardController;
+    private static Pivot instance = null;
 
     PIDController velocityFeedBackController;
     ArmFeedforward velocityFeedForwardController;
     double desiredDegAngle = 0;
     public Pivot(PivotIO io)  {
-        this.io = io;
+        Pivot.io = io;
         positionFeedBackController = new PIDController(3, 0, 0);
         positionFeedForwardController = new ArmFeedforward(0.0,-.4, 6); // 8
         positionFeedBackController.setTolerance(kRadPositionTolerance);
@@ -75,5 +76,12 @@ public class Pivot extends SubsystemBase{
     }
     public void toggleMode() {
         io.toggleMode();
+    }
+
+    public static Pivot getInstance(){
+        if ( instance == null){
+            instance = new Pivot(Pivot.io);
+        }
+        return instance;
     }
 }

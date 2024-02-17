@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.Rev2mDistanceSensor;
 
 public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     private final double kMotorToOutputShaftRatio = 0.25;
