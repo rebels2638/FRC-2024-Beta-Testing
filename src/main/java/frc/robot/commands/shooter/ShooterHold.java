@@ -5,7 +5,7 @@ import frc.robot.subsystems.shooter.Shooter;
 
 public class ShooterHold extends Command {
     
-    private double velocitySetPoint = 1;
+    private double velocitySetPoint = 10;
     private final Shooter shooterSubsystem;
 
     public ShooterHold(Shooter shooterSubsystem){
@@ -20,7 +20,7 @@ public class ShooterHold extends Command {
 
     @Override
     public boolean isFinished(){
-        return true;
+        return false;
     }
     
 }

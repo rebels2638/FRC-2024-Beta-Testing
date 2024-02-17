@@ -1,18 +1,17 @@
 package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.intake.Intake;
 
 public class InShooter extends Command{
-    private Shooter shooterSubsystem;
+    private Intake intakeSubsystem;
     private boolean isIn = false;
 
-    public InShooter(Shooter shooterSubsystem){
-        this.shooterSubsystem = shooterSubsystem;
-        addRequirements(shooterSubsystem);
+    public InShooter(Intake intakeSubsystem){
+        this.intakeSubsystem = intakeSubsystem;
     }
     @Override
     public void execute(){
-        isIn = shooterSubsystem.inShooter();
+        isIn = !intakeSubsystem.inIntake();
     }
     @Override
     public void end(boolean isInterrupted){

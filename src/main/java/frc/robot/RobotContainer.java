@@ -47,6 +47,7 @@ import frc.robot.commands.Intake.RollIntakeOut;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.audio.*;
 import frc.robot.commands.compositions.IntakeNote;
+import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
@@ -171,9 +172,9 @@ public class RobotContainer {
 
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
 
-    // shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
-    // intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
-    // elevatorSubsystem.setDefaultCommand(new ElevatorControlRaw(elevatorSubsystem, xboxDriver));
+    // // shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
+    // // intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
+    // // elevatorSubsystem.setDefaultCommand(new ElevatorControlRaw(elevatorSubsystem, xboxDriver));
     
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
@@ -181,6 +182,7 @@ public class RobotContainer {
     this.xboxOperator.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsystem));
     this.xboxOperator.getAButton().onTrue(new StopIntake(intakeSubsystem));
     this.xboxOperator.getXButton().onTrue(new RollIntakeOut(intakeSubsystem));
+    this.xboxOperator.getBButton().onTrue(new ScoreAMP(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
 
     
     // this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
@@ -188,15 +190,15 @@ public class RobotContainer {
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(()-> pivot.toggleMode()));
     // this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivotSubsytem.zeroAngle()));
 
-    this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
-    this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
+    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
+    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
 
     this.xboxDriver.getAButton().onTrue(new IntakeNote(intakeSubsystem, pivotSubsystem));
-    // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
-    // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
-    // this.pivot.setDefaultCommand(pivotController);
-    this.xboxDriver.getLeftBumper().onTrue(new PivotTurtle(pivotSubsystem));
-    this.xboxDriver.getRightBumper().onTrue(new PivotToTorus(pivotSubsystem)); 
+    // // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
+    // // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
+    // // this.pivot.setDefaultCommand(pivotController);
+    // this.xboxDriver.getLeftBumper().onTrue(new PivotTurtle(pivotSubsystem));
+    // this.xboxDriver.getRightBumper().onTrue(new PivotToTorus(pivotSubsystem)); 
 
 
 

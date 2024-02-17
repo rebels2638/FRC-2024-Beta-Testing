@@ -27,7 +27,7 @@ public class IntakeNote extends Command {
 
     @Override
     public void execute() {
-        if (intakeSubsystem.inIntake() == false) {
+        // if (intakeSubsystem.inIntake() == false) {
             SequentialCommandGroup commandGroup = new SequentialCommandGroup(new PivotToTorus(pivotSubsystem), 
             new ParallelDeadlineGroup(new InIntake(intakeSubsystem), new RollIntakeIn(intakeSubsystem, pivotSubsystem)),
             new StopIntake(intakeSubsystem),
@@ -35,7 +35,7 @@ public class IntakeNote extends Command {
             new ParallelRaceGroup(new RollIntakeOut(intakeSubsystem), new OutIntake(intakeSubsystem)), 
             new StopIntake(intakeSubsystem));
             commandGroup.schedule();
-        }
+        // }
     }
 
     @Override
