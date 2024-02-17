@@ -28,7 +28,8 @@ public class AlignWithTargetPoint extends Command {
 
     @Override
     public void execute() {
-        Pose2d initialPose = this.swerveSubsystem.getPose(); // assume that everything in x,y,z??
+        Pose2d currPose = this.swerveSubsystem.getPose(); // assume that everything in x,y,z??
+        Pose2d initialPose = new Pose2d(currPose.getX()-(15/39.4), currPose.getY(), currPose.getRotation()); // adjusted for the 15 in offset :skull:
         Pose3d targetPointPose = this.llsubsystem.getValidShotPoint().relativeTo(new Pose3d(initialPose));
 
         Pose2d computedPose = RebelUtil.calculateAlignedPose(llsubsystem, initialPose, this.shooterPose, targetPointPose);
