@@ -30,7 +30,8 @@ public class PoseLimelightIOReal implements PoseLimelightIO {
 
     public void setID(int number) {
         // for (int i = 0; getID() != number && i < 6; i++){
-        //     results.targets_Fiducials.getNext();
+        //     results.targets_Fiducials.getNext(); //This probably won't work 
+        //     var a = results.targets_fiducials[i]; //This probably works, they put them in a array since they will never exceed the size of 128.
         // }
     }
 

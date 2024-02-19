@@ -69,4 +69,8 @@ public class Intake extends SubsystemBase{
         }
         return null;
     }
+    public static Intake setInstance(Intake inst){
+        instance = inst;
+        return inst;
+    }
 }

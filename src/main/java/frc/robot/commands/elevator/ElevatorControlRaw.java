@@ -20,7 +20,7 @@ public class ElevatorControlRaw extends Command{
     }
     @Override
     public void execute(){
-        ElevatorSubsystem.setVoltage(RebelUtil.linearDeadband(controller.getRightY(), 0.08) * 12);
+        ElevatorSubsystem.setHeightMeters(RebelUtil.linearDeadband(controller.getRightY(), 0.05) * 12, true, false, true);
     }
     @Override
     //This is a default command, it should never finish theoretically

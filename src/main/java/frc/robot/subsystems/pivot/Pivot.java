@@ -84,4 +84,8 @@ public class Pivot extends SubsystemBase{
         }
         return instance;
     }
+    public static Pivot setInstance(Pivot inst){
+        Pivot.instance = inst;
+        return Pivot.instance;
+    }
 }
