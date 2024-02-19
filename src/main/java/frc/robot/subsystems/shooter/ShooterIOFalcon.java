@@ -42,6 +42,7 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
         inputs.velocityRadSec = m_motor1.getVelocity().getValueAsDouble() * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
         currentVelocityRadPerSec = inputs.velocityRadSec;
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
+        // inputs.inShooter = isInShooter(); //What if the point of this.
     }
 
     @Override
@@ -49,13 +50,13 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
     public void setVelocityRadSec(double goalVelocityRadPerSec) {
         double ffVelo = 0;
         if (goalVelocityRadPerSec > currentVelocityRadPerSec) {
-            ffVelo = 1;
+            ffVelo = 1; 
         }
         else if (goalVelocityRadPerSec < currentVelocityRadPerSec) {
-            ffVelo = -1;
+            ffVelo = -1; 
         }
 
-        double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, ffVelo );
+        double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, ffVelo);
         velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
         double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
         double outVoltage = feedForwardVoltage + feedBackControllerVoltage;

@@ -62,7 +62,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     @Override
     // sould be called periodically
     // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
-    public void setHeightMeters(double goalPositionMeters, boolean isShooterHeight, boolean isClimbing) {
+    public void setHeightMeters(double goalPositionMeters, boolean isShooterHeight, boolean isClimbing, boolean isRaw) {
         double currentPositionMeters;
         if (isShooterHeight) {
             currentPositionMeters = lastShooterHeightMeters;
@@ -70,20 +70,25 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
         else {
             currentPositionMeters = lastClimberHeightMeters;
         }
+        if(isRaw){
+            setVoltage(goalPositionMeters);
+            return;
+        }
+    
         
-        // // cheking for over extension
-        // if (isShooterHeight) {
-        //     if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
-        //         goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
-        //             return;
-        //     }
-        // }
-        // else {
-        //     if (currentPositionMeters > kMAX_CLIMBER_HEIGHT || currentPositionMeters < kMIN_CLIMBER_HEIGHT || 
-        //         goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT) {
-        //             return;
-        //     }
-        // }
+        // cheking for over extension
+        if (isShooterHeight) {
+            if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
+                goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
+                    return;
+            }
+        }
+        else {
+            if (currentPositionMeters > kMAX_CLIMBER_HEIGHT || currentPositionMeters < kMIN_CLIMBER_HEIGHT || 
+                goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT) {
+                    return;
+            }
+        }
         
         if (isShooterHeight) {
             
@@ -100,7 +105,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             m_motor1.setVoltage(outVoltage);
             return;
         }
-        // Not Shooterheight and Not climbing. When will we ever use this. This is default case. But we should consider this at a later date.
+        //Not Shooterheight and Not climbing. When will we ever use this. This is default case. But we should consider this at a later date.
         else if (!isShooterHeight && !isClimbing) {
             // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
@@ -119,7 +124,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             m_motor1.setVoltage(outVoltage);
             return;
         }
-        // move climber down
+        //move climber down
         else {
             // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
@@ -136,6 +141,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
+            return;
         }
     } 
 

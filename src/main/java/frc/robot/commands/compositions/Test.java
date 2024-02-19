@@ -11,7 +11,9 @@ import frc.robot.subsystems.shooter.Shooter;
 
 public class Test extends SequentialCommandGroup {
     public Test(){
-        addCommands(new SequentialCommandGroup(new RollIntakeIn(Intake.getInstance(), Pivot.getInstance()), new ShooterWindup(Shooter.getInstance())));
+        addCommands(
+            new SequentialCommandGroup(new RollIntakeIn(Intake.getInstance(), Pivot.getInstance()),
+         new ShooterWindup(Shooter.getInstance())));
 
     }
 }
