@@ -57,11 +57,12 @@ public class RebelUtil {
 
     public static Pose2d calculateAlignedPose(PoseLimelight visionSubsystem, Pose2d initialPose, Pose3d shooterPose, Pose3d targetPointPose) {
 
-        // Pose2d drivebasePose = new Pose2d(initialPose.getX(),
-        //                                   shooterPose.getX()*targetPointPose.getY()/targetPointPose.getX(),
-        //                                   initialPose.getRotation()); // elim y-axis difference
+        Pose3d s_aligned = new Pose3d(shooterPose.getX(),
+                                      shooterPose.getX()*targetPointPose.getY()/targetPointPose.getX(),
+                                      shooterPose.getZ(),
+                                      new Rotation3d(0,0,0)); // elim y-axis difference
 
-        Rotation3d rot = new Rotation3d(0,0, Math.acos(dot(targetPointPose, shooterPose)/(mag(targetPointPose)*mag(shooterPose))));
+        Rotation3d rot = new Rotation3d(0,0, Math.acos(dot(targetPointPose, s_aligned)/(mag(targetPointPose)*mag(s_aligned))));
         Pose3d intermediate = new Pose3d(initialPose).rotateBy(rot);
         Pose2d drivebasePose = new Pose2d(initialPose.getTranslation(), initialPose.getRotation().plus(new Rotation2d(intermediate.getRotation().getZ())));
                                           
