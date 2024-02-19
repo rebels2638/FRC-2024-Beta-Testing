@@ -134,7 +134,7 @@ public class RobotContainer {
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
         intakeSubsystem = new Intake(new IntakeIOSim() {});
-        // intakeSubsystem = Intake.setInstance(new Intake(new IntakeIOSim()));
+        // intakeSubsystem = Intake.setInstance(new Intake(new IntakeIOSim())); //Assigns the instance object(pointer) to the variable so no new changes are needed.
 
         shooterSubsystem = new Shooter(new ShooterIOSim());
         // shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIOSim()));
@@ -157,10 +157,16 @@ public class RobotContainer {
         // shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIO(){}));
 
         intakeSubsystem = new Intake(new IntakeIO() {});
+        // intakeSubsystem = Intake.setInstance(new Intake(new IntakeIO(){}));
+
         pivotSubsystem = new Pivot(new PivotIO() {});
+        // pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIO(){}));
 
         elevatorSubsystem = new Elevator(new ElevatorIO() {});
+        // elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIO(){}));
+        
         visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
+        
 
         break;
         
