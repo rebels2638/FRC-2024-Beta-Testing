@@ -63,7 +63,7 @@ public class RebelUtil {
 
         Rotation3d rot = new Rotation3d(0,0, Math.acos(dot(targetPointPose, shooterPose)/(mag(targetPointPose)*mag(shooterPose))));
         Pose3d intermediate = new Pose3d(initialPose).rotateBy(rot);
-        Pose2d drivebasePose = new Pose2d(initialPose.getTranslation(), new Rotation2d(intermediate.getRotation().getZ()));
+        Pose2d drivebasePose = new Pose2d(initialPose.getTranslation(), initialPose.getRotation().plus(new Rotation2d(intermediate.getRotation().getZ())));
                                           
         // 0,0,acos(dot(target,shooter)/(mag(target)*mag(shooter))) - roll,pitch,yaw
         // can use Rot3d and then apply as a transform to currPose and then supply transformed pose (time benefits?)
