@@ -11,7 +11,7 @@ import frc.robot.Utils.RebelUtil;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
+public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
     private static final double kMotorToOutputShaftRatio = 1/6.0; 
     private static final double kSproketDiameterMeters = 0.032;
     private static final double kFIRST_STAGE_TO_SECOND = 2.054054054054054;
@@ -37,7 +37,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private double lastShooterHeightMeters;
     private double lastClimberHeightMeters;
 
-    public ElevatorIONeo() {
+    public ElevatorIOFalcon() {
 
         m_motor1.clearStickyFault_BootDuringEnable();
         m_motor2.clearStickyFault_BootDuringEnable();
