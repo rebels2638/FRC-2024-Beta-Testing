@@ -219,7 +219,7 @@ public class RobotContainer {
     // this.xboxOperator.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsystem));
     // this.xboxOperator.getAButton().onTrue(new StopIntake(intakeSubsystem));
     // this.xboxOperator.getXButton().onTrue(new RollIntakeOut(intakeSubsystem));
-    this.xboxOperator.getYButton().onTrue(new RollIntakeInSlow(intakeSubsystem));
+    // this.xboxOperator.getYButton().onTrue(new RollIntakeInSlow(intakeSubsystem));
 
     // this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
     // this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivotSubsystem));
@@ -264,8 +264,19 @@ public class RobotContainer {
     //   }
     // }));
     //xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
+
+
+      //Michaelangelo controls
+
+    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
+    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
+
+    // this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle(elevatorSubsystem));
+    // this.xboxOperator.getAButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsystem));
+    // this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
+    // this.xboxOperator.getYButton().onTrue(new ScoreAMP(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
+
   }
-  
   public static RobotContainer getInstance() {
     if (instance == null) {
       instance = new RobotContainer();
@@ -291,17 +302,6 @@ public class RobotContainer {
     
   }
 
-  public static Boolean isRed(){
-    try{
-    Optional<Alliance> id = DriverStation.getAlliance();
-    if(id.equals(AllianceStationID.Blue1) || id.equals(AllianceStationID.Blue2) || id.equals(AllianceStationID.Blue3)){
-      return false;
-    }
-  }catch(Exception e){
-    System.out.println(e);
-  }
-    return true;
-  }
   //TODO: Do later once we are done with all of our priorities.
   // public void setInstances(){
   //   pivotSubsystem = Pivot.getInstance();
