@@ -12,7 +12,7 @@ import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.limelight.PoseLimelight;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 
@@ -47,11 +47,24 @@ public class RebelUtil {
         return true;
     }
 
+    public static double dot(Pose3d a, Pose3d b) {
+        return (a.getX()*b.getX()) + (a.getY()*b.getY()) + (a.getZ()*b.getZ());
+    }
+    
+    public static double mag(Pose3d a) {
+        return Math.sqrt(Math.pow(a.getX(), 2) + Math.pow(a.getY(), 2) + Math.pow(a.getZ(), 2));
+    }
+
     public static Pose2d calculateAlignedPose(PoseLimelight visionSubsystem, Pose2d initialPose, Pose3d shooterPose, Pose3d targetPointPose) {
 
-        Pose2d drivebasePose = new Pose2d(initialPose.getX(),
-                                          shooterPose.getX()*targetPointPose.getY()/targetPointPose.getX(),
-                                          initialPose.getRotation()); // elim y-axis difference
+        Pose3d s_aligned = new Pose3d(shooterPose.getX(),
+                                      shooterPose.getX()*targetPointPose.getY()/targetPointPose.getX(),
+                                      shooterPose.getZ(),
+                                      new Rotation3d(0,0,0)); // elim y-axis difference
+
+        Rotation3d rot = new Rotation3d(0,0, Math.acos(dot(targetPointPose, s_aligned)/(mag(targetPointPose)*mag(s_aligned))));
+        Pose3d intermediate = new Pose3d(initialPose).rotateBy(rot);
+        Pose2d drivebasePose = new Pose2d(initialPose.getTranslation(), initialPose.getRotation().plus(new Rotation2d(intermediate.getRotation().getZ())));
                                           
         // 0,0,acos(dot(target,shooter)/(mag(target)*mag(shooter))) - roll,pitch,yaw
         // can use Rot3d and then apply as a transform to currPose and then supply transformed pose (time benefits?)
