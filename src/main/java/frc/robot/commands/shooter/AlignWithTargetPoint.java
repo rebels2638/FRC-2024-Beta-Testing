@@ -35,7 +35,6 @@ public class AlignWithTargetPoint extends Command {
         Pose2d computedPose = RebelUtil.calculateAlignedPose(llsubsystem, initialPose, this.shooterPose, targetPointPose);
         RebelUtil.driveRobotToPose(computedPose);
         calcFlywheelSpeed(new Pose3d(computedPose), targetPointPose);
-
     }
 
     private static void calcFlywheelSpeed(Pose3d initial, Pose3d desired) {
