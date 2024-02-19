@@ -19,8 +19,8 @@ import frc.robot.subsystems.swerve.SwerveSubsystem;
 public class RebelUtil {
     public static final double EPSILON = 1e-12;
     public static double flywheelSpeed = 0.0;
-    private static final double kAdjustmentParam = 0.01;
-    private static final double kErrorMargin = 0.14;
+    private static final double kAdjustmentParam = 0.050761421; // its like 2in
+    private static final double kErrorMargin = 0.0761421; // its like 3in
 
     /**
      * @param toConstrain
@@ -82,7 +82,7 @@ public class RebelUtil {
                 drivebasePose = new Pose2d(drivebasePose.getX()-kAdjustmentParam, drivebasePose.getY(), new Rotation2d(0));
             }
 
-            targetPointPose = visionSubsystem.getValidShotPoint().relativeTo(new Pose3d(drivebasePose)); // doesn't exist... yet
+            targetPointPose = visionSubsystem.getValidShotPoint().relativeTo(new Pose3d(drivebasePose));
         }
 
         return drivebasePose;
