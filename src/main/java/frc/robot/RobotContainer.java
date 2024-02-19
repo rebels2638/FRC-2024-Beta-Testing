@@ -61,7 +61,7 @@ import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
-import frc.robot.subsystems.elevator.ElevatorIONeo;
+import frc.robot.subsystems.elevator.ElevatorIOFalcon;
 // import frc.robot.subsystems.elevator.ElevatorIOSim;;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
@@ -172,7 +172,6 @@ public class RobotContainer {
         
         visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
         
-
         break;
         
       default:
@@ -185,7 +184,7 @@ public class RobotContainer {
         intakeSubsystem = new Intake(new IntakeIONeo() {});
         // intakeSubsystem = Intake.setInstance(new Intake(new IntakeIONeo()));
 
-        elevatorSubsystem = new Elevator(new ElevatorIONeo());
+        elevatorSubsystem = new Elevator(new ElevatorIOFalcon());
         // elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIONeo()));
 
         pivotSubsystem = new Pivot(new PivotIONeo());
@@ -238,8 +237,6 @@ public class RobotContainer {
     // this.pivot.setDefaultCommand(pivotController);
     // this.xboxDriver.getLeftBumper().onTrue(new PivotTurtle(pivotSubsystem));
     // this.xboxDriver.getRightBumper().onTrue(new PivotToTorus(pivotSubsystem)); 
-
-
 
      //TODO: ELEVATOR
     this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevatorSubsystem));

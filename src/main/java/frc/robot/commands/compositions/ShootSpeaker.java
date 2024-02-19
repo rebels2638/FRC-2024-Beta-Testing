@@ -46,8 +46,7 @@ public class ShootSpeaker extends Command {
     public void initialize() {
         SequentialCommandGroup commandGroup = 
         new SequentialCommandGroup(
-            new AlignWithTargetPoint(this.shooterSubsystem, this.swerveSubsystem, this.visionSubsystem),
-            new ShooterWindup(this.shooterSubsystem, RebelUtil.flywheelSpeed),
+            new ParallelRaceGroup(new AlignWithTargetPoint(this.shooterSubsystem, this.swerveSubsystem, this.visionSubsystem), new ShooterWindup(this.shooterSubsystem, RebelUtil.flywheelSpeed)),
             new ParallelCommandGroup(new MoveElevatorTurtle(this.elevatorSubsystem), new PivotTurtle(this.pivotSubsystem)),
             new ParallelRaceGroup(new RollIntakeIn(this.intakeSubsystem, this.pivotSubsystem), new InIntake(this.intakeSubsystem)),
             new StopIntake(this.intakeSubsystem),
