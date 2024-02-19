@@ -8,13 +8,17 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils.RebelUtil;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private static final double kMotorToOutputShaftRatio = 1/6.0; 
     private static final double kSproketDiameterMeters = 0.032;
     private static final double kFIRST_STAGE_TO_SECOND = 2.054054054054054;
     private static final double kSECOND_STAGE_TO_THIRD = 1.513157894736842;
-    private CANSparkMax m_motor1 = new CANSparkMax(17, CANSparkMax.MotorType.kBrushless); 
-    private CANSparkMax m_motor2 = new CANSparkMax(18, CANSparkMax.MotorType.kBrushless);
+
+    private TalonFX m_motor1 = new TalonFX(22);
+    private TalonFX m_motor2 = new TalonFX(23);
     // private static final double kMAX_CURRENT_AMPS = 35; //Let the smart current handler in the motorControllers handle it. 
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_SIN = Math.sin(Math.toRadians(23));
@@ -34,24 +38,23 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
     private double lastClimberHeightMeters;
 
     public ElevatorIONeo() {
-        m_motor1.setInverted(false);
-        m_motor2.setInverted(false);
-        m_motor1.clearFaults();
-        m_motor2.clearFaults();
-        m_motor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_motor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_motor2.follow(m_motor1);
+
+        m_motor1.clearStickyFault_BootDuringEnable();
+        m_motor2.clearStickyFault_BootDuringEnable();
+        m_motor1.setNeutralMode(NeutralModeValue.Brake);
+        m_motor2.setNeutralMode(NeutralModeValue.Brake);
+        // m_motor2.Follow(m_motor1); TODO: figure this out, DOESNT WORK LOL
 
     }
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.shooterHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
+        inputs.shooterHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
 
-        inputs.climberHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI *
+        inputs.climberHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI *
                                                             kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_SIN;
 
-        inputs.voltageOut = m_motor1.getAppliedOutput() * kMAX_VOLTAGE;
+        inputs.voltageOut = m_motor1.getDutyCycle().getValueAsDouble() * kMAX_VOLTAGE;
 
         inputs.reachedSetpoint = positionFeedBackController.atSetpoint();
 
@@ -87,7 +90,6 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
         
         if (isShooterHeight) {
             
-            
             positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
@@ -98,6 +100,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
+            m_motor2.setVoltage(outVoltage);
             return;
         }
         // Not Shooterheight and Not climbing. When will we ever use this. This is default case. But we should consider this at a later date.
@@ -117,6 +120,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
+            m_motor2.setVoltage(outVoltage);
             return;
         }
         // move climber down
@@ -125,7 +129,7 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
             goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
             currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
             
-                positionFeedBackController.setSetpoint(goalPositionMeters);
+            positionFeedBackController.setSetpoint(goalPositionMeters);
             double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
             double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);            
@@ -136,12 +140,14 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
             Logger.recordOutput("Elevator/voltageOut", outVoltage);
             m_motor1.setVoltage(outVoltage);
+            m_motor2.setVoltage(outVoltage);
         }
     } 
 
     public void setVoltage(double voltage){
         Logger.recordOutput("Elevator/voltageOut", voltage);
         m_motor1.setVoltage(voltage);
+        m_motor2.setVoltage(voltage);
     }
 
     @Override
@@ -154,8 +160,8 @@ public class ElevatorIONeo extends SubsystemBase implements ElevatorIO {
 
     @Override
     public void zeroHeight() {
-        m_motor1.getEncoder().setPosition(0.0);
-        m_motor2.getEncoder().setPosition(0);
+        m_motor1.setPosition(0.0);
+        m_motor2.setPosition(0.0);
     }
 
 }

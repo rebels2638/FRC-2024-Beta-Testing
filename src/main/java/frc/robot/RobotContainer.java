@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 
 import java.io.File;
+import java.sql.Time;
 import java.util.Optional;
 // import frc.robot.commands.pivot.PickUpCube;
 // import frc.robot.commands.pivot.PivotController;
@@ -33,6 +34,9 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystemIO;
@@ -79,6 +83,7 @@ import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOFalcon;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.commands.shooter.ShooterStop;
+import edu.wpi.first.wpilibj.Timer;
 
 // import frc.robot.commands.drivetrain.TeleopDrive;
 
@@ -201,8 +206,8 @@ public class RobotContainer {
     this.xboxOperator.getYButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsystem));
     this.xboxOperator.getAButton().onTrue(new StopIntake(intakeSubsystem));
     this.xboxOperator.getXButton().onTrue(new RollIntakeOut(intakeSubsystem));
+    // this.xboxOperator.getAButton().onTrue(new InstantCommand(() -> new ParallelRaceGroup(new WaitCommand(1), new RollIntakeIn(intakeSubsystem, pivotSubsystem, -0.3))));
 
-    
     // this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
     // this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivotSubsytem));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(()-> pivot.toggleMode()));
@@ -217,8 +222,6 @@ public class RobotContainer {
     // // this.pivot.setDefaultCommand(pivotController);
     // this.xboxDriver.getLeftBumper().onTrue(new PivotTurtle(pivotSubsystem));
     // this.xboxDriver.getRightBumper().onTrue(new PivotToTorus(pivotSubsystem)); 
-
-
 
     // //TODO: ELEVATOR
     // this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevatorSubsystem));
