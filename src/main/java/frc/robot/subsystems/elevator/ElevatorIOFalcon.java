@@ -17,8 +17,8 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
     private static final double kFIRST_STAGE_TO_SECOND = 2.054054054054054;
     private static final double kSECOND_STAGE_TO_THIRD = 1.513157894736842;
 
-    private TalonFX m_motor1 = new TalonFX(22);
-    private TalonFX m_motor2 = new TalonFX(23);
+    private TalonFX m_motor1 = new TalonFX(17);
+    private TalonFX m_motor2 = new TalonFX(18);
     // private static final double kMAX_CURRENT_AMPS = 35; //Let the smart current handler in the motorControllers handle it. 
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_SIN = Math.sin(Math.toRadians(23));
