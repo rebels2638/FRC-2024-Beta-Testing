@@ -40,12 +40,6 @@ public class ScoreAMP extends Command {
     @Override
     public void initialize() {
         SequentialCommandGroup commandGroup = new SequentialCommandGroup(
-            new PivotTurtle(pivotSubsystem),
-            new ParallelRaceGroup(new WaitCommand(.5), new RollIntakeInSlow(intakeSubsystem)),
-            new ParallelRaceGroup(
-                new InShooter(intakeSubsystem),
-                new RollIntakeInSlow(intakeSubsystem), 
-                new ShooterHold(shooterSubsystem)),
             new ShooterStop(shooterSubsystem),
             new MoveElevatorAMP(elevatorSubsystem),
             new ShooterWindReverse(shooterSubsystem),
