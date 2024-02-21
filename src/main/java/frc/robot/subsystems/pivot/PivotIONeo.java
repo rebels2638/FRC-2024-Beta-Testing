@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Utils.RebelUtil;
 
 public class PivotIONeo extends SubsystemBase implements PivotIO {
     private static final double kMotorToOutputShaftRatio = 0.00625;
@@ -54,9 +55,6 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
     @Override
     // sould be called periodically
     public void setPosition(double goalPositionRad) {
-        // if (goalPositionRad >= kMAX_POSITION_RAD || goalPositionRad < kMIN_POSITION_RAD) {
-        //     return;
-        // }
 
         double ffVelo = 0;
         if (goalPositionRad > currentRadAngle) {
@@ -74,16 +72,18 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
 
         positionFeedBackController.setSetpoint(goalPositionRad);
         double feedBackControllerVoltage = positionFeedBackController.calculate(currentRadAngle);
-        double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+        double voltageOut = feedForwardVoltage + feedBackControllerVoltage;
+        
+        voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
 
-        if (outVoltage > kMAX_VOLTAGE) {
-            outVoltage = 12;
+        if ((currentRadAngle > kMAX_POSITION_RAD && voltageOut > 0) || 
+                (currentRadAngle < kMIN_POSITION_RAD && voltageOut < 0) || 
+                (goalPositionRad > kMAX_POSITION_RAD || goalPositionRad < kMIN_POSITION_RAD)) {
+                    voltageOut = 0;
         }
-        else if (outVoltage < -kMAX_VOLTAGE) {
-            outVoltage = -12;
-        }
-        Logger.recordOutput("Pivot/voltageOut", outVoltage);
-        m_motor.setVoltage(outVoltage);
+
+        Logger.recordOutput("Pivot/voltageOut", voltageOut);
+        m_motor.setVoltage(voltageOut);
     } 
 
     @Override
