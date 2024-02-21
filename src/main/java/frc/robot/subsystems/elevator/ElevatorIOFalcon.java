@@ -23,9 +23,7 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_SIN = Math.sin(Math.toRadians(23));
     
-    private static final double kSECOND_STAGE_OFFSET_METERS = 0.0; // TODO: FIND THIS! 
     // Should be where the second stage starts when elavator down. measured from the base of the elevator to the second stage top in meters. do not measure from belly pan. measure from base of elavator
-    private static final double kTHIRD_STAGE_OFFSET_METERS = 0.0; // TODO: FIND THIS! ^ same process
     
     private static final double kMIN_SHOOTER_HEIGHT = 0;
     private static final double kMAX_SHOOTER_HEIGHT= 0.52;
@@ -53,10 +51,10 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
 
     @Override
     public void updateInputs(ElevatorIOInputs inputs) {
-        inputs.shooterHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND + kSECOND_STAGE_OFFSET_METERS;
+        inputs.shooterHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND;
 
         inputs.climberHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI *
-                                                            kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_SIN + kTHIRD_STAGE_OFFSET_METERS;
+                                                            kSproketDiameterMeters * kFIRST_STAGE_TO_SECOND * kSECOND_STAGE_TO_THIRD * kELEVATOR_ANGLE_SIN;
 
         inputs.voltageOut = m_motor1.getDutyCycle().getValueAsDouble() * kMAX_VOLTAGE;
 
