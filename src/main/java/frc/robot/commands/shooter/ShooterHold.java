@@ -5,7 +5,7 @@ import frc.robot.subsystems.shooter.Shooter;
 
 public class ShooterHold extends Command {
     
-    private double velocitySetPoint = 10;
+    // private double velocitySetPoint = 3;
     private final Shooter shooterSubsystem;
 
     public ShooterHold(Shooter shooterSubsystem){
@@ -15,7 +15,7 @@ public class ShooterHold extends Command {
 
     @Override
     public void execute(){
-        shooterSubsystem.setVelocityRadSec(0.5);
+        shooterSubsystem.setVelocityRadSec(5);
     }
 
     @Override

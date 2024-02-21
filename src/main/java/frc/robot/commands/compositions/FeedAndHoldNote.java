@@ -1,10 +1,12 @@
 package frc.robot.commands.compositions;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.Intake.InIntake;
 import frc.robot.commands.Intake.OutIntake;
 import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.Intake.RollIntakeInSlow;
@@ -37,16 +39,18 @@ public class FeedAndHoldNote extends Command {
 
     @Override
     public void initialize() {
+
         SequentialCommandGroup commandGroup = new SequentialCommandGroup(
-             new ParallelRaceGroup(
+            new ParallelRaceGroup(
                 new RollIntakeIn(intakeSubsystem, pivotSubsystem), 
-                new WaitCommand(0.04)),
+                new WaitCommand(0.1)),
             new ParallelRaceGroup(
                 new OutIntake(intakeSubsystem),
-                new RollIntakeInSlow(intakeSubsystem), 
+                // new WaitCommand(0.0),
+                new RollIntakeInSlow(intakeSubsystem),
                 new ShooterHold(shooterSubsystem)),
-            new StopIntake(intakeSubsystem),
-            new ShooterStop(shooterSubsystem)
+           // new WaitCommand(0.0),
+            new ParallelCommandGroup(new StopIntake(intakeSubsystem), new ShooterStop(shooterSubsystem))
             );
 
         commandGroup.schedule();

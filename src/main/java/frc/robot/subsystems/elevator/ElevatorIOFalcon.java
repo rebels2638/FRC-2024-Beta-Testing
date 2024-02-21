@@ -12,24 +12,24 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
-    private static final double kMotorToOutputShaftRatio = 1/6.0; 
+    private static final double kMotorToOutputShaftRatio = 1/7.5; 
     private static final double kSproketDiameterMeters = 0.032;
     private static final double kFIRST_STAGE_TO_SECOND = 2.054054054054054;
-    private static final double kSECOND_STAGE_TO_THIRD = 1.513157894736842;
+    private static final double kSECOND_STAGE_TO_THIRD = 1; //They got rid of the third stage
 
-    private TalonFX m_motor1 = new TalonFX(22);
-    private TalonFX m_motor2 = new TalonFX(23);
+    private TalonFX m_motor1 = new TalonFX(17);
+    private TalonFX m_motor2 = new TalonFX(18);
     // private static final double kMAX_CURRENT_AMPS = 35; //Let the smart current handler in the motorControllers handle it. 
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_SIN = Math.sin(Math.toRadians(23));
     
-    private static final double kMIN_SHOOTER_HEIGHT = 0;
+    private static final double kMIN_SHOOTER_HEIGHT = 0; // 0.6m offset, stop the cap
     private static final double kMAX_SHOOTER_HEIGHT= 0.52;
 
     private static final double kMIN_CLIMBER_HEIGHT = 0;
     private static final double kMAX_CLIMBER_HEIGHT= 0.7;
 
-    private double kCLIMB_KG = 12;
+    private double kCLIMB_KG = 0;
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
     private ElevatorFeedforward climbElevatorFeedforwardController = new ElevatorFeedforward(0,0,0);

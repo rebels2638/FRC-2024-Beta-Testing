@@ -21,9 +21,9 @@ public class Shooter extends SubsystemBase{
     double desiredVelocityRadSec = 0;
     public Shooter(ShooterIO io)  {
         Shooter.io = io;
-        velocityFeedBackController = new PIDController(0.00, 0, 0.00); // .68
+        velocityFeedBackController = new PIDController(0.34,  0, 0.00); // .68
         velocityFeedBackController.setTolerance(kVelocityRadSecTolerance);
-        velocityFeedForwardController = new SimpleMotorFeedforward(0.135, 0.11, 0); //0.135, 0.11, 0
+        velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0); //0.135, 0.11, 0
         io.configureController(velocityFeedForwardController, velocityFeedBackController);
     }
 

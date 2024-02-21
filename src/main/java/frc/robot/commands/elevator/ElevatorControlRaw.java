@@ -20,7 +20,19 @@ public class ElevatorControlRaw extends Command{
     }
     @Override
     public void execute(){
-        ElevatorSubsystem.setHeightMeters(RebelUtil.linearDeadband(controller.getRightY(), 0.05) * 12, true, false, true);
+        double height = this.ElevatorSubsystem.getShooterHeightMeters();
+        if (controller.getLeftY() > 0.04 || controller.getLeftY() < 0.04) {
+            if (controller.getLeftY() > 0) {
+                height = 0.54-controller.getLeftY()*0.54;
+            }
+            if (controller.getLeftY() == 0) {
+                height = this.ElevatorSubsystem.getShooterHeightMeters();
+            }
+            else {
+                height = -controller.getLeftY()*0.54;
+            }
+        }
+        ElevatorSubsystem.setHeightMeters(height, true, false, true);
     }
     @Override
     //This is a default command, it should never finish theoretically

@@ -12,7 +12,7 @@ public class MoveElevatorAMP extends Command {
     
     @Override
     public void execute() { 
-       elevatorSubsystem.setHeightMeters(0.5, true, false, false);
+       elevatorSubsystem.setHeightMeters(0.51, true, false, false); // after one increment of "y"
     }
     @Override
     public void end(boolean isInterrupted){

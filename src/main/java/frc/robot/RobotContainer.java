@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -81,6 +82,7 @@ import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOFalcon;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.commands.shooter.ShooterStop;
+import frc.robot.commands.compositions.ShooterTest;
 import edu.wpi.first.wpilibj.Timer;
 
 // import frc.robot.commands.drivetrain.TeleopDrive;
@@ -209,7 +211,8 @@ public class RobotContainer {
 
     //  shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
     //  intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
-    //  elevatorSubsystem.setDefaultCommand(new ElevatorControlRaw(elevatorSubsystem, xboxOperator));
+    // elevatorSubsystem.setDefaultCommand(new ElevatorControlRaw(elevatorSubsystem, xboxOperator));
+    // new InstantCommand(() -> elevatorSubsystem.zeroHeight()).schedule();
     
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(() -> swerveSubsystem.lock()));
@@ -220,18 +223,18 @@ public class RobotContainer {
     // this.xboxOperator.getXButton().onTrue(new RollIntakeOut(intakeSubsystem));
     // this.xboxOperator.getYButton().onTrue(new RollIntakeInSlow(intakeSubsystem));
 
-    // this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsytem));
+    // this.xboxDriver.getLeftBumper().onTrue(new PivotToTorus(pivotSubsystem));
     // this.xboxDriver.getRightBumper().onTrue(new PivotTurtle(pivotSubsystem));
     // this.xboxDriver.getLeftBumper().onTrue(new PivotMidway(pivotSubsystem));
     
     // this.xboxDriver.getAButton().onTrue(new InstantCommand(()-> pivot.toggleMode()));
-    // this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivotSubsytem.zeroAngle()));
+    this.xboxOperator.getXButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
 
     // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
     // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
     // this.xboxOperator.getAButton().onTrue(new ShooterHold(shooterSubsystem));
 
-    // this.xboxDriver.getAButton().onTrue(new IntakeNote(intakeSubsystem, pivotSubsystem));
+    this.xboxOperator.getAButton().onTrue(new IntakeNote(intakeSubsystem, pivotSubsystem));
     // this.xboxDriver.getRightStick.onTrue(new InstantCommand(() -> ))
     // this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> pivotSubsystem.zeroAngle()));
     // this.pivot.setDefaultCommand(pivotController);
@@ -239,11 +242,14 @@ public class RobotContainer {
     // this.xboxDriver.getRightBumper().onTrue(new PivotToTorus(pivotSubsystem)); 
 
      //TODO: ELEVATOR
+
     this.xboxDriver.getAButton().onTrue(new MoveElevatorAMP(elevatorSubsystem));
     this.xboxDriver.getBButton().onTrue(new MoveElevatorTurtle(elevatorSubsystem));
     this.xboxDriver.getYButton().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
     
     // this.xboxDriver.getYButton().onTrue(new ShootSpeaker(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem, visionSubsystem, swerveSubsystem));
+    this.xboxDriver.getRightBumper().onTrue(new ShooterWindReverse(shooterSubsystem));
+    this.xboxDriver.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
 
     // this.xboxDriver.getXButton().onTrue(new AutoAlignAMP(swerveSubsystem));
     // this.xboxDriver.getYButton().onTrue(new AutoAlignTrap(swerveSubsystem));
@@ -263,17 +269,20 @@ public class RobotContainer {
     //xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
 
 
-      //Michaelangelo controls
+    //Michaelangelo controls
+
 
     // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(shooterSubsystem));
     // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup(shooterSubsystem));
 
     // this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle(elevatorSubsystem));
     // this.xboxOperator.getAButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsystem));
-    // this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
-    // this.xboxOperator.getYButton().onTrue(new ScoreAMP(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
+    this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
+    this.xboxOperator.getLeftBumper().onTrue(new ShooterTest(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
+    this.xboxOperator.getYButton().onTrue(new ScoreAMP(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
 
   }
+
   public static RobotContainer getInstance() {
     if (instance == null) {
       instance = new RobotContainer();

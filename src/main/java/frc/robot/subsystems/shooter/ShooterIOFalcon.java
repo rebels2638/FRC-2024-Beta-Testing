@@ -77,8 +77,6 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
         Logger.recordOutput("Shooter/voltageOut", outVoltage);
         m_motor1.setVoltage(outVoltage);
         m_motor2.setVoltage(outVoltage);
-
-
     } 
 
     @Override

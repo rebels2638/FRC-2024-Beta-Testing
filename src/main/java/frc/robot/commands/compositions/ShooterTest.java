@@ -1,20 +1,19 @@
 package frc.robot.commands.compositions;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.Intake.InIntake;
+import frc.robot.commands.Intake.OutIntake;
 import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.Intake.RollIntakeInSlow;
+import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.elevator.MoveElevatorAMP;
-import frc.robot.commands.elevator.MoveElevatorTurtle;
 import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.commands.shooter.InShooter;
 import frc.robot.commands.shooter.ShooterHold;
-import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterWindReverse;
 import frc.robot.subsystems.elevator.Elevator;
@@ -22,13 +21,13 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class ScoreAMP extends Command {
+public class ShooterTest extends Command {
     private final Shooter shooterSubsystem;
     private final Intake intakeSubsystem;
     private final Pivot pivotSubsystem;
     private final Elevator elevatorSubsystem;
 
-    public ScoreAMP(Shooter shooterSubsystem, Intake intakeSubsystem, Pivot pivotSubsystem, Elevator elevatorSubsystem) {
+    public ShooterTest(Shooter shooterSubsystem, Intake intakeSubsystem, Pivot pivotSubsystem, Elevator elevatorSubsystem) {
         this.shooterSubsystem = shooterSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         this.pivotSubsystem = pivotSubsystem;
@@ -40,11 +39,10 @@ public class ScoreAMP extends Command {
     @Override
     public void initialize() {
         SequentialCommandGroup commandGroup = new SequentialCommandGroup(
-            new ShooterStop(shooterSubsystem), // for what reason??
-            new MoveElevatorAMP(elevatorSubsystem),
-            new ShooterWindReverse(shooterSubsystem),
-            new ShooterStop(shooterSubsystem),
-            new MoveElevatorTurtle(elevatorSubsystem)
+            new ParallelRaceGroup(
+                new ShooterHold(shooterSubsystem),
+                new WaitCommand(0.2)),
+                new ShooterStop(shooterSubsystem)
             );
 
         commandGroup.schedule();
