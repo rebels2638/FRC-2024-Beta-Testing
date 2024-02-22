@@ -23,6 +23,10 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
     private static final double kMAX_VOLTAGE = 12;
     private static final double kELEVATOR_ANGLE_SIN = Math.sin(Math.toRadians(23));
     
+    // Should be where the second stage starts when elavator down. measured from the base of the elevator to the second stage top in meters. do not measure from belly pan. measure from base of elavator
+    
+    // Should be where the second stage starts when elavator down. measured from the base of the elevator to the second stage top in meters. do not measure from belly pan. measure from base of elavator
+    
     private static final double kMIN_SHOOTER_HEIGHT = 0; // 0.6m offset, stop the cap
     private static final double kMAX_SHOOTER_HEIGHT= 0.52;
 
@@ -73,26 +77,8 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
         else {
             currentPositionMeters = lastClimberHeightMeters;
         }
-        if(isRaw){
-            setVoltage(goalPositionMeters);
-            return;
-        }
-    
         
-        // cheking for over extension
-        if (isShooterHeight) {
-            if (currentPositionMeters > kMAX_SHOOTER_HEIGHT || currentPositionMeters < kMIN_SHOOTER_HEIGHT || 
-                goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT) {
-                    return;
-            }
-        }
-        else {
-            if (currentPositionMeters > kMAX_CLIMBER_HEIGHT || currentPositionMeters < kMIN_CLIMBER_HEIGHT || 
-                goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT) {
-                    return;
-            }
-        }
-        
+        double voltageOut = 0;
         if (isShooterHeight) {
             
             positionFeedBackController.setSetpoint(goalPositionMeters);
@@ -100,14 +86,10 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
             double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
 
-            double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
-
-            Logger.recordOutput("Elevator/voltageOut", outVoltage);
-            m_motor1.setVoltage(outVoltage);
-            m_motor2.setVoltage(outVoltage);
-            return;
+            voltageOut = feedForwardVoltage + feedBackControllerVoltage;
+            voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
         }
+
         //Not Shooterheight and Not climbing. When will we ever use this. This is default case. But we should consider this at a later date.
         else if (!isShooterHeight && !isClimbing) {
             // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
@@ -120,13 +102,8 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
             double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
             
-            double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
-
-            Logger.recordOutput("Elevator/voltageOut", outVoltage);
-            m_motor1.setVoltage(outVoltage);
-            m_motor2.setVoltage(outVoltage);
-            return;
+            voltageOut = feedForwardVoltage + feedBackControllerVoltage;
+            voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
         }
         //move climber down
         else {
@@ -140,13 +117,34 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
             double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);            
        
             
-            double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-            outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
-
-            Logger.recordOutput("Elevator/voltageOut", outVoltage);
-            m_motor1.setVoltage(outVoltage);
-            m_motor2.setVoltage(outVoltage);
+            voltageOut = feedForwardVoltage + feedBackControllerVoltage;
+            voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
         }
+        
+        if(isRaw){
+            voltageOut = goalPositionMeters;
+        }
+
+        // cheking for over extension
+        if (isShooterHeight) {
+            if ((currentPositionMeters > kMAX_SHOOTER_HEIGHT && voltageOut > 0) || 
+                (currentPositionMeters < kMIN_SHOOTER_HEIGHT && voltageOut < 0) || 
+                (goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT)) {
+                    voltageOut = 0;
+            }
+        }
+
+        else {
+            if ((currentPositionMeters > kMAX_CLIMBER_HEIGHT && voltageOut > 0) || 
+                (currentPositionMeters < kMIN_CLIMBER_HEIGHT && voltageOut < 0) || 
+                (goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT)) {
+                    voltageOut = 0;
+            }
+        }
+
+        Logger.recordOutput("Elevator/voltageOut", voltageOut);
+        m_motor1.setVoltage(voltageOut);
+        m_motor2.setVoltage(voltageOut);
     } 
 
     public void setVoltage(double voltage){
