@@ -50,11 +50,7 @@ public class AutoRunner {
 
 
     static {
-        PATH_CHOSEN_TO_NAME_HASH_MAP.put("taxi", "taxi");
-        PATH_CHOSEN_TO_NAME_HASH_MAP.put("Turn Auto", "Turn Auto");
-        PATH_CHOSEN_TO_NAME_HASH_MAP.put("Turn In Place","Turn In Place");
-        PATH_CHOSEN_TO_NAME_HASH_MAP.put("Turn", "Turn");
-        PATH_CHOSEN_TO_NAME_HASH_MAP.put("TestAuto2024", "TestAuto2024");
+        PATH_CHOSEN_TO_NAME_HASH_MAP.put("TurnAuto", "TurnAuto");
 
     }
     
@@ -91,7 +87,7 @@ public class AutoRunner {
                     return false;
                 },
                 swerveSubsystem // Reference to this subsystem to set requirements
-        );
+        ); 
     }
 
     private void loadPath() {
@@ -100,6 +96,6 @@ public class AutoRunner {
     }
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("SourceSide1Near1Far");
+        return new PathPlannerAuto("TurnAuto");
     }
 } 

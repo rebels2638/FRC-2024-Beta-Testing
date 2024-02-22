@@ -49,7 +49,6 @@ public class FeedAndHoldNote extends Command {
                 // new WaitCommand(0.0),
                 new RollIntakeInSlow(intakeSubsystem),
                 new ShooterHold(shooterSubsystem)),
-           // new WaitCommand(0.0),
             new ParallelCommandGroup(new StopIntake(intakeSubsystem), new ShooterStop(shooterSubsystem))
             );
 

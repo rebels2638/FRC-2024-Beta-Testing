@@ -1,8 +1,6 @@
 package frc.robot.subsystems.elevator;
 
 import org.littletonrobotics.junction.Logger;
-
-
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,18 +20,12 @@ public class Elevator extends SubsystemBase{
     
     private static Elevator instance = null;
     private double goalPositionMeters = 0;
-    private boolean isShooterHeight = true;
-    private boolean isClimbing = false;
-    private boolean isRaw = false;
-
     public Elevator(ElevatorIO io)  {
         Elevator.io = io;
-        positionFeedBackController = new PIDController(8, 3, 0); // 12, 2, 0
-        positionFeedForwardController = new ElevatorFeedforward(0.13, 0.05, 0); //0.33, 0.14, 0 
+        positionFeedBackController = new PIDController(8, 0, 0); // 12, 2, 0
+        positionFeedForwardController = new ElevatorFeedforward(0.13, 0.06, 0.2); //0.33, 0.14, 0 
         climbFeedForwardController = new ElevatorFeedforward(0,0,0); //TODO: Tune later, use the raw elevator control or a setVoltage initially to give Build team measurements.
         
-        // velocityFeedBackController = new PIDController(0, 0, 0);
-        // velocityFeedForwardController = new ElevatorFeedforward(0,0, 0);
         
         positionFeedBackController.setTolerance(kPID_TOLERANCE_METERS);
 
@@ -44,25 +36,23 @@ public class Elevator extends SubsystemBase{
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Elevator", inputs);
-        if(isRaw){
-            io.setHeightMeters(goalPositionMeters, false, false, isRaw);
-        }
-        else if (isShooterHeight) {
-            Logger.recordOutput("Elevator/desiredShooterHeight", goalPositionMeters);
-            io.setHeightMeters(goalPositionMeters, isShooterHeight, isClimbing, false);
-        }
-        else {
-            Logger.recordOutput("Elevator/desiredClimberHeight", goalPositionMeters);
-            io.setHeightMeters(goalPositionMeters, isShooterHeight, isClimbing, false);
-        }
-        Logger.recordOutput("Elavator/isClimbing", isClimbing);
-    
+        io.setHeightMeters(goalPositionMeters);
+        // if(isRaw){
+        //     io.setHeightMeters(goalPositionMeters);
+        // }
+        // else if (isShooterHeight) {
+        //     Logger.recordOutput("Elevator/desiredShooterHeight", goalPositionMeters);
+        //     io.setHeightMeters(goalPositionMeters);
+        // }
+        // else {
+        //     Logger.recordOutput("Elevator/desiredClimberHeight", goalPositionMeters);
+        //     io.setHeightMeters(goalPositionMeters);
+        // }
+        Logger.recordOutput("Elevator/desiredShooterHeight", goalPositionMeters);
     }
 
-    public void setHeightMeters(double goalPositionMeters, boolean isShooterHeight, boolean isClimbing, boolean isRaw) {
+    public void setHeightMeters(double goalPositionMeters) {
         this.goalPositionMeters = goalPositionMeters;
-        this.isShooterHeight = isShooterHeight;
-        this.isClimbing = isClimbing;
     }
 
     public void setVoltage(double voltage){
@@ -87,7 +77,7 @@ public class Elevator extends SubsystemBase{
         if(instance == null){
             return new Elevator(Elevator.io);
         }
-        return null;
+        return instance;
     }
     //Sets and returns instance, the only reason why it returns is to just make our life easier.
     public static Elevator setInstance(Elevator inst){

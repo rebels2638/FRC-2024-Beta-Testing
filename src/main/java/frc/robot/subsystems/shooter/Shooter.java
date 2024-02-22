@@ -62,14 +62,14 @@ public class Shooter extends SubsystemBase{
         return inputs.inShooter;
     }
     public static Shooter getInstance(){
-        if(instance == null){
+        if(Shooter.instance == null){
             return new Shooter(Shooter.io);
         }
-        return null;
+        return instance;
     }
     public static Shooter setInstance(Shooter inst){
-        instance = inst;
-        return instance;
+        Shooter.instance = inst;
+        return Shooter.instance;
     }
 
 

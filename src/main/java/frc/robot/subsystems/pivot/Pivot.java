@@ -79,8 +79,8 @@ public class Pivot extends SubsystemBase{
     }
 
     public static Pivot getInstance(){
-        if ( instance == null){
-            instance = new Pivot(Pivot.io);
+        if ( Pivot.instance == null){
+            return new Pivot(Pivot.io);
         }
         return instance;
     }

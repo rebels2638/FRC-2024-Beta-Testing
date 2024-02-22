@@ -11,13 +11,14 @@ public interface ClimberIO {
         public double climberHeightMeters;
         public double voltageOut;
         public boolean reachedSetpoint; 
+        public double goalPositionMeters;
     }
 
     public default void updateInputs(ClimberIOInputs inputs) {}
 
-    public default void setHeightMeters(double goalPositionMeters, boolean isClimbing) {}
+    public default void setHeightMeters(double goalPositionMeters) {}
 
-    public default void configureController(ElevatorFeedforward pff, PIDController pfb, double kCLIMB_KG) {}
+    public default void configureController(ElevatorFeedforward pff, PIDController pfb) {}
 
     public default void setVoltage(double voltage) {}
     

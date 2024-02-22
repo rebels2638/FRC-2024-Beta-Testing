@@ -12,7 +12,7 @@ public class MoveElevatorToggle extends Command {
     
     @Override
     public void execute() { 
-       elevatorSubsystem.setHeightMeters(0.5, true, false, false);
+       elevatorSubsystem.setHeightMeters(0.5);
     }
     @Override
     public void end(boolean isInterrupted){

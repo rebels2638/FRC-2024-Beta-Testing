@@ -5,7 +5,7 @@ import frc.robot.subsystems.shooter.Shooter;
 
 public class ShooterWindReverse extends Command {
     
-    private double velocitySetPoint = -2;
+    private double velocitySetPoint = -9;
     private final Shooter shooterSubsystem;
 
     public ShooterWindReverse(Shooter shooterSubsystem){

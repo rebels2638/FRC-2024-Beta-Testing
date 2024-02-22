@@ -9,6 +9,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Utils.RebelUtil;
 
 public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
     private static final double kMotorToOutputShaftRatio = 1; //Last Checked 2/6/2024
@@ -62,12 +63,7 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
         double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
         // double outVoltage = feedBackControllerVoltage;
             
-        if (outVoltage > kMAX_VOLTAGE) {
-            outVoltage = 12;
-        }
-        else if (outVoltage < -kMAX_VOLTAGE) {
-            outVoltage = -12;
-        }
+        outVoltage = RebelUtil.constrain(outVoltage, -12, 12);
         // if (goalVelocityRadPerSec > 0) {
         //      outVoltage = 6;
         // }

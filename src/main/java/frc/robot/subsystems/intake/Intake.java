@@ -64,13 +64,13 @@ public class Intake extends SubsystemBase{
         return inputs.inIntake;
     }
     public static Intake getInstance(){
-        if(instance == null){
+        if(Intake.instance == null){
             return new Intake(Intake.io);
         }
-        return null;
+        return instance;
     }
     public static Intake setInstance(Intake inst){
-        instance = inst;
+        Intake.instance = inst;
         return inst;
     }
 }

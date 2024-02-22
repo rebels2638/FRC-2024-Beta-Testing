@@ -18,22 +18,27 @@ public class ElevatorControlRaw extends Command{
         controller = m_controller;
         addRequirements(Elevator);
     }
+
     @Override
     public void execute(){
+        
         double height = this.ElevatorSubsystem.getShooterHeightMeters();
         if (controller.getLeftY() > 0.04 || controller.getLeftY() < 0.04) {
-            if (controller.getLeftY() > 0) {
-                height = 0.54-controller.getLeftY()*0.54;
-            }
-            if (controller.getLeftY() == 0) {
-                height = this.ElevatorSubsystem.getShooterHeightMeters();
-            }
-            else {
-                height = -controller.getLeftY()*0.54;
-            }
+            height += controller.getLeftY()*0.54;
+        //     if (controller.getLeftY() > 0) {
+        //         height = 0.54-controller.getLeftY()*0.54;
+        //     }
+        //     if (controller.getLeftY() == 0) {
+        //         height = this.ElevatorSubsystem.getShooterHeightMeters();
+        //     }
+        //     else {
+        //         height = -controller.getLeftY()*0.54;
+        //     }
         }
-        ElevatorSubsystem.setHeightMeters(height, true, false, true);
+        ElevatorSubsystem.setHeightMeters(height);
     }
+
+    
     @Override
     //This is a default command, it should never finish theoretically
     public boolean isFinished(){

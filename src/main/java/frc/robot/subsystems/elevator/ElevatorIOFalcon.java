@@ -40,11 +40,13 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
 
     private double lastShooterHeightMeters;
     private double lastClimberHeightMeters;
+    private double goalPositionMeters;
+
 
     public ElevatorIOFalcon() {
 
-        m_motor1.clearStickyFault_BootDuringEnable();
-        m_motor2.clearStickyFault_BootDuringEnable();
+        // m_motor1.clearStickyFault_BootDuringEnable();
+        // m_motor2.clearStickyFault_BootDuringEnable();
         m_motor1.setNeutralMode(NeutralModeValue.Brake);
         m_motor2.setNeutralMode(NeutralModeValue.Brake);
         // m_motor2.Follow(m_motor1); TODO: figure this out, DOESNT WORK LOL
@@ -61,11 +63,41 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
         inputs.voltageOut = m_motor1.getDutyCycle().getValueAsDouble() * kMAX_VOLTAGE;
 
         inputs.reachedSetpoint = positionFeedBackController.atSetpoint();
+        
+        inputs.goalPositionMeters = this.goalPositionMeters;
 
         lastClimberHeightMeters = inputs.climberHeightMeters;
         lastShooterHeightMeters = inputs.shooterHeightMeters;
     }
 
+    @Override
+    public void setHeightMeters(double goalPositionMeters) {
+        positionFeedBackController.setSetpoint(goalPositionMeters);
+
+        this.goalPositionMeters = goalPositionMeters;
+        double currentPositionMeters = lastShooterHeightMeters;
+        
+        double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
+        double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
+        double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
+
+        double voltageOut = feedForwardVoltage + feedBackControllerVoltage;
+        voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
+
+        // if ((currentPositionMeters > kMAX_SHOOTER_HEIGHT && voltageOut > 0) || 
+        //     (currentPositionMeters < kMIN_SHOOTER_HEIGHT && voltageOut < 0) || 
+        //     (goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT)) {
+        //     voltageOut = 0;
+        // }
+        
+        Logger.recordOutput("Elevator/voltageOut", voltageOut);
+        m_motor1.setVoltage(voltageOut);
+        m_motor2.setVoltage(voltageOut);
+
+    }
+
+
+    /*
     @Override
     // sould be called periodically
     // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
@@ -125,7 +157,7 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
             voltageOut = goalPositionMeters;
         }
 
-        // cheking for over extension
+        // checking for over extension
         if (isShooterHeight) {
             if ((currentPositionMeters > kMAX_SHOOTER_HEIGHT && voltageOut > 0) || 
                 (currentPositionMeters < kMIN_SHOOTER_HEIGHT && voltageOut < 0) || 
@@ -146,12 +178,14 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
         m_motor1.setVoltage(voltageOut);
         m_motor2.setVoltage(voltageOut);
     } 
+    */
 
     public void setVoltage(double voltage){
         Logger.recordOutput("Elevator/voltageOut", voltage);
         m_motor1.setVoltage(voltage);
         m_motor2.setVoltage(voltage);
     }
+    
 
     @Override
     public void configureController(ElevatorFeedforward pff, PIDController pfb, ElevatorFeedforward Climbff,double kCLIMB_KG) {

@@ -33,7 +33,7 @@ public class Climber extends SubsystemBase{
         
         positionFeedBackController.setTolerance(kPID_TOLERANCE_METERS);
 
-        io.configureController(positionFeedForwardController, positionFeedBackController, kCLIMB_KG);
+        io.configureController(positionFeedForwardController, positionFeedBackController);
     }
 
     @Override
@@ -42,9 +42,9 @@ public class Climber extends SubsystemBase{
         Logger.processInputs("Elevator", inputs);
     }
 
-    public void setHeightMeters(double goalPositionMeters,boolean isClimbing) {
+    public void setHeightMeters(double goalPositionMeters) {
         Logger.recordOutput("Climber/desiredClimberHeight");
-        io.setHeightMeters(goalPositionMeters, isClimbing);
+        io.setHeightMeters(goalPositionMeters);
 
         return;
     }
@@ -68,6 +68,6 @@ public class Climber extends SubsystemBase{
      if(instance == null){
      return new Climber(Climber.io);
     }
-     return null;
+     return instance;
     }
 }

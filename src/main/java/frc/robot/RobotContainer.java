@@ -9,6 +9,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import java.io.File;
 import java.sql.Time;
 import java.util.Optional;
+
+import com.pathplanner.lib.auto.NamedCommands;
+
 import frc.robot.commands.drivetrain.AbsoluteFieldDrive;
 import frc.robot.commands.elevator.ElevatorControlRaw;
 import frc.robot.commands.elevator.MoveElevatorAMP;
@@ -23,6 +26,7 @@ import frc.robot.commands.shooter.ShooterWindup;
 import frc.robot.commands.shooter.ShooterToggle;
 import frc.robot.commands.shooter.ShooterWindReverse;
 import frc.robot.commands.Intake.IntakeToggle;
+import frc.robot.commands.Intake.OutIntake;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -125,6 +129,7 @@ public class RobotContainer {
   // private final AudioPlayer aPlayer;
 
   public RobotContainer() {
+
     // setInstances();
     // Instantiate our controllers with proper ports.
     this.xboxTester = new XboxController(1);
@@ -139,61 +144,43 @@ public class RobotContainer {
       case SIM:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
-
-        intakeSubsystem = new Intake(new IntakeIOSim() {});
-        // intakeSubsystem = Intake.setInstance(new Intake(new IntakeIOSim())); //Assigns the instance object(pointer) to the variable so no new changes are needed.
-
-        shooterSubsystem = new Shooter(new ShooterIOSim());
-        // shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIOSim()));
-
-        elevatorSubsystem = new Elevator(new ElevatorIOSim());
-        // elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOSim()));
-
-        pivotSubsystem = new Pivot(new PivotIOSim());
-        // pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIOSim())); 
-
+        // intakeSubsystem = new Intake(new IntakeIOSim() {});
+        intakeSubsystem = Intake.setInstance(new Intake(new IntakeIOSim())); //Assigns the instance object(pointer) to the variable so no new changes are needed.
+        // shooterSubsystem = new Shooter(new ShooterIOSim());
+        shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIOSim()));
+        // elevatorSubsystem = new Elevator(new ElevatorIOSim());
+        elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOSim()));
+        // pivotSubsystem = new Pivot(new PivotIOSim());
+        pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIOSim())); 
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
-        
         break;
       
       case REPLAY:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
-        
-        shooterSubsystem = new Shooter(new ShooterIO(){});
-        // shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIO(){}));
-
-        intakeSubsystem = new Intake(new IntakeIO() {});
-        // intakeSubsystem = Intake.setInstance(new Intake(new IntakeIO(){}));
-
-        pivotSubsystem = new Pivot(new PivotIO() {});
-        // pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIO(){}));
-
-        elevatorSubsystem = new Elevator(new ElevatorIO() {});
-        // elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIO(){}));
-        
+        // shooterSubsystem = new Shooter(new ShooterIO(){});
+        shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIO(){}));
+        // intakeSubsystem = new Intake(new IntakeIO() {});
+        intakeSubsystem = Intake.setInstance(new Intake(new IntakeIO(){}));
+        // pivotSubsystem = new Pivot(new PivotIO() {});
+        pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIO(){}));
+        // elevatorSubsystem = new Elevator(new ElevatorIO() {});
+        elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIO(){}));     
         visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
-        
         break;
         
       default:
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
-
-        shooterSubsystem = new Shooter(new ShooterIOFalcon(){});
-        // shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIOFalcon()));
-
-        intakeSubsystem = new Intake(new IntakeIONeo() {});
-        // intakeSubsystem = Intake.setInstance(new Intake(new IntakeIONeo()));
-
-        elevatorSubsystem = new Elevator(new ElevatorIOFalcon());
-        // elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIONeo()));
-
-        pivotSubsystem = new Pivot(new PivotIONeo());
-        // pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIONeo()));
-
+        // shooterSubsystem = new Shooter(new ShooterIOFalcon(){});
+        shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIOFalcon()));
+        // intakeSubsystem = new Intake(new IntakeIONeo() {});
+        intakeSubsystem = Intake.setInstance(new Intake(new IntakeIONeo()));
+        // elevatorSubsystem = new Elevator(new ElevatorIOFalcon());
+        elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOFalcon()));
+        // pivotSubsystem = new Pivot(new PivotIONeo());
+        pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIONeo()));
         visionSubsystem = new PoseLimelight(new PoseLimelightIOReal());
-
         break;
     }
 
@@ -206,7 +193,15 @@ public class RobotContainer {
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(),OperatorConstants.LEFT_X_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
 
-    
+    NamedCommands.registerCommand("MoveElevatorAMP", new MoveElevatorAMP(elevatorSubsystem));
+    NamedCommands.registerCommand("MoveElevatorTurtle", new MoveElevatorTurtle(elevatorSubsystem));
+    NamedCommands.registerCommand("ShootWindUp", new ShooterWindup(shooterSubsystem));
+    NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn(intakeSubsystem, pivotSubsystem));
+    NamedCommands.registerCommand("IntakeNote", new IntakeNote(intakeSubsystem, pivotSubsystem));
+    NamedCommands.registerCommand("ShooterStop", new ShooterStop(shooterSubsystem) );
+
+
+
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
 
     //  shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
@@ -278,7 +273,7 @@ public class RobotContainer {
     // this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle(elevatorSubsystem));
     // this.xboxOperator.getAButton().onTrue(new RollIntakeIn(intakeSubsystem, pivotSubsystem));
     this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
-    this.xboxOperator.getLeftBumper().onTrue(new ShooterTest(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
+    // this.xboxOperator.getLeftBumper().onTrue(new ShooterTest(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
     this.xboxOperator.getYButton().onTrue(new ScoreAMP(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
 
   }
