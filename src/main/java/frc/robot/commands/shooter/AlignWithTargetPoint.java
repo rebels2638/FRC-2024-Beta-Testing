@@ -13,17 +13,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Utils.RebelUtil;
 
 public class AlignWithTargetPoint extends Command {
-    private final Shooter shooterSubsystem;
     private final SwerveSubsystem swerveSubsystem;
     private final PoseLimelight llsubsystem;
     private final Pose3d shooterPose;
 
-    public AlignWithTargetPoint(Shooter shooterSubsystem, SwerveSubsystem swerveSubsystem, PoseLimelight llsubsystem) {
-        this.shooterSubsystem = shooterSubsystem;
+    public AlignWithTargetPoint(SwerveSubsystem swerveSubsystem, PoseLimelight llsubsystem) {
         this.swerveSubsystem = swerveSubsystem;
         this.llsubsystem = llsubsystem;
         this.shooterPose = new Pose3d(-0.301828,0,0.577596,new Rotation3d(0,0,0)); // first three zeroes are real measurments, no euler angles (rot. at tip)
-        addRequirements(shooterSubsystem, swerveSubsystem, llsubsystem); // F_g = mg moment
+        addRequirements(swerveSubsystem, llsubsystem); // F_g = mg moment
     }
 
     @Override
