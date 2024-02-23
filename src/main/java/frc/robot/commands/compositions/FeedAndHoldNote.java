@@ -25,14 +25,10 @@ import frc.robot.subsystems.shooter.Shooter;
 public class FeedAndHoldNote extends SequentialCommandGroup {
     public FeedAndHoldNote() {
         addCommands(
-            new ParallelRaceGroup(
-                new RollIntakeIn(), 
-                new WaitCommand(0.1)),
-            new ParallelRaceGroup(
-                new OutIntake(),
-                new RollIntakeInSlow(),
-                new ShooterHold()),
-            new ParallelCommandGroup(new StopIntake(), new ShooterStop())
-        );
+            new RollIntakeInSlow(),
+            new ShooterHold(),
+            new OutIntake(),
+            new StopIntake(),
+            new ShooterStop());
     }
 }

@@ -19,18 +19,16 @@ import frc.robot.commands.Intake.RollIntakeInSlow;
 public class IntakeNote extends SequentialCommandGroup {
     public IntakeNote() {
         addCommands(
-            new PivotToTorus(), 
-            new ParallelDeadlineGroup(
-                new InIntake(), 
-                new RollIntakeIn()),
+            new PivotToTorus(),  
+            new RollIntakeIn(),
+            new InIntake(),
             new StopIntake(),
             new PivotTurtle(),
-            new ParallelRaceGroup(
-                new RollIntakeOut(), 
-                new OutIntake()), 
-            new ParallelRaceGroup(
-                new RollIntakeInSlow(), 
-                new WaitCommand(1)),
+            new RollIntakeOut(), 
+            new OutIntake(),
+            new StopIntake(), 
+            new RollIntakeInSlow(), 
+            new WaitCommand(1),
             new StopIntake()
         );
     }

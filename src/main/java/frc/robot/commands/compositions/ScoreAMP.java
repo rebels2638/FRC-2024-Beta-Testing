@@ -28,7 +28,9 @@ public class ScoreAMP extends SequentialCommandGroup {
         addCommands(
             new ShooterStop(), // for what reason??
             new MoveElevatorAMP(),
+            new WaitCommand(0.3),
             new ShooterWindReverse(),
+            new WaitCommand(1),
             new ShooterStop(),
             new MoveElevatorTurtle()
         );

@@ -11,16 +11,16 @@ public class StopIntake extends Command {
 
     @Override
     public void initialize() { 
-        intakeSubsystem.setVelocityRadSec(Math.toRadians(0)); //Use radians directly.
+        intakeSubsystem.setVelocityRadSec(0); //Use radians directly.
     }
     
     @Override
     public void end(boolean isInterrupted){
-        intakeSubsystem.setVelocityRadSec(0);
+        //intakeSubsystem.setVelocityRadSec(0);
     }
 
     @Override
     public boolean isFinished() {
-        return intakeSubsystem.reachedSetpoint();
+        return true;
     }
 }

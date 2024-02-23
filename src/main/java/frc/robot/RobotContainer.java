@@ -65,6 +65,7 @@ import frc.robot.commands.audio.*;
 import frc.robot.commands.compositions.FeedAndHoldNote;
 import frc.robot.commands.compositions.IntakeNote;
 import frc.robot.commands.compositions.ScoreAMP;
+import frc.robot.commands.compositions.ShootNote;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
@@ -90,6 +91,7 @@ import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.compositions.ShooterTest;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 // import frc.robot.commands.drivetrain.TeleopDrive;
 
@@ -196,13 +198,14 @@ public class RobotContainer {
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
 
     NamedCommands.registerCommand("MoveElevatorAMP", new MoveElevatorAMP());
-    NamedCommands.registerCommand("MoveElevatorTurtle", new MoveElevatorTurtle());
-    NamedCommands.registerCommand("ShootWindUp", new ShooterWindup());
+    NamedCommands.registerCommand("M oveElevatorTurtle", new MoveElevatorTurtle());
+    NamedCommands.registerCommand("ShooterWindUp", new ShooterWindup());
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
     NamedCommands.registerCommand("StopIntake", new StopIntake());
     NamedCommands.registerCommand("IntakeNote", new IntakeNote());
     NamedCommands.registerCommand("ShooterStop", new ShooterStop());
     NamedCommands.registerCommand("ShooterWindReverse", new ShooterWindReverse());
+    NamedCommands.registerCommand("ShootNote", new ShootNote());
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
 
@@ -272,14 +275,17 @@ public class RobotContainer {
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
     this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
     this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
-    this.xboxOperator.getYButton().onTrue(new SequentialCommandGroup(new MoveElevatorAMP(), new ShooterWindReverse()));
-    this.xboxOperator.getAButton().onTrue(new RollIntakeIn());
+    this.xboxOperator.getYButton().onTrue(new ScoreAMP());
+    this.xboxOperator.getAButton().onTrue(new ShootNote());
     this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
     
     this.xboxOperator.getRightMiddleButton().onTrue(new StopIntake());
     
     // this.xboxOperator.getLeftBumper().onTrue(new ShooterTest(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
     // this.xboxOperator.getYButton().onTrue(new ScoreAMP(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
+
+    Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+
   }
 
   public static RobotContainer getInstance() {
