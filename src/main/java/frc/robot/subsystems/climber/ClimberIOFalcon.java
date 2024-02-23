@@ -2,7 +2,10 @@ package frc.robot.subsystems.climber;
 
 import org.littletonrobotics.junction.Logger;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,8 +19,8 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     private static final double kSproketDiameterMeters = 0.0508;
 
     // dont know device ID
-    private CANSparkMax m_motor1 = new CANSparkMax(18, CANSparkMax.MotorType.kBrushless); 
-    private CANSparkMax m_motor2 = new CANSparkMax(19, CANSparkMax.MotorType.kBrushless);
+    private TalonFX m_motor1 = new TalonFX(18); 
+    private TalonFX m_motor2 = new TalonFX(19);
     private static final double kMAX_CURRENT_AMPS = 35;
     private static final double kMAX_VOLTAGE = 12;
 
@@ -33,18 +36,15 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     public ClimberIOFalcon() {
         m_motor1.setInverted(true);
         m_motor2.setInverted(true);
-        m_motor1.clearFaults();
-        m_motor2.clearFaults();
-        m_motor1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_motor2.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_motor2.follow(m_motor1);
+        m_motor1.setNeutralMode(NeutralModeValue.Brake);
+        m_motor2.setNeutralMode(NeutralModeValue.Brake);        
 
     }
 
     @Override
     public void updateInputs(ClimberIOInputs inputs) {
-        inputs.climberHeightMeters = m_motor1.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters;
-        inputs.voltageOut = m_motor1.getAppliedOutput() * kMAX_VOLTAGE;
+        inputs.climberHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters;
+        inputs.voltageOut = m_motor1.getDutyCycle().getValueAsDouble() * kMAX_VOLTAGE;
 
         climberHeightMeters = inputs.climberHeightMeters;
 
@@ -89,8 +89,8 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
 
     @Override
     public void zeroHeight() {
-        m_motor1.getEncoder().setPosition(0.0);
-        m_motor2.getEncoder().setPosition(0);
+        m_motor1.setPosition(0.0);
+        m_motor2.setPosition(0);
     }
 
 }

@@ -24,9 +24,7 @@ public class Climber extends SubsystemBase{
     public Climber(ClimberIO io)  {
         Climber.io = io;
         positionFeedBackController = new PIDController(6, 0, 0); // 0 0 0 
-        //
         positionFeedForwardController = new ElevatorFeedforward(0.33, 0.14, 0); //0.008 0.31 31
-
         
         // velocityFeedBackController = new PIDController(0, 0, 0);
         // velocityFeedForwardController = new ElevatorFeedforward(0,0, 0);

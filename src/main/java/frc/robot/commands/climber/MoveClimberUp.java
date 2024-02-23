@@ -12,7 +12,7 @@ public class MoveClimberUp extends Command {
     
     @Override
     public void execute() { 
-       climberSubsystem.setHeightMeters(0.51); // after one increment of "y"
+       climberSubsystem.setHeightMeters(0.51);
     }
     @Override
     public void end(boolean isInterrupted){
