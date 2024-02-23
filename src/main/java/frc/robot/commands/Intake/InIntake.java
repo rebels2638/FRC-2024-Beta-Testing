@@ -3,21 +3,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 
 public class InIntake extends Command{
-    private Intake intakeNeo;
     private boolean isIn = false;
 
-    public InIntake(Intake intakeSubsystem){
-        intakeNeo = intakeSubsystem;
-        // addRequirements(intakeSubsystem);
+    public InIntake(){
     }
+    
     @Override
     public void execute(){
-        isIn = intakeNeo.inIntake();
+        isIn = Intake.getInstance().inIntake();
     }
+    
     @Override
     public void end(boolean isInterrupted){
         return;
     }
+    
     @Override
     public boolean isFinished(){
         return isIn;
