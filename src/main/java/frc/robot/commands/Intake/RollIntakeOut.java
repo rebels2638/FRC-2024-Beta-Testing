@@ -6,12 +6,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 
 public class RollIntakeOut extends Command {
-    private final Intake intakeSubsystem;
+    private final Intake intakeSubsystem = Intake.getInstance();
 
-    public RollIntakeOut(Intake intakeSubsystem) {
-        this.intakeSubsystem = intakeSubsystem;
-
-        addRequirements(intakeSubsystem);
+    public RollIntakeOut() {
     }
 
     @Override
