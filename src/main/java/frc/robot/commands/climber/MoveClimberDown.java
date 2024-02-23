@@ -4,16 +4,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.climber.Climber;
 
 public class MoveClimberDown extends Command {
-    private Climber climberSubsystem;
+    private Climber climberSubsystem = Climber.getInstance();
 
-    public MoveClimberDown(Climber climberSubsystem) {
-        this.climberSubsystem = climberSubsystem;
+    public MoveClimberDown() {
     }
     
     @Override
     public void execute() { 
        climberSubsystem.setHeightMeters(0.0); 
     }
+    
     @Override
     public void end(boolean isInterrupted){
         //Add end if need be

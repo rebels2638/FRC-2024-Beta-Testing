@@ -12,12 +12,11 @@ import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 public class AutoAlignTrap extends Command {
     private Command followPathHolonomic;
-    private SwerveSubsystem swerveSubsystem;
-    public AutoAlignTrap(SwerveSubsystem swerveSubsystem) {
-        this.swerveSubsystem = swerveSubsystem;
-
-        addRequirements(swerveSubsystem);
+    private SwerveSubsystem swerveSubsystem = SwerveSubsystem.getInstance();
+    
+    public AutoAlignTrap() {
     }
+    
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
@@ -29,8 +28,7 @@ public class AutoAlignTrap extends Command {
                 bestPose2d = Constants.FieldConstants.autoAlignTrapPose[i];
             }
         }
-
-
+        
         followPathHolonomic = AutoBuilder.pathfindToPose(bestPose2d, new PathConstraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION, 
             Constants.Auton.MAX_ANGULAR_VELO_RPS, Constants.Auton.MAX_ANGULAR_ACCEL_RPS_SQUARED));
 

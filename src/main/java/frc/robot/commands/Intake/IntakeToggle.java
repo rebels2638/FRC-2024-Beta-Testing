@@ -8,16 +8,13 @@ import frc.robot.subsystems.pivot.Pivot;
 public class IntakeToggle extends Command {
     
     private int tapped;
-    private final Intake intakeSubsystem;
-    private final Pivot pivotSubsystem;
+    private final Intake intakeSubsystem = Intake.getInstance();
+    private final Pivot pivotSubsystem = Pivot.getInstance();
     private XboxController m_controller;
 
-    public IntakeToggle(Intake intakeSubsystem, Pivot pivotSubsystem, XboxController controller){
-        this.intakeSubsystem = intakeSubsystem;
-        this.pivotSubsystem = pivotSubsystem;
+    public IntakeToggle(XboxController controller){
         this.m_controller = controller;
         this.tapped = 0;
-        addRequirements(intakeSubsystem, pivotSubsystem);
     }
 
     @Override
@@ -27,17 +24,13 @@ public class IntakeToggle extends Command {
             
             switch(tapped) {
                 case 1: // roll
-
                     if (pivotSubsystem.getDegAngle() < 45) {
                         intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 20)); //Use radians directly.
-                    }
-
-                    else {
+                    } else {
                         intakeSubsystem.setVelocityRadSec(Math.toRadians(360 * 4)); //Use radians directly.
                     }
-
                     break;
-
+                    
                 case 2: // stop
                     intakeSubsystem.setVelocityRadSec(0);
                     break;
@@ -47,7 +40,6 @@ public class IntakeToggle extends Command {
                     this.tapped = 0;
                     break;
             }
-            
         }
     }
 
@@ -55,5 +47,4 @@ public class IntakeToggle extends Command {
     public boolean isFinished(){
         return true;
     }
-    
 }
