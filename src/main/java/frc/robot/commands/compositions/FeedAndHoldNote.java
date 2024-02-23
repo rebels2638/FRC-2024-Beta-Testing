@@ -22,40 +22,17 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class FeedAndHoldNote extends Command {
-    private final Shooter shooterSubsystem;
-    private final Intake intakeSubsystem;
-    private final Pivot pivotSubsystem;
-    private final Elevator elevatorSubsystem;
-
-    public FeedAndHoldNote(Shooter shooterSubsystem, Intake intakeSubsystem, Pivot pivotSubsystem, Elevator elevatorSubsystem) {
-        this.shooterSubsystem = shooterSubsystem;
-        this.intakeSubsystem = intakeSubsystem;
-        this.pivotSubsystem = pivotSubsystem;
-        this.elevatorSubsystem = elevatorSubsystem;
-        
-        addRequirements(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem);
-    }
-
-    @Override
-    public void initialize() {
-
-        SequentialCommandGroup commandGroup = new SequentialCommandGroup(
+public class FeedAndHoldNote extends SequentialCommandGroup {
+    public FeedAndHoldNote() {
+        addCommands(
             new ParallelRaceGroup(
-                new RollIntakeIn(intakeSubsystem, pivotSubsystem), 
+                new RollIntakeIn(), 
                 new WaitCommand(0.1)),
             new ParallelRaceGroup(
-                new OutIntake(intakeSubsystem),
-                new RollIntakeInSlow(intakeSubsystem),
-                new ShooterHold(shooterSubsystem)),
-            new ParallelCommandGroup(new StopIntake(intakeSubsystem), new ShooterStop(shooterSubsystem))
-            );
-
-        commandGroup.schedule();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
+                new OutIntake(),
+                new RollIntakeInSlow(),
+                new ShooterHold()),
+            new ParallelCommandGroup(new StopIntake(), new ShooterStop())
+        );
     }
 }

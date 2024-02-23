@@ -5,6 +5,7 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.controller.ElevatorFeedforward; 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.elevator.Elevator;
 
 public class Climber extends SubsystemBase{
 
@@ -67,5 +68,9 @@ public class Climber extends SubsystemBase{
      return new Climber(Climber.io);
     }
      return instance;
+    }
+    public static Climber setInstance(Climber inst){
+        instance = inst;
+        return inst;
     }
 }

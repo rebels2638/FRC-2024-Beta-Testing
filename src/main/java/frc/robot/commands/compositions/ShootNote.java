@@ -12,33 +12,13 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class ShootNote extends Command {
-    private final Intake intakeSubsystem;
-    private final Shooter shooterSubsystem;
-    private final Pivot pivotSubsystem;
-
-    public ShootNote(Intake intakeSubsystem, Shooter shooterSubsystem, Pivot pivotSubsystem) {
-        this.intakeSubsystem = intakeSubsystem; 
-        this.shooterSubsystem = shooterSubsystem;
-        this.pivotSubsystem = pivotSubsystem;
-
-        addRequirements(intakeSubsystem, shooterSubsystem);
-    }
-    //Will change later. Singleton class structure must be maintained.
-    @Override
-    public void execute() {
-        if (intakeSubsystem.inIntake() == true) {
-            SequentialCommandGroup commandGroup = new SequentialCommandGroup(
-                new ShooterWindup(shooterSubsystem),
-                new ParallelRaceGroup(
+public class ShootNote extends SequentialCommandGroup {
+    public ShootNote() {
+        addCommands(
+            new ShooterWindup(),
+            new ParallelRaceGroup(
                 new WaitCommand(1), //Modify this later on.
-                new RollIntakeIn(intakeSubsystem, pivotSubsystem)));
-            commandGroup.schedule();
-        }
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
+                new RollIntakeIn())
+        );
     }
 }

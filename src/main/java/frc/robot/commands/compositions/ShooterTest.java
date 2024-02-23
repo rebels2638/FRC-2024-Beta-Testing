@@ -21,35 +21,13 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class ShooterTest extends Command {
-    private final Shooter shooterSubsystem;
-    private final Intake intakeSubsystem;
-    private final Pivot pivotSubsystem;
-    private final Elevator elevatorSubsystem;
-
-    public ShooterTest(Shooter shooterSubsystem, Intake intakeSubsystem, Pivot pivotSubsystem, Elevator elevatorSubsystem) {
-        this.shooterSubsystem = shooterSubsystem;
-        this.intakeSubsystem = intakeSubsystem;
-        this.pivotSubsystem = pivotSubsystem;
-        this.elevatorSubsystem = elevatorSubsystem;
-        
-        addRequirements(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem);
-    }
-
-    @Override
-    public void initialize() {
-        SequentialCommandGroup commandGroup = new SequentialCommandGroup(
+public class ShooterTest extends SequentialCommandGroup {
+    public ShooterTest() {
+        addCommands(
             new ParallelRaceGroup(
-                new ShooterHold(shooterSubsystem),
+                new ShooterHold(),
                 new WaitCommand(0.2)),
-                new ShooterStop(shooterSubsystem)
-            );
-
-        commandGroup.schedule();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
+                new ShooterStop()
+        );
     }
 }

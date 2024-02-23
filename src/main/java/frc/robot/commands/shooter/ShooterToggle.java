@@ -12,13 +12,12 @@ public class ShooterToggle extends Command {
     private final double holdVelocitySetpoint = 0;
     private int tapped;
 
-    private final Shooter shooterSubsystem;
+    private final Shooter shooterSubsystem = Shooter.getInstance();
     private XboxController m_controller;
-    public ShooterToggle(Shooter shooterSubsystem, XboxController controller){
-        this.shooterSubsystem = shooterSubsystem;
+
+    public ShooterToggle(XboxController controller){
         this.m_controller = controller;
         this.tapped = 0;
-        addRequirements(shooterSubsystem);
     }
 
     @Override

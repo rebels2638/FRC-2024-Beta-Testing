@@ -12,7 +12,7 @@ public class RollIntakeOut extends Command {
     }
 
     @Override
-    public void execute() { 
+    public void initialize() { 
         intakeSubsystem.setVelocityRadSec(Math.toRadians(-90)); //Use radians directly.
     }
     

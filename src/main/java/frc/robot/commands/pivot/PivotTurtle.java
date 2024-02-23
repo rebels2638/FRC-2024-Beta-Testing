@@ -4,16 +4,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.pivot.Pivot;
 
 public class PivotTurtle extends Command {
+    private final Pivot pivotSubsystem = Pivot.getInstance();
 
-    private final Pivot pivotSubsystem;
-    public PivotTurtle(Pivot pivotSubsystem) {
-        this.pivotSubsystem = pivotSubsystem;
-
-        addRequirements(pivotSubsystem);
+    public PivotTurtle() {
     }
 
     @Override
-    public void execute() { 
+    public void initialize() { 
         pivotSubsystem.setDegAngle(0);
     }
 

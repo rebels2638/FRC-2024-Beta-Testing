@@ -12,9 +12,10 @@ import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 public class AutoAlignTrap extends Command {
     private Command followPathHolonomic;
-    private SwerveSubsystem swerveSubsystem = SwerveSubsystem.getInstance();
+    private SwerveSubsystem swerveSubsystem;
     
-    public AutoAlignTrap() {
+    public AutoAlignTrap(SwerveSubsystem swerveSubsystem) {
+        this.swerveSubsystem = swerveSubsystem;
     }
     
     // Called when the command is initially scheduled.

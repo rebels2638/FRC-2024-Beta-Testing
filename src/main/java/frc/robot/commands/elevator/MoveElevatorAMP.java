@@ -4,16 +4,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.elevator.Elevator;
 
 public class MoveElevatorAMP extends Command {
-    private Elevator elevatorSubsystem;
+    private Elevator elevatorSubsystem = Elevator.getInstance();
 
-    public MoveElevatorAMP(Elevator elevatorSubsystem) {
-        this.elevatorSubsystem = elevatorSubsystem;
+    public MoveElevatorAMP() {
     }
     
     @Override
-    public void execute() { 
+    public void initialize() { 
        elevatorSubsystem.setHeightMeters(0.51); // after one increment of "y"
     }
+
     @Override
     public void end(boolean isInterrupted){
         //Add end if need be

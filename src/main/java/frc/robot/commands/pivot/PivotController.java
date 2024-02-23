@@ -6,15 +6,13 @@ import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.lib.input.XboxController;
 
 public class PivotController extends Command {
-
-    Pivot pivotSubsystem = null;
+    Pivot pivotSubsystem = Pivot.getInstance();
     XboxController controller;
 
-    public PivotController(Pivot pivotSubsystem, XboxController controller) {
-        this.pivotSubsystem = pivotSubsystem;
+    public PivotController(XboxController controller) {
         this.controller = controller;
-        addRequirements(pivotSubsystem);
     }
+    
     @Override
     public void execute() { 
     //     pivotSubsystem.setVelocityControlMode(true);
@@ -26,6 +24,7 @@ public class PivotController extends Command {
     public boolean isFinished() {
         return false;
     }
+    
     public void end(boolean interrupted){
         System.out.println("CALLED END");
         pivotSubsystem.setVelocitySetPoint(0);

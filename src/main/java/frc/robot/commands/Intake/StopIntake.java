@@ -10,7 +10,7 @@ public class StopIntake extends Command {
     }
 
     @Override
-    public void execute() { 
+    public void initialize() { 
         intakeSubsystem.setVelocityRadSec(Math.toRadians(0)); //Use radians directly.
     }
     

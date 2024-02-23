@@ -11,9 +11,10 @@ import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 public class AutoAlignAMP extends Command {
     private Command followPathHolonomic;
-    private SwerveSubsystem swerveSubsystem = SwerveSubsystem.getInstance();
+    private SwerveSubsystem swerveSubsystem;
     
-    public AutoAlignAMP() {
+    public AutoAlignAMP(SwerveSubsystem swerveSubsystem) {
+        this.swerveSubsystem = swerveSubsystem;
     }
 
     // Builds a follow path holonomic path using field constants.

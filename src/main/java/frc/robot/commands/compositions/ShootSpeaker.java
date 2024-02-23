@@ -23,40 +23,14 @@ import frc.robot.subsystems.limelight.PoseLimelight;
 
 import frc.robot.Utils.RebelUtil;
 
-public class ShootSpeaker extends Command {
-    private final Shooter shooterSubsystem;
-    private final Intake intakeSubsystem;
-    private final Pivot pivotSubsystem;
-    private final Elevator elevatorSubsystem;
-    private final PoseLimelight visionSubsystem;
-    private final SwerveSubsystem swerveSubsystem;
-
-    public ShootSpeaker(Shooter shooterSubsystem, Intake intakeSubsystem, Pivot pivotSubsystem, Elevator elevatorSubsystem, PoseLimelight visionSubsystem, SwerveSubsystem swerveSubsystem) {
-        this.shooterSubsystem = shooterSubsystem;
-        this.intakeSubsystem = intakeSubsystem;
-        this.pivotSubsystem = pivotSubsystem;
-        this.elevatorSubsystem = elevatorSubsystem;
-        this.visionSubsystem = visionSubsystem;
-        this.swerveSubsystem = swerveSubsystem;
-
-        addRequirements(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem, visionSubsystem, swerveSubsystem);
-    }
-
-    @Override
-    public void initialize() {
-        SequentialCommandGroup commandGroup = 
-        new SequentialCommandGroup(
-            new ParallelRaceGroup(new AlignWithTargetPoint(this.swerveSubsystem, this.visionSubsystem), new ShooterWindup(this.shooterSubsystem, RebelUtil.flywheelSpeed)),
-            new ParallelCommandGroup(new MoveElevatorTurtle(this.elevatorSubsystem), new PivotTurtle(this.pivotSubsystem)),
-            new ParallelRaceGroup(new RollIntakeIn(this.intakeSubsystem, this.pivotSubsystem), new InIntake(this.intakeSubsystem)),
-            new StopIntake(this.intakeSubsystem),
-            new ShooterStop(this.shooterSubsystem)
+public class ShootSpeaker extends SequentialCommandGroup {
+    public ShootSpeaker(PoseLimelight visionSubsystem, SwerveSubsystem swerveSubsystem) {
+        addCommands(
+            new ParallelRaceGroup(new AlignWithTargetPoint(swerveSubsystem, visionSubsystem), new ShooterWindup(RebelUtil.flywheelSpeed)),
+            new ParallelCommandGroup(new MoveElevatorTurtle(), new PivotTurtle()),
+            new ParallelRaceGroup(new RollIntakeIn(), new InIntake()),
+            new StopIntake(),
+            new ShooterStop()
         );
-        commandGroup.schedule();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
     }
 }

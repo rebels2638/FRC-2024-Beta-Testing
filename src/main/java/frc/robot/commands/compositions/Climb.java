@@ -14,11 +14,11 @@ public class Climb extends SequentialCommandGroup {
     public Climb() {
         addCommands(
             new SequentialCommandGroup(
-                new MoveElevatorAMP(Elevator.getInstance()),
+                new MoveElevatorAMP(),
                 new WaitCommand(3),
-                new MoveClimberUp(Climber.getInstance()),
+                new MoveClimberUp(),
                 new WaitCommand(3),
-                new MoveClimberDown(Climber.getInstance())
+                new MoveClimberDown()
             )
         );
 

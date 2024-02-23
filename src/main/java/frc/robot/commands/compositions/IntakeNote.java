@@ -16,33 +16,22 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.commands.Intake.RollIntakeInSlow;
 
-public class IntakeNote extends Command {
-    private final Intake intakeSubsystem;
-    private final Pivot pivotSubsystem;
-
-    public IntakeNote(Intake intakeSubsystem, Pivot pivotSubsystem) {
-        this.intakeSubsystem = intakeSubsystem;
-        this.pivotSubsystem = pivotSubsystem;
-
-        addRequirements(intakeSubsystem, pivotSubsystem);
-    }
-
-    @Override
-    public void initialize() {
-        // if (intakeSubsystem.inIntake() == false) {
-            SequentialCommandGroup commandGroup = new SequentialCommandGroup(new PivotToTorus(pivotSubsystem), 
-            new ParallelDeadlineGroup(new InIntake(intakeSubsystem), new RollIntakeIn(intakeSubsystem, pivotSubsystem)),
-            new StopIntake(intakeSubsystem),
-            new PivotTurtle(pivotSubsystem),
-            new ParallelRaceGroup(new RollIntakeOut(intakeSubsystem), new OutIntake(intakeSubsystem)), 
-            new ParallelRaceGroup(new RollIntakeInSlow(intakeSubsystem), new WaitCommand(1)),
-            new StopIntake(intakeSubsystem));
-            commandGroup.schedule();
-        // }
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
+public class IntakeNote extends SequentialCommandGroup {
+    public IntakeNote() {
+        addCommands(
+            new PivotToTorus(), 
+            new ParallelDeadlineGroup(
+                new InIntake(), 
+                new RollIntakeIn()),
+            new StopIntake(),
+            new PivotTurtle(),
+            new ParallelRaceGroup(
+                new RollIntakeOut(), 
+                new OutIntake()), 
+            new ParallelRaceGroup(
+                new RollIntakeInSlow(), 
+                new WaitCommand(1)),
+            new StopIntake()
+        );
     }
 }

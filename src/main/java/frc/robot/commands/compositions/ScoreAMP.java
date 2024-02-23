@@ -22,36 +22,15 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class ScoreAMP extends Command {
-    private final Shooter shooterSubsystem;
-    private final Intake intakeSubsystem;
-    private final Pivot pivotSubsystem;
-    private final Elevator elevatorSubsystem;
+public class ScoreAMP extends SequentialCommandGroup {
 
-    public ScoreAMP(Shooter shooterSubsystem, Intake intakeSubsystem, Pivot pivotSubsystem, Elevator elevatorSubsystem) {
-        this.shooterSubsystem = shooterSubsystem;
-        this.intakeSubsystem = intakeSubsystem;
-        this.pivotSubsystem = pivotSubsystem;
-        this.elevatorSubsystem = elevatorSubsystem;
-        
-        addRequirements(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem);
-    }
-
-    @Override
-    public void initialize() {
-        SequentialCommandGroup commandGroup = new SequentialCommandGroup(
-            new ShooterStop(shooterSubsystem), // for what reason??
-            new MoveElevatorAMP(elevatorSubsystem),
-            new ShooterWindReverse(shooterSubsystem),
-            new ShooterStop(shooterSubsystem),
-            new MoveElevatorTurtle(elevatorSubsystem)
-            );
-
-        commandGroup.schedule();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
+    public ScoreAMP() {
+        addCommands(
+            new ShooterStop(), // for what reason??
+            new MoveElevatorAMP(),
+            new ShooterWindReverse(),
+            new ShooterStop(),
+            new MoveElevatorTurtle()
+        );
     }
 }

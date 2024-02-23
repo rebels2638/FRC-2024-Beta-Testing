@@ -21,11 +21,18 @@ import frc.robot.subsystems.shooter.Shooter;
 public class IntakeNote5 extends SequentialCommandGroup {
     public IntakeNote5(){
         addCommands(
-           new ParallelDeadlineGroup(new InIntake(Intake.getInstance()), new RollIntakeIn(Intake.getInstance(), Pivot.getInstance())),
-            new StopIntake(Intake.getInstance()),
-            new PivotTurtle(Pivot.getInstance()),
-            new ParallelRaceGroup(new RollIntakeOut(Intake.getInstance()), new OutIntake(Intake.getInstance())), 
-            new ParallelRaceGroup(new RollIntakeInSlow(Intake.getInstance()), new WaitCommand(1)),
-            new StopIntake(Intake.getInstance()));
+            new ParallelRaceGroup(
+                new InIntake(), 
+                new RollIntakeIn()),
+            new StopIntake(),
+            new PivotTurtle(),
+            new ParallelRaceGroup(
+                new RollIntakeOut(), 
+                new OutIntake()), 
+            new ParallelRaceGroup(
+                new RollIntakeInSlow(), 
+                new WaitCommand(1)),
+            new StopIntake()
+        );
     }
 }

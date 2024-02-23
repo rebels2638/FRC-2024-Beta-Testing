@@ -59,12 +59,12 @@ public class SwerveSubsystem extends SubsystemBase
   private SwerveSubsystemIO io;
   private SwerveSubsystemIOInputsAutoLogged inputs = new SwerveSubsystemIOInputsAutoLogged();
 
-  private static final PIDController translationPIDController = new PIDController(0.001, 0, 0);
+  private static final PIDController translationPIDController = new PIDController(0.000, 0, 0);
 
   public SwerveSubsystem(File directory/* , PoseLimelight poseLimelightSubsystem*/)
   {
-    translationPIDController.setTolerance(0.04
-    );
+    
+    translationPIDController.setTolerance(0.06);
     // this.poseLimelightSubsystem = poseLimelightSubsystem;
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;

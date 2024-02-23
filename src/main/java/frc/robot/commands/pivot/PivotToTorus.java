@@ -4,16 +4,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.pivot.Pivot;
 
 public class PivotToTorus extends Command {
+    private final Pivot pivotSubsystem = Pivot.getInstance();
 
-    private final Pivot pivotSubsystem;
-    public PivotToTorus(Pivot pivotSubsystem) {
-        this.pivotSubsystem = pivotSubsystem;
-
-        addRequirements(pivotSubsystem);
+    public PivotToTorus() {
     }
 
     @Override
-    public void execute() { 
+    public void initialize() { 
         pivotSubsystem.setDegAngle(87);
     }
 
