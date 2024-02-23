@@ -3,14 +3,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 
 public class OutIntake extends Command{
+    private Intake intakeNeo = Intake.getInstance();
     private boolean isIn = false;
 
-    public OutIntake(){
+    public OutIntake() {
     }
     
     @Override
     public void execute(){
-        isIn = Intake.getInstance().inIntake();
+        isIn = intakeNeo.inIntake();
     }
     
     @Override
