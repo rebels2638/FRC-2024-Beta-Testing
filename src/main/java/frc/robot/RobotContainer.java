@@ -51,6 +51,7 @@ import frc.robot.subsystems.limelight.PoseLimelightIOReal;
 import frc.robot.subsystems.limelight.PoseLimelightIOSim;
 import frc.robot.subsystems.limelight.PoseLimelightIOInputsAutoLogged;
 import frc.robot.Utils.Constants;
+import frc.robot.Utils.RebelUtil;
 import frc.robot.Utils.Constants.OperatorConstants;
 import frc.robot.commands.compositions.ShootSpeaker;
 // import frc.robot.commands.automation.AutoAlign;
@@ -174,7 +175,7 @@ public class RobotContainer {
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIO(){}));
         // elevatorSubsystem = new Elevator(new ElevatorIO() {});
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIO(){}));     
-        visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
+        visionSubsystem = PoseLimelight.setInstance(new PoseLimelight(new PoseLimelightIO() {}));
         break;
         
       default:
@@ -274,8 +275,10 @@ public class RobotContainer {
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
     this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> RebelUtil.driveRobotToPose(
+                                                                  PoseLimelight.getInstance().getDefaultAlignPoint())));
 
-    //Michaelangelo controls
+    //Michaelangelo controlss
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
     this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
     this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
