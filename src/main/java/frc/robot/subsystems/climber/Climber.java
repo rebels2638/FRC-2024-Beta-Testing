@@ -13,6 +13,7 @@ public class Climber extends SubsystemBase{
     private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
     PIDController positionFeedBackController;
     ElevatorFeedforward positionFeedForwardController;
+    private double goalPositionMeters = 0;
 
     // PIDController velocityFeedBackController;
     // ElevatorFeedforward velocityFeedForwardController; //Literally never gonna be used
@@ -25,7 +26,7 @@ public class Climber extends SubsystemBase{
     public Climber(ClimberIO io)  {
         Climber.io = io;
         positionFeedBackController = new PIDController(6, 0, 0); // 0 0 0 
-        positionFeedForwardController = new ElevatorFeedforward(0.33, 0.14, 0); //0.008 0.31 31
+        positionFeedForwardController = new ElevatorFeedforward(0, 0, 0); //0.008 0.31 31
         
         // velocityFeedBackController = new PIDController(0, 0, 0);
         // velocityFeedForwardController = new ElevatorFeedforward(0,0, 0);
@@ -38,12 +39,14 @@ public class Climber extends SubsystemBase{
     @Override
     public void periodic() {
         io.updateInputs(inputs);
-        Logger.processInputs("Elevator", inputs);
+        Logger.processInputs("Climber", inputs);
+        io.setHeightMeters(goalPositionMeters);
     }
 
     public void setHeightMeters(double goalPositionMeters) {
         Logger.recordOutput("Climber/desiredClimberHeight");
         io.setHeightMeters(goalPositionMeters);
+        this.goalPositionMeters = goalPositionMeters;
 
         return;
     }

@@ -63,6 +63,7 @@ import frc.robot.commands.Intake.RollIntakeOut;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.audio.*;
 import frc.robot.commands.climber.MoveClimberDown;
+import frc.robot.commands.climber.MoveClimberRaw;
 import frc.robot.commands.climber.MoveClimberUp;
 import frc.robot.commands.compositions.CancelIntakeNote;
 import frc.robot.commands.compositions.FeedAndHoldNote;
@@ -71,6 +72,10 @@ import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.commands.compositions.ShootNote;
 import frc.robot.commands.compositions.ShootNoteTele;
 import frc.robot.subsystems.audio.AudioPlayer;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIO;
+import frc.robot.subsystems.climber.ClimberIOFalcon;
+import frc.robot.subsystems.climber.ClimberOSim;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOFalcon;
@@ -134,6 +139,7 @@ public class RobotContainer {
   private final Elevator elevatorSubsystem;
   // private final PoseLimelight poseLimelightSubsystem; 
   private final Pivot pivotSubsystem;
+  private final Climber climberSubsystem;
   // private final AudioPlayer aPlayer;
 
   public RobotContainer() {
@@ -160,6 +166,8 @@ public class RobotContainer {
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOSim()));
         // pivotSubsystem = new Pivot(new PivotIOSim());
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIOSim())); 
+
+        climberSubsystem = Climber.setInstance(new Climber(new ClimberOSim()));
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
         break;
       
@@ -173,7 +181,10 @@ public class RobotContainer {
         // pivotSubsystem = new Pivot(new PivotIO() {});
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIO(){}));
         // elevatorSubsystem = new Elevator(new ElevatorIO() {});
-        elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIO(){}));     
+        elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIO(){}));  
+        
+        climberSubsystem = Climber.setInstance(new Climber(new ClimberIO(){}));
+
         visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
         break;
         
@@ -188,6 +199,8 @@ public class RobotContainer {
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOFalcon()));
         // pivotSubsystem = new Pivot(new PivotIONeo());
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIONeo()));
+        climberSubsystem = Climber.setInstance(new Climber(new ClimberIOFalcon()));
+
         visionSubsystem = new PoseLimelight(new PoseLimelightIOReal());
         break;
     }
@@ -211,7 +224,16 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterWindReverse", new ShooterWindReverse());
     NamedCommands.registerCommand("ShootNote", new ShootNote());
 
-    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem ,xboxTester));
+    xboxTester.getAButton().onTrue(new PivotToTorus());
+    xboxTester.getBButton().onTrue(new MoveElevatorAMP());
+    xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
+    xboxTester.getXButton().onTrue(new PivotTurtle());
+    xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
+
+    // xboxOperator.getAButton().onTrue(new MoveClimberDown());
+    // xboxOperator.getYButton().onTrue(new MoveClimberUp());
 
     //  shooterSubsystem.setDefaultCommand(new ShooterToggle(shooterSubsystem, xboxDriver));
     //  intakeSubsystem.setDefaultCommand(new IntakeToggle(intakeSubsystem, pivotSubsytem, xboxDriver));
@@ -270,23 +292,26 @@ public class RobotContainer {
     //xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
 
     //TrevorBallshack Controls
-    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
-    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
 
-    //Michaelangelo controls
-    this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
-    this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
-    this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
-    this.xboxOperator.getYButton().onTrue(new ScoreAMP());
-    this.xboxOperator.getAButton().onTrue(new ShootNoteTele());
-    this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
+    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    // this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
+    // this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
+
+    // //Michaelangelo controls
+    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
+    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
+    // this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
+    // this.xboxOperator.getYButton().onTrue(new ScoreAMP());
+    // this.xboxOperator.getAButton().onTrue(new ShootNoteTele());
+    // this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
     
-    // this.xboxOperator.getRightMiddleButton().onTrue(new StopIntake());
-    // this.xboxOperator.getLeftMiddleButton().onTrue(new ShootNote());
-    this.xboxOperator.getRightMiddleButton().onTrue(new MoveClimberUp());
-    this.xboxOperator.getLeftMiddleButton().onTrue(new MoveClimberDown());
+    // // this.xboxOperator.getRightMiddleButton().onTrue(new StopIntake());
+    // //  this.xboxOperator.getLeftMiddleButton().onTrue(new ShootNote());
+    // this.xboxOperator.getRightMiddleButton().onTrue(new MoveClimberUp());
+    // this.xboxOperator.getLeftMiddleButton().onTrue(new MoveClimberDown());
+
+      
     
     // this.xboxOperator.getLeftBumper().onTrue(new ShooterTest(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
     // this.xboxOperator.getYButton().onTrue(new ScoreAMP(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));

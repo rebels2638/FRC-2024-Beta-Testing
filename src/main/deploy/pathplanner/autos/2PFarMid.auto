@@ -47,41 +47,10 @@
           "data": {
             "name": "ShootNote"
           }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "GoToMiddle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ReturnFromMiddle"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
-          }
         }
       ]
     }
   },
-  "folder": "3P",
+  "folder": "2P",
   "choreoAuto": false
 }
