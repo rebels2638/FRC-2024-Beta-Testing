@@ -15,13 +15,17 @@ public interface PoseLimelightIO {
 
     // public void setID();
 
-    public default double getID() {return 0.0;}
+    public default double getID(){return 0.0;}
 
-    public default double getV() {return 0.0;}
+    public default double getV(){return 0.0;}
 
-    public default double getX() {return 0.0;}
+    public default double getX(){return 0.0;}
     
-    public default double getY() {return 0.0;}
+    public default double getY(){return 0.0;}
 
-    public default double getA() {return 0.0;}
+    public default double getA(){return 0.0;}
+
+    public default void setInstance(PoseLimelight p) {}
+
+    public default PoseLimelight getInstance() {return null;}
 }
