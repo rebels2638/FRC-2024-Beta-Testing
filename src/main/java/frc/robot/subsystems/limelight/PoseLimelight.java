@@ -12,13 +12,15 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.limelight.PoseLimelightIO.PoseLimelightIOInputs;
+import frc.robot.subsystems.pivot.Pivot;
+
 import java.util.Optional;
 
 public class PoseLimelight extends SubsystemBase{
-    private final PoseLimelightIOInputsAutoLogged inputs = new PoseLimelightIOInputsAutoLogged();
-    private PoseLimelightIO io;
-    public final Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 
+    private final PoseLimelightIOInputsAutoLogged inputs = new PoseLimelightIOInputsAutoLogged();
+    private static PoseLimelightIO io;
+    public final Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 
     // apriltag constants,, fix all 
     private final Pose3d defaultShotPoint;
@@ -26,6 +28,8 @@ public class PoseLimelight extends SubsystemBase{
     private final double max_ta = 0; // in meters (i think)
     private final double maxTranslationY = 0.05;
     private final double maxTranslationZ = 0.2;
+
+    private static PoseLimelight instance;
 
     public PoseLimelight(PoseLimelightIO poseLimelightIOReal) {
         this.io = poseLimelightIOReal;
@@ -75,6 +79,35 @@ public class PoseLimelight extends SubsystemBase{
         double z = defaultShotPoint.getZ() + (proportionA * maxTranslationZ);
 
         return new Pose3d(x, defaultShotPoint.getY(), z, new Rotation3d(0, 0, 0));
+    }
+
+    public Pose2d getDefaultAlignPoint() {
+        if (alliance.isPresent()) {
+            return (alliance.get() == DriverStation.Alliance.Red)
+                ? new Pose2d(-0.916, -2.725, new Rotation2d(180) // 1.34, 5.51
+                ) : new Pose2d(-15.626, -2.6675, new Rotation2d(180)); // 
+        }
+        return new Pose2d(16.579342, 5.547868, new Rotation2d(180));
+    }
+
+    public static PoseLimelight setInstance(PoseLimelight p) {
+        PoseLimelight.instance = p;
+        return p;
+    }
+
+    public static PoseLimelight getInstance(){
+        if (PoseLimelight.instance == null){
+            return new PoseLimelight(PoseLimelight.io);
+        }
+        return instance;
+    }
+
+    public Pose2d getBotPose2d() {
+        if (alliance.isPresent()) {
+            return (alliance.get() != DriverStation.Alliance.Red) ? new Pose2d(inputs.botpose_wpiblue[0], inputs.botpose_wpiblue[1], new Rotation2d(inputs.botpose_wpiblue[5])) 
+                : new Pose2d(inputs.botpose_wpired[0], inputs.botpose_wpired[1], new Rotation2d(inputs.botpose_wpired[5]));
+        }
+        return new Pose2d(0,0,new Rotation2d(0));
     }
 
 }

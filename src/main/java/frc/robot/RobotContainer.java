@@ -51,6 +51,7 @@ import frc.robot.subsystems.limelight.PoseLimelightIOReal;
 import frc.robot.subsystems.limelight.PoseLimelightIOSim;
 import frc.robot.subsystems.limelight.PoseLimelightIOInputsAutoLogged;
 import frc.robot.Utils.Constants;
+import frc.robot.Utils.RebelUtil;
 import frc.robot.Utils.Constants.OperatorConstants;
 import frc.robot.commands.compositions.ShootSpeaker;
 // import frc.robot.commands.automation.AutoAlign;
@@ -185,7 +186,7 @@ public class RobotContainer {
         
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIO(){}));
 
-        visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
+        visionSubsystem = PoseLimelight.setInstance(new PoseLimelight(new PoseLimelightIO() {}));
         break;
         
       default:
@@ -205,7 +206,7 @@ public class RobotContainer {
         break;
     }
 
-    autoRunner = new AutoRunner(swerveSubsystem);
+    autoRunner = new AutoRunner(swerveSubsystem, visionSubsystem);
 
     pivotController = new PivotController(xboxOperator);
 
@@ -292,11 +293,10 @@ public class RobotContainer {
     //xboxDriver.getAButton().onTrue(new AutoAlign(swerveSubsystem, () -> autoAlignTargetNum[0], xboxDriver));
 
     //TrevorBallshack Controls
-
-    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    // this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
-    // this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
+    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
+    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
 
     // //Michaelangelo controls
     // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());

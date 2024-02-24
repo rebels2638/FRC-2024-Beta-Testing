@@ -30,6 +30,7 @@ public interface PivotIO {
     public default void toggleMode() {}
 
     public static Pivot getInstance(){
-        return null;}
+        return null;
+    }
     
 }
