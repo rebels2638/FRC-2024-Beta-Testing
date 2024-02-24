@@ -3,7 +3,7 @@ package frc.robot.subsystems.climber;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.elevator.ElevatorIO.ElevatorIOInputs;
 
-public class ClimberOSim extends SubsystemBase implements ClimberIO {
+public class ClimberIOSim extends SubsystemBase implements ClimberIO {
 
     private double climberHeightMeters;
     public void updateInputs(ElevatorIOInputs inputs) {
