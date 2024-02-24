@@ -1,6 +1,7 @@
 package frc.robot.commands.compositions;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -16,20 +17,15 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.commands.Intake.RollIntakeInSlow;
 
-public class IntakeNote extends SequentialCommandGroup {
-    public IntakeNote() {
+public class CancelIntakeNote extends SequentialCommandGroup {
+    public CancelIntakeNote() {
         addCommands(
-            new PivotToTorus(),  
-            new RollIntakeIn(),
-            new InIntake(),
-            new StopIntake(),
-            new PivotTurtle(),
-            new RollIntakeOut(), 
-            new OutIntake(),
-            new StopIntake(), 
-            new RollIntakeInSlow(), 
-            new WaitCommand(0.8),
-            new StopIntake()
+            new ParallelRaceGroup(
+            new ParallelCommandGroup(
+                new StopIntake(),
+                new PivotTurtle()
+            ),
+            new WaitCommand(3))
         );
     }
 }

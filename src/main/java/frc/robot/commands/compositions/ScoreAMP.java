@@ -30,7 +30,7 @@ public class ScoreAMP extends SequentialCommandGroup {
             new MoveElevatorAMP(),
             new WaitCommand(0.3),
             new ShooterWindReverse(),
-            new WaitCommand(1),
+            new WaitCommand(0.8),
             new ShooterStop(),
             new MoveElevatorTurtle()
         );

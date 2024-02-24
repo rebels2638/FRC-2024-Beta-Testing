@@ -16,7 +16,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     private static final double kMotorToOutputShaftRatio = 1/80.0; 
-    private static final double kSproketDiameterMeters = 0.0508;
+    private static final double kSproketDiameterMeters = 0.0126903553299492;
 
     // dont know device ID
     private TalonFX m_motor1 = new TalonFX(18); 

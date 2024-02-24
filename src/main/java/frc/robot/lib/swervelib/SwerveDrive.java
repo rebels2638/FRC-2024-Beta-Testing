@@ -5,6 +5,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -173,6 +174,10 @@ public class SwerveDrive
                        Rotation2d.fromDegrees(0))); // x,y,heading in radians; Vision measurement std dev, higher=less weight
 
     zeroGyro();
+    setGyro(new Rotation3d(new Quaternion(0,0,0,180))); //Middle
+    // setGyro(new Rotation3d(new Quaternion(0,0,0, 150))); //Amp Side
+    // setGyro(new Rotation3d(new Quaternion(0,0,0, -150))); //Not Amp side
+    // setGyro(new Rotation3d(new Quaternion(0,0,0,0))); //No Offset
     setMaximumSpeed(maxSpeedMPS);
 
     // Initialize Telemetry

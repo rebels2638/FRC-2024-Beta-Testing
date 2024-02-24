@@ -62,10 +62,14 @@ import frc.robot.commands.Intake.RollIntakeInSlow;
 import frc.robot.commands.Intake.RollIntakeOut;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.audio.*;
+import frc.robot.commands.climber.MoveClimberDown;
+import frc.robot.commands.climber.MoveClimberUp;
+import frc.robot.commands.compositions.CancelIntakeNote;
 import frc.robot.commands.compositions.FeedAndHoldNote;
 import frc.robot.commands.compositions.IntakeNote;
 import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.commands.compositions.ShootNote;
+import frc.robot.commands.compositions.ShootNoteTele;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
@@ -198,7 +202,7 @@ public class RobotContainer {
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
 
     NamedCommands.registerCommand("MoveElevatorAMP", new MoveElevatorAMP());
-    NamedCommands.registerCommand("M oveElevatorTurtle", new MoveElevatorTurtle());
+    NamedCommands.registerCommand("MoveElevatorTurtle", new MoveElevatorTurtle());
     NamedCommands.registerCommand("ShooterWindUp", new ShooterWindup());
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
     NamedCommands.registerCommand("StopIntake", new StopIntake());
@@ -269,17 +273,20 @@ public class RobotContainer {
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
-    this.xboxDriver.getRightBumper().onTrue(new SequentialCommandGroup(new StopIntake(), new PivotTurtle()));
+    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
 
     //Michaelangelo controls
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
     this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
     this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
     this.xboxOperator.getYButton().onTrue(new ScoreAMP());
-    this.xboxOperator.getAButton().onTrue(new ShootNote());
+    this.xboxOperator.getAButton().onTrue(new ShootNoteTele());
     this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
     
-    this.xboxOperator.getRightMiddleButton().onTrue(new StopIntake());
+    // this.xboxOperator.getRightMiddleButton().onTrue(new StopIntake());
+    // this.xboxOperator.getLeftMiddleButton().onTrue(new ShootNote());
+    this.xboxOperator.getRightMiddleButton().onTrue(new MoveClimberUp());
+    this.xboxOperator.getLeftMiddleButton().onTrue(new MoveClimberDown());
     
     // this.xboxOperator.getLeftBumper().onTrue(new ShooterTest(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
     // this.xboxOperator.getYButton().onTrue(new ScoreAMP(shooterSubsystem, intakeSubsystem, pivotSubsystem, elevatorSubsystem));
