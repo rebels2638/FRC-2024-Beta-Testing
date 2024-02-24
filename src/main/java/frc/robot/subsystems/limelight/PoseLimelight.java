@@ -84,8 +84,8 @@ public class PoseLimelight extends SubsystemBase{
     public Pose2d getDefaultAlignPoint() {
         if (alliance.isPresent()) {
             return (alliance.get() == DriverStation.Alliance.Red)
-                ? new Pose2d(16.579342, 5.547868, new Rotation2d(180) // 1.34, 5.51
-                ) : new Pose2d(-0.0381, 5.547868, new Rotation2d(180)); // 
+                ? new Pose2d(-0.916, -2.725, new Rotation2d(180) // 1.34, 5.51
+                ) : new Pose2d(-15.626, -2.6675, new Rotation2d(180)); // 
         }
         return new Pose2d(16.579342, 5.547868, new Rotation2d(180));
     }
