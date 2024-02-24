@@ -45,6 +45,6 @@ public class IntakeToggle extends Command {
 
     @Override
     public boolean isFinished(){
-        return true;
+        return intakeSubsystem.reachedSetpoint();
     }
 }

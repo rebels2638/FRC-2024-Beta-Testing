@@ -21,6 +21,6 @@ public class StopIntake extends Command {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return intakeSubsystem.reachedSetpoint();
     }
 }

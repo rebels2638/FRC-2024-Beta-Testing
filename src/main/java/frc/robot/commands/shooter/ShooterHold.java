@@ -17,7 +17,7 @@ public class ShooterHold extends Command {
 
     @Override
     public boolean isFinished(){
-        return true;
+        return shooterSubsystem.reachedSetpoint();
     }
     
 }

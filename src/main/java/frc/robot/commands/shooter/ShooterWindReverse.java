@@ -17,7 +17,7 @@ public class ShooterWindReverse extends Command {
 
     @Override
     public boolean isFinished(){
-        return true;
+        return shooterSubsystem.reachedSetpoint();
     }
     
 }

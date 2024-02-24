@@ -22,7 +22,7 @@ public class ShooterWindup extends Command {
 
     @Override
     public boolean isFinished(){
-        return true;
+        return shooterSubsystem.reachedSetpoint();
     }
     
 }

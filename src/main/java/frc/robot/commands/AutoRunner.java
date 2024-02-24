@@ -96,6 +96,6 @@ public class AutoRunner {
     }
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("test");
+        return new PathPlannerAuto("AMP3P2Near");
     }
 } 

@@ -27,6 +27,6 @@ public class RollIntakeIn extends Command {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return intakeSubsystem.reachedSetpoint();
     }
 }
