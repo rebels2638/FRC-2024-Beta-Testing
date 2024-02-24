@@ -1,15 +1,23 @@
 package frc.robot.subsystems.limelight;
 
+import java.util.Optional;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Utils.LimelightHelpers;
 import frc.robot.Utils.LimelightHelpers.Results;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 public class PoseLimelightIOReal implements PoseLimelightIO {
     private NetworkTable table;
     private int pipelineNumber = 0; // configure in limelight application
     private Results results = new Results();
     private PoseLimelightIOInputs inputs;
+    public final Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+
 
     public PoseLimelightIOReal() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -30,8 +38,7 @@ public class PoseLimelightIOReal implements PoseLimelightIO {
 
     public void setID(int number) {
         // for (int i = 0; getID() != number && i < 6; i++){
-        //     results.targets_Fiducials.getNext(); //This probably won't work 
-        //     var a = results.targets_fiducials[i]; //This probably works, they put them in a array since they will never exceed the size of 128.
+        //     results.targets_Fiducials.getNext();
         // }
     }
 

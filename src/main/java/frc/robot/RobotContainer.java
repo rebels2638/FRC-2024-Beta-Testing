@@ -193,7 +193,7 @@ public class RobotContainer {
         break;
     }
 
-    autoRunner = new AutoRunner(swerveSubsystem);
+    autoRunner = new AutoRunner(swerveSubsystem, visionSubsystem);
 
     pivotController = new PivotController(xboxOperator);
 

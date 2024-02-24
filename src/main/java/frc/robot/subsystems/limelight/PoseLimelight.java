@@ -102,4 +102,12 @@ public class PoseLimelight extends SubsystemBase{
         return instance;
     }
 
+    public Pose2d getBotPose2d() {
+        if (alliance.isPresent()) {
+            return (alliance.get() != DriverStation.Alliance.Red) ? new Pose2d(inputs.botpose_wpiblue[0], inputs.botpose_wpiblue[1], new Rotation2d(inputs.botpose_wpiblue[5])) 
+                : new Pose2d(inputs.botpose_wpired[0], inputs.botpose_wpired[1], new Rotation2d(inputs.botpose_wpired[5]));
+        }
+        return new Pose2d(0,0,new Rotation2d(0));
+    }
+
 }
