@@ -72,6 +72,10 @@ import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.commands.compositions.ShootNote;
 import frc.robot.commands.compositions.ShootNoteTele;
 import frc.robot.subsystems.audio.AudioPlayer;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIO;
+import frc.robot.subsystems.climber.ClimberIOFalcon;
+import frc.robot.subsystems.climber.ClimberIOSim;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOFalcon;
@@ -136,6 +140,7 @@ public class RobotContainer {
   // private final PoseLimelight poseLimelightSubsystem; 
   private final Pivot pivotSubsystem;
   // private final AudioPlayer aPlayer;
+  private final Climber climberSubsystem;
 
   public RobotContainer() {
 
@@ -162,6 +167,8 @@ public class RobotContainer {
         // pivotSubsystem = new Pivot(new PivotIOSim());
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIOSim())); 
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
+        climberSubsystem = Climber.setInstance(new Climber(new ClimberIOSim()));
+
         break;
       
       case REPLAY:
@@ -176,6 +183,8 @@ public class RobotContainer {
         // elevatorSubsystem = new Elevator(new ElevatorIO() {});
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIO(){}));     
         visionSubsystem = PoseLimelight.setInstance(new PoseLimelight(new PoseLimelightIO() {}));
+        climberSubsystem = Climber.setInstance(new Climber(new ClimberIO() {}));
+
         break;
         
       default:
@@ -190,6 +199,8 @@ public class RobotContainer {
         // pivotSubsystem = new Pivot(new PivotIONeo());
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIONeo()));
         visionSubsystem = new PoseLimelight(new PoseLimelightIOReal());
+        climberSubsystem = Climber.setInstance(new Climber(new ClimberIOFalcon()));
+
         break;
     }
 

@@ -12,15 +12,33 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "AMPSideAMPNote"
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "AMPSideFar1"
+            "pathName": "AMPSideMidNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
           }
         }
       ]

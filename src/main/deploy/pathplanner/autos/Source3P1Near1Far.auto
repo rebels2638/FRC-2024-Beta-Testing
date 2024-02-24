@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.34,
-      "y": 5.5097280638665405
+      "x": 0.7504864129176964,
+      "y": 4.481405256838079
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MidSideMidNote"
+            "pathName": "SourceSideSourceNote"
           }
         },
         {
@@ -32,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MidSideFar3"
+            "pathName": "SourceSideFar5"
           }
         },
         {

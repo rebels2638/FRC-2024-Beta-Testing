@@ -96,6 +96,6 @@ public class AutoRunner {
     }
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("3PMidTop");
+        return new PathPlannerAuto("test");
     }
 } 

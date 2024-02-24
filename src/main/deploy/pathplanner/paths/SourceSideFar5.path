@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 7.5380062360431,
-        "y": 0.7784609903063614
+        "x": 7.6761045925658085,
+        "y": 0.746032097049637
       },
       "prevControl": {
-        "x": 6.436952592856699,
-        "y": 0.9959799806750279
+        "x": 6.575050949379407,
+        "y": 0.9635510874183035
       },
       "nextControl": {
-        "x": 8.108494586055029,
-        "y": 0.6657579892495165
+        "x": 8.246592942577735,
+        "y": 0.6333290959927921
       },
       "isLocked": false,
       "linkedName": null
@@ -89,7 +89,42 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Intake",
+      "waypointRelativePos": 1.55,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Windup",
+      "waypointRelativePos": 3.4,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShooterWindUp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
