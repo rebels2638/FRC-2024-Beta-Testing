@@ -13,6 +13,7 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -52,6 +53,7 @@ public final class Constants
     public static final double MAX_SPEED_METERS_PER_SEC = 1;
     //public static final double MAX_ROT 
   }
+
   public static final class Auton
   {
 
@@ -80,6 +82,7 @@ public final class Constants
     public static final double WHEEL_LOCK_TIME = 3; // seconds
     public static final double MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC = 6;
     public static final double MAX_DEG_SEC_ROTATIONAL_VELOCITY = 180;
+    public static final Pose3d SHOOTER_POSE = new Pose3d(-0.301828,0,0.577596,new Rotation3d(0,0,0)); // first three zeroes are real measurments, no euler angles (rot. at tip)
   }
 
   public static class OperatorConstants
@@ -104,6 +107,8 @@ public final class Constants
       new Translation2d(1.77, 3.85),
       new Translation2d(1.77, 4.42),
       new Translation2d(1.77, 4.97) };
+
+    public static final Translation3d SPEAKER_CENTER_TRANSLATION = new Translation3d(0.24, 5.51, 2.3); // TODO: FIND!
     public static final Pose2d autoAlignAMPPose = new Pose2d(new Translation2d(1.82, 7.33), new Rotation2d(Math.toRadians(90)));
     // public static final AprilTagFieldLayout aprilTagFieldLayout 
     // = new AprilTagFieldLayout();

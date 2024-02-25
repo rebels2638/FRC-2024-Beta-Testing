@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Utils.Constants;
+import frc.robot.commands.autoAligment.MoveAndShootUtil;
 import frc.robot.lib.swervelib.SwerveController;
 import frc.robot.lib.swervelib.math.SwerveMath;
+import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 
 import java.util.List;
 import java.util.function.DoubleSupplier;
@@ -30,6 +32,8 @@ public class AbsoluteFieldDrive extends Command
   private double lastTime = 0;
   private Rotation2d desiredHeading = new Rotation2d(0);
   PIDController translationPID = new PIDController(0,0, 0);
+
+  private boolean alignWithSpeaker = true;
   // PIDController translationPID = new PIDController(0,0, 0);
 
   /**
@@ -73,7 +77,11 @@ public class AbsoluteFieldDrive extends Command
 
     // Get the desired chassis speeds based on a 2 joystick module.
     ChassisSpeeds desiredSpeeds;
-    if (resetRotation) {
+    if (alignWithSpeaker) {
+      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
+                    MoveAndShootUtil.getValidRobotRotation(new ChassisSpeeds(SwerveDriveTelemetry.desiredChassisSpeeds[0], SwerveDriveTelemetry.desiredChassisSpeeds[1], SwerveDriveTelemetry.desiredChassisSpeeds[2]), swerve.getPose().getTranslation()));
+    }
+    else if (resetRotation) {
       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
                                                          new Rotation2d(heading.getAsDouble() * Math.PI));
     }
@@ -93,6 +101,10 @@ public class AbsoluteFieldDrive extends Command
     
     // Make the robot move
     swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, true, false, true);
+  }
+
+  public void toggelAlignWithSpeaker() {
+      alignWithSpeaker = !alignWithSpeaker;
   }
 
   // Called once the command ends or is interrupted.
