@@ -78,8 +78,11 @@ public class AbsoluteFieldDrive extends Command
     // Get the desired chassis speeds based on a 2 joystick module.
     ChassisSpeeds desiredSpeeds;
     if (alignWithSpeaker) {
+      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(), new Rotation2d(0));
+
+      // we do this to have clean speeds, as the telem speeds are "jittery"
       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                    MoveAndShootUtil.getValidRobotRotation(new ChassisSpeeds(SwerveDriveTelemetry.desiredChassisSpeeds[0], SwerveDriveTelemetry.desiredChassisSpeeds[1], SwerveDriveTelemetry.desiredChassisSpeeds[2]), swerve.getPose().getTranslation()));
+      MoveAndShootUtil.getValidRobotRotation(desiredSpeeds, swerve.getPose().getTranslation()));
     }
     else if (resetRotation) {
       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
