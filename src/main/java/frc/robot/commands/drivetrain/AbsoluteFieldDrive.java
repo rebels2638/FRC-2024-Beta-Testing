@@ -80,7 +80,7 @@ public class AbsoluteFieldDrive extends Command
 
     // Get the desired chassis speeds based on a 2 joystick module.
     ChassisSpeeds desiredSpeeds;
-    if (alignWithSpeaker) {
+    if (false) {
       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(), new Rotation2d(0));
 
       Translation3d targetPoint = MoveAndShootUtil.getTargetPoint(desiredSpeeds, swerve.getPose().getTranslation());
