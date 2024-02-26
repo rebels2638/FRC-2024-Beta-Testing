@@ -68,6 +68,7 @@ import frc.robot.commands.climber.MoveClimberUp;
 import frc.robot.commands.compositions.CancelIntakeNote;
 import frc.robot.commands.compositions.FeedAndHoldNote;
 import frc.robot.commands.compositions.IntakeNote;
+import frc.robot.commands.compositions.IntakeNoteAuto;
 import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.commands.compositions.ShootNote;
 import frc.robot.commands.compositions.ShootNoteTele;
@@ -215,7 +216,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterWindUp", new ShooterWindup());
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
     NamedCommands.registerCommand("StopIntake", new StopIntake());
-    NamedCommands.registerCommand("IntakeNote", new IntakeNote());
+    NamedCommands.registerCommand("IntakeNote", new IntakeNoteAuto());
     NamedCommands.registerCommand("ShooterStop", new ShooterStop());
     NamedCommands.registerCommand("ShooterWindReverse", new ShooterWindReverse());
     NamedCommands.registerCommand("ShootNote", new ShootNote());
