@@ -45,7 +45,6 @@ import frc.robot.commands.compositions.ShootNoteTele;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIO;
 import frc.robot.subsystems.climber.ClimberIOFalcon;
-import frc.robot.subsystems.climber.ClimberOSim;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIO;
@@ -126,7 +125,7 @@ public class RobotContainer {
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOSim()));
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIOSim())); 
 
-        climberSubsystem = Climber.setInstance(new Climber(new ClimberOSim()));
+        climberSubsystem = Climber.setInstance(new Climber(new ClimberIOSim()));
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), visionSubsystem);
 
