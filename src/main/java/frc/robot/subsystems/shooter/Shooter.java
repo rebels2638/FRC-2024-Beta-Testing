@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase{
     private static Shooter instance = null;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
-    public static final double noteExitVelocityMetersPerSec = 3;
+    public static final double noteExitVelocityMetersPerSec = 10;
 
     PIDController velocityFeedBackController;
     SimpleMotorFeedforward velocityFeedForwardController;

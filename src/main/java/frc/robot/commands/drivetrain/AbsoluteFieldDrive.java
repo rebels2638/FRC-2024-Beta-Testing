@@ -3,6 +3,7 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +16,8 @@ import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 
 import java.util.List;
 import java.util.function.DoubleSupplier;
+
+import org.littletonrobotics.junction.Logger;
 
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 
@@ -80,9 +83,21 @@ public class AbsoluteFieldDrive extends Command
     if (alignWithSpeaker) {
       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(), new Rotation2d(0));
 
+      Translation3d targetPoint = MoveAndShootUtil.getTargetPoint(desiredSpeeds, swerve.getPose().getTranslation());
       // we do this to have clean speeds, as the telem speeds are "jittery"
       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-      MoveAndShootUtil.getValidRobotRotation(desiredSpeeds, swerve.getPose().getTranslation()));
+                        MoveAndShootUtil.getValidRobotRotation(desiredSpeeds, swerve.getPose().getTranslation(),
+                        targetPoint));
+
+      Rotation2d shooterAngelRad = MoveAndShootUtil.getShooterAngel(desiredSpeeds, swerve.getPose().getTranslation(), targetPoint);
+      if (shooterAngelRad == null ) {
+        Logger.recordOutput("SpeakerAligment/shooterAngelRad", -1);
+
+      }
+      else {
+        Logger.recordOutput("SpeakerAligment/shooterAngelRad", shooterAngelRad.getRadians());
+      }
+
     }
     else if (resetRotation) {
       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
