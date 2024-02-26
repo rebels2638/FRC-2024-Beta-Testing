@@ -24,7 +24,7 @@ import frc.robot.Utils.Constants;
 import frc.robot.commands.elevator.MoveElevatorAMP;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
-import frc.robot.subsystems.limelight.PoseLimelight;
+// import frc.robot.subsystems.limelight.PoseLimelight;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;;
@@ -54,7 +54,7 @@ public class AutoRunner {
 
     }
     
-    public AutoRunner (SwerveSubsystem swerveSubsystem, PoseLimelight visionSubsystem) {
+    public AutoRunner (SwerveSubsystem swerveSubsystem) {
         //NamedCommands.registerCommand("MoveElevatorAMP", new MoveElevatorAMP(elevatorSubsystem));
 
         PATH_CHOSEN_TO_NAME_HASH_MAP.forEach((pathName, pathFile) -> pathChooser.addOption(pathName, pathFile));

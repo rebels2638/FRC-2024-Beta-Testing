@@ -45,11 +45,7 @@ import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystemIO;
 import frc.robot.subsystems.swerve.SwerveSubsystemIORunning;
-import frc.robot.subsystems.limelight.PoseLimelight;
-import frc.robot.subsystems.limelight.PoseLimelightIO;
-import frc.robot.subsystems.limelight.PoseLimelightIOReal;
-import frc.robot.subsystems.limelight.PoseLimelightIOSim;
-import frc.robot.subsystems.limelight.PoseLimelightIOInputsAutoLogged;
+import frc.robot.subsystems.poseLimelight.PoseLimelightIOInputsAutoLogged;
 import frc.robot.Utils.Constants;
 import frc.robot.Utils.RebelUtil;
 import frc.robot.Utils.Constants.OperatorConstants;
@@ -86,10 +82,10 @@ import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIONeo;
 import frc.robot.subsystems.intake.IntakeIOSim;
 import frc.robot.subsystems.elevator.ElevatorIOSim;
-// import frc.robot.subsystems.limelight.PoseLimelight;
-// import frc.robot.subsystems.limelight.PoseLimelightIO;
-// import frc.robot.subsystems.limelight.PoseLimelightIOReal;
-// import frc.robot.subsystems.limelight.PoseLimelightIOSim;
+import frc.robot.subsystems.poseLimelight.PoseLimelight;
+import frc.robot.subsystems.poseLimelight.PoseLimelightIO;
+import frc.robot.subsystems.poseLimelight.PoseLimelightIOReal;
+import frc.robot.subsystems.poseLimelight.PoseLimelightIOSim;
 import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.pivot.PivotIO;
 import frc.robot.subsystems.pivot.PivotIONeo;
@@ -98,7 +94,6 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOFalcon;
 import frc.robot.subsystems.shooter.ShooterIOSim;
-import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.compositions.ShooterTest;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -157,7 +152,6 @@ public class RobotContainer {
 
     switch (Constants.currentMode) {
       case SIM:
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
         // intakeSubsystem = new Intake(new IntakeIOSim() {});
         intakeSubsystem = Intake.setInstance(new Intake(new IntakeIOSim())); //Assigns the instance object(pointer) to the variable so no new changes are needed.
@@ -170,10 +164,11 @@ public class RobotContainer {
 
         climberSubsystem = Climber.setInstance(new Climber(new ClimberOSim()));
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), visionSubsystem);
+
         break;
       
       case REPLAY:
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
         // shooterSubsystem = new Shooter(new ShooterIO(){});
         shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIO(){}));
@@ -186,11 +181,12 @@ public class RobotContainer {
         
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIO(){}));
 
-        visionSubsystem = PoseLimelight.setInstance(new PoseLimelight(new PoseLimelightIO() {}));
+        visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), visionSubsystem);
+
         break;
         
       default:
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"/swerve/falcon")/* , poseLimelightSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
         // shooterSubsystem = new Shooter(new ShooterIOFalcon(){});
         shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIOFalcon()));
@@ -203,10 +199,12 @@ public class RobotContainer {
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIOFalcon()));
 
         visionSubsystem = new PoseLimelight(new PoseLimelightIOReal());
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), visionSubsystem);
+
         break;
     }
 
-    autoRunner = new AutoRunner(swerveSubsystem, visionSubsystem);
+    autoRunner = new AutoRunner(swerveSubsystem);
 
     pivotController = new PivotController(xboxOperator);
 
@@ -299,12 +297,12 @@ public class RobotContainer {
     this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
 
     // //Michaelangelo controls
-    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
-    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
-    // this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
-    // this.xboxOperator.getYButton().onTrue(new ScoreAMP());
-    // this.xboxOperator.getAButton().onTrue(new ShootNoteTele());
-    // this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
+    this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
+    this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
+    this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
+    this.xboxOperator.getYButton().onTrue(new ScoreAMP());
+    this.xboxOperator.getAButton().onTrue(new ShootNoteTele());
+    this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
     
     // // this.xboxOperator.getRightMiddleButton().onTrue(new StopIntake());
     // //  this.xboxOperator.getLeftMiddleButton().onTrue(new ShootNote());
