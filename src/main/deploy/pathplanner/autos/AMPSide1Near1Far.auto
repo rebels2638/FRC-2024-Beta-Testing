@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AMPSideAMPNote"
+            "pathName": "GoToAMPSideAMPNote"
           }
         },
         {
@@ -26,6 +26,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "GoofyOnes",
   "choreoAuto": false
 }

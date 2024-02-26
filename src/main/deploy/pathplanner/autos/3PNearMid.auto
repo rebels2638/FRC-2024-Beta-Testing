@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.31,
-      "y": 5.59
+      "x": 0.7121783474336195,
+      "y": 6.689787225728298
     },
-    "rotation": 180.0
+    "rotation": -120.0
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "GoToTop"
+                  "pathName": "GoToAMPSideAMPNote"
                 }
               },
               {
@@ -40,12 +40,6 @@
           "type": "path",
           "data": {
             "pathName": "ReturnFromTop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
           }
         },
         {
@@ -82,6 +76,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "3P",
   "choreoAuto": false
 }

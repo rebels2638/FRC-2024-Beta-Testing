@@ -84,101 +84,17 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
         double voltageOut = feedForwardVoltage + feedBackControllerVoltage;
         voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
 
-        // if ((currentPositionMeters > kMAX_SHOOTER_HEIGHT && voltageOut > 0) || 
-        //     (currentPositionMeters < kMIN_SHOOTER_HEIGHT && voltageOut < 0) || 
-        //     (goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT)) {
-        //     voltageOut = 0;
-        // }
+        if ((currentPositionMeters > kMAX_SHOOTER_HEIGHT && voltageOut > 0) || 
+            (currentPositionMeters < kMIN_SHOOTER_HEIGHT && voltageOut < 0) || 
+            (goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT)) {
+            voltageOut = 0;
+        }
         
         Logger.recordOutput("Elevator/voltageOut", voltageOut);
         m_motor1.setVoltage(voltageOut);
         m_motor2.setVoltage(voltageOut);
 
     }
-
-
-    /*
-    @Override
-    // sould be called periodically
-    // currentPositionMeters is in what ever elevator compunent (shooter/climber) you want to move
-    public void setHeightMeters(double goalPositionMeters, boolean isShooterHeight, boolean isClimbing, boolean isRaw) {
-        double currentPositionMeters;
-        if (isShooterHeight) {
-            currentPositionMeters = lastShooterHeightMeters;
-        }
-        else {
-            currentPositionMeters = lastClimberHeightMeters;
-        }
-        
-        double voltageOut = 0;
-        if (isShooterHeight) {
-            
-            positionFeedBackController.setSetpoint(goalPositionMeters);
-            double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
-            double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
-
-            voltageOut = feedForwardVoltage + feedBackControllerVoltage;
-            voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
-        }
-
-        //Not Shooterheight and Not climbing. When will we ever use this. This is default case. But we should consider this at a later date.
-        else if (!isShooterHeight && !isClimbing) {
-            // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
-            goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
-            currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
-
-            positionFeedBackController.setSetpoint(goalPositionMeters);
-            double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
-            
-            double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
-            
-            voltageOut = feedForwardVoltage + feedBackControllerVoltage;
-            voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
-        }
-        //move climber down
-        else {
-            // here, our controllers are calibrated for the second stage, so we will just move the second stage to the apropriate position (two times lower) to set the third
-            goalPositionMeters /= kSECOND_STAGE_TO_THIRD;
-            currentPositionMeters /= kSECOND_STAGE_TO_THIRD; 
-            
-            positionFeedBackController.setSetpoint(goalPositionMeters);
-            double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
-            double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
-            double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);            
-       
-            
-            voltageOut = feedForwardVoltage + feedBackControllerVoltage;
-            voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
-        }
-        
-        if(isRaw){
-            voltageOut = goalPositionMeters;
-        }
-
-        // checking for over extension
-        if (isShooterHeight) {
-            if ((currentPositionMeters > kMAX_SHOOTER_HEIGHT && voltageOut > 0) || 
-                (currentPositionMeters < kMIN_SHOOTER_HEIGHT && voltageOut < 0) || 
-                (goalPositionMeters > kMAX_SHOOTER_HEIGHT || goalPositionMeters < kMIN_SHOOTER_HEIGHT)) {
-                    voltageOut = 0;
-            }
-        }
-
-        else {
-            if ((currentPositionMeters > kMAX_CLIMBER_HEIGHT && voltageOut > 0) || 
-                (currentPositionMeters < kMIN_CLIMBER_HEIGHT && voltageOut < 0) || 
-                (goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT)) {
-                    voltageOut = 0;
-            }
-        }
-
-        Logger.recordOutput("Elevator/voltageOut", voltageOut);
-        m_motor1.setVoltage(voltageOut);
-        m_motor2.setVoltage(voltageOut);
-    } 
-    */
 
     public void setVoltage(double voltage){
         Logger.recordOutput("Elevator/voltageOut", voltage);

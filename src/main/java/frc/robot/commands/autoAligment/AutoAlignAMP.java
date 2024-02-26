@@ -7,15 +7,9 @@ import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Utils.Constants;
-import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 public class AutoAlignAMP extends Command {
     private Command followPathHolonomic;
-    private SwerveSubsystem swerveSubsystem;
-    
-    public AutoAlignAMP(SwerveSubsystem swerveSubsystem) {
-        this.swerveSubsystem = swerveSubsystem;
-    }
 
     // Builds a follow path holonomic path using field constants.
     @Override

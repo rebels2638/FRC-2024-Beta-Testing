@@ -13,7 +13,7 @@ import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.intake.IntakeIO;
-import frc.robot.subsystems.limelight.PoseLimelight;
+// import frc.robot.subsystems.limelight.PoseLimelight;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 public class RebelUtil {
@@ -55,38 +55,38 @@ public class RebelUtil {
         return Math.sqrt(Math.pow(a.getX(), 2) + Math.pow(a.getY(), 2) + Math.pow(a.getZ(), 2));
     }
 
-    public static Pose2d calculateAlignedPose(PoseLimelight visionSubsystem, Pose2d initialPose, Pose3d shooterPose, Pose3d targetPointPose) {
+//     public static Pose2d calculateAlignedPose(PoseLimelight visionSubsystem, Pose2d initialPose, Pose3d shooterPose, Pose3d targetPointPose) {
 
-        Pose3d s_aligned = new Pose3d(shooterPose.getX(),
-                                      shooterPose.getX()*targetPointPose.getY()/targetPointPose.getX(),
-                                      shooterPose.getZ(),
-                                      new Rotation3d(0,0,0)); // elim y-axis difference
+//         Pose3d s_aligned = new Pose3d(shooterPose.getX(),
+//                                       shooterPose.getX()*targetPointPose.getY()/targetPointPose.getX(),
+//                                       shooterPose.getZ(),
+//                                       new Rotation3d(0,0,0)); // elim y-axis difference
 
-        Rotation3d rot = new Rotation3d(0,0, Math.acos(dot(targetPointPose, s_aligned)/(mag(targetPointPose)*mag(s_aligned))));
-        Pose3d intermediate = new Pose3d(initialPose).rotateBy(rot);
-        Pose2d drivebasePose = new Pose2d(initialPose.getTranslation(), initialPose.getRotation().plus(new Rotation2d(intermediate.getRotation().getZ())));
+//         Rotation3d rot = new Rotation3d(0,0, Math.acos(dot(targetPointPose, s_aligned)/(mag(targetPointPose)*mag(s_aligned))));
+//         Pose3d intermediate = new Pose3d(initialPose).rotateBy(rot);
+//         Pose2d drivebasePose = new Pose2d(initialPose.getTranslation(), initialPose.getRotation().plus(new Rotation2d(intermediate.getRotation().getZ())));
                                           
-        // 0,0,acos(dot(target,shooter)/(mag(target)*mag(shooter))) - roll,pitch,yaw
-        // can use Rot3d and then apply as a transform to currPose and then supply transformed pose (time benefits?)
+//         // 0,0,acos(dot(target,shooter)/(mag(target)*mag(shooter))) - roll,pitch,yaw
+//         // can use Rot3d and then apply as a transform to currPose and then supply transformed pose (time benefits?)
 
-        // this.swerveSubsystem.drive(drivebasePose.getTranslation(), drivebasePose.getRotation(), true, false); // 1st boolean might be wrong
-        // the drivebase theoretically just rotated in place to to remove the y axis
-// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        while (Math.abs(shooterPose.getX()/targetPointPose.getX() - shooterPose.getZ()/targetPointPose.getZ()) <= kErrorMargin) { // z-axis difference elimination
+//         // this.swerveSubsystem.drive(drivebasePose.getTranslation(), drivebasePose.getRotation(), true, false); // 1st boolean might be wrong
+//         // the drivebase theoretically just rotated in place to to remove the y axis
+// // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//         while (Math.abs(shooterPose.getX()/targetPointPose.getX() - shooterPose.getZ()/targetPointPose.getZ()) <= kErrorMargin) { // z-axis difference elimination
 
-            if (shooterPose.getX()/targetPointPose.getX() > shooterPose.getZ()/targetPointPose.getZ()) { // might need to flip the sign idrc rn, emp. testing
-                drivebasePose = new Pose2d(drivebasePose.getX()+kAdjustmentParam, drivebasePose.getY(), new Rotation2d(0));
-            }
+//             if (shooterPose.getX()/targetPointPose.getX() > shooterPose.getZ()/targetPointPose.getZ()) { // might need to flip the sign idrc rn, emp. testing
+//                 drivebasePose = new Pose2d(drivebasePose.getX()+kAdjustmentParam, drivebasePose.getY(), new Rotation2d(0));
+//             }
 
-            else {
-                drivebasePose = new Pose2d(drivebasePose.getX()-kAdjustmentParam, drivebasePose.getY(), new Rotation2d(0));
-            }
+//             else {
+//                 drivebasePose = new Pose2d(drivebasePose.getX()-kAdjustmentParam, drivebasePose.getY(), new Rotation2d(0));
+//             }
 
-            targetPointPose = visionSubsystem.getValidShotPoint().relativeTo(new Pose3d(drivebasePose));
-        }
+//             targetPointPose = visionSubsystem.getValidShotPoint().relativeTo(new Pose3d(drivebasePose));
+//         }
 
-        return drivebasePose;
+//         return drivebasePose;
 
-    }
+//     }
 
 }

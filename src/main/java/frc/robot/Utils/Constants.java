@@ -58,7 +58,7 @@ public final class Constants
     public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(0.4, 0, 0);
     public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(5, 0, 0);
 
-    public static final double MAX_SPEED = 3;
+    public static final double MAX_SPEED = 6;
     public static final double MAX_ACCELERATION = 3;
     public static final double MAX_ANGULAR_VELO_RPS = 1.5;
     public static final double MAX_ANGULAR_ACCEL_RPS_SQUARED = 1;
@@ -67,7 +67,8 @@ public final class Constants
                         Constants.Auton.TRANSLATION_PID_CONFIG, // Translation PID constants
                         Constants.Auton.ANGLE_PID_CONFIG, // Rotation PID constants
                         Constants.Auton.MAX_SPEED, // Max module speed, in m/s
-                        .4, // Drive base radius in meters. Distance from robot center to furthest module.
+                        // I LOVE THE PYTHAGPREAN THEOREM
+                        0.5384061785684372, // Drive base radius in meters. Distance from robot center to furthest module.
                         new ReplanningConfig() // Default path replanning config. See the API for the options here
     );
 

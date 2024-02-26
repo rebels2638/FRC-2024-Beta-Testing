@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7319122330552369,
-      "y": 4.410523436431489
+      "x": 1.31,
+      "y": 5.58606903233778
     },
-    "rotation": 120.0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -22,46 +22,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "SourceSideSourceNote"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "IntakeNote"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ReturnToMidSideSourceNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "GoToMiddle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
                 }
               }
             ]
@@ -82,6 +51,6 @@
       ]
     }
   },
-  "folder": "3P",
+  "folder": "2P",
   "choreoAuto": false
 }
