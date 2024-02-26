@@ -38,13 +38,18 @@ import frc.robot.commands.climber.MoveClimberRaw;
 import frc.robot.commands.compositions.CancelIntakeNote;
 import frc.robot.commands.compositions.FeedAndHoldNote;
 import frc.robot.commands.compositions.IntakeNote;
+import frc.robot.commands.compositions.IntakeNoteAuto;
 import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.commands.compositions.ShootNote;
 import frc.robot.commands.compositions.ShootNoteTele;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIO;
 import frc.robot.subsystems.climber.ClimberIOFalcon;
-import frc.robot.subsystems.climber.ClimberOSim;
+import frc.robot.subsystems.audio.AudioPlayer;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIO;
+import frc.robot.subsystems.climber.ClimberIOFalcon;
+import frc.robot.subsystems.climber.ClimberIOSim;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOFalcon;
@@ -120,7 +125,7 @@ public class RobotContainer {
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOSim()));
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIOSim())); 
 
-        climberSubsystem = Climber.setInstance(new Climber(new ClimberOSim()));
+        climberSubsystem = Climber.setInstance(new Climber(new ClimberIOSim()));
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), visionSubsystem);
 
@@ -166,7 +171,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterWindUp", new ShooterWindup());
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
     NamedCommands.registerCommand("StopIntake", new StopIntake());
-    NamedCommands.registerCommand("IntakeNote", new IntakeNote());
+    NamedCommands.registerCommand("IntakeNote", new IntakeNoteAuto());
     NamedCommands.registerCommand("ShooterStop", new ShooterStop());
     NamedCommands.registerCommand("ShooterWindReverse", new ShooterWindReverse());
     NamedCommands.registerCommand("ShootNote", new ShootNote());
