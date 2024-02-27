@@ -50,13 +50,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ToAmpNoteFromMid"
+            "pathName": "FromMidNoteToAMP"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "FromAmpNoteToMid"
+            "pathName": null
           }
         },
         {
