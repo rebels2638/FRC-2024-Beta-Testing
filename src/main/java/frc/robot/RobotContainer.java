@@ -124,7 +124,6 @@ public class RobotContainer {
         shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIOSim()));
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOSim()));
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIOSim())); 
-
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIOSim()));
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon"), visionSubsystem);
@@ -178,26 +177,26 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShootNote", new ShootNoteAuto());
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));
-    xboxTester.getAButton().onTrue(new PivotToTorus());
-    xboxTester.getBButton().onTrue(new MoveElevatorAMP());
-    xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
-    xboxTester.getXButton().onTrue(new PivotTurtle());
-    xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
+    // climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));
+    // xboxTester.getAButton().onTrue(new PivotToTorus());
+    // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
+    // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
+    // xboxTester.getXButton().onTrue(new PivotTurtle());
+    // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
 
-    // //TrevorBallshack Controls
-    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    // this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
-    // this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
+    //TrevorBallshack Controls
+    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
+    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
 
-    // // //Michaelangelo controls
-    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
-    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
-    // this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
-    // this.xboxOperator.getYButton().onTrue(new ScoreAMP());
-    // this.xboxOperator.getAButton().onTrue(new ShootNoteTele());
-    // this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
+    // //Michaelangelo controls
+    this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
+    this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
+    this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
+    this.xboxOperator.getYButton().onTrue(new ScoreAMP());
+    this.xboxOperator.getAButton().onTrue(new ShootNoteTele());
+    this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
     
     Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
 
