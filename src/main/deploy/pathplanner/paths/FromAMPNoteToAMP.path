@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3114801856843854,
-        "y": 5.575848284313056
+        "x": 2.514012777297753,
+        "y": 6.985403451338198
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2114801856843853,
-        "y": 5.575848284313056
+        "x": 0.9452823472587802,
+        "y": 7.264304535885873
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.64,
-        "y": 6.74
+        "x": 0.7494731892666114,
+        "y": 6.589364851764638
       },
       "prevControl": {
-        "x": 2.54,
-        "y": 6.74
+        "x": 0.9275541886236611,
+        "y": 7.028383655566437
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": -120.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,14 +45,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -135.0,
+    "rotation": -120.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "AMPNote",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -178.60699311366736,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

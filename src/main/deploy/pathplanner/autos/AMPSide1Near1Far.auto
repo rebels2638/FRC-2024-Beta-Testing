@@ -14,13 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "GoToAMPSideAMPNote"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "AMPSideFar1"
+            "pathName": null
           }
         }
       ]

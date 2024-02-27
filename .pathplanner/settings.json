@@ -3,9 +3,14 @@
   "robotLength": 0.76,
   "holonomicMode": true,
   "pathFolders": [
-    "MidSide",
-    "AMPSide",
-    "SourceSide"
+    "AMPNote",
+    "Far1",
+    "Far2",
+    "Far3",
+    "Far4",
+    "MidNote",
+    "Far5",
+    "SourceNote"
   ],
   "autoFolders": [
     "1P",
