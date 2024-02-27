@@ -40,6 +40,30 @@
           "data": {
             "pathName": "FromFar3ToMid"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToMidNoteFromMid"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromMidNoteToMid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
         }
       ]
     }
