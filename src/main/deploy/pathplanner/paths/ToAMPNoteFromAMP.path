@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.514012777297753,
-        "y": 6.985403451338198
+        "x": 2.622168652270347,
+        "y": 6.689949815489151
       },
       "prevControl": {
-        "x": 1.6663058389799459,
-        "y": 6.937908914937189
+        "x": 1.6254182615303014,
+        "y": 6.38766875847305
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MidMidNote"
+      "linkedName": "StartAMPAMPNote"
     }
   ],
   "rotationTargets": [
@@ -63,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": -138.3839395462046,
     "rotateFast": false
   },
   "reversed": false,
