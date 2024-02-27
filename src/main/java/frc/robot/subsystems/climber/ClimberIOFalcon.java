@@ -36,8 +36,8 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
 
  
     public ClimberIOFalcon() {
-        m_motor1.setInverted(false);
-        m_motor2.setInverted(true);
+        m_motor1.setInverted(true);
+        m_motor2.setInverted(false);
         m_motor1.setNeutralMode(NeutralModeValue.Brake);
         m_motor2.setNeutralMode(NeutralModeValue.Brake);        
 
