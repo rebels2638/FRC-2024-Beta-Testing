@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 6.5832987179074784
+      "x": 0.7631512463945168,
+      "y": 6.592982982745107
     },
     "rotation": -120.0
   },
@@ -15,24 +15,6 @@
           "type": "named",
           "data": {
             "name": "ShooterWindUp"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ToFar1FromAmp"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FromFar1ToAmp"
           }
         },
         {
@@ -80,6 +62,6 @@
       ]
     }
   },
-  "folder": "4P",
+  "folder": "3P",
   "choreoAuto": false
 }
