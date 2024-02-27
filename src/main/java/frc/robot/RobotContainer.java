@@ -41,6 +41,7 @@ import frc.robot.commands.compositions.IntakeNote;
 import frc.robot.commands.compositions.IntakeNoteAuto;
 import frc.robot.commands.compositions.ScoreAMP;
 import frc.robot.commands.compositions.ShootNote;
+import frc.robot.commands.compositions.ShootNoteAuto;
 import frc.robot.commands.compositions.ShootNoteTele;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIO;
@@ -174,7 +175,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeNote", new IntakeNoteAuto());
     NamedCommands.registerCommand("ShooterStop", new ShooterStop());
     NamedCommands.registerCommand("ShooterWindReverse", new ShooterWindReverse());
-    NamedCommands.registerCommand("ShootNote", new ShootNote());
+    NamedCommands.registerCommand("ShootNote", new ShootNoteAuto());
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));

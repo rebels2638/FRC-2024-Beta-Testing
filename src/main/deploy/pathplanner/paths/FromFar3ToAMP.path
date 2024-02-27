@@ -3,41 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.924913542134778,
-        "y": 4.124382094918037
+        "x": 7.844771115155727,
+        "y": 5.772604194748266
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.961461192740996,
-        "y": 4.5404530435082595
+        "x": 5.977228971329108,
+        "y": 6.354296036812933
       },
       "isLocked": false,
       "linkedName": "Far2"
     },
     {
       "anchor": {
-        "x": 2.896367307467727,
-        "y": 6.33007289758624
+        "x": 5.755411924934279,
+        "y": 6.399446380181104
       },
       "prevControl": {
-        "x": 4.096177148159797,
-        "y": 6.364817593607055
+        "x": 6.324608362904209,
+        "y": 6.338608435497486
       },
       "nextControl": {
-        "x": 1.6890056857036806,
-        "y": 6.29510951329595
+        "x": 5.124536702294263,
+        "y": 6.466876794949908
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.2745940876497153,
-        "y": 5.535354916863679
+        "x": 2.8933818258740813,
+        "y": 6.1541196778712575
       },
       "prevControl": {
-        "x": 1.9258123131630895,
-        "y": 5.939899572106838
+        "x": 4.080289155921437,
+        "y": 5.975229103488579
+      },
+      "nextControl": {
+        "x": 1.6229264892987096,
+        "y": 6.345602600871185
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7631512463945168,
+        "y": 6.592982982745107
+      },
+      "prevControl": {
+        "x": 1.1115072123932035,
+        "y": 7.405045506615424
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +62,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 2.0999999999999996,
       "rotationDegrees": 180.0,
       "rotateFast": false
     }
@@ -55,7 +71,7 @@
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 1.65,
+      "waypointRelativePos": 2.65,
       "command": {
         "type": "parallel",
         "data": {
@@ -79,11 +95,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": -120.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Far2",
+  "folder": "Far3",
   "previewStartingState": {
     "rotation": -178.9996991437712,
     "velocity": 0

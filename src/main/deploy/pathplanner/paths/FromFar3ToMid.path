@@ -8,40 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.961461192740996,
-        "y": 4.5404530435082595
-      },
-      "isLocked": false,
-      "linkedName": "Far2"
-    },
-    {
-      "anchor": {
-        "x": 2.896367307467727,
-        "y": 6.33007289758624
-      },
-      "prevControl": {
-        "x": 4.096177148159797,
-        "y": 6.364817593607055
-      },
-      "nextControl": {
-        "x": 1.6890056857036806,
-        "y": 6.29510951329595
+        "x": 3.583080371682216,
+        "y": 4.024725215861475
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.2745940876497153,
-        "y": 5.535354916863679
+        "x": 2.3833993526882757,
+        "y": 4.925420464337861
       },
       "prevControl": {
-        "x": 1.9258123131630895,
-        "y": 5.939899572106838
+        "x": 6.370849036156565,
+        "y": 4.968045615455618
+      },
+      "nextControl": {
+        "x": 1.7944775536790334,
+        "y": 4.919124991624216
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3005979086921784,
+        "y": 5.524499726219249
+      },
+      "prevControl": {
+        "x": 2.1830262602242994,
+        "y": 5.652154095719235
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AMP"
+      "linkedName": "Mid"
     }
   ],
   "rotationTargets": [
@@ -85,7 +85,7 @@
   "reversed": false,
   "folder": "Far3",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -178.9996991437712,
     "velocity": 0
   },
   "useDefaultConstraints": false

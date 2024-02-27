@@ -3,41 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2745940876497153,
-        "y": 5.535354916863679
+        "x": 1.3005979086921784,
+        "y": 5.524499726219249
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6594048572712545,
-        "y": 6.226040913620289
+        "x": 2.229898021912608,
+        "y": 5.5955440246770065
       },
       "isLocked": false,
-      "linkedName": "AMP"
+      "linkedName": "Mid"
     },
     {
       "anchor": {
-        "x": 2.896367307467727,
-        "y": 6.33007289758624
+        "x": 3.212680332569254,
+        "y": 4.894877585000569
       },
       "prevControl": {
-        "x": 1.669271800082063,
-        "y": 6.226040913620289
+        "x": 1.5279685851017155,
+        "y": 4.955613068899919
       },
       "nextControl": {
-        "x": 3.977392668999397,
-        "y": 6.4217211942353325
+        "x": 4.548304215473461,
+        "y": 4.8467270554173005
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.924913542134778,
-        "y": 4.124382094918037
+        "x": 5.824662124784372,
+        "y": 4.28042961147272
       },
       "prevControl": {
-        "x": 7.8713058475831446,
-        "y": 4.217255074514068
+        "x": 4.058683661845851,
+        "y": 4.106615544519432
+      },
+      "nextControl": {
+        "x": 6.805091190096727,
+        "y": 4.3769270301997825
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.844771115155727,
+        "y": 5.772604194748266
+      },
+      "prevControl": {
+        "x": 6.908346032359831,
+        "y": 5.6757999517650735
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,7 +71,7 @@
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 1.65,
+      "waypointRelativePos": 2.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -83,9 +99,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Far2",
+  "folder": "Far3",
   "previewStartingState": {
-    "rotation": -120.0,
+    "rotation": -179.22257128604332,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3005979086921784,
+      "y": 5.524499726219249
+    },
+    "rotation": 180.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterWindUp"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.68
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToFar3FromMid"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromFar3ToMid"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "3P",
+  "choreoAuto": false
+}
