@@ -13,7 +13,7 @@ public class Climber extends SubsystemBase{
     private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
     PIDController positionFeedBackController;
     ElevatorFeedforward positionFeedForwardController;
-    private double goalPositionMeters = 0;
+    private double goalPositionMeters = 0; // 
 
     // PIDController velocityFeedBackController;
     // ElevatorFeedforward velocityFeedForwardController; //Literally never gonna be used
