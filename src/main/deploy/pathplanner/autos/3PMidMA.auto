@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7514482095921979,
-      "y": 4.490952780122445
+      "x": 1.2830578472292316,
+      "y": 5.51843359236209
     },
     "rotation": 180.0
   },
@@ -15,6 +15,12 @@
           "type": "named",
           "data": {
             "name": "ShooterWindUp"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.68
           }
         },
         {

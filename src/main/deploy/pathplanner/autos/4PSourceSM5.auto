@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2830578472292316,
-      "y": 5.51843359236209
+      "x": 0.7405760747104312,
+      "y": 4.482229021973382
     },
-    "rotation": 180.0
+    "rotation": 120.0
   },
   "command": {
     "type": "sequential",
@@ -32,6 +32,42 @@
         {
           "type": "path",
           "data": {
+            "pathName": "ToFar5FromSource"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromFar5ToSource"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToSourceNoteFromSource"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromSourceNoteToMid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
             "pathName": "ToMidNoteFromMid"
           }
         },
@@ -46,28 +82,10 @@
           "data": {
             "name": "ShootNote"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ToSourceNoteFromMid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FromSourceNoteToMid"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
-          }
         }
       ]
     }
   },
-  "folder": "3P",
+  "folder": "4P",
   "choreoAuto": false
 }

@@ -18,6 +18,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.68
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "ShootNote"
