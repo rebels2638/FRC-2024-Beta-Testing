@@ -16,14 +16,14 @@ public class MoveClimberRaw extends Command {
     
     @Override
     public void execute() { 
-       climberSubsystem.setVoltage(-controller.getLeftY() * 12); 
+       climberSubsystem.setVoltage(-controller.getLeftY()*12); 
     }
     
-    @Override
-    public void end(boolean isInterrupted){
-              climberSubsystem.setVoltage(0); 
+    // @Override
+    // public void end(boolean isInterrupted){
+    //           climberSubsystem.setVoltage(0); 
 
-    }
+    // }
 
     @Override
     public boolean isFinished() {
