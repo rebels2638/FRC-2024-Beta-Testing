@@ -1,0 +1,85 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.75,
+      "y": 6.5832987179074784
+    },
+    "rotation": -120.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterWindUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToFar1FromAMP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromFar1ToAMP"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToAMPNoteFromAMP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromAMPNoteToMid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToMidNoteFromMid"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromMidNoteToMid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "4P",
+  "choreoAuto": false
+}
