@@ -1,0 +1,76 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3005979086921784,
+        "y": 5.524499726219249
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.6034059591772754,
+        "y": 6.766599413839294
+      },
+      "isLocked": false,
+      "linkedName": "Mid"
+    },
+    {
+      "anchor": {
+        "x": 2.622168652270347,
+        "y": 6.689949815489151
+      },
+      "prevControl": {
+        "x": 1.8916932775641386,
+        "y": 6.016044665822957
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "StartAMPAMPNote"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -137.31702550138652,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -139.38,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "AMPNote",
+  "previewStartingState": {
+    "rotation": 178.92402620035944,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

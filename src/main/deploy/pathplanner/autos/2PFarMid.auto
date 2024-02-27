@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SourceSideSourceNote"
+                  "pathName": null
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ReturnToMidSideSourceNote"
+            "pathName": null
           }
         },
         {

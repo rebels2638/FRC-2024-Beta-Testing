@@ -14,13 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MidSideMidNote"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MidSideFar3"
+            "pathName": null
           }
         }
       ]
