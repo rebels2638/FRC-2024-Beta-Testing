@@ -3,38 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7405760747104312,
-        "y": 4.482229021973382
+        "x": 7.888298406964912,
+        "y": 0.7701625564294068
       },
       "prevControl": null,
       "nextControl": {
-        "x": -0.17979252599609552,
-        "y": 4.432160340547675
+        "x": 4.329044704868551,
+        "y": 1.5754912299701902
       },
       "isLocked": false,
-      "linkedName": "Source"
+      "linkedName": "Far5"
     },
     {
       "anchor": {
-        "x": 1.3005979086921784,
-        "y": 5.524499726219249
+        "x": 0.7405760747104312,
+        "y": 4.482229021973382
       },
       "prevControl": {
-        "x": 2.1298713239711775,
-        "y": 5.613234567990244
+        "x": 1.281544077658707,
+        "y": 4.033381490842736
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid"
+      "linkedName": "Source"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 179.19248872707507,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,14 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 120.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "SourceNote",
+  "folder": "Far5",
   "previewStartingState": {
     "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

@@ -5,7 +5,7 @@
       "x": 0.7514482095921979,
       "y": 4.490952780122445
     },
-    "rotation": 180.0
+    "rotation": 120.0
   },
   "command": {
     "type": "sequential",
@@ -26,13 +26,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ToMidNoteFromMid"
+            "pathName": "ToSourceNoteFromSource"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "FromMidNoteToMid"
+            "pathName": "FromSourceNoteToSource"
           }
         },
         {
@@ -44,13 +44,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ToSourceNoteFromMid"
+            "pathName": "ToFar5FromSource"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "FromSourceNoteToMid"
+            "pathName": "FromFar5ToSource"
           }
         },
         {
