@@ -189,7 +189,7 @@ public class RobotContainer {
     xboxTester.getLeftMiddleButton().onTrue(new Climb());
     xboxTester.getRightMiddleButton().onTrue(new Thing6());
     xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
-
+    xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
     //TrevorBallshack Controls
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));

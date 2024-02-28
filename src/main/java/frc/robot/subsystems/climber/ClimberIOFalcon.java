@@ -36,8 +36,8 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
 
  
     public ClimberIOFalcon() {
-        m_motor1.setInverted(false);
-        m_motor2.setInverted(true);
+        m_motor1.setInverted(true);
+        m_motor2.setInverted(false);
         m_motor1.setNeutralMode(NeutralModeValue.Brake);
         m_motor2.setNeutralMode(NeutralModeValue.Brake);        
 
@@ -45,7 +45,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
 
     @Override
     public void updateInputs(ClimberIOInputs inputs) {
-        inputs.climberHeightMeters = -m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters;
+        inputs.climberHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters;
         inputs.voltageOut = m_motor1.getDutyCycle().getValueAsDouble() * kMAX_VOLTAGE;
 
         climberHeightMeters = inputs.climberHeightMeters;

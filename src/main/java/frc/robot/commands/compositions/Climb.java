@@ -14,10 +14,9 @@ public class Climb extends SequentialCommandGroup {
     public Climb() {
         addCommands(
             new SequentialCommandGroup(
-                new ParallelCommandGroup(
-                    new MoveElevatorAMP(),
-                    new PivotToTorus()
-                )
+                new PivotToTorus(),
+                new MoveElevatorAMP()
+                
                 // new WaitCommand(3),
                 // new MoveClimberUp(),
                 // new WaitCommand(3),
