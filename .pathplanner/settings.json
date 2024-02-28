@@ -14,11 +14,10 @@
     "SourceNote"
   ],
   "autoFolders": [
-    "1P",
     "2P",
     "3P",
-    "GoofyOnes",
-    "4P"
+    "4P",
+    "GoofyOnes"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

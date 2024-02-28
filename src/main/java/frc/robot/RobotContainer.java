@@ -18,6 +18,7 @@ import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterWindup;
 import frc.robot.commands.shooter.ShooterWindReverse;
+import frc.robot.commands.compositions.Thing6;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,6 +37,7 @@ import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.climber.MoveClimberRaw;
 import frc.robot.commands.compositions.CancelIntakeNote;
+import frc.robot.commands.compositions.Climb;
 import frc.robot.commands.compositions.FeedAndHoldNote;
 import frc.robot.commands.compositions.IntakeNote;
 import frc.robot.commands.compositions.IntakeNoteAuto;
@@ -175,20 +177,24 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterStop", new ShooterStop());
     NamedCommands.registerCommand("ShooterWindReverse", new ShooterWindReverse());
     NamedCommands.registerCommand("ShootNote", new ShootNoteAuto());
+    NamedCommands.registerCommand("PivotToTorus", new PivotToTorus());
+
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    // climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));
-    // xboxTester.getAButton().onTrue(new PivotToTorus());
-    // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
-    // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
-    // xboxTester.getXButton().onTrue(new PivotTurtle());
-    // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
+    climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));
+    xboxTester.getAButton().onTrue(new PivotToTorus());
+    xboxTester.getBButton().onTrue(new MoveElevatorAMP());
+    xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
+    xboxTester.getXButton().onTrue(new PivotTurtle());
+    xboxTester.getLeftMiddleButton().onTrue(new Climb());
+    xboxTester.getRightMiddleButton().onTrue(new Thing6());
+    xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
 
     //TrevorBallshack Controls
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    this.xboxDriver.getLeftBumper().onTrue(new IntakeNote());
-    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote());
+    this.xboxDriver.getLeftBumper().onTrue(new IntakeNoteAuto());
+    this.xboxOperator.getLeftMiddleButton().onTrue(new CancelIntakeNote());
 
     // //Michaelangelo controls
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
@@ -197,6 +203,7 @@ public class RobotContainer {
     this.xboxOperator.getYButton().onTrue(new ScoreAMP());
     this.xboxOperator.getAButton().onTrue(new ShootNoteTele());
     this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
+    this.xboxOperator.getRightMiddleButton().onTrue(new Climb());
     
     Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
 

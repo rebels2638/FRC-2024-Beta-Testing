@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.622168652270347,
-        "y": 6.689949815489151
+        "x": 2.65,
+        "y": 6.74
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2605332106588523,
-        "y": 5.508370393560291
+        "x": 1.2883645583885053,
+        "y": 5.55842057807114
       },
       "isLocked": false,
       "linkedName": "StartAMPAMPNote"

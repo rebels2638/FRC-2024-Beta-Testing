@@ -28,18 +28,25 @@
                 }
               },
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": null
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToMidNoteFromMid"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromMidNoteToMid"
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": null
           }
         },
         {

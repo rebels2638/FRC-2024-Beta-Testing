@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2661291015813474,
-        "y": 7.356095956733398
+        "x": 1.2351263164064805,
+        "y": 6.472714483890506
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StartAmpMidNote"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 6.575116490844335
       },
       "prevControl": {
-        "x": 1.090258244017216,
-        "y": 6.989306467695904
+        "x": 1.837009827865811,
+        "y": 6.374045055782419
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.55,
+      "waypointRelativePos": 0.9,
       "rotationDegrees": -120.0,
       "rotateFast": false
     }

@@ -30,15 +30,35 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "ToFar5FromSource"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FromFar5ToSource"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToFar5FromSource"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromFar5ToSource"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              }
+            ]
           }
         },
         {
@@ -48,15 +68,29 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "ToSourceNoteFromSource"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FromSourceNoteToSource"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToSourceNoteFromSource"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromSourceNoteToSource"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {

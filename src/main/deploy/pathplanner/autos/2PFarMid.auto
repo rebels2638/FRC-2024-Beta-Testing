@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7319122330552369,
-      "y": 4.410523436431489
+      "x": 0.75,
+      "y": 4.49
     },
     "rotation": 120.0
   },
@@ -22,24 +22,31 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": null
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "IntakeNote"
                 }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToSourceNoteFromSource"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromSourceNoteToSource"
+                      }
+                    }
+                  ]
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": null
           }
         },
         {

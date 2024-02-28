@@ -50,7 +50,10 @@ public class AutoRunner {
 
 
     static {
-        PATH_CHOSEN_TO_NAME_HASH_MAP.put("3PMidTop", "TurnAuto");
+        PATH_CHOSEN_TO_NAME_HASH_MAP.put("3PMidTop", "3PMidTop");
+        PATH_CHOSEN_TO_NAME_HASH_MAP.put("3PMidMA", "3PMidMA");
+
+
 
     }
     
@@ -97,6 +100,6 @@ public class AutoRunner {
     }
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto(pathChosen);
+    return new PathPlannerAuto("3PMidMA");
     }
 } 

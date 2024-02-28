@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7121783474336195,
-      "y": 6.689787225728298
+      "x": 0.76,
+      "y": 6.59
     },
     "rotation": -120.0
   },
@@ -22,24 +22,37 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": null
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToAMPNoteFromAMP"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromAMPNoteToAMP"
+                      }
+                    }
+                  ]
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": null
+            "name": "ShootNote"
           }
         }
       ]

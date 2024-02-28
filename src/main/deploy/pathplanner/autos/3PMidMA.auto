@@ -30,15 +30,35 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "ToMidNoteFromMid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FromMidNoteToMid"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToMidNoteFromMid"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromMidNoteToMid"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -48,15 +68,35 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "FromMidNoteToAMP"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": null
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToAMPNoteFromMid"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromAMPNoteToMid"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {

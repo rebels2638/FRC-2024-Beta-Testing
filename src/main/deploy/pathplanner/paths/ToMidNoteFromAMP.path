@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7673894450772891,
-        "y": 6.567498555302787
+        "x": 0.76,
+        "y": 6.592982982745107
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.060021623318356,
-        "y": 7.349230409887312
+        "x": 1.807408999433385,
+        "y": 6.423379769836463
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AMP"
     },
     {
       "anchor": {
@@ -20,41 +20,23 @@
         "y": 5.826583787447051
       },
       "prevControl": {
-        "x": 1.8230378091032748,
-        "y": 6.546055477482134
+        "x": 1.6594048572712548,
+        "y": 6.354311170160802
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StartAmpMidNote"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.6,
-      "rotationDegrees": 138.79541205274617,
+      "waypointRelativePos": 0.1,
+      "rotationDegrees": -120.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "intake",
-      "waypointRelativePos": 0.7,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "IntakeNote"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
