@@ -93,7 +93,6 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     }
     
     public boolean inIntake() {
-        // TODO: WRITE THE BEAM BRAKE CODE
         //Valid range(?) check aka 2m or less
 
 

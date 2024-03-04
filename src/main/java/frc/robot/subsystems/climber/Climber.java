@@ -17,7 +17,7 @@ public class Climber extends SubsystemBase{
 
     // PIDController velocityFeedBackController;
     // ElevatorFeedforward velocityFeedForwardController; //Literally never gonna be used
-    private static final double kPID_TOLERANCE_METERS = 0.01; //this is 1cm 
+    private static final double kPID_TOLERANCE_METERS = 0.0008; //this is 1cm 
     private static final double kCLIMB_KG = 12;
 
     private static Climber instance = null;
@@ -25,10 +25,9 @@ public class Climber extends SubsystemBase{
 
     public Climber(ClimberIO io)  {
         Climber.io = io;
-        positionFeedBackController = new PIDController(6, 0, 0); // 0 0 0 
+        positionFeedBackController = new PIDController(53, 6, 0); // 0 0 0 
         positionFeedForwardController = new ElevatorFeedforward(0, 0, 0); //0.008 0.31 31
-        
-        
+
         positionFeedBackController.setTolerance(kPID_TOLERANCE_METERS);
 
         io.configureController(positionFeedForwardController, positionFeedBackController);

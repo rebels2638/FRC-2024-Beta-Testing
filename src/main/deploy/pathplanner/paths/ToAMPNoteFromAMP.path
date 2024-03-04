@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.65,
-        "y": 6.74
+        "x": 2.49,
+        "y": 6.9679477447399965
       },
       "prevControl": {
-        "x": 2.665649902397414,
-        "y": 6.787487688456603
+        "x": 2.505649902397414,
+        "y": 7.0154354331966
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -160.0,
+    "rotation": -140.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AMPNote",
+  "folder": "AmpNote",
   "previewStartingState": {
-    "rotation": -120.7514003057104,
+    "rotation": -120.75,
     "velocity": 0
   },
   "useDefaultConstraints": false

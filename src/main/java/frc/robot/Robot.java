@@ -13,11 +13,16 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
+import edu.wpi.first.math.geometry.Quaternion;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Utils.Constants;
 import frc.robot.commands.autoAligment.LocalADStarAK;
+import frc.robot.commands.compositions.CancelIntakeNote;
+import frc.robot.lib.swervelib.SwerveDrive;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -46,26 +51,26 @@ public class Robot extends LoggedRobot {
     switch (Constants.currentMode) {
       // Running on a real robot, log to a USB stick
       case REAL:
-        //Logger.addDataReceiver(new WPILOGWriter("/media/sda1/"));
-        Logger.addDataReceiver(new NT4Publisher());
+        // Logger.addDataReceiver(new WPILOGWriter("D:/"));
+        // Logger.addDataReceiver(new NT4Publisher());
         break;
 
       // Running a physics simulator, log to local folder
       case SIM:
         // Logger.addDataReceiver(new WPILOGWriter(logPath));
-        Logger.addDataReceiver(new NT4Publisher());
+        // Logger.addDataReceiver(new NT4Publisher());
         break;
 
       // Replaying a log, set up replay source
       case REPLAY:
         setUseTiming(false);
         String logPath = LogFileUtil.findReplayLog();
-        Logger.setReplaySource(new WPILOGReader(logPath));
-        // Logger.addDataReceiver(new NT4Publisher());
-        Logger.addDataReceiver(new WPILOGWriter(logPath));
+        // Logger.setReplaySource(new WPILOGReader(logPath));
+        // // Logger.addDataReceiver(new NT4Publisher());
+        // Logger.addDataReceiver(new WPILOGWriter(logPath));
         break;
     }
-
+    // SwerveSubsystem.getInstance().setGyro(180);
     // Logger.getInstance().disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
     Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
 
@@ -73,6 +78,8 @@ public class Robot extends LoggedRobot {
     // Instantiate our RobotContainer.  This will perform all 
     // CameraServer.startAutomaticCapture();
     m_robotContainer = RobotContainer.getInstance();
+    // SwerveSubsystem.getInstance().setGyro(180);
+
     time = new Timer();
     CommandScheduler.getInstance().enable();
 
@@ -87,6 +94,8 @@ public class Robot extends LoggedRobot {
      
      
      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    //  SwerveSubsystem.getInstance().setGyro(180);
      
      // schedule the autonomous command (example)
      if (m_autonomousCommand != null) {
@@ -116,7 +125,9 @@ public class Robot extends LoggedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   // @Override
@@ -148,6 +159,9 @@ public class Robot extends LoggedRobot {
       m_autonomousCommand.cancel();
     }
     // m_robotContainer.switchToLow();
+
+    // reset the intake at the start of teleop 
+    // new CancelIntakeNote().schedule();
   }
 
   /** This function is called periodically during operator control. */

@@ -1,23 +1,24 @@
 package frc.robot.commands.compositions;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.pivot.PivotTurtle;
-import frc.robot.commands.shooter.ShooterStop;
 
 public class CancelIntakeNote extends SequentialCommandGroup {
-    public CancelIntakeNote() {
+    public CancelIntakeNote(SequentialCommandGroup c) {
+        if(c != null){
         addCommands(
-            new ParallelRaceGroup(
-            new ParallelCommandGroup(
+            new InstantCommand(()->c.cancel()),
                 new StopIntake(),
-                new PivotTurtle(),
-                new ShooterStop()
-            ),
-            new WaitCommand(1))
+                new PivotTurtle()
         );
+        }
+        else{
+            addCommands(
+                new StopIntake(), 
+                new PivotTurtle()
+                );
+            }
     }
 }

@@ -6,6 +6,10 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,6 +22,8 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     private static final double kMotorToOutputShaftRatio = 1/80.0; 
     private static final double kSproketDiameterMeters = 0.0508;
 
+    ShuffleboardTab tab;
+
     // dont know device ID
     private TalonFX m_motor1 = new TalonFX(19); 
     private TalonFX m_motor2 = new TalonFX(20);
@@ -25,7 +31,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     private static final double kMAX_VOLTAGE = 12;
 
     private static final double kMIN_CLIMBER_HEIGHT = 0;
-    private static final double kMAX_CLIMBER_HEIGHT = 9999; //TODO: Get the limit for this
+    private static final double kMAX_CLIMBER_HEIGHT = 0.515+((4.6)/39.4); //TODO: Alt. for man. ctrl, 0.515
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
@@ -39,7 +45,9 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         m_motor1.setInverted(true);
         m_motor2.setInverted(false);
         m_motor1.setNeutralMode(NeutralModeValue.Brake);
-        m_motor2.setNeutralMode(NeutralModeValue.Brake);        
+        m_motor2.setNeutralMode(NeutralModeValue.Brake); 
+        
+        climberHeightMeters = 0; //initial zero at current position
 
     }
 
@@ -51,7 +59,10 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         climberHeightMeters = inputs.climberHeightMeters;
         currentPositionMeters = climberHeightMeters;
         inputs.reachedSetpoint = positionFeedBackController.atSetpoint();
-        inputs.goalPositionMeters = this.goalPositionMeters;
+        inputs.goalPositionMeters = this.goalPositionMeters;    
+
+        System.out.println("ClimberHeightMeters : " + climberHeightMeters);
+
     }
 
     @Override
@@ -69,15 +80,14 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         double voltageOut = feedForwardVoltage + feedBackControllerVoltage;
         voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
 
-        if ((currentPositionMeters > kMAX_CLIMBER_HEIGHT && voltageOut < 0) || 
-            (currentPositionMeters < kMIN_CLIMBER_HEIGHT && voltageOut > 0) || 
+        if ((currentPositionMeters > kMAX_CLIMBER_HEIGHT && voltageOut > 0) || 
+            (currentPositionMeters < kMIN_CLIMBER_HEIGHT && voltageOut < 0) || 
             (goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT)) {
             voltageOut = 0;
         }
-        
         // Logger.recordOutput("Climber/voltageOut", voltageOut);
-        // m_motor1.setVoltage(voltageOut);
-        // m_motor2.setVoltage(voltageOut);
+        m_motor1.setVoltage(voltageOut);
+        m_motor2.setVoltage(voltageOut);
     }
 
     public double getHeightMeters() {
@@ -90,8 +100,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
             voltage = 0;
         }
 
-        
-        Logger.recordOutput("Climber/voltageOut", voltage);
+       Logger.recordOutput("Climber/voltageOut", voltage);
 
         m_motor1.setVoltage(voltage);
         m_motor2.setVoltage(voltage);

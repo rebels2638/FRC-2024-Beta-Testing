@@ -56,7 +56,7 @@ public final class Constants
   {
 
     public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(0.4, 0, 0);
-    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(5, 0, 0);
+    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(.001, 0, 0.0002); //0.01, 0 ,0.0002
 
     public static final double MAX_SPEED = 6;
     public static final double MAX_ACCELERATION = 3;

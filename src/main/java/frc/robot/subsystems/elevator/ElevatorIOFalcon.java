@@ -45,11 +45,10 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
 
     public ElevatorIOFalcon() {
 
-        // m_motor1.clearStickyFault_BootDuringEnable();
-        // m_motor2.clearStickyFault_BootDuringEnable();
+        m_motor1.clearStickyFault_BootDuringEnable();
+        m_motor2.clearStickyFault_BootDuringEnable();
         m_motor1.setNeutralMode(NeutralModeValue.Brake);
         m_motor2.setNeutralMode(NeutralModeValue.Brake);
-        // m_motor2.Follow(m_motor1); TODO: figure this out, DOESNT WORK LOL
 
     }
 

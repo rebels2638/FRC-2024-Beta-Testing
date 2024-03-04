@@ -32,13 +32,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ToFar1FromAmp"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "FromFar1ToAmp"
+            "pathName": null
           }
         },
         {
@@ -50,13 +50,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ToAmpNoteFromAmp"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "FromAmpNoteToMid"
+            "pathName": null
           }
         },
         {

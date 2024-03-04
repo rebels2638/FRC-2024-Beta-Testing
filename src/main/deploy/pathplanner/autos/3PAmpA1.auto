@@ -40,13 +40,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToFar1FromAMP"
+                        "pathName": "ToAMPNoteFromAMP"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromFar1ToAMP"
+                        "pathName": "FromAMPNoteToAMP"
                       }
                     }
                   ]
@@ -59,6 +59,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CancelIntakeNote"
           }
         },
         {
@@ -78,13 +84,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToAMPNoteFromAMP"
+                        "pathName": "ToFar1FromAMP"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromAMPNoteToAMP"
+                        "pathName": "FromFar1ToAMP"
                       }
                     }
                   ]

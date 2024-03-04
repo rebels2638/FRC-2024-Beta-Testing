@@ -76,7 +76,7 @@ public class AbsoluteDrive extends Command
                                                          headingHorizontal.getAsDouble(),
                                                          headingVertical.getAsDouble());
 
-    // Limit velocity to prevent tippy // TODO: look at these comments
+    // Limit velocity to prevent tippy 
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
     translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
                                            Constants.LOOP_TIME, Constants.ROBOT_MASS, List.of(Constants.CHASSIS),

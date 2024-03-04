@@ -64,6 +64,12 @@
         {
           "type": "named",
           "data": {
+            "name": "CancelIntakeNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootNote"
           }
         },

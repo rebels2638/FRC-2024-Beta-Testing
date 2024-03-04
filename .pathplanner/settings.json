@@ -1,27 +1,28 @@
 {
-  "robotWidth": 0.76,
-  "robotLength": 0.76,
+  "robotWidth": 0.9137055837563453,
+  "robotLength": 0.9137055837563453,
   "holonomicMode": true,
   "pathFolders": [
-    "AMPNote",
+    "AmpNote",
     "Far1",
     "Far2",
     "Far3",
     "Far4",
     "Far5",
     "MidNote",
-    "New Folder",
+    "Old",
     "SourceNote"
   ],
   "autoFolders": [
     "2P",
     "3P",
     "4P",
-    "GoofyOnes"
+    "GoofyOnes",
+    "OldAndWorking"
   ],
-  "defaultMaxVel": 3.0,
+  "defaultMaxVel": 6.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
-  "defaultMaxAngAccel": 720.0,
+  "defaultMaxAngAccel": 360.0,
   "maxModuleSpeed": 4.5
 }

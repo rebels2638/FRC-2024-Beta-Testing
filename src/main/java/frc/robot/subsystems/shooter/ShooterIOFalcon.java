@@ -34,7 +34,7 @@ public class ShooterIOFalcon extends SubsystemBase implements ShooterIO {
         m_motor2.clearStickyFault_BootDuringEnable(); //Don't Do this unless in competition
         m_motor2.setInverted(false);
         // distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kMillimeters, Rev2mDistanceSensor.RangeProfile.kDefault);
-       //  distanceTolerance = 0.4572; //0.5 meters TODO: change this value to actually fit the distance I only put an Approximation
+       //  distanceTolerance = 0.4572; 
         // distanceSensor.setEnabled(true);
     }
 

@@ -11,7 +11,7 @@ public class MoveElevatorAMP extends Command {
     
     @Override
     public void initialize() { 
-       elevatorSubsystem.setHeightMeters(0.51); // after one increment of "y"
+       elevatorSubsystem.setHeightMeters(0.50); // after one increment of "y"
     }
 
     @Override

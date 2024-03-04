@@ -48,6 +48,12 @@
                       "data": {
                         "pathName": "FromMidNoteToMid"
                       }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0
+                      }
                     }
                   ]
                 }
@@ -59,6 +65,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CancelIntakeNote"
           }
         },
         {

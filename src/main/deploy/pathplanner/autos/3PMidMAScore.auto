@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 4.49
+      "x": 1.3,
+      "y": 5.52
     },
-    "rotation": 120.0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -34,13 +34,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToSourceNoteFromSource"
+                        "pathName": "ToMidNoteFromMid"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromSourceNoteToSource"
+                        "pathName": "FromMidNoteToMid"
                       }
                     }
                   ]
@@ -54,10 +54,42 @@
           "data": {
             "name": "ShootNote"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterStop"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToAMPNoteFromMid"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         }
       ]
     }
   },
-  "folder": "2P",
+  "folder": "3P",
   "choreoAuto": false
 }

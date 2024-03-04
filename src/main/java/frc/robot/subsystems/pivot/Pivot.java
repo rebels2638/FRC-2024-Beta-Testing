@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pivot extends SubsystemBase{
 
-    private static final double kRadPositionTolerance = Math.toRadians(4);
+    private static final double kRadPositionTolerance = Math.toRadians(8);
 
     private static PivotIO io;
     private final PivotIOInputsAutoLogged inputs = new PivotIOInputsAutoLogged();
@@ -24,7 +24,7 @@ public class Pivot extends SubsystemBase{
     public Pivot(PivotIO io)  {
         Pivot.io = io;
         positionFeedBackController = new PIDController(3, 0, 0);
-        positionFeedForwardController = new ArmFeedforward(0.0,-.4, 6); // 8
+        positionFeedForwardController = new ArmFeedforward(0.0,-0.4, 6); // 8
         positionFeedBackController.setTolerance(kRadPositionTolerance);
 
         velocityFeedBackController = new PIDController(0, 0, 0);

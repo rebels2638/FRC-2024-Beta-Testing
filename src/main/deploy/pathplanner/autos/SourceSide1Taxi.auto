@@ -2,31 +2,31 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7504864129176964,
-      "y": 4.481405256838079
+      "x": 0.71,
+      "y": 4.37
     },
-    "rotation": -60.0
+    "rotation": 120.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": null
+            "name": "ShootNote"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "MoveElevatorAMP"
+            "name": "ShooterStop"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "TaxiOutSourceStart"
           }
         }
       ]

@@ -3,38 +3,48 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3005979086921784,
-        "y": 5.524499726219249
+        "x": 1.35,
+        "y": 5.52
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6034059591772754,
-        "y": 6.766599413839294
+        "x": 1.35,
+        "y": 5.619999999999999
       },
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": "Mid"
     },
     {
       "anchor": {
-        "x": 2.65,
-        "y": 6.74
+        "x": 1.9,
+        "y": 6.9679477447399965
       },
       "prevControl": {
-        "x": 1.9195246252937916,
-        "y": 6.066094850333806
+        "x": 1.7999999999999998,
+        "y": 6.9679477447399965
+      },
+      "nextControl": {
+        "x": 2.0,
+        "y": 6.9679477447399965
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.4851032868970147,
+        "y": 6.9679477447399965
+      },
+      "prevControl": {
+        "x": 2.478102259010577,
+        "y": 6.9679477447399965
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": "StartAMPAMPNote"
+      "isLocked": true,
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": -137.31702550138652,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,11 +55,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -139.38,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AMPNote",
+  "folder": "AmpNote",
   "previewStartingState": {
     "rotation": 178.92402620035944,
     "velocity": 0

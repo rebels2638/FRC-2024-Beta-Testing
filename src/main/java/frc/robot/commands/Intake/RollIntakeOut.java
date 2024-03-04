@@ -13,7 +13,7 @@ public class RollIntakeOut extends Command {
 
     @Override
     public void initialize() { 
-        intakeSubsystem.setVelocityRadSec(Math.toRadians(-90)); //Use radians directly.
+        intakeSubsystem.setVelocityRadSec(Math.toRadians(-80)); //Use radians directly.
     }
     
     @Override
@@ -23,8 +23,7 @@ public class RollIntakeOut extends Command {
 
     @Override
     public boolean isFinished() {
-        //return !intakeSubsystem.inIntake();
-        return false;
+        return true;
 
     }
 }

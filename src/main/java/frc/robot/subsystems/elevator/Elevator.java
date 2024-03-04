@@ -24,7 +24,7 @@ public class Elevator extends SubsystemBase{
         Elevator.io = io;
         positionFeedBackController = new PIDController(12, 0, 0); // 12, 2, 0
         positionFeedForwardController = new ElevatorFeedforward(0.13, 0.06, 0.2); //0.33, 0.14, 0 
-        climbFeedForwardController = new ElevatorFeedforward(0,0,0); //TODO: Tune later, use the raw elevator control or a setVoltage initially to give Build team measurements.
+        climbFeedForwardController = new ElevatorFeedforward(0,0,0); 
         
         
         positionFeedBackController.setTolerance(kPID_TOLERANCE_METERS);

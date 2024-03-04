@@ -13,9 +13,11 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
@@ -31,6 +33,7 @@ import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 // import frc.robot.subsystems.limelight.PoseLimelight;
 import frc.robot.subsystems.poseLimelight.PoseLimelight;
+import frc.robot.subsystems.shooter.Shooter;
 
 
 public class SwerveSubsystem extends SubsystemBase
@@ -39,6 +42,7 @@ public class SwerveSubsystem extends SubsystemBase
    * Swerve drive object.
    */
   private final SwerveDrive swerveDrive;
+  private static SwerveSubsystem instance;
   
   //AprilTagVision aprilTagVision;
 
@@ -56,16 +60,16 @@ public class SwerveSubsystem extends SubsystemBase
    */
   //private static final SimpleMotorFeedforward FEEDFORWARD = new SimpleMotorFeedforward(0.16026, 0.0023745, 2.774E-05);
 
-  private PoseLimelight poseLimelightSubsystem;
+  // private PoseLimelight poseLimelightSubsystem;
   private SwerveSubsystemIO io;
   private SwerveSubsystemIOInputsAutoLogged inputs = new SwerveSubsystemIOInputsAutoLogged();
 
   private static final PIDController translationPIDController = new PIDController(0.000, 0, 0);
 
-  public SwerveSubsystem(File directory, PoseLimelight poseLimelightSubsystem) {
+  public SwerveSubsystem(File directory /*, PoseLimelight poseLimelightSubsystem */) {
     
     translationPIDController.setTolerance(0.06);
-    this.poseLimelightSubsystem = poseLimelightSubsystem;
+    // this.poseLimelightSubsystem = poseLimelightSubsystem;
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
@@ -135,9 +139,9 @@ public class SwerveSubsystem extends SubsystemBase
 
     swerveDrive.updateOdometry();
 
-    if (poseLimelightSubsystem.hasValidTargets()) {
-      swerveDrive.addVisionMeasurement(poseLimelightSubsystem.getEstimatedRobotPose(), poseLimelightSubsystem.getTimestampSeconds());
-    }
+    // if (poseLimelightSubsystem.hasValidTargets()) {
+    //   swerveDrive.addVisionMeasurement(poseLimelightSubsystem.getEstimatedRobotPose(), poseLimelightSubsystem.getTimestampSeconds());
+    // }
 
     
     //log all tlemetry to a log file
@@ -197,6 +201,9 @@ public class SwerveSubsystem extends SubsystemBase
   {
     swerveDrive.zeroGyro();
   }
+  // public void setGyro(double angle){
+  //   swerveDrive.setGyro(new Rotation3d(0, 0, Math.toRadians(180)));
+  // }
 
   /**
    * Gets the current yaw angle of the robot, as reported by the imu.  CCW positive, not wrapped.
@@ -394,4 +401,16 @@ public class SwerveSubsystem extends SubsystemBase
   public SwerveDrive getSwerveDrive() {
     return swerveDrive;
   }
-}
+  public static SwerveSubsystem getInstance(){
+    if(instance == null){
+      SwerveSubsystem swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* ,visionSubsystem*/);
+        swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
+        instance = swerveSubsystem;
+    }
+    return instance;
+  }
+  public static SwerveSubsystem setInstance(SwerveSubsystem inst){
+        SwerveSubsystem.instance = inst;
+        return SwerveSubsystem.instance;
+    }
+  }

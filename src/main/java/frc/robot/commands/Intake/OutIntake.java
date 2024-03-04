@@ -11,6 +11,7 @@ public class OutIntake extends Command{
     
     @Override
     public void execute(){
+        // System.out.println("Out intake : " + !isIn);
         isIn = intakeNeo.inIntake();
     }
     

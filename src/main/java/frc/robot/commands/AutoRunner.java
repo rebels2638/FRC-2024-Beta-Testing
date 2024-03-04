@@ -42,8 +42,8 @@ public class AutoRunner {
     private static final HashMap<String, Command> EVENT_MAP = new HashMap<>();
     // private static PathPlannerAuto pathPlanner = new PathPlannerAuto();
     // private static PPSwerveControllerCommand scc;
-    private static HolonomicDriveController hdc = new HolonomicDriveController(
-        new PIDController(0.1, 0, 0), new PIDController(.1, 0, 0), new ProfiledPIDController(0.1, 0, 0,new Constraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION)));
+    // private static HolonomicDriveController hdc = new HolonomicDriveController(
+    //   new PIDController(0.1, 0, 0), new PIDController(.1, 0, 0), new ProfiledPIDController(0.1, 0, 0,new Constraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION)));
     private static List<com.pathplanner.lib.path.PathPlannerTrajectory> pathList;
     private static PathPlannerPath path;
     private static PathfindThenFollowPathHolonomic pathCommand;
@@ -52,9 +52,6 @@ public class AutoRunner {
     static {
         PATH_CHOSEN_TO_NAME_HASH_MAP.put("3PMidTop", "3PMidTop");
         PATH_CHOSEN_TO_NAME_HASH_MAP.put("3PMidMA", "3PMidMA");
-
-
-
     }
     
     public AutoRunner (SwerveSubsystem swerveSubsystem) {
@@ -63,8 +60,8 @@ public class AutoRunner {
         PATH_CHOSEN_TO_NAME_HASH_MAP.forEach((pathName, pathFile) -> pathChooser.addOption(pathName, pathFile));
 
         Shuffleboard.getTab("Auto").add("Path Chooser", pathChooser);
-        Shuffleboard.getTab("Auto").add("Update Selected Command Output", 
-            new InstantCommand( () -> loadPath()));
+        // Shuffleboard.getTab("Auto").add("Update Selected Command Output", 
+        //     new InstantCommand( () -> loadPath()));
         
         AutoBuilder.configureHolonomic(
                 // visionSubsystem::getBotPose2d,
@@ -99,7 +96,8 @@ public class AutoRunner {
         Shuffleboard.getTab("Auto").add("Selected Path", pathChosen);
     }
 
-    public Command getAutonomousCommand() {
-    return new PathPlannerAuto("3PMidMA");
+    public Command getAutonomousCommand() { 
+        //TODO:!! HERE CHANGE THIS 
+    return new PathPlannerAuto("SourceSide1Taxi");
     }
 } 

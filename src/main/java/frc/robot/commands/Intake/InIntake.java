@@ -16,6 +16,9 @@ public class InIntake extends Command{
     
     @Override
     public void end(boolean isInterrupted){
+        if(isInterrupted){
+            isIn = true;
+        }
         return;
     }
     

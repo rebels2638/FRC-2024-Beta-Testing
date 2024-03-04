@@ -11,7 +11,8 @@ public class MoveClimberUp extends Command {
     
     @Override
     public void initialize() { 
-       climberSubsystem.setHeightMeters(0.10);
+    
+       climberSubsystem.setHeightMeters(0.515);
     }
     
     @Override

@@ -12,7 +12,7 @@ public class ShooterHold extends Command {
 
     @Override
     public void initialize(){
-        shooterSubsystem.setVelocityRadSec(5);
+        shooterSubsystem.setVelocityRadSec(4);
     }
 
     @Override
