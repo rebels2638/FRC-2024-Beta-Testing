@@ -2,6 +2,7 @@ package frc.robot.commands.compositions;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Intake.RollIntakeEject;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.pivot.PivotTurtle;
 
@@ -19,6 +20,6 @@ public class CancelIntakeNote extends SequentialCommandGroup {
                 new StopIntake(), 
                 new PivotTurtle()
                 );
-            }
+        }
     }
 }

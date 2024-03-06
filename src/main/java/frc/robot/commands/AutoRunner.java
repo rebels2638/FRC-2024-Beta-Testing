@@ -73,13 +73,13 @@ public class AutoRunner {
                         Constants.Auton.TRANSLATION_PID_CONFIG, // Translation PID constants
                         Constants.Auton.ANGLE_PID_CONFIG, // Rotation PID constants
                         Constants.Auton.MAX_SPEED, // Max module speed, in m/s
-                        .4, // Drive base radius in meters. Distance from robot center to furthest module.
+                        0.5384061785684372, // Drive base radius in meters. Distance from robot center to furthest module.
                         new ReplanningConfig() // Default path replanning config. See the API for the options here
                 ),
                 () -> {
                     // Boolean supplier that controls when the path will be mirrored for the red alliance
                     // This will flip the path being followed to the red side of the field.
-                    // THE ORIGIN WILL REMAwIN ON THE BLUE SIDE
+                    // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
                     var alliance = DriverStation.getAlliance();
                     if (alliance.isPresent()) {

@@ -10,6 +10,7 @@ import java.io.File;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.commands.drivetrain.AbsoluteFieldDrive;
+import frc.robot.commands.drivetrain.TurnCommand;
 import frc.robot.commands.elevator.MoveElevatorAMP;
 import frc.robot.commands.elevator.MoveElevatorToggle;
 import frc.robot.commands.elevator.MoveElevatorTurtle;
@@ -76,7 +77,7 @@ import frc.robot.subsystems.pivot.PivotIONeo;
 import frc.robot.subsystems.pivot.PivotIOSim;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIO;
-import frc.robot.subsystems.shooter.ShooterIOFalcon;
+import frc.robot.subsystems.shooter.ShooterIONeo;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
@@ -152,7 +153,7 @@ public class RobotContainer {
         break;
         
       default:
-        shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIOFalcon()));
+        shooterSubsystem = Shooter.setInstance(new Shooter(new ShooterIONeo()));
         intakeSubsystem = Intake.setInstance(new Intake(new IntakeIONeo()));
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOFalcon()));
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIONeo()));
@@ -196,7 +197,7 @@ public class RobotContainer {
 
     // // xboxTester.getXButton().onTrue(new PivotTurtle());
     xboxTester.getXButton().onTrue(new MoveClimberUp());
-    xboxTester.getAButton().onTrue(new MoveClimberDown());
+    // xboxTester.getAButton().whileTrue(new TurnCommand(swerveSubsystem));
     xboxTester.getLeftMiddleButton().onTrue(new Climb());
     // // xboxTester.getRightMiddleButton().onTrue(new Thing6());
     xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
@@ -205,6 +206,7 @@ public class RobotContainer {
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
+    this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
     this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake));
     this.xboxDriver.getYButton().onTrue(new Climb());
     this.xboxDriver.getBButton().onTrue(new MoveClimberUp());

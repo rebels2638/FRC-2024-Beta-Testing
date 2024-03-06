@@ -16,9 +16,7 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ArmFeedforward positionFeedForwardController = new ArmFeedforward(0, 0, 0);
-    private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
-    private ArmFeedforward velocityFeedForwardController = new ArmFeedforward(0, 0, 0);
-    private static final double kMAX_POSITION_RAD = Math.toRadians(98);
+    private static final double kMAX_POSITION_RAD = Math.toRadians(91);
     private static final double kMIN_POSITION_RAD = Math.toRadians(-1);
     private static final double kMAX_VOLTAGE = 12;
     private static double currentRadAngle;
@@ -86,24 +84,24 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
         m_motor.setVoltage(voltageOut);
     } 
 
-    @Override
-    // sould be called periodically
-    public void setVelocity(double goalVelocityRadPerSec) {
-        double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, 0);
+    // @Override
+    // // sould be called periodically
+    // public void setVelocity(double goalVelocityRadPerSec) {
+    //     double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, 0);
         
-        velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
-        double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
-        double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
-        if (outVoltage > kMAX_VOLTAGE) {
-            outVoltage = 12;
-        }
-        else if (outVoltage < -kMAX_VOLTAGE) {
-            outVoltage = -12;
-        }
-        //Logger.recordOutput("Pivot/voltageOut", outVoltage);
-        m_motor.setVoltage(outVoltage);
+    //     velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
+    //     double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
+    //     double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+    //     if (outVoltage > kMAX_VOLTAGE) {
+    //         outVoltage = 12;
+    //     }
+    //     else if (outVoltage < -kMAX_VOLTAGE) {
+    //         outVoltage = -12;
+    //     }
+    //     //Logger.recordOutput("Pivot/voltageOut", outVoltage);
+    //     m_motor.setVoltage(outVoltage);
 
-    } 
+    // } 
 
     public void setVoltage(double voltage){
         if ((currentRadAngle > kMAX_POSITION_RAD && voltage > 0)|| (currentRadAngle < kMIN_POSITION_RAD && voltage < 0)) {
@@ -116,20 +114,13 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
     }
 
     @Override
-    public void configureController(ArmFeedforward pff, PIDController pfb, 
-                                        ArmFeedforward vff, PIDController vfb ) {
+    public void configureController(ArmFeedforward pff, PIDController pfb) {
         positionFeedBackController = pfb;
         positionFeedForwardController = pff;
-        velocityFeedBackController = vfb;
-        velocityFeedForwardController = vff;
     }
 
     private boolean reachedSetpoint(boolean isPositionalControl) {
-        if (isPositionalControl) {
-            return positionFeedBackController.atSetpoint();
-        } else{
-        return velocityFeedBackController.atSetpoint();
-        }
+        return positionFeedBackController.atSetpoint();
     }
 
     @Override

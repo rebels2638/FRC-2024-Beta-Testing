@@ -61,7 +61,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         inputs.reachedSetpoint = positionFeedBackController.atSetpoint();
         inputs.goalPositionMeters = this.goalPositionMeters;    
 
-        System.out.println("ClimberHeightMeters : " + climberHeightMeters);
+        // System.out.println("ClimberHeightMeters : " + climberHeightMeters);
 
     }
 

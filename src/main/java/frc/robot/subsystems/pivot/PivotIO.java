@@ -21,8 +21,8 @@ public interface PivotIO {
 
     public default void setVelocity(double goalVelocityRadPerSec) {}
 
-    public default void configureController(ArmFeedforward pff, PIDController pfb, 
-                                                    ArmFeedforward vff, PIDController vfb) {}
+    public default void configureController(ArmFeedforward pff, PIDController pfb) {}
+    
     public default void setVoltage(double voltage) {}
 
     public default void zeroAngle() {}

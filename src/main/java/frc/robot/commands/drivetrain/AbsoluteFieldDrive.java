@@ -106,12 +106,10 @@ public class AbsoluteFieldDrive extends Command
   @Override
   public boolean isFinished()
   {
-    return false;
+    return true;
   }
 
   public void toggleRotationMode() {
       resetRotation = !resetRotation;
   }
-
-
 }

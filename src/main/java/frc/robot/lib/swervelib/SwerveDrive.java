@@ -176,7 +176,7 @@ public class SwerveDrive
     zeroGyro(); //Commented out whilst testing auto init zeroing
     // setGyro(new Rotation3d(new Quaternion(0,0,0,180))); //Middle TODO: This changes
     // setGyro(new Rotation3d(new Quaternion(0,0,0, 150))); //Amp Side
-    setGyro(new Rotation3d(new Quaternion(0,0,0, -150))); //Not Amp side
+    // setGyro(new Rotation3d(new Quaternion(0,0,0, -150))); //Not Amp side
     // setGyro(new Rotation3d(new Quaternion(0,0,,0))); //No Offset
     setMaximumSpeed(maxSpeedMPS);
 

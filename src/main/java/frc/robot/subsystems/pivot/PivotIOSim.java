@@ -50,8 +50,7 @@ public class PivotIOSim extends SubsystemBase implements PivotIO {
     }
 
     @Override
-    public void configureController(ArmFeedforward pff, PIDController pfb, 
-                                        ArmFeedforward vff, PIDController vfb ) {
+    public void configureController(ArmFeedforward pff, PIDController pfb ) {
     }
 
     @Override

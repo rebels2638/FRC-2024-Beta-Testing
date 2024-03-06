@@ -9,13 +9,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pivot extends SubsystemBase{
 
-    private static final double kRadPositionTolerance = Math.toRadians(8);
+    private static final double kRadPositionTolerance = Math.toRadians(4);
 
     private static PivotIO io;
     private final PivotIOInputsAutoLogged inputs = new PivotIOInputsAutoLogged();
     private boolean velocityControlmode;
-    PIDController positionFeedBackController;
-    ArmFeedforward positionFeedForwardController;
+
+    PIDController upPositionFeedBackController;
+    PIDController downPositionFeedBackController;
+
+    ArmFeedforward downPositionFeedForwardController;
+    ArmFeedforward upPositionFeedForwardController;
+
     private static Pivot instance = null;
 
     PIDController velocityFeedBackController;
@@ -23,19 +28,25 @@ public class Pivot extends SubsystemBase{
     double desiredDegAngle = 0;
     public Pivot(PivotIO io)  {
         Pivot.io = io;
-        positionFeedBackController = new PIDController(3, 0, 0);
-        positionFeedForwardController = new ArmFeedforward(0.0,-0.4, 6); // 8
-        positionFeedBackController.setTolerance(kRadPositionTolerance);
+        upPositionFeedBackController = new PIDController(2, 0, 0.1);
+        upPositionFeedBackController.setTolerance(kRadPositionTolerance);
+        upPositionFeedForwardController = new ArmFeedforward(0.0,0, 6); // 8
 
-        velocityFeedBackController = new PIDController(0, 0, 0);
-        velocityFeedForwardController = new ArmFeedforward(0, 0, 0);
+        downPositionFeedBackController = new PIDController(7, 0, 0);
+        downPositionFeedBackController.setTolerance(kRadPositionTolerance);
+        downPositionFeedForwardController = new ArmFeedforward(0,0, 3); // 8
 
-        io.configureController(positionFeedForwardController, positionFeedBackController,
-            velocityFeedForwardController, velocityFeedBackController);
+        io.configureController(downPositionFeedForwardController, downPositionFeedBackController);
     }
 
     @Override
     public void periodic() {
+        if (desiredDegAngle > 45) {
+            io.configureController(downPositionFeedForwardController, downPositionFeedBackController);
+        }
+        else if (desiredDegAngle < 45) {
+            io.configureController(upPositionFeedForwardController, upPositionFeedBackController);
+        }
         io.updateInputs(inputs);
         Logger.processInputs("Pivot", inputs);
 
