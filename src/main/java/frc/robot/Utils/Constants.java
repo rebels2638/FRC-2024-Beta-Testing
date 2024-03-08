@@ -55,12 +55,12 @@ public final class Constants
   public static final class Auton
   {
 
-    public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(0, 0, 0);
-    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(0, 0, 0.0); //0.01, 0 ,0.0002
+    public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(7, 0, 0.002);
+    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(10, 0, 0.001); //0.01, 0 ,0.0002
 
     public static final double MAX_SPEED = 6;
     public static final double MAX_ACCELERATION = 3;
-    public static final double MAX_ANGULAR_VELO_RPS = 1.5;
+    public static final double MAX_ANGULAR_VELO_RPS = 2;
     public static final double MAX_ANGULAR_ACCEL_RPS_SQUARED = 1;
 
     public static final HolonomicPathFollowerConfig DRIVE_CONTROLLER_CONFIG = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class

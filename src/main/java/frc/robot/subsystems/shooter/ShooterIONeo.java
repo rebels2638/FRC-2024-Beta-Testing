@@ -14,6 +14,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils.RebelUtil;
 
+import com.revrobotics.jni.VL53L0XJNI;
+
 public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private static final double kMotorToOutputShaftRatio = 1; //Last Checked 2/6/2024
     private double wheelVelo = 0.0;
@@ -28,7 +30,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
     private static final double kMAX_VOLTAGE = 12;
 
-    private final Rev2mDistanceSensor distanceSensor;
+    // private final Rev2mDistanceSensor distanceSensor;
 
     public ShooterIONeo() {
         m_motor1.clearFaults();
@@ -38,9 +40,12 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         m_motor2.setInverted(false); // TODO: check inversions.. def wrong
         // m_motor2.follow(m_motor1);
 
-        distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kMillimeters, Rev2mDistanceSensor.RangeProfile.kDefault);
-         distanceTolerance = 0.4572; 
-        distanceSensor.setEnabled(true);
+        // distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kInches, Rev2mDistanceSensor.RangeProfile.kDefault);
+        // VL53L0XJNI.SetDeviceMode(0, 1, 0x32);
+
+        // distanceTolerance = 17.4572; 
+        // distanceSensor.setAutomaticMode(true);
+        // distanceSensor.setEnabled(true);
     }
 
     @Override
@@ -92,15 +97,15 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     }
 
     private boolean isInShooter(){
-        if(distanceSensor.isRangeValid()){
-            //distanceSensor.setMeasurementPeriod();
-            //Using default measurementperiod, we get its range at that moment.
-            if(distanceSensor.getRange(Rev2mDistanceSensor.Unit.kMillimeters) < distanceTolerance){
-                return true;
-            }
-            return false;
-        }
-        // System.out.println("Out of range");
+        // if(distanceSensor.isRangeValid()){
+        //     //distanceSensor.setMeasurementPeriod();
+        //     //Using default measurementperiod, we get its range at that moment.
+        //     if(distanceSensor.getRange(Rev2mDistanceSensor.Unit.kMillimeters) < distanceTolerance){
+        //         return true;
+        //     }
+        //     return false;
+        // }
+        // // System.out.println("Out of range");
         return false;
     }
 

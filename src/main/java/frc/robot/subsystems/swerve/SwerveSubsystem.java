@@ -226,7 +226,8 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, double headingX, double headingY)
   {
-    return swerveDrive.swerveController.getTargetSpeeds(xInput, yInput, headingX, headingY, getYaw().getRadians());
+    double angle = Math.atan2(headingY, headingX);
+    return swerveDrive.swerveController.getTargetSpeeds(xInput, yInput, angle, getYaw().getRadians(), Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC);
   }
 
   /**

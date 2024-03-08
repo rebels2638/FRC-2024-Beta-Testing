@@ -98,6 +98,6 @@ public class AutoRunner {
 
     public Command getAutonomousCommand() { 
         //TODO:!! HERE CHANGE THIS 
-    return new PathPlannerAuto("SourceSide1Taxi");
+    return new PathPlannerAuto("TestRotate");
     }
 } 
