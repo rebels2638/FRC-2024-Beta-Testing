@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 
 import java.io.File;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -166,6 +168,7 @@ public class RobotContainer {
 
         break;
     }
+    // swerveSubsystem.resetOdometry(new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
 
     autoRunner = new AutoRunner(swerveSubsystem);
 
@@ -209,8 +212,8 @@ public class RobotContainer {
     this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
     this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake));
     this.xboxDriver.getYButton().onTrue(new Climb());
-    this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
-    this.xboxDriver.getAButton().onTrue(new MoveClimberDown());
+   //  this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
+    // this.xboxDriver.getAButton().onTrue(new MoveClimberDown());
 
     // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());
     // this.xboxDriver.getRightMiddleButton().onTrue(new PivotTurtle());
@@ -223,7 +226,7 @@ public class RobotContainer {
     this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
     
-    Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    // Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
 
   }
 

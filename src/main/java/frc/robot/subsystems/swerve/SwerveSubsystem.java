@@ -17,6 +17,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -68,7 +69,7 @@ public class SwerveSubsystem extends SubsystemBase
 
   public SwerveSubsystem(File directory /*, PoseLimelight poseLimelightSubsystem */) {
     
-    translationPIDController.setTolerance(0.06);
+    // translationPIDController.setTolerance(0.06);
     // this.poseLimelightSubsystem = poseLimelightSubsystem;
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -82,7 +83,7 @@ public class SwerveSubsystem extends SubsystemBase
 
     swerveDrive.setMotorIdleMode(true);
     swerveDrive.chassisVelocityCorrection = true;
-    swerveDrive.setHeadingCorrection(true, 0.0);
+    swerveDrive.setHeadingCorrection(true, 0);
     swerveDrive.replaceSwerveModuleFeedforward(new SimpleMotorFeedforward(0, 0,  0)); //0.16, 1.92, 0.1
   }
 
@@ -172,6 +173,16 @@ public class SwerveSubsystem extends SubsystemBase
   public void resetOdometry(Pose2d initialHolonomicPose)
   {
     swerveDrive.resetOdometry(initialHolonomicPose);
+  }
+  public void resetOdometryAuto(Pose2d i){
+    Rotation2d yaw = i.getRotation();
+    var alliance = DriverStation.getAlliance();
+
+    if(alliance.get() == DriverStation.Alliance.Red){
+      yaw = yaw.plus(new Rotation2d(Math.PI));
+    }
+    Pose2d balls = new Pose2d(i.getTranslation(), yaw); 
+    swerveDrive.resetOdometry(balls);
   }
 
   /**

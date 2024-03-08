@@ -13,6 +13,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.Timer;
@@ -89,9 +90,12 @@ public class Robot extends LoggedRobot {
    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
    @Override
    public void autonomousInit() {
+
      time.reset();
      time.start();
      
+     Pose2d currentPose = SwerveSubsystem.getInstance().getPose();
+     SwerveSubsystem.getInstance().resetOdometry(currentPose);
      
      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -129,20 +133,6 @@ public class Robot extends LoggedRobot {
 
   }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
-  // @Override
-  // public void autonomousInit() {
-  //   time.reset();
-  //   time.start();
-    
-  //   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-  //   // m_robotContainer.prepareForAuto();
-    
-  //   // schedule the autonomous command (example)
-  //   if (m_autonomousCommand != null) {
-  //     m_autonomousCommand.schedule();
-  //   }
-  // }
 
   /** This function is called periodically during autonomous. */
   @Override

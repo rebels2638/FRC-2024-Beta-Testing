@@ -66,7 +66,7 @@ public class AutoRunner {
         AutoBuilder.configureHolonomic(
                 // visionSubsystem::getBotPose2d,
                 swerveSubsystem::getPose, // Robot pose supplier
-                swerveSubsystem::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+                swerveSubsystem::resetOdometryAuto, // Method to reset odometry (will be called if your auto has a starting pose)
                 swerveSubsystem::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
                 swerveSubsystem::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
                 new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
@@ -85,7 +85,7 @@ public class AutoRunner {
                     if (alliance.isPresent()) {
                         return alliance.get() == DriverStation.Alliance.Red;
                     }
-                    return false;
+                    return true;
                 },
                 swerveSubsystem // Reference to this subsystem to set requirements
         ); 

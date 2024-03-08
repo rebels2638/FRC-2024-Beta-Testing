@@ -28,6 +28,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import javax.management.relation.RoleResult;
+
 import frc.robot.lib.swervelib.encoders.CANCoderSwerve;
 import frc.robot.lib.swervelib.imu.Pigeon2Swerve;
 import frc.robot.lib.swervelib.imu.SwerveIMU;
@@ -40,6 +43,7 @@ import frc.robot.lib.swervelib.telemetry.Alert;
 import frc.robot.lib.swervelib.telemetry.Alert.AlertType;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 /**
  * Swerve Drive class representing and controlling the swerve drive.
@@ -173,7 +177,7 @@ public class SwerveDrive
             new Pose2d(new Translation2d(0, 0),
                        Rotation2d.fromDegrees(0))); // x,y,heading in radians; Vision measurement std dev, higher=less weight
 
-    zeroGyro(); //Commented out whilst testing auto init zeroing
+    // zeroGyro(); //Commented out whilst testing auto init zeroing
     // setGyro(new Rotation3d(new Quaternion(0,0,0,180))); //Middle TODO: This changes
     // setGyro(new Rotation3d(new Quaternion(0,0,0, 150))); //Amp Side
     // setGyro(new Rotation3d(new Quaternion(0,0,0, -150))); //Not Amp side
@@ -1061,7 +1065,7 @@ public class SwerveDrive
 //                                    robotPose.getRotation());
     odometryLock.unlock();
 
- setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
+//  setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
 //    resetOdometry(newOdometry);
   }
 
