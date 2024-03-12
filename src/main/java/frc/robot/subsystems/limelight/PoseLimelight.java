@@ -93,14 +93,14 @@
 //     public static PoseLimelight setInstance(PoseLimelight p) {
 //         PoseLimelight.instance = p;
 //         return p;
-//     }
+//     }how 
 
-//     public static PoseLimelight getInstance(){
-//         if (PoseLimelight.instance == null){
-//             return new PoseLimelight(PoseLimelight.io);
-//         }
-//         return instance;
+// public static PoseLimelight getInstance(){
+//     if (PoseLimelight.instance == null){
+//         instance = new PoseLimelight(PoseLimelight.io);
 //     }
+//     return instance;
+// }
 
 //     public Pose2d getBotPose2d() {
 //         if (alliance.isPresent()) {

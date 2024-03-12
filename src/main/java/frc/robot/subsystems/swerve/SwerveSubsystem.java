@@ -176,11 +176,10 @@ public class SwerveSubsystem extends SubsystemBase
   }
   public void resetOdometryAuto(Pose2d i){
     Rotation2d yaw = i.getRotation();
-    var alliance = DriverStation.getAlliance();
-
-    if(alliance.get() == DriverStation.Alliance.Red){
-      yaw = yaw.plus(new Rotation2d(Math.PI));
-    }
+    var alliance = DriverStation.getAlliance(); 
+    // if(alliance.get() == DriverStation.Alliance.Red){
+    //   yaw = yaw.plus(new Rotation2d(Math.PI));
+    // }
     Pose2d balls = new Pose2d(i.getTranslation(), yaw); 
     swerveDrive.resetOdometry(balls);
   }

@@ -46,7 +46,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromMidNoteToMid"
+                        "pathName": "FromAMPNoteToMidTurn"
                       }
                     }
                   ]
@@ -58,7 +58,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.8
           }
         },
         {
@@ -84,13 +84,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToAMPNoteFromMidTrans"
+                        "pathName": "ToAMPNoteFromMidTurn"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromAMPNoteToMid"
+                        "pathName": "ToAMPNoteFromMidTurn"
                       }
                     }
                   ]

@@ -7,8 +7,13 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.vision.VisionThread;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
 
 import java.io.File;
+import java.util.Map;
+
 import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.commands.drivetrain.AbsoluteFieldDrive;
@@ -108,15 +113,21 @@ public class RobotContainer {
   
   private final Intake intakeSubsystem;
   private final Shooter shooterSubsystem;
-  // private final PoseLimelight visionSubsystem;
+  private final PoseLimelight visionSubsystem;
   private final AutoRunner autoRunner;
 
   private final Elevator elevatorSubsystem;
   private final Pivot pivotSubsystem;
   private final Climber climberSubsystem;
 
-  public RobotContainer() {
+  private HttpCamera limelightFeed;
 
+  public RobotContainer() {
+    limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
+Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
+
+
+    // CameraServer.startAutomaaticCapture();
     // setInstances();
     // Instantiate our controllers with proper ports.
     this.xboxTester = new XboxController(1);
@@ -134,7 +145,8 @@ public class RobotContainer {
         elevatorSubsystem = Elevator.setInstance(new Elevator(new ElevatorIOSim()));
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIOSim())); 
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIOSim()));
-        // visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
+
+        visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon") /*, visionSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
@@ -148,7 +160,7 @@ public class RobotContainer {
         
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIO(){}));
 
-        // visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
+        visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* ,visionSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
 
@@ -161,15 +173,14 @@ public class RobotContainer {
         pivotSubsystem = Pivot.setInstance(new Pivot(new PivotIONeo()));
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIOFalcon()));
 
-        // visionSubsystem = new PoseLimelight(new PoseLimelightIOReal());
+        visionSubsystem = new PoseLimelight(new PoseLimelightIOReal());
         swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* , visionSubsystem*/);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
         swerveSubsystem = SwerveSubsystem.setInstance(swerveSubsystem);
 
         break;
     }
-    // swerveSubsystem.resetOdometry(new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
-
+    
     autoRunner = new AutoRunner(swerveSubsystem);
 
     SequentialCommandGroup intake;
@@ -221,9 +232,9 @@ public class RobotContainer {
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
     this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
     this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
-    this.xboxOperator.getYButton().onTrue(new ScoreAMP());
+    this.xboxOperator.getYButton().onTrue(new ScoreAMP()); // changed
     this.xboxOperator.getAButton().onTrue(new RollIntakeIn()); // change back to shootNoteTele
-    this.xboxOperator.getBButton().onTrue(new FeedAndHoldNote());
+    this.xboxOperator.getBButton().onTrue(new SequentialCommandGroup(new CancelIntakeNote(intake), new FeedAndHoldNote()));
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
     
     // Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
@@ -252,7 +263,7 @@ public class RobotContainer {
   }
 
   public void prepareForAuto() {
-    
+    //Do nothing
   }
 
 

@@ -43,19 +43,18 @@ public final class Constants
     /** Replaying from a log file. */
     REPLAY
   }
-
   public static final double ROBOT_MASS = (60) * 0.453592; // 32lbs * kg per pound
   public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(0)), ROBOT_MASS);
   public static final double LOOP_TIME  = 0.2; //s, 20ms + 110ms sprk max velocity lag
 
   public static final class Telop {
-    public static final double MAX_SPEED_METERS_PER_SEC = 1;
+    public static final double MAX_SPEED_METERS_PER_SEC = 6;
     //public static final double MAX_ROT 
   }
   public static final class Auton
   {
 
-    public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(7, 0, 0.002);
+    public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(7.2, 0, 0.002);
     public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(10, 0, 0.001); //0.01, 0 ,0.0002
 
     public static final double MAX_SPEED = 6;
@@ -77,9 +76,9 @@ public final class Constants
   {
 
     // Hold time on motor brakes when disabled
-    public static final double WHEEL_LOCK_TIME = 3; // seconds
-    public static final double MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC = 6;
-    public static final double MAX_DEG_SEC_ROTATIONAL_VELOCITY = 360;
+    public static final double WHEEL_LOCK_TIME = 1; // seconds
+    public static final double MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC = 9;
+    public static final double MAX_DEG_SEC_ROTATIONAL_VELOCITY = 720;
   }
 
   public static class OperatorConstants
@@ -89,7 +88,7 @@ public final class Constants
     // yes, this high
     public static final double LEFT_X_DEADBAND = 0.05;
     public static final double LEFT_Y_DEADBAND = 0.05;
-
+    
     public static final double RIGHT_X_DEADBAND = 0.05;
   }
 
@@ -115,42 +114,43 @@ public final class Constants
     
   }
   public static final class VisionConstants {
-    public static final String FRONT_RIGHT_CAMERA_NAME = "frontRightCamera";
-    public static final String FRONT_LEFT_CAMERA_NAME = "frontLeftCamera";
-    public static final String BACK_RIGHT_CAMERA_NAME = "backRightCamera";
-    public static final String BACK_LEFT_CAMERA_NAME = "backLeftCamera";
+    // this is photon stuff:
+    // public static final String FRONT_RIGHT_CAMERA_NAME = "frontRightCamera";
+    // public static final String FRONT_LEFT_CAMERA_NAME = "frontLeftCamera";
+    // public static final String BACK_RIGHT_CAMERA_NAME = "backRightCamera";
+    // public static final String BACK_LEFT_CAMERA_NAME = "backLeftCamera";
     
-    public static final double FRONT_RIGHT_CAMERA_FOV_DIAGONAL = 90;
-    public static final Transform3d FRONT_RIGHT_CAMERA_ROBOT_TO_CAMERA
-     = new Transform3d(new Translation3d(.33, .33, 0), new Rotation3d(0, -0.59, -0.79));
-    public static final double FRONT_RIGHT_MAX_LED_RANGE_METERS = 100;
-    public static final int FRONT_RIGHT_CAMERA_RESOLUTION_WIDTH = 1280;
-    public static final int FRONT_RIGHT_CAMERA_RESOLUTION_HEIGHT = 720;
-    public static final double FRONT_RIGHT_CAMERA_MIN_TARGET_AREA = 0.05;
+    // public static final double FRONT_RIGHT_CAMERA_FOV_DIAGONAL = 90;
+    // public static final Transform3d FRONT_RIGHT_CAMERA_ROBOT_TO_CAMERA
+    //  = new Transform3d(new Translation3d(.33, .33, 0), new Rotation3d(0, -0.59, -0.79));
+    // public static final double FRONT_RIGHT_MAX_LED_RANGE_METERS = 100;
+    // public static final int FRONT_RIGHT_CAMERA_RESOLUTION_WIDTH = 1280;
+    // public static final int FRONT_RIGHT_CAMERA_RESOLUTION_HEIGHT = 720;
+    // public static final double FRONT_RIGHT_CAMERA_MIN_TARGET_AREA = 0.05;
 
-    public static final double FRONT_LEFT_CAMERA_FOV_DIAGONAL = 90;
-    public static final Transform3d FRONT_LEFT_CAMERA_ROBOT_TO_CAMERA 
-    = new Transform3d(new Translation3d(-.33, .33, 0), new Rotation3d(0, -0.59, 0.79));
-    public static final double FRONT_LEFT_MAX_LED_RANGE_METERS = 100;
-    public static final int FRONT_LEFT_CAMERA_RESOLUTION_WIDTH = 1280;
-    public static final int FRONT_LEFT_CAMERA_RESOLUTION_HEIGHT = 720;
-    public static final double FRONT_LEFT_CAMERA_MIN_TARGET_AREA = 0.05;
+    // public static final double FRONT_LEFT_CAMERA_FOV_DIAGONAL = 90;
+    // public static final Transform3d FRONT_LEFT_CAMERA_ROBOT_TO_CAMERA 
+    // = new Transform3d(new Translation3d(-.33, .33, 0), new Rotation3d(0, -0.59, 0.79));
+    // public static final double FRONT_LEFT_MAX_LED_RANGE_METERS = 100;
+    // public static final int FRONT_LEFT_CAMERA_RESOLUTION_WIDTH = 1280;
+    // public static final int FRONT_LEFT_CAMERA_RESOLUTION_HEIGHT = 720;
+    // public static final double FRONT_LEFT_CAMERA_MIN_TARGET_AREA = 0.05;
 
-    public static final double BACK_RIGHT_CAMERA_FOV_DIAGONAL = 90;
-    public static final Transform3d BACK_RIGHT_CAMERA_ROBOT_TO_CAMERA 
-    = new Transform3d(new Translation3d(.33, -.33, 0), new Rotation3d(0, 0.59, -0.79 + Math.PI));
-    public static final double BACK_RIGHT_MAX_LED_RANGE_METERS = 100;
-    public static final int BACK_RIGHT_CAMERA_RESOLUTION_WIDTH = 1280;
-    public static final int BACK_RIGHT_CAMERA_RESOLUTION_HEIGHT = 720;
-    public static final double BACK_RIGHT_CAMERA_MIN_TARGET_AREA = 0.05;
+    // public static final double BACK_RIGHT_CAMERA_FOV_DIAGONAL = 90;
+    // public static final Transform3d BACK_RIGHT_CAMERA_ROBOT_TO_CAMERA 
+    // = new Transform3d(new Translation3d(.33, -.33, 0), new Rotation3d(0, 0.59, -0.79 + Math.PI));
+    // public static final double BACK_RIGHT_MAX_LED_RANGE_METERS = 100;
+    // public static final int BACK_RIGHT_CAMERA_RESOLUTION_WIDTH = 1280;
+    // public static final int BACK_RIGHT_CAMERA_RESOLUTION_HEIGHT = 720;
+    // public static final double BACK_RIGHT_CAMERA_MIN_TARGET_AREA = 0.05;
 
-    public static final double BACK_LEFT_CAMERA_FOV_DIAGONAL = 90;
-    public static final Transform3d BACK_LEFT_CAMERA_ROBOT_TO_CAMERA 
-    = new Transform3d(new Translation3d(-.33, -.33, 0), new Rotation3d(0, 0.59, 0.79 + Math.PI));
-    public static final double BACK_LEFT_MAX_LED_RANGE_METERS = 100;
-    public static final int BACK_LEFT_CAMERA_RESOLUTION_WIDTH = 1280;
-    public static final int BACK_LEFT_CAMERA_RESOLUTION_HEIGHT = 720;
-    public static final double BACK_LEFT_CAMERA_MIN_TARGET_AREA = 0.05;
+    // public static final double BACK_LEFT_CAMERA_FOV_DIAGONAL = 90;
+    // public static final Transform3d BACK_LEFT_CAMERA_ROBOT_TO_CAMERA 
+    // = new Transform3d(new Translation3d(-.33, -.33, 0), new Rotation3d(0, 0.59, 0.79 + Math.PI));
+    // public static final double BACK_LEFT_MAX_LED_RANGE_METERS = 100;
+    // public static final int BACK_LEFT_CAMERA_RESOLUTION_WIDTH = 1280;
+    // public static final int BACK_LEFT_CAMERA_RESOLUTION_HEIGHT = 720;
+    // public static final double BACK_LEFT_CAMERA_MIN_TARGET_AREA = 0.05;
 
     public static AprilTagFieldLayout aprilTagFieldLayout;
     public VisionConstants() {

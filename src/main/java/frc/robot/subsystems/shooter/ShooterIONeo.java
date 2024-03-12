@@ -7,14 +7,16 @@ import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.Rev2mDistanceSensor;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 // import com.revrobotics.CANSparkMaxLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils.RebelUtil;
 
-import com.revrobotics.jni.VL53L0XJNI;
+// import com.revrobotics.jni.VL53L0XJNI;
 
 public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private static final double kMotorToOutputShaftRatio = 1; //Last Checked 2/6/2024
@@ -29,12 +31,19 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private double currentVelocityRadPerSec;
 
     private static final double kMAX_VOLTAGE = 12;
+    
+    private DigitalInput lineBreakSensor; 
 
     // private final Rev2mDistanceSensor distanceSensor;
 
     public ShooterIONeo() {
         m_motor1.clearFaults();
         m_motor2.clearFaults();
+
+        m_motor1.setIdleMode(IdleMode.kBrake);
+        m_motor2.setIdleMode(IdleMode.kBrake);
+
+        lineBreakSensor = new DigitalInput(9);
 
         m_motor1.setInverted(false);
         m_motor2.setInverted(false); // TODO: check inversions.. def wrong
@@ -50,10 +59,10 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
-        inputs.velocityRadSec = m_motor1.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2; // we divide by 60 because the motor out is in RPM
+        inputs.velocityRadSec = m_motor1.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
         currentVelocityRadPerSec = inputs.velocityRadSec;
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
-        // inputs.inShooter = isInShooter(); //What if the point of this.
+        inputs.inShooter = isInShooter(); 
     }
 
     @Override
@@ -106,7 +115,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         //     return false;
         // }
         // // System.out.println("Out of range");
-        return false;
+        return !lineBreakSensor.get();
     }
 
 }

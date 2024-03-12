@@ -98,6 +98,6 @@ public class AutoRunner {
 
     public Command getAutonomousCommand() { 
         //TODO:!! HERE CHANGE THIS 
-    return new PathPlannerAuto("TestRotate");
+    return new PathPlannerAuto("3PMidMAScoreTurn");
     }
 } 

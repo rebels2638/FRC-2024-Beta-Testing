@@ -13,7 +13,7 @@ public class RollIntakeInSlow extends Command {
 
     @Override
     public void initialize() { 
-        intakeSubsystem.setVelocityRadSec(Math.toRadians(80)); //Use radians directly.
+        intakeSubsystem.setVelocityRadSec(Math.toRadians(120)); //Use radians directly.
     }
     
     @Override

@@ -15,7 +15,10 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Quaternion;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -148,7 +151,13 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    // m_robotContainer.switchToLow();
+    //Reflect the angle for red only
+    var alliance = DriverStation.getAlliance(); 
+    // if(alliance.get() == DriverStation.Alliance.Red){
+    //   yaw = yaw.plus(new Rotation2d(Math.PI));
+    // }
+    //you might be wondering why it is here and not on resetOdometryAuto, this is here only because I need to it apply once, pathplanner calls resetOdometryAuto(the supplied command) multiple times possibly after every path end from my tests
+    SwerveSubsystem.getInstance().resetOdometry(new Pose2d(new Translation2d(0,0),SwerveSubsystem.getInstance().getYaw()));
 
     // reset the intake at the start of teleop 
     // new CancelIntakeNote().schedule();

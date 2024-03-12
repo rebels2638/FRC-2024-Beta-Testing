@@ -10,8 +10,8 @@ public class ShootNoteAuto extends SequentialCommandGroup {
     public ShootNoteAuto() {
         addCommands(
             new ShooterWindup(),
-            new RollIntakeIn(),
             new WaitCommand(0.5),
+            new RollIntakeIn(),
             new StopIntake()
         );
     }

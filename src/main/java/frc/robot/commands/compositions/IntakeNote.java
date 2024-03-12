@@ -23,7 +23,7 @@ public class IntakeNote extends SequentialCommandGroup {
             new OutIntake(),
             new StopIntake(), 
             new RollIntakeInSlow(), 
-            new WaitCommand(0.5),
+            new WaitCommand(0.3) ,
             new StopIntake()
         );
 
