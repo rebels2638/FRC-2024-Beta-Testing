@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5553683061717036,
+        "x": 2.62,
         "y": 5.51843359236209
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3415772432183986,
+        "x": 1.406208937046695,
         "y": 5.524405677632315
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StartMidMidNote"
     },
     {
       "anchor": {
@@ -25,17 +25,17 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 6.0,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
@@ -48,5 +48,5 @@
     "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

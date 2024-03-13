@@ -20,10 +20,12 @@ public class IntakeNote extends SequentialCommandGroup {
             new StopIntake(),
             new PivotTurtle(),
             new RollIntakeOut(), 
+            new WaitCommand(0.15),
             new OutIntake(),
             new StopIntake(), 
-            new RollIntakeInSlow(), 
-            new WaitCommand(0.3) ,
+            new RollIntakeInSlow(),
+            new InIntake(),
+            new WaitCommand(0.3333333333333333),
             new StopIntake()
         );
 

@@ -11,9 +11,9 @@ public class ShootNote extends SequentialCommandGroup {
     public ShootNote() {
         addCommands(
             new ShooterWindup(),
-            new WaitCommand(0.7), //Modify this later on.
+            new WaitCommand(0.70), //Modify this later on.
             new RollIntakeIn(),
-            new WaitCommand(0.5),
+            new WaitCommand(0.4),
             new StopIntake(),
             new ShooterStop()
         );

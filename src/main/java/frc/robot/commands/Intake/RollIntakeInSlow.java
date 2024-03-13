@@ -7,13 +7,18 @@ import frc.robot.subsystems.intake.Intake;
 
 public class RollIntakeInSlow extends Command {
     private final Intake intakeSubsystem = Intake.getInstance();
-
+    private double velo;
     public RollIntakeInSlow() {
+        velo = 150;
+    }
+    public RollIntakeInSlow(double a){
+        velo = a;
+
     }
 
     @Override
     public void initialize() { 
-        intakeSubsystem.setVelocityRadSec(Math.toRadians(120)); //Use radians directly.
+        intakeSubsystem.setVelocityRadSec(Math.toRadians(velo)); //Use radians directly.
     }
     
     @Override

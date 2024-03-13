@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2700000000000005,
+        "x": 1.52,
         "y": 5.52
       },
       "isLocked": false,
@@ -16,19 +16,25 @@
     },
     {
       "anchor": {
-        "x": 2.52,
-        "y": 6.63
+        "x": 2.5085249599885775,
+        "y": 6.8391285427364
       },
       "prevControl": {
-        "x": 2.464808633289441,
-        "y": 6.572087021829121
+        "x": 2.4519564174936535,
+        "y": 6.782560000241476
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StartMidAmpNote"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6,
+      "rotationDegrees": -135.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -48,5 +54,5 @@
     "rotation": 178.92402620035944,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

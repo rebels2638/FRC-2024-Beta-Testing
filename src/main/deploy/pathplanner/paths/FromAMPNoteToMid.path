@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.49,
-        "y": 6.9679477447399965
+        "x": 2.5085249599885775,
+        "y": 6.8391285427364
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.532224021644393,
-        "y": 6.9679477447399965
+        "x": 2.5507489816329705,
+        "y": 6.8391285427364
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StartMidAmpNote"
     },
     {
       "anchor": {
         "x": 1.37,
-        "y": 5.515804013063089
+        "y": 5.52
       },
       "prevControl": {
         "x": 2.502896756082115,
-        "y": 6.5474540394400655
+        "y": 6.551650026376976
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid"
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "AmpNote",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -135.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

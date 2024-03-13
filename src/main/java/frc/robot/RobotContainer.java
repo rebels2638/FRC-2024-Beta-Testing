@@ -10,6 +10,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.UsbCameraInfo;
 
 import java.io.File;
 import java.util.Map;
@@ -123,11 +125,12 @@ public class RobotContainer {
   private HttpCamera limelightFeed;
 
   public RobotContainer() {
-    limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
-Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
+  // limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
+  // Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
 
 
-    // CameraServer.startAutomaaticCapture();
+    // UsbCamera Camera = CameraServer.startAutomaticCapture();
+    
     // setInstances();
     // Instantiate our controllers with proper ports.
     this.xboxTester = new XboxController(1);
@@ -195,26 +198,27 @@ Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0)
     NamedCommands.registerCommand("ShooterWindUp", new ShooterWindup());
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
     NamedCommands.registerCommand("StopIntake", new StopIntake());
-    NamedCommands.registerCommand("IntakeNote",intake = new IntakeNoteAuto());
+    NamedCommands.registerCommand("IntakeNote", intake = new IntakeNoteAuto());
     NamedCommands.registerCommand("ShooterStop", new ShooterStop());
     NamedCommands.registerCommand("ShooterWindReverse", new ShooterWindReverse());
     NamedCommands.registerCommand("ShootNote", new ShootNote());
     NamedCommands.registerCommand("PivotToTorus", new PivotToTorus());
     NamedCommands.registerCommand("CancelIntakeNote", new CancelIntakeNote(intake));
+    NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
 
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     // climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));
     // xboxTester.getAButton().onTrue(new PivotToTorus());
-    xboxTester.getBButton().onTrue(new MoveElevatorAMP());
-    xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
+    // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
+    // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
 
     // // xboxTester.getXButton().onTrue(new PivotTurtle());
-    xboxTester.getXButton().onTrue(new MoveClimberUp());
+    // xboxTester.getXButton().onTrue(new MoveClimberDown());
     // xboxTester.getAButton().whileTrue(new TurnCommand(swerveSubsystem));
-    xboxTester.getLeftMiddleButton().onTrue(new Climb());
+    // xboxTester.getLeftMiddleButton().onTrue(new Climb());
     // // xboxTester.getRightMiddleButton().onTrue(new Thing6());
-    xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
+    // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
     // xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
     //TrevorBallshack Controls
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
@@ -223,7 +227,7 @@ Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0)
     this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
     this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake));
     this.xboxDriver.getYButton().onTrue(new Climb());
-   //  this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
+    // this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
     // this.xboxDriver.getAButton().onTrue(new MoveClimberDown());
 
     // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());

@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.52,
-        "y": 6.63
+        "x": 2.5085249599885775,
+        "y": 6.8391285427364
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.52,
-        "y": 6.7299999999999995
+        "x": 2.5085249599885775,
+        "y": 6.0891285427364
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StartMidAmpNote"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 5.52
       },
       "prevControl": {
-        "x": 1.314808633289441,
-        "y": 5.462087021829121
+        "x": 2.12,
+        "y": 5.52
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,5 +48,5 @@
     "rotation": -135.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
