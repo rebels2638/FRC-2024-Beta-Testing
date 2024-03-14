@@ -211,9 +211,20 @@ public class SwerveSubsystem extends SubsystemBase
   {
     swerveDrive.zeroGyro();
   }
-  // public void setGyro(double angle){
-  //   swerveDrive.setGyro(new Rotation3d(0, 0, Math.toRadians(180)));
-  // }
+  /**
+   * Takes an angle and sets an offset, use this for auto to teleOp pose heading synchronization
+   * @param angleDegrees
+   */
+  public void setGyroOffset(double angleDegrees){
+    swerveDrive.setGyroOffset(new Rotation3d(0, 0, Math.toRadians(angleDegrees)));
+  }
+  /**
+   * Takes an angle and sets an offset, use this for auto to teleOp pose heading synchronization
+   * @param angleDegrees
+   */
+  public void setGyro(double angleDegrees){
+    swerveDrive.setGyro(new Rotation3d(0, 0, Math.toRadians(angleDegrees)));
+  }
 
   /**
    * Gets the current yaw angle of the robot, as reported by the imu.  CCW positive, not wrapped.

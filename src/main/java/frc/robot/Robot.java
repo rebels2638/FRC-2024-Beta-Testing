@@ -18,8 +18,12 @@ import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Utils.Constants;
@@ -37,6 +41,8 @@ import frc.robot.subsystems.swerve.SwerveSubsystem;
 public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+  SendableChooser<Double> gyroOffset = new SendableChooser<>();
+
 
   private Timer time;
 
@@ -87,7 +93,12 @@ public class Robot extends LoggedRobot {
     time = new Timer();
     CommandScheduler.getInstance().enable();
 
+    gyroOffset.addOption("BlueMidSpeaker", 180.0);
+    gyroOffset.addOption("RedMidSpeaker" , 180.0);
+    gyroOffset.addOption("FacingOppSide(Battery is)", 0.0);
     
+    Shuffleboard.getTab("auto").add("Angle Offset", gyroOffset);
+
   }
 
    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -156,8 +167,12 @@ public class Robot extends LoggedRobot {
     // if(alliance.get() == DriverStation.Alliance.Red){
     //   yaw = yaw.plus(new Rotation2d(Math.PI));
     // }
+    // SwerveSubsystem.getInstance().zeroGyro();
     //you might be wondering why it is here and not on resetOdometryAuto, this is here only because I need to it apply once, pathplanner calls resetOdometryAuto(the supplied command) multiple times possibly after every path end from my tests
-    SwerveSubsystem.getInstance().resetOdometry(new Pose2d(new Translation2d(0,0),SwerveSubsystem.getInstance().getYaw()));
+    SwerveSubsystem.getInstance().resetOdometry(new Pose2d(new Translation2d(0,0), SwerveSubsystem.getInstance().getYaw().rotateBy(Rotation2d.fromDegrees(gyroOffset.getSelected())
+    )));
+    // SwerveSubsystem.getInstance().setGyro(SwerveSubsystem.getInstance().getYaw().rotateBy(new Rotation2d(Math.toRadians(gyroOffset.getSelected()))).getDegrees());
+    
 
     // reset the intake at the start of teleop 
     // new CancelIntakeNote().schedule();

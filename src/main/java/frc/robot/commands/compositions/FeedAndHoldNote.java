@@ -19,4 +19,9 @@ public class FeedAndHoldNote extends SequentialCommandGroup {
             new ParallelCommandGroup(new OutIntake(), new InShooter()),
             new ParallelCommandGroup(new StopIntake(), new ShooterStop()));
     }
+    void Callcancel(){
+        this.cancel();
+    }
+
+
 }

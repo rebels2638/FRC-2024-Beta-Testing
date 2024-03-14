@@ -10,32 +10,32 @@ import frc.robot.commands.shooter.ShooterWindReverse;
 
 public class ScoreAMP extends SequentialCommandGroup {
 
-    // public ScoreAMP() {
-    //     addCommands(
-    //         // new ShooterStop(), // for what reason??
-    //         // new MoveElevatorAMP(),
-    //         // new WaitCommand(0.6),
-    //         // new ShooterWindReverse(),
-    //         // new WaitCommand(0.8),
-    //         // new ShooterStop(),
-    //         // new MoveElevatorTurtle()
-    //         new ShooterWindReverse(),
-    //         new WaitCommand(0.8),
-    //         new ShooterStop()
-    //     );
-    // }
-
     public ScoreAMP() {
         addCommands(
-            new FeedAndHoldNote(),
-            new ShooterStop(),
-            new MoveElevatorAMP(),
-            new WaitCommand(0.6),
+            // new ShooterStop(), // for what reason??
+            // new MoveElevatorAMP(),
+            // new WaitCommand(0.6),
+            // new ShooterWindReverse(),
+            // new WaitCommand(0.8),
+            // new ShooterStop(),
+            // new MoveElevatorTurtle()
             new ShooterWindReverse(),
-            new WaitCommand(0.4),
-            new ShooterStop(),
-            new MoveElevatorTurtle()
+            new WaitCommand(0.8),
+            new ShooterStop()
         );
     }
+
+    // public ScoreAMP() {
+    //     addCommands(
+    //         new FeedAndHoldNote(),
+    //         new ShooterStop(),
+    //         new MoveElevatorAMP(),
+    //         new WaitCommand(0.6),
+    //         new ShooterWindReverse(),
+    //         new WaitCommand(0.4),
+    //         new ShooterStop(),
+    //         new MoveElevatorTurtle()
+    //     );
+    // }
 
 }

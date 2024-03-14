@@ -186,7 +186,8 @@ public class RobotContainer {
     
     autoRunner = new AutoRunner(swerveSubsystem);
 
-    SequentialCommandGroup intake;
+    SequentialCommandGroup intake, feedHold;
+
 
     closedFieldAbsoluteDrive = new AbsoluteFieldDrive(swerveSubsystem,
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND),
@@ -202,8 +203,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterStop", new ShooterStop());
     NamedCommands.registerCommand("ShooterWindReverse", new ShooterWindReverse());
     NamedCommands.registerCommand("ShootNote", new ShootNote());
+    NamedCommands.registerCommand("ShootNoteAuto", new ShootNoteAuto());
     NamedCommands.registerCommand("PivotToTorus", new PivotToTorus());
-    NamedCommands.registerCommand("CancelIntakeNote", new CancelIntakeNote(intake));
+    NamedCommands.registerCommand("CancelIntakeNote", new CancelIntakeNote(intake, null));
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
 
 
@@ -220,29 +222,31 @@ public class RobotContainer {
     // // xboxTester.getRightMiddleButton().onTrue(new Thing6());
     // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
     // xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
-    //TrevorBallshack Controls
-    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
-    this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
-    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake));
-    this.xboxDriver.getYButton().onTrue(new Climb());
+
     // this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
     // this.xboxDriver.getAButton().onTrue(new MoveClimberDown());
 
-    // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());
-    // this.xboxDriver.getRightMiddleButton().onTrue(new PivotTurtle());
+    
     // //Michaelangelo controls
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop());
     this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
     this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
     this.xboxOperator.getYButton().onTrue(new ScoreAMP()); // changed
     this.xboxOperator.getAButton().onTrue(new RollIntakeIn()); // change back to shootNoteTele
-    this.xboxOperator.getBButton().onTrue(new SequentialCommandGroup(new CancelIntakeNote(intake), new FeedAndHoldNote()));
+    this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
-    
+        //TrevorBallshack Controls
+    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
+    this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
+    this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
+    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
+    this.xboxDriver.getYButton().onTrue(new Climb());
     // Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-
+    this.xboxDriver.getAButton().onTrue(new PivotTurtle());
+    // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());
+    // this.xboxDriver.getRightMiddleButton().onTrue(new PivotTurtle());
   }
 
   public static RobotContainer getInstance() {

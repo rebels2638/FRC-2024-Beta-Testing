@@ -9,6 +9,7 @@ import frc.robot.commands.Intake.OutIntake;
 import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.Intake.RollIntakeOut;
 import frc.robot.commands.Intake.StopIntake;
+import frc.robot.commands.pivot.PivotMidway;
 import frc.robot.commands.pivot.PivotToTorus;
 import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.commands.Intake.RollIntakeInSlow;
@@ -21,13 +22,14 @@ public class IntakeNoteAuto extends SequentialCommandGroup {
             new RollIntakeIn(),
             new InIntake(),
             new StopIntake(),
-            new PivotTurtle(),
+            new PivotMidway(),
             new RollIntakeOut(), 
             new OutIntake(),
             new StopIntake(), 
             new RollIntakeInSlow(), 
-            new WaitCommand(0.5),
-            new StopIntake()
+            new WaitCommand(0.43),
+            new StopIntake(),
+            new PivotTurtle()
         );
     }
 }
