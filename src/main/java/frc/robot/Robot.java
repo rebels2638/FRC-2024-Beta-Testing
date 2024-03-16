@@ -169,9 +169,8 @@ public class Robot extends LoggedRobot {
     // }
     // SwerveSubsystem.getInstance().zeroGyro();
     //you might be wondering why it is here and not on resetOdometryAuto, this is here only because I need to it apply once, pathplanner calls resetOdometryAuto(the supplied command) multiple times possibly after every path end from my tests
-    SwerveSubsystem.getInstance().resetOdometry(new Pose2d(new Translation2d(0,0), SwerveSubsystem.getInstance().getYaw().rotateBy(Rotation2d.fromDegrees(gyroOffset.getSelected())
-    )));
-    // SwerveSubsystem.getInstance().setGyro(SwerveSubsystem.getInstance().getYaw().rotateBy(new Rotation2d(Math.toRadians(gyroOffset.getSelected()))).getDegrees());
+    SwerveSubsystem.getInstance().resetOdometry(new Pose2d(new Translation2d(0,0), SwerveSubsystem.getInstance().getYaw().rotateBy(Rotation2d.fromDegrees(gyroOffset.getSelected()))));
+    // SwerveSubsystem.getInstance().setGyro(SwerveSubsystem.getInstance().getYaw().rotateBy(new Rotation2d(Math.toRadians(gyroOffset.getSelected()))).getDegrees()); //TODO: DONT USE THIS FOR NOW
     
 
     // reset the intake at the start of teleop 

@@ -88,16 +88,9 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "FromSourceNoteToMid"
-                            }
-                          }
-                        ]
+                        "pathName": "FromSourceNoteToMid"
                       }
                     }
                   ]

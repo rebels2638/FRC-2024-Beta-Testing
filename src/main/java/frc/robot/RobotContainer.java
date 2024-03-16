@@ -90,6 +90,10 @@ import frc.robot.subsystems.shooter.ShooterIONeo;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+
+
+
 // import frc.robot.commands.drivetrain.TeleopDrive;
 
 /**
@@ -103,6 +107,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
  */
 public class RobotContainer {
   public static RobotContainer instance = null;
+  public Spark color1 = new Spark(6);
+  public Spark color2 = new Spark(7);
 
   // The robot's controllers
   private final XboxController xboxDriver;
@@ -122,13 +128,13 @@ public class RobotContainer {
   private final Pivot pivotSubsystem;
   private final Climber climberSubsystem;
 
-  private HttpCamera limelightFeed;
+  // private HttpCamera limelightFeed;
 
   public RobotContainer() {
   // limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
   // Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
 
-
+     
     // UsbCamera Camera = CameraServer.startAutomaticCapture();
     
     // setInstances();
@@ -223,8 +229,8 @@ public class RobotContainer {
     // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
     // xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
 
-    // this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
-    // this.xboxDriver.getAButton().onTrue(new MoveClimberDown());
+    this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
+    this.xboxDriver.getAButton().onTrue(new MoveClimberDown()); // TODO: recomment
 
     
     // //Michaelangelo controls
@@ -236,12 +242,12 @@ public class RobotContainer {
     this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
         //TrevorBallshack Controls
-    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
-    this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
-    this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
-    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
+    // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
+    // this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
+    // this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
     this.xboxDriver.getYButton().onTrue(new Climb());
     // Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     this.xboxDriver.getAButton().onTrue(new PivotTurtle());

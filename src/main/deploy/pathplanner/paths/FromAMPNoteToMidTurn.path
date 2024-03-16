@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6362321955413157,
-        "y": 5.880585568863446
+        "x": 2.2698794800930893,
+        "y": 5.821861381192929
       },
       "isLocked": false,
       "linkedName": "StartMidAmpNote"
@@ -20,8 +20,8 @@
         "y": 5.52
       },
       "prevControl": {
-        "x": 2.12,
-        "y": 5.52
+        "x": 1.9368285236183027,
+        "y": 5.580045189754842
       },
       "nextControl": null,
       "isLocked": false,
