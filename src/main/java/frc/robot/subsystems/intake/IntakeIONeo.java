@@ -37,7 +37,7 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         // distanceTolerance = 0.57; //Approximate distance assuming some tolerance, CHECK AGAIN
         // distanceSensor.setEnabled(true);
 
-        lineBreakSensor = new DigitalInput(1);
+        lineBreakSensor = new DigitalInput(7);
         //distanceSensor.setAutomaticMode(true); << Probably not required but keep note that we need this if we have several of these 2m dist devices
 
         IntakeStatus = Shuffleboard.getTab("auto").add("INTAKE STATUS", inIntake()).getEntry();

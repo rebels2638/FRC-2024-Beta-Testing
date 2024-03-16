@@ -226,7 +226,7 @@ public class RobotContainer {
     // xboxTester.getAButton().whileTrue(new TurnCommand(swerveSubsystem));
     // xboxTester.getLeftMiddleButton().onTrue(new Climb());
     // // xboxTester.getRightMiddleButton().onTrue(new Thing6());
-    // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
+    xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
     // xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
 
     this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
@@ -243,14 +243,14 @@ public class RobotContainer {
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
         //TrevorBallshack Controls
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
+    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
     // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
-    // this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
-    // this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
-    this.xboxDriver.getYButton().onTrue(new Climb());
+    this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
+    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
+    // this.xboxDriver.getYButton().onTrue(new Climb());
     // Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    this.xboxDriver.getAButton().onTrue(new PivotTurtle());
+    // this.xboxDriver.getAButton().onTrue(new PivotTurtle());
     // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());
     // this.xboxDriver.getRightMiddleButton().onTrue(new PivotTurtle());
   }

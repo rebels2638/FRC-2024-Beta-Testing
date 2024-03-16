@@ -31,7 +31,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     private static final double kMAX_VOLTAGE = 12;
 
     private static final double kMIN_CLIMBER_HEIGHT = 0;
-    private static final double kMAX_CLIMBER_HEIGHT = 0.515+((4.6)/39.4); //TODO: Alt. for man. ctrl, 0.515
+    private static final double kMAX_CLIMBER_HEIGHT = 0.497; //TODO: Alt. for man. ctrl, 0.515
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);

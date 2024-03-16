@@ -28,7 +28,7 @@ public class IntakeNote extends SequentialCommandGroup {
             new StopIntake(), 
             new RollIntakeInSlow(),
             new InIntake(),
-            new WaitCommand(0.3333333333333333),
+            new WaitCommand(0.0),
             new StopIntake()
             // ,new LEDController(0.77)
         );

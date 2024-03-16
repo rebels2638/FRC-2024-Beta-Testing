@@ -27,7 +27,7 @@ public class IntakeNoteAuto extends SequentialCommandGroup {
             new OutIntake(),
             new StopIntake(), 
             new RollIntakeInSlow(), 
-            new WaitCommand(0.43),
+            new WaitCommand(0.33),
             new StopIntake(),
             new PivotTurtle()
         );

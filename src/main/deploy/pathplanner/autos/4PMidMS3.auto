@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3005979086921784,
+      "x": 1.37,
       "y": 5.524499726219249
     },
     "rotation": 180.0
@@ -20,13 +20,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.68
+            "waitTime": 0.3
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         },
         {

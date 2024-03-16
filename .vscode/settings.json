@@ -27,5 +27,5 @@
   ],
   "java.test.defaultConfig": "WPIlibUnitTests",
   "wpilib.autoSaveOnDeploy": true,
-  "C_Cpp.intelliSenseEngineFallback": "enabled"
+  "C_Cpp.intelliSenseEngineFallback": "disabled"
 }

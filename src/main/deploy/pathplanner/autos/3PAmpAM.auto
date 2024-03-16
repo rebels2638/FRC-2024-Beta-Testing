@@ -20,13 +20,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.68
+            "waitTime": 0.3
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         },
         {
@@ -64,13 +64,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CancelIntakeNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         },
         {
@@ -108,7 +102,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         }
       ]
