@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7514482095921979,
-      "y": 4.490952780122445
+      "x": 0.72,
+      "y": 4.37
     },
     "rotation": 120.0
   },
@@ -20,13 +20,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.68
+            "waitTime": 0.3
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         },
         {
@@ -64,13 +64,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CancelIntakeNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         },
         {
