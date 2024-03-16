@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7631512463945168,
-      "y": 6.592982982745107
+      "x": 0.7050561319382253,
+      "y": 6.722020177278586
     },
     "rotation": -120.0
   },
@@ -20,13 +20,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.68
+            "waitTime": 0.3
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         },
         {
@@ -64,13 +64,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CancelIntakeNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         },
         {
@@ -108,7 +102,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         }
       ]
