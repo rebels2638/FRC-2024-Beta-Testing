@@ -6,7 +6,10 @@ import com.revrobotics.CANSparkMax;
 // import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeIONeo extends SubsystemBase implements IntakeIO {
@@ -21,6 +24,9 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     private double currentVelocityRadPerSec;
     private DigitalInput lineBreakSensor; 
 
+    private GenericEntry IntakeStatus;
+
+
     private static final double kMAX_VOLTAGE = 12;
 
     public IntakeIONeo() {
@@ -33,6 +39,8 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
 
         lineBreakSensor = new DigitalInput(1);
         //distanceSensor.setAutomaticMode(true); << Probably not required but keep note that we need this if we have several of these 2m dist devices
+
+        IntakeStatus = Shuffleboard.getTab("auto").add("INTAKE STATUS", inIntake()).getEntry();
     }
 
     @Override
@@ -78,7 +86,7 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         // }
 
         m_motor.setVoltage(outVoltage);
-
+        IntakeStatus.setBoolean(inIntake());
     } 
 
     @Override
@@ -96,7 +104,7 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         //Valid range(?) check aka 2m or less
 
 
-        /* //Uncomment this whenever you rhe 2mDistance sensor is there
+        /* //Uncomment this whenever you the 2mDistance sensor is there
         if(distanceSensor.isRangeValid()){
             //distanceSensor.setMeasurementPeriod();
             //Using default measurementperiod, we get its range at that moment.
