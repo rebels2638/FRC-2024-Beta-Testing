@@ -1,6 +1,7 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.shooter.Shooter;
 
 public class ShooterWindup extends Command {
@@ -13,6 +14,9 @@ public class ShooterWindup extends Command {
     }
 
     public ShooterWindup() {
+    }
+    public ShooterWindup(SequentialCommandGroup s){
+        s.cancel();
     }
 
     @Override
