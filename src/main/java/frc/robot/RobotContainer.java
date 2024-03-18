@@ -135,7 +135,8 @@ public class RobotContainer {
   // Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
 
      
-    // UsbCamera Camera = CameraServer.startAutomaticCapture();
+    UsbCamera Camera = CameraServer.startAutomaticCapture();
+    Shuffleboard.getTab("auto").add(Camera);
     
     // setInstances();
     // Instantiate our controllers with proper ports.

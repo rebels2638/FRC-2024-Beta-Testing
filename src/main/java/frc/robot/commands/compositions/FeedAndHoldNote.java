@@ -15,7 +15,7 @@ public class FeedAndHoldNote extends SequentialCommandGroup {
         addCommands(
             new ShooterHold(),
             new WaitCommand(0.5),
-            new RollIntakeInSlow(120),
+            new RollIntakeInSlow(140),
             new ParallelCommandGroup(new OutIntake(), new InShooter()),
             new ParallelCommandGroup(new StopIntake(), new ShooterStop()));
     }
