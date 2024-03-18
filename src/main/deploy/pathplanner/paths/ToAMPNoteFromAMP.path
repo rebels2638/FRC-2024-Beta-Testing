@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7126564679945075,
-        "y": 6.820208214567768
+        "x": 2.2905303992426167,
+        "y": 6.884614496501721
       },
       "isLocked": false,
       "linkedName": "AMP"
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -140.0,
+    "rotation": -160.0,
     "rotateFast": false
   },
   "reversed": false,

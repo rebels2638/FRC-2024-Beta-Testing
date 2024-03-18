@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4743500976025863,
-        "y": 6.920460056283393
+        "x": 1.4602720114531138,
+        "y": 7.173805620338514
       },
       "isLocked": false,
       "linkedName": "StartAMPAMPNote"
@@ -20,8 +20,8 @@
         "y": 6.722020177278586
       },
       "prevControl": {
-        "x": 1.4042995358717991,
-        "y": 7.033874431385226
+        "x": 0.9098760015701849,
+        "y": 7.155148128478076
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "AmpNote",
   "previewStartingState": {
-    "rotation": -120.75,
+    "rotation": -160.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
