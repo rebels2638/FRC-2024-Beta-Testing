@@ -44,6 +44,7 @@ public class Robot extends LoggedRobot {
   SendableChooser<Double> gyroOffset = new SendableChooser<>();
 
 
+
   private Timer time;
 
   /**
@@ -92,10 +93,13 @@ public class Robot extends LoggedRobot {
 
     time = new Timer();
     CommandScheduler.getInstance().enable();
+    gyroOffset.setDefaultOption("NoOffset", 0.0);
 
     gyroOffset.addOption("BlueMidSpeaker", 180.0);
     gyroOffset.addOption("RedMidSpeaker" , 180.0);
     gyroOffset.addOption("FacingOppSide(Battery is)", 0.0);
+    gyroOffset.addOption("AmpSide", -240.0);
+    gyroOffset.addOption("SourceSide", 120.0);
     
     Shuffleboard.getTab("auto").add("Angle Offset", gyroOffset);
 

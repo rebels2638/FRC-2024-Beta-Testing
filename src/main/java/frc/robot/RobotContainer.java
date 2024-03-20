@@ -44,6 +44,7 @@ import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.drivetrain.AbsoluteDrive;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
+import frc.robot.commands.LEDController;
 import frc.robot.commands.Intake.RollIntakeEject;
 import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.Intake.StopIntake;
@@ -62,6 +63,7 @@ import frc.robot.commands.compositions.ShootNoteTele;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIO;
 import frc.robot.subsystems.climber.ClimberIOFalcon;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.audio.AudioPlayer;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIO;
@@ -131,8 +133,8 @@ public class RobotContainer {
   // private HttpCamera limelightFeed;
 
   public RobotContainer() {
-  // limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
-  // Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
+  HttpCamera limelightFeed = new HttpCamera("limelight", "http://10.26.38.11:5800/stream.mjpg");
+  Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
 
      
     UsbCamera Camera = CameraServer.startAutomaticCapture();
@@ -188,10 +190,13 @@ public class RobotContainer {
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
         swerveSubsystem = SwerveSubsystem.setInstance(swerveSubsystem);
 
+        LEDSubsystem.setInstance(new LEDSubsystem());
+
         break;
     }
     
     autoRunner = new AutoRunner(swerveSubsystem);
+
 
     SequentialCommandGroup intake, feedHold;
 
@@ -221,6 +226,7 @@ public class RobotContainer {
     // xboxTester.getAButton().onTrue(new PivotToTorus());
     // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
     // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
+    // xboxTester.getAButton().onTrue(new LEDController(0.61));
 
     // // xboxTester.getXButton().onTrue(new PivotTurtle());
     // xboxTester.getXButton().onTrue(new MoveClimberDown());

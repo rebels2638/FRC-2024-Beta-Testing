@@ -48,7 +48,7 @@ public final class Constants
   public static final double LOOP_TIME  = 0.2; //s, 20ms + 110ms sprk max velocity lag
 
   public static final class Telop {
-    public static final double MAX_SPEED_METERS_PER_SEC = 6;
+    public static final double MAX_SPEED_METERS_PER_SEC = 1;
     //public static final double MAX_ROT 
   }
   public static final class Auton

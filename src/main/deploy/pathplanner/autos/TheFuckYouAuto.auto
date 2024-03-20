@@ -2,31 +2,25 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.71,
-      "y": 4.37
+      "x": 1.4311279977766793,
+      "y": 1.5809629336805058
     },
-    "rotation": 120.0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ShootNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShooterStop"
+            "pathName": "ToFar5FromSourceUnaligned"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TaxiOutSourceStart"
+            "pathName": "theFuckYouMovement"
           }
         }
       ]
