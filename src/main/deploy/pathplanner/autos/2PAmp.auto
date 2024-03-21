@@ -14,7 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShooterWindUp"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.7
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteAuto"
           }
         },
         {
@@ -52,7 +64,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         }
       ]

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 4.49
+      "x": 0.716766968484007,
+      "y": 4.368142031576504
     },
     "rotation": 120.0
   },
@@ -20,13 +20,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.68
+            "waitTime": 1.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         },
         {
@@ -64,7 +64,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootNote"
+            "name": "ShootNoteAuto"
           }
         }
       ]

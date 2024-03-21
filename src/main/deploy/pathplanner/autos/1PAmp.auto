@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7050561319382253,
+      "y": 6.72
+    },
+    "rotation": -120.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterWindUp"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.7
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteAuto"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

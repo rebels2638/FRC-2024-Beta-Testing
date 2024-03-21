@@ -12,9 +12,12 @@ import com.revrobotics.CANSparkBase.IdleMode;
 // import com.revrobotics.CANSparkMaxLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils.RebelUtil;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
 
 // import com.revrobotics.jni.VL53L0XJNI;
 
@@ -28,7 +31,10 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
 
     private double distanceTolerance;
-    private double currentVelocityRadPerSec;
+    private double currentVelocityRadPerSec = 0 ;
+
+    private GenericEntry ShooterStatus;
+
 
     private static final double kMAX_VOLTAGE = 12;
     
@@ -55,6 +61,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         // distanceTolerance = 17.4572; 
         // distanceSensor.setAutomaticMode(true);
         // distanceSensor.setEnabled(true);
+        ShooterStatus = Shuffleboard.getTab("auto").add("SHOOTER STATUS", currentVelocityRadPerSec > 60).getEntry();
     }
 
     @Override
@@ -92,6 +99,8 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         Logger.recordOutput("Shooter/voltageOut", outVoltage);
         m_motor1.setVoltage(outVoltage);
         m_motor2.setVoltage(outVoltage);
+
+        ShooterStatus.setBoolean(currentVelocityRadPerSec > 60);
     } 
 
     @Override

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4602720114531138,
-        "y": 7.173805620338514
+        "x": 1.9346939692452838,
+        "y": 7.412959533479694
       },
       "isLocked": false,
       "linkedName": "StartAMPAMPNote"
@@ -39,8 +39,8 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -120.75,
-    "rotateFast": false
+    "rotation": -120.0,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "AmpNote",

@@ -18,7 +18,6 @@ public class IntakeNote extends SequentialCommandGroup {
         addCommands(
             new PivotToTorus(),  
             new RollIntakeIn(),
-            new LEDController(0.61),
             new InIntake(),
             new StopIntake(),
             new PivotTurtle(),
@@ -29,8 +28,8 @@ public class IntakeNote extends SequentialCommandGroup {
             new RollIntakeInSlow(),
             new InIntake(),
             new WaitCommand(0.0),
-            new StopIntake(),
-            new LEDController(0.77)
+            new StopIntake()
+            // new LEDController(0.77) // green
         );
 
     }

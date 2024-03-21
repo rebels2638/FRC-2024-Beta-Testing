@@ -30,6 +30,7 @@ import frc.robot.Utils.Constants;
 import frc.robot.commands.autoAligment.LocalADStarAK;
 import frc.robot.commands.compositions.CancelIntakeNote;
 import frc.robot.lib.swervelib.SwerveDrive;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 /**
@@ -63,7 +64,7 @@ public class Robot extends LoggedRobot {
       // Running on a real robot, log to a USB stick
       case REAL:
         // Logger.addDataReceiver(new WPILOGWriter("D:/"));
-        Logger.addDataReceiver(new NT4Publisher());
+        // Logger.addDataReceiver(new NT4Publisher());
         break;
 
       // Running a physics simulator, log to local folder
@@ -108,6 +109,8 @@ public class Robot extends LoggedRobot {
    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
    @Override
    public void autonomousInit() {
+
+    // LEDSubsystem.getInstance().setColor(0.87);
 
      time.reset();
      time.start();
@@ -166,6 +169,7 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    LEDSubsystem.getInstance().setColor(0.77);
     //Reflect the angle for red only
     var alliance = DriverStation.getAlliance(); 
     // if(alliance.get() == DriverStation.Alliance.Red){
@@ -174,6 +178,10 @@ public class Robot extends LoggedRobot {
     // SwerveSubsystem.getInstance().zeroGyro();
     //you might be wondering why it is here and not on resetOdometryAuto, this is here only because I need to it apply once, pathplanner calls resetOdometryAuto(the supplied command) multiple times possibly after every path end from my tests
     SwerveSubsystem.getInstance().resetOdometry(new Pose2d(new Translation2d(0,0), SwerveSubsystem.getInstance().getYaw().rotateBy(Rotation2d.fromDegrees(gyroOffset.getSelected()))));
+
+    //UNCOMMENT THE LINE BELOW AND COMMENT THE LINE ABOVE IF YOU ARE GETTING FPGA::WPI.now() ERROR
+    // SwerveSubsystem.getInstance().resetOdometry(new Pose2d(new Translation2d(0,0), SwerveSubsystem.getInstance().getYaw().rotateBy(Rotation2d.fromDegrees(0))));
+
     // SwerveSubsystem.getInstance().setGyro(SwerveSubsystem.getInstance().getYaw().rotateBy(new Rotation2d(Math.toRadians(gyroOffset.getSelected()))).getDegrees()); //TODO: DONT USE THIS FOR NOW
     
 

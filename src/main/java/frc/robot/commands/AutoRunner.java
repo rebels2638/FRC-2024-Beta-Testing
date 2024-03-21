@@ -89,9 +89,9 @@ public class AutoRunner {
     public Command getAutonomousCommand() { 
         //TODO:!! HERE CHANGE THIS 
         //4PMidMASScoreTurn
-        //3PAmpAM << Amp Side 3 piece
+        //3PAmpAM << Amp Side 3 piece   
         //2PAmp << 2 piece Amp
         //MidDestroyer
-    return new PathPlannerAuto("2PAmp");
+    return new PathPlannerAuto("2PSource");
     }
 } 
