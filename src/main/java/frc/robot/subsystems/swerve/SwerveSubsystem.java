@@ -239,6 +239,22 @@ public class SwerveSubsystem extends SubsystemBase
 
   /**
    * Get the chassis speeds based on controller input of 2 joysticks. One for speeds in which direction. The other for
+   * the angular velocity of the robot.
+   *
+   * @param xInput   X joystick input for the robot to move in the X direction.
+   * @param yInput   Y joystick input for the robot to move in the Y direction.
+   * @param headingVelo X joystick which controls the angular velocity of the robot.
+   * @return {@link ChassisSpeeds} which can be sent to th Swerve Drive.
+   */
+  public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, double headingVelo)
+  {
+    double xVelo = xInput * Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC;
+    double yVelo = yInput * Constants.Drivebase.MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC;
+    return swerveDrive.swerveController.getRawTargetSpeeds(xVelo, yVelo, headingVelo);
+  }
+
+  /**
+   * Get the chassis speeds based on controller input of 2 joysticks. One for speeds in which direction. The other for
    * the angle of the robot.
    *
    * @param xInput   X joystick input for the robot to move in the X direction.

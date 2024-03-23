@@ -75,12 +75,12 @@ public class AbsoluteFieldDrive extends Command
     ChassisSpeeds desiredSpeeds;
     if (resetRotation) {
       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
+                                                         new Rotation2d(0));
     }
     else {
         desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
-        desiredSpeeds.omegaRadiansPerSecond = heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY);
+                                                        heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY));
+        // desiredSpeeds.omegaRadiansPerSecond = heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY);
     }
 
     // Limit velocity to prevent tippy
