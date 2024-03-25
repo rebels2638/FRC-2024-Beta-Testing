@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.5,
-      "y": 6.96
+      "x": 1.36,
+      "y": 7.696215392430785
     },
     "rotation": 0
   },
@@ -14,12 +14,18 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TurnTesting2"
+            "pathName": "ToFar1RideWall"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "theFuckMeMovement"
           }
         }
       ]
     }
   },
-  "folder": "GoofyOnes",
+  "folder": "LAST DEFENSE",
   "choreoAuto": false
 }

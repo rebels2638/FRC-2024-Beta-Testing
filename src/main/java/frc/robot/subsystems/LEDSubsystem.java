@@ -52,7 +52,7 @@ double value;
       }
 
       else if (Shooter.getInstance().getVelocityRadSec() > 6.2 && Shooter.getInstance().getVelocityRadSec() <= 60) {
-        color = -.07; // strobe gold
+        color = 0.15; // strobe
       }
 
       else {

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.0,
-        "y": 2.1662604407059796
+        "x": 7.895312713702351,
+        "y": 1.4800414216213047
       },
       "isLocked": false,
       "linkedName": null
@@ -17,11 +17,59 @@
     {
       "anchor": {
         "x": 8.0,
-        "y": 7.178742802564065
+        "y": 2.1904613039995318
       },
       "prevControl": {
+        "x": 7.53877954448983,
+        "y": 1.5401408641562089
+      },
+      "nextControl": {
+        "x": 8.44786151110764,
+        "y": 2.821945643891289
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.181454055215804,
+        "y": 4.01584572399914
+      },
+      "prevControl": {
+        "x": 8.181454055215804,
+        "y": 3.366536061434566
+      },
+      "nextControl": {
+        "x": 8.181454055215804,
+        "y": 4.889724926192899
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.865711885269925,
+        "y": 5.239346632539419
+      },
+      "prevControl": {
+        "x": 8.189419042752274,
+        "y": 5.039822551114432
+      },
+      "nextControl": {
+        "x": 7.5420047277875755,
+        "y": 5.438870713964406
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
         "x": 8.0,
-        "y": 6.178742802564065
+        "y": 5.870830972431175
+      },
+      "prevControl": {
+        "x": 7.613542393989211,
+        "y": 5.531216712603511
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +91,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AmpNote",
+  "folder": null,
   "previewStartingState": {
     "rotation": -25.0,
     "velocity": 0

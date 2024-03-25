@@ -89,9 +89,12 @@ public class AutoRunner {
     public Command getAutonomousCommand() { 
         //TODO:!! HERE CHANGE THIS 
         //4PMidMASScoreTurn
-        //3PAmpAM << Amp Side 3 piece   
-        //2PAmp << 2 piece Amp
-        //MidDestroyer
-    return new PathPlannerAuto("2PSource");
+        //3PAmpAM << Amp Side 3 piece      
+        //2PAmp << 2 piece Amp'
+        //TheFuckYouAuto << messes up midline
+        //TheFuckMeAuto << messes up midline
+        //3.5PMidMSFar1
+        //3PAmpA1
+    return new PathPlannerAuto("3PAmpA1");
     }
 } 

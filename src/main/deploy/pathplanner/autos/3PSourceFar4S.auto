@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.71,
-      "y": 6.72
+      "x": 0.72,
+      "y": 4.368142031576504
     },
-    "rotation": -120.0
+    "rotation": 120.0
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.9
           }
         },
         {
@@ -34,66 +34,28 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "parallel",
                 "data": {
                   "commands": [
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToAMPNoteFromAMP"
+                        "pathName": "StartSourceFar4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromAMPNoteToAMP"
+                        "pathName": "FromFar4ToSource"
                       }
                     }
                   ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": null
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromMidNoteToAMP"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
                 }
               }
             ]
@@ -108,6 +70,6 @@
       ]
     }
   },
-  "folder": "3P",
+  "folder": null,
   "choreoAuto": false
 }

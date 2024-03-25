@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9346939692452838,
-        "y": 7.412959533479694
+        "x": 1.9229831326995024,
+        "y": 7.670597937486888
       },
       "isLocked": false,
       "linkedName": "StartAMPAMPNote"
@@ -20,8 +20,8 @@
         "y": 6.722020177278586
       },
       "prevControl": {
-        "x": 0.9098760015701849,
-        "y": 7.155148128478076
+        "x": 0.9275620263080739,
+        "y": 7.366116187296568
       },
       "nextControl": null,
       "isLocked": false,

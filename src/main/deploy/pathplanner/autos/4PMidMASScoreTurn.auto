@@ -62,6 +62,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "ShootNoteAuto"
@@ -141,6 +147,12 @@
           "type": "named",
           "data": {
             "name": "ShootNoteAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterStop"
           }
         }
       ]

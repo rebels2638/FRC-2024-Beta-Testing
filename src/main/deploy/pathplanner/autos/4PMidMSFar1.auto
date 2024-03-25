@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.71,
-      "y": 6.72
+      "x": 1.37,
+      "y": 5.52
     },
-    "rotation": -120.0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -34,28 +34,72 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToAMPNoteFromAMP"
+                        "pathName": "ToMidNoteFromMid"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromAMPNoteToAMP"
+                        "pathName": "FromMidNoteToMid"
                       }
                     }
                   ]
                 }
-              },
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteAuto"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
               {
                 "type": "named",
                 "data": {
                   "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToAMPNoteFromMidTurn"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromAMPNoteToMid"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -76,24 +120,37 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "wait",
                       "data": {
-                        "pathName": null
+                        "waitTime": 0.8
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "FromMidNoteToAMP"
+                        "name": "IntakeNote"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "IntakeNote"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToFar1FromMid"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromFar1ToMid"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -102,12 +159,12 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootNoteAuto"
+            "name": "ShooterStop"
           }
         }
       ]
     }
   },
-  "folder": "3P",
+  "folder": "4P",
   "choreoAuto": false
 }

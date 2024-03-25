@@ -11,7 +11,7 @@ public class PivotMidway extends Command {
 
     @Override
     public void initialize() { 
-        pivotSubsystem.setDegAngle(33);
+        pivotSubsystem.setDegAngle(40);
     }
 
     @Override

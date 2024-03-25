@@ -21,7 +21,6 @@ public class IntakeNoteAuto extends SequentialCommandGroup {
             new StopIntake(),
             new PivotToTorus(),
             new RollIntakeIn(),
-            new LEDController(0.61),
             new InIntake(),
             new StopIntake(),
             new PivotMidway(),
@@ -29,10 +28,9 @@ public class IntakeNoteAuto extends SequentialCommandGroup {
             new OutIntake(),
             new StopIntake(), 
             new RollIntakeInSlow(), 
-            new WaitCommand(0.33),
+            new WaitCommand(0.25),
             new StopIntake(),
-            new PivotTurtle(),
-            new LEDController(0.77)
+            new PivotTurtle()
         );
     }
 }

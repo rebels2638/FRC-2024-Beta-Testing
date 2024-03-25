@@ -26,6 +26,8 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
         m_motor.setIdleMode(CANSparkMax.IdleMode.kBrake); //This is desirable, trust me kBrake
         m_motor.clearFaults();
         m_motor.setInverted(true);
+
+        zeroAngle();
     }
 
     

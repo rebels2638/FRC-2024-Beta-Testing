@@ -30,7 +30,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     private static final double kMAX_CURRENT_AMPS = 35;
     private static final double kMAX_VOLTAGE = 12;
 
-    private static final double kMIN_CLIMBER_HEIGHT = -0.5;
+    private static final double kMIN_CLIMBER_HEIGHT = 0;
     private static final double kMAX_CLIMBER_HEIGHT = 0.36; //TODO: Alt. for man. 0.35 max as of 3/20/2024
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
@@ -46,6 +46,11 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         m_motor2.setInverted(false);
         m_motor1.setNeutralMode(NeutralModeValue.Brake);
         m_motor2.setNeutralMode(NeutralModeValue.Brake); 
+
+        m_motor1.clearStickyFaults();
+        m_motor2.clearStickyFaults();
+
+
         
         climberHeightMeters = 0; //initial zero at current position
 

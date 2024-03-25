@@ -11,7 +11,7 @@ public class PivotTurtle extends Command {
 
     @Override
     public void initialize() { 
-        pivotSubsystem.setDegAngle(2);
+        pivotSubsystem.setDegAngle(0);
     }
 
     @Override

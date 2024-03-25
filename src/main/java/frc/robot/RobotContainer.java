@@ -33,6 +33,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
@@ -137,8 +138,8 @@ public class RobotContainer {
   Shuffleboard.getTab("DriverStation").add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
 
      
-    UsbCamera Camera = CameraServer.startAutomaticCapture();
-    Shuffleboard.getTab("auto").add(Camera);
+    // UsbCamera Camera = CameraServer.startAutomaticCapture();
+    // Shuffleboard.getTab("auto").add(Camera);
     
     // setInstances();
     // Instantiate our controllers with proper ports.
@@ -247,6 +248,7 @@ public class RobotContainer {
     this.xboxOperator.getAButton().onTrue(new RollIntakeIn()); // change back to shootNoteTele
     this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(feedHold));
+    this.xboxOperator.getRightMiddleButton().onTrue(new ParallelCommandGroup(new MoveElevatorAMP(), new IntakeNote()));
 
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
         //TrevorBallshack Controls

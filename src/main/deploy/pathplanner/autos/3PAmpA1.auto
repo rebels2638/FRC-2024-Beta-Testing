@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.9
           }
         },
         {
@@ -72,6 +72,12 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -89,12 +95,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
               }
             ]
           }
@@ -103,6 +103,12 @@
           "type": "named",
           "data": {
             "name": "ShootNoteAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterStop"
           }
         }
       ]
