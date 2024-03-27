@@ -6,7 +6,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class PoseLimelightIOReal implements PoseLimelightIO {
     private NetworkTable llTable;
     public PoseLimelightIOReal() {
-        llTable = NetworkTableInstance.getDefault().getTable("PoseLimelight");
+        llTable = NetworkTableInstance.getDefault().getTable("limelight");
 
     }
     public void updateInputs(PoseLimelightIOInputs inputs) {

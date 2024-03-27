@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
 import org.littletonrobotics.junction.Logger;
 
+import com.fasterxml.jackson.databind.node.POJONode;
+
 import frc.robot.Utils.Constants;
 import frc.robot.lib.swervelib.SwerveController;
 import frc.robot.lib.swervelib.SwerveDrive;
@@ -61,16 +63,16 @@ public class SwerveSubsystem extends SubsystemBase
    */
   //private static final SimpleMotorFeedforward FEEDFORWARD = new SimpleMotorFeedforward(0.16026, 0.0023745, 2.774E-05);
 
-  // private PoseLimelight poseLimelightSubsystem;
+  private PoseLimelight poseLimelightSubsystem;
   private SwerveSubsystemIO io;
   private SwerveSubsystemIOInputsAutoLogged inputs = new SwerveSubsystemIOInputsAutoLogged();
 
   private static final PIDController translationPIDController = new PIDController(0.000, 0, 0);
 
-  public SwerveSubsystem(File directory /*, PoseLimelight poseLimelightSubsystem */) {
+  public SwerveSubsystem(File directory /* , PoseLimelight poseLimelightSubsystem */) {
     
     // translationPIDController.setTolerance(0.06);
-    // this.poseLimelightSubsystem = poseLimelightSubsystem;
+    this.poseLimelightSubsystem = poseLimelightSubsystem;
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
@@ -141,7 +143,8 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.updateOdometry();
 
     // if (poseLimelightSubsystem.hasValidTargets()) {
-    //   swerveDrive.addVisionMeasurement(poseLimelightSubsystem.getEstimatedRobotPose(), poseLimelightSubsystem.getTimestampSeconds());
+    //   Translation2d rawTranslation = poseLimelightSubsystem.getEstimatedRobotPose().getTranslation();
+    //  swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, getYaw()), poseLimelightSubsystem.getTimestampSeconds());
     // }
 
     

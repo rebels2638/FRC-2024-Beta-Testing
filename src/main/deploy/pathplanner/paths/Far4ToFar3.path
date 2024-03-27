@@ -3,48 +3,48 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7284778050297884,
-        "y": 4.368142031576503
+        "x": 8.06,
+        "y": 2.56
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2868567247017388,
-        "y": 3.3698177726580463
+        "x": 7.549969715319653,
+        "y": 2.8120787010804436
       },
       "isLocked": false,
-      "linkedName": "Source"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.860377261410728,
-        "y": 0.7846260485673593
+        "x": 8.191320998026612,
+        "y": 3.6606357828100275
       },
       "prevControl": {
-        "x": 5.668815006353703,
-        "y": 0.5092483007259745
+        "x": 7.767042457157444,
+        "y": 3.3251597272424966
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Far5"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": 120.0,
+      "waypointRelativePos": 0.0,
+      "rotationDegrees": -90.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.75,
-      "maxWaypointRelativePos": 1.0,
+      "minWaypointRelativePos": 0.25,
+      "maxWaypointRelativePos": 0.95,
       "constraints": {
-        "maxVelocity": 3.0,
-        "maxAcceleration": 1.5,
-        "maxAngularVelocity": 720.0,
-        "maxAngularAcceleration": 360.0
+        "maxVelocity": 1.0,
+        "maxAcceleration": 0.7,
+        "maxAngularVelocity": 400.0,
+        "maxAngularAcceleration": 200.0
       }
     }
   ],
@@ -57,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
-    "rotateFast": true
+    "rotation": -90.0,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": "Far5",
+  "folder": "Far4",
   "previewStartingState": {
-    "rotation": 120.0,
+    "rotation": 135.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

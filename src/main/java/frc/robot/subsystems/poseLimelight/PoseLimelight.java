@@ -20,6 +20,8 @@ public class PoseLimelight extends SubsystemBase{
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("PoseLimelight", inputs);
+
+        Logger.recordOutput("PoseLimelight/estRobotPose", getEstimatedRobotPose());
     }
 
     public boolean hasValidTargets() {

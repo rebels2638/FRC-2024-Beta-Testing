@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.4
           }
         },
         {
@@ -40,7 +40,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": null
+                        "pathName": "ToFar5FromSource"
                       }
                     },
                     {
@@ -53,18 +53,25 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "IntakeNote"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeNote"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.7
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CancelIntakeNote"
           }
         },
         {
@@ -84,13 +91,32 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToSourceNoteFromSource"
+                        "pathName": "StartSourceFar4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromSourceNoteToSource"
+                        "pathName": "FromFar4ToSource"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.7
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeNote"
                       }
                     }
                   ]
@@ -104,10 +130,16 @@
           "data": {
             "name": "ShootNoteAuto"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterStop"
+          }
         }
       ]
     }
   },
-  "folder": "3P",
+  "folder": null,
   "choreoAuto": false
 }

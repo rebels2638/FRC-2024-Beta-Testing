@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -45,6 +46,7 @@ double value;
     // colorBlinkin.set(value);
     double color = 0.0;
     if (DriverStation.isAutonomous()) {colorBlinkin.set(0.87);} // blue
+
     else {
 
       if ((Shooter.getInstance().inShooter() || Intake.getInstance().inIntake())) {
@@ -55,14 +57,16 @@ double value;
         color = 0.15; // strobe
       }
 
+      // else if (Climber.getInstance().) {
+      //   color = ; // isClimbing strobe
+      // }
+
       else {
         color = 0.61; // red
       }
       colorBlinkin.set(color);
 
     }
-
-    // colorBlinkin.set(color);
 
     // This method will be called once per scheduler run
   }

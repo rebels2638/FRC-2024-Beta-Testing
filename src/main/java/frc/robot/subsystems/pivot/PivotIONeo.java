@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils.RebelUtil;
 
@@ -16,19 +17,21 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ArmFeedforward positionFeedForwardController = new ArmFeedforward(0, 0, 0);
-    private static final double kMAX_POSITION_RAD = Math.toRadians(91);
-    private static final double kMIN_POSITION_RAD = Math.toRadians(-1);
+    private static final double kMAX_POSITION_RAD = 1.9; //Math.toRadians(91)
+    private static final double kMIN_POSITION_RAD = -1;
     private static final double kMAX_VOLTAGE = 12;
     private static double currentRadAngle;
     private static double currentVelocityRadPerSec;
+
+    private DutyCycleEncoder absEncoder = new DutyCycleEncoder(5);
 
     public PivotIONeo() {
         m_motor.setIdleMode(CANSparkMax.IdleMode.kBrake); //This is desirable, trust me kBrake
         m_motor.clearFaults();
         m_motor.setInverted(true);
-
+        absEncoder.setDistancePerRotation(-2 * Math.PI  );
         zeroAngle();
-    }
+    }    
 
     
     public void toggleMode() {
@@ -42,15 +45,22 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
 
     @Override
     public void updateInputs(PivotIOInputs inputs) {
-        inputs.positionRad = m_motor.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * 2;
-        currentRadAngle = m_motor.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * 2;
-        inputs.positionDeg = m_motor.getEncoder().getPosition() * kMotorToOutputShaftRatio * 360;
+        // inputs.positionRad = m_motor.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * 2;
+        // currentRadAngle = m_motor.getEncoder().getPosition() * kMotorToOutputShaftRatio * Math.PI * 2;
+        currentRadAngle = absEncoder.getDistance();
+        inputs.positionRad = currentRadAngle;
+        // inputs.positionDeg = m_motor.getEncoder().getPosition() * kMotorToOutputShaftRatio * 360;
 
-        inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2;
-        currentVelocityRadPerSec =  m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2;
-        inputs.velocityDegSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * 360;
+        // inputs.velocityRadSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2;
+        // currentVelocityRadPerSec =  m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * Math.PI * 2;
+        // inputs.velocityDegSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * 360;
 
         inputs.reachedSetpoint = reachedSetpoint(true);
+        Logger.recordOutput("pivotAbs", absEncoder.getDistance());
+        // System.out.println("REV encoder: " + absEncoder.getDistance()); //0.692, 0.0146   
+
+        // System.out.println("REV encoder: " + absEncoder.getAbsolutePosition()); //0.692, 0.0146   
+
     }
     @Override
     // sould be called periodically
@@ -83,7 +93,7 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
         }
 
         Logger.recordOutput("Pivot/voltageOut", voltageOut);
-        m_motor.setVoltage(voltageOut);
+        // m_motor.setVoltage(voltageOut);
     } 
 
     // @Override

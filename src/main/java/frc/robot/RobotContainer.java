@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystemIO;
@@ -48,6 +49,7 @@ import frc.robot.commands.AutoRunner;
 import frc.robot.commands.LEDController;
 import frc.robot.commands.Intake.RollIntakeEject;
 import frc.robot.commands.Intake.RollIntakeIn;
+import frc.robot.commands.Intake.RollIntakeInSlow;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.climber.MoveClimberDown;
 import frc.robot.commands.climber.MoveClimberRaw;
@@ -131,6 +133,7 @@ public class RobotContainer {
   private final Pivot pivotSubsystem;
   private final Climber climberSubsystem;
 
+  private final PoseLimelight poseLimelight;
   // private HttpCamera limelightFeed;
 
   public RobotContainer() {
@@ -193,9 +196,11 @@ public class RobotContainer {
 
         LEDSubsystem.setInstance(new LEDSubsystem());
 
+
         break;
     }
-    
+            poseLimelight = new PoseLimelight(new PoseLimelightIOReal());
+
     autoRunner = new AutoRunner(swerveSubsystem);
 
 
@@ -220,45 +225,48 @@ public class RobotContainer {
     NamedCommands.registerCommand("PivotToTorus", new PivotToTorus());
     NamedCommands.registerCommand("CancelIntakeNote", new CancelIntakeNote(intake, null));
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
+    NamedCommands.registerCommand("LobNoteAuto", new SequentialCommandGroup(
+                                                        new ParallelCommandGroup(new WaitCommand(0.4), new ShooterWindup(30)),
+                                                        new RollIntakeIn()));
 
 
-    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    // climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));
-    // xboxTester.getAButton().onTrue(new PivotToTorus());
-    // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
-    // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
-    // xboxTester.getAButton().onTrue(new LEDController(0.91));
+    // // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    // // climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));
+    // // xboxTester.getAButton().onTrue(new PivotToTorus());
+    // // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
+    // // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
+    // // xboxTester.getAButton().onTrue(new LEDController(0.91));
 
-    // // xboxTester.getXButton().onTrue(new PivotTurtle());
-    // xboxTester.getXButton().onTrue(new MoveClimberDown());
-    // xboxTester.getAButton().whileTrue(new TurnCommand(swerveSubsystem));
-    // xboxTester.getLeftMiddleButton().onTrue(new Climb());
-    // // xboxTester.getRightMiddleButton().onTrue(new Thing6());
-    // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
-    // xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
+    // // // xboxTester.getXButton().onTrue(new PivotTurtle());
+    // // xboxTester.getXButton().onTrue(new MoveClimberDown());
+    // // xboxTester.getAButton().whileTrue(new TurnCommand(swerveSubsystem));
+    // // xboxTester.getLeftMiddleButton().onTrue(new Climb());
+    // // // xboxTester.getRightMiddleButton().onTrue(new Thing6());
+    // // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
+    // // xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
 
-    this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
-    this.xboxDriver.getAButton().onTrue(new MoveClimberDown()); // TODO: recomment
+    // this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
+    // this.xboxDriver.getAButton().onTrue(new MoveClimberDown()); // TODO: recomment
 
     
-    // //Michaelangelo controls
-    this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
-    this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
-    this.xboxOperator.getYButton().onTrue(new ScoreAMP()); // changed
-    this.xboxOperator.getAButton().onTrue(new RollIntakeIn()); // change back to shootNoteTele
-    this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());
-    this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(feedHold));
-    this.xboxOperator.getRightMiddleButton().onTrue(new ParallelCommandGroup(new MoveElevatorAMP(), new IntakeNote()));
+    // // //Michaelangelo controls
+    // this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
+    // this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
+    // this.xboxOperator.getYButton().onTrue(new ScoreAMP()); // changed
+    // this.xboxOperator.getAButton().onTrue(new RollIntakeIn()); // change back to shootNoteTele
+    // this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());
+    // this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(feedHold));
+    // this.xboxOperator.getRightMiddleButton().onTrue(new ParallelCommandGroup(new MoveElevatorAMP(), new IntakeNote()));
 
-    this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
-        //TrevorBallshack Controls
-    swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
-    // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
-    this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
-    this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
-    this.xboxDriver.getYButton().onTrue(new Climb());
+    // this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
+    //     //TrevorBallshack Controls
+    // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
+    // this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
+    // // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
+    // this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
+    // this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
+    // this.xboxDriver.getYButton().onTrue(new Climb());
     // Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     // this.xboxDriver.getAButton().onTrue(new PivotTurtle());
     // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());

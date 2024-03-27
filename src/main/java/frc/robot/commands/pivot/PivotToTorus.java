@@ -11,7 +11,9 @@ public class PivotToTorus extends Command {
 
     @Override
     public void initialize() { 
-        pivotSubsystem.setDegAngle(89);
+        // pivotSubsystem.setDegAngle(89);
+        pivotSubsystem.setDegAngle(0.8);
+        
     }
 
     @Override

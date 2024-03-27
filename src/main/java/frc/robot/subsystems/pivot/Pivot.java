@@ -15,7 +15,7 @@ public class Pivot extends SubsystemBase{
     private final PivotIOInputsAutoLogged inputs = new PivotIOInputsAutoLogged();
     private boolean velocityControlmode;
 
-    PIDController upPositionFeedBackController;
+    PIDController upPositionFeedBackController; 
     PIDController downPositionFeedBackController;
 
     ArmFeedforward downPositionFeedForwardController;
@@ -51,7 +51,8 @@ public class Pivot extends SubsystemBase{
         Logger.processInputs("Pivot", inputs);
 
         Logger.recordOutput("Pivot/desiredDegAngle", desiredDegAngle);
-        io.setPosition(Math.toRadians(desiredDegAngle));
+        // io.setPosition(Math.toRadians(desiredDegAngle));
+        io.setPosition(desiredDegAngle);
     }
 
     public void setDegAngle(double angle) {

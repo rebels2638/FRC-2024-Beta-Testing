@@ -12,21 +12,60 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ShooterWindUp"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToFar5FromSource"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromFar5ToShot"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeNote"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.3
+            "name": "LobNoteAuto"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ShootNoteAuto"
+            "pathName": "SourceShotToFar4"
           }
         },
         {
@@ -40,13 +79,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": null
+                        "pathName": "Far4ToFar3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromFar5ToSource"
+                        "pathName": "FromFar3ToSource"
                       }
                     }
                   ]
@@ -64,50 +103,12 @@
         {
           "type": "named",
           "data": {
-            "name": "CancelIntakeNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ToSourceNoteFromSource"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromSourceNoteToSource"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "ShootNoteAuto"
           }
         }
       ]
     }
   },
-  "folder": "3P",
+  "folder": "LAST DEFENSE",
   "choreoAuto": false
 }
