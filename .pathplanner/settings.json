@@ -20,9 +20,9 @@
     "LAST DEFENSE",
     "OldAndWorking"
   ],
-  "defaultMaxVel": 6.0,
-  "defaultMaxAccel": 3.0,
-  "defaultMaxAngVel": 720.0,
-  "defaultMaxAngAccel": 360.0,
+  "defaultMaxVel": 4.0,
+  "defaultMaxAccel": 2.5,
+  "defaultMaxAngVel": 360.0,
+  "defaultMaxAngAccel": 180.0,
   "maxModuleSpeed": 15.0
 }

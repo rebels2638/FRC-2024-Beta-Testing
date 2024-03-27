@@ -50,6 +50,9 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         m_motor1.clearStickyFaults();
         m_motor2.clearStickyFaults();
 
+        // m_motor1.optimizeBusUtilization();
+        // m_motor2.optimizeBusUtilization();
+
 
         
         climberHeightMeters = 0; //initial zero at current position

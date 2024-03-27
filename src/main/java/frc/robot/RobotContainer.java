@@ -253,7 +253,7 @@ public class RobotContainer {
     this.xboxOperator.getRightBumper().onTrue(new ShooterWindup());
     this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
     this.xboxOperator.getYButton().onTrue(new ScoreAMP()); // changed
-    this.xboxOperator.getAButton().onTrue(new RollIntakeIn()); // change back to shootNoteTele
+    this.xboxOperator.getAButton().onTrue(new ShootNoteTele()); // change back to shootNoteTele
     this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(feedHold));
     this.xboxOperator.getRightMiddleButton().onTrue(new ParallelCommandGroup(new MoveElevatorAMP(), new IntakeNote()));

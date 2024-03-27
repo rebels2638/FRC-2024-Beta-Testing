@@ -51,8 +51,8 @@ public class Pivot extends SubsystemBase{
         Logger.processInputs("Pivot", inputs);
 
         Logger.recordOutput("Pivot/desiredDegAngle", desiredDegAngle);
-        // io.setPosition(Math.toRadians(desiredDegAngle));
-        io.setPosition(desiredDegAngle);
+        io.setPosition(Math.toRadians(desiredDegAngle));
+        // io.setPosition(desiredDegAngle);
     }
 
     public void setDegAngle(double angle) {

@@ -95,6 +95,7 @@ public class AutoRunner {
         //TheFuckMeAuto << messes up midline
         //3.5PMidMSFar1
         //3PAmpA1
-    return new PathPlannerAuto("3PAmpA1");
+        //3PMidMAScoreTurn
+    return new PathPlannerAuto("4PMidMASScoreTurn");
     }
 } 
