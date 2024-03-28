@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Utils.Constants;
+import frc.robot.lib.input.XboxController;
 import frc.robot.lib.swervelib.SwerveController;
 import frc.robot.lib.swervelib.math.SwerveMath;
 
@@ -21,7 +22,7 @@ import frc.robot.subsystems.swerve.SwerveSubsystem;
  */
 public class AbsoluteFieldDrive extends Command
 {
-
+  private final XboxController cXboxController;
   private final SwerveSubsystem swerve;
   private final DoubleSupplier  vX, vY, heading;
   private final boolean isOpenLoop;
@@ -46,7 +47,7 @@ public class AbsoluteFieldDrive extends Command
    *                station glass.
    * @param heading DoubleSupplier that supplies the robot's heading angle.
    */
-  public AbsoluteFieldDrive(SwerveSubsystem swerve, DoubleSupplier vX, DoubleSupplier vY,
+  public AbsoluteFieldDrive(SwerveSubsystem swerve, XboxController cXboxController1, DoubleSupplier vX, DoubleSupplier vY,
                             DoubleSupplier heading, boolean isOpenLoop)
   {
     this.swerve = swerve;
@@ -54,6 +55,7 @@ public class AbsoluteFieldDrive extends Command
     this.vY = vY;
     this.heading = heading;
     this.isOpenLoop = isOpenLoop;
+    cXboxController = cXboxController1;
 
 
     addRequirements(swerve);
@@ -69,7 +71,7 @@ public class AbsoluteFieldDrive extends Command
   @Override
   public void execute()
   {
-    
+    // if(cXboxController.getLeftMiddleButton().)
 
     // Get the desired chassis speeds based on a 2 joystick module.
     ChassisSpeeds desiredSpeeds;
@@ -90,7 +92,6 @@ public class AbsoluteFieldDrive extends Command
     //                                        swerve.getSwerveDriveConfiguration());
     SmartDashboard.putNumber("LimitedTranslation", translation.getX());
     SmartDashboard.putString("Translation", translation.toString());
-    
     // Make the robot move
     swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, true, false, true);
   }

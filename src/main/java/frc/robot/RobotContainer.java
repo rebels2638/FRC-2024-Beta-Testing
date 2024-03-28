@@ -207,7 +207,7 @@ public class RobotContainer {
     SequentialCommandGroup intake, feedHold;
 
 
-    closedFieldAbsoluteDrive = new AbsoluteFieldDrive(swerveSubsystem,
+    closedFieldAbsoluteDrive = new AbsoluteFieldDrive(swerveSubsystem, xboxDriver,
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getLeftX(),OperatorConstants.LEFT_X_DEADBAND),
     () -> MathUtil.applyDeadband(-xboxDriver.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), false);
@@ -216,6 +216,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("MoveElevatorTurtle", new MoveElevatorTurtle());
     NamedCommands.registerCommand("ShooterWindUp", new ShooterWindup());
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
+    NamedCommands.registerCommand("RollIntakeEject", new RollIntakeEject());
     NamedCommands.registerCommand("StopIntake", new StopIntake());
     NamedCommands.registerCommand("IntakeNote", intake = new IntakeNoteAuto());
     NamedCommands.registerCommand("ShooterStop", new ShooterStop());
@@ -227,7 +228,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("RollIntakeIn", new RollIntakeIn());
     NamedCommands.registerCommand("LobNoteAuto", new SequentialCommandGroup(
                                                         new ParallelCommandGroup(new WaitCommand(0.4), new ShooterWindup(30)),
-                                                        new RollIntakeIn()));
+                                                        new RollIntakeIn(),
+                                                        new StopIntake(),
+                                                        new ShooterStop()));
 
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
@@ -269,7 +272,8 @@ public class RobotContainer {
     this.xboxDriver.getYButton().onTrue(new Climb());
     Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     this.xboxDriver.getAButton().onTrue(new PivotTurtle());
-    this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());
+    // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());
+
     this.xboxDriver.getRightMiddleButton().onTrue(new PivotTurtle());
   }
 

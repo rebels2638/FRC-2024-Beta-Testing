@@ -12,9 +12,21 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "RollIntakeEject"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "ToFar1RideWall"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopIntake"
           }
         },
         {

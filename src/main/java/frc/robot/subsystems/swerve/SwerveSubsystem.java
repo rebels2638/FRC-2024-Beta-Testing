@@ -86,7 +86,7 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setMotorIdleMode(true);
     swerveDrive.chassisVelocityCorrection = true;
     swerveDrive.setHeadingCorrection(true, 0);
-    swerveDrive.replaceSwerveModuleFeedforward(new SimpleMotorFeedforward(0.16, 1,  0.15)); //0.16, 1.92, 0.1
+    swerveDrive.replaceSwerveModuleFeedforward(new SimpleMotorFeedforward(0.16, 1.3,  0.15)); //0.16, 1.92, 0.1
   }
 
   public void setIO(SwerveSubsystemIO io) {

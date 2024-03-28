@@ -54,12 +54,12 @@ public final class Constants
   public static final class Auton
   {
 
-    public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(7.345, 0, 0.0005);
-    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(9.2, 0, 0.001); //0.01, 0 ,0.0002
+    public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(1, 0, 0.00055); //1
+    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(3.85, 0, 0.0012); //3.8, 0 ,0.0002
 
     public static final double MAX_SPEED = 4;
-    public static final double MAX_ACCELERATION = 3;
-    public static final double MAX_ANGULAR_VELO_RPS = 2;
+    public static final double MAX_ACCELERATION = 2.5;
+    public static final double MAX_ANGULAR_VELO_RPS = 1;
     public static final double MAX_ANGULAR_ACCEL_RPS_SQUARED = .5;
 
     public static final HolonomicPathFollowerConfig DRIVE_CONTROLLER_CONFIG = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
@@ -77,7 +77,7 @@ public final class Constants
     // Hold time on motor brakes when disabled
     public static final double WHEEL_LOCK_TIME = 1; // seconds
     public static final double MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC = 4; //11.5 // 9
-    public static final double MAX_DEG_SEC_ROTATIONAL_VELOCITY = 540;
+    public static final double MAX_DEG_SEC_ROTATIONAL_VELOCITY = 235;
   }
 
   public static class OperatorConstants
@@ -85,10 +85,10 @@ public final class Constants
 
     // Joystick Deadband
     // yes, this high
-    public static final double LEFT_X_DEADBAND = 0.05;
-    public static final double LEFT_Y_DEADBAND = 0.05;
+    public static final double LEFT_X_DEADBAND = 0.09;
+    public static final double LEFT_Y_DEADBAND = 0.09;
     
-    public static final double RIGHT_X_DEADBAND = 0.05;
+    public static final double RIGHT_X_DEADBAND = 0.09;
   }
 
   public static final class FieldConstants {
