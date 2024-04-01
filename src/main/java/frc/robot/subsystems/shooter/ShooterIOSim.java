@@ -15,7 +15,7 @@ public class ShooterIOSim extends SubsystemBase implements ShooterIO {
 
     @Override
     // sould be called periodically
-    public void setVelocityRadSec(double goalVelocityRadPerSec) {
+    public void setVelocityRadSec(double goalVelocityRadPerSec, boolean isVar, double Bottom, double Top) {
         desiredVelocityRadSec = goalVelocityRadPerSec;
     } 
 

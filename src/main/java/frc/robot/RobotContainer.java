@@ -231,6 +231,7 @@ public class RobotContainer {
                                                         new RollIntakeIn(),
                                                         new StopIntake(),
                                                         new ShooterStop()));
+    NamedCommands.registerCommand("VariableShoot", new InstantCommand(() -> Shooter.getInstance().setVelocityRadSec(0, true, 65, 17.5)));
 
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
@@ -272,9 +273,13 @@ public class RobotContainer {
     this.xboxDriver.getYButton().onTrue(new Climb());
     Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     this.xboxDriver.getAButton().onTrue(new PivotTurtle());
-    // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());
+    // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());  
 
-    this.xboxDriver.getRightMiddleButton().onTrue(new PivotTurtle());
+    this.xboxDriver.getRightMiddleButton().onTrue(new PivotToTorus());
+    this.xboxTester.getRightMiddleButton().onTrue(new InstantCommand(() -> Shooter.getInstance().setVelocityRadSec(0, true, 65, 17))); //65, 17, for 2.08m out of the center of speaker. 
+    this.xboxTester.getRightBumper().onTrue(new StopIntake());
+    this.xboxTester.getLeftBumper().onTrue(new ShooterStop());
+    this.xboxTester.getAButton().onTrue(new RollIntakeIn());
   }
 
   public static RobotContainer getInstance() {

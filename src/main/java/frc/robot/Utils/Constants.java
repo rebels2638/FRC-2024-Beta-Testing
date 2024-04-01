@@ -55,12 +55,12 @@ public final class Constants
   {
 
     public static final PIDConstants TRANSLATION_PID_CONFIG = new PIDConstants(1, 0, 0.00055); //1
-    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(3.85, 0, 0.0012); //3.8, 0 ,0.0002
+    public static final PIDConstants ANGLE_PID_CONFIG = new PIDConstants(3.855, 0.025, 0.00012); //3.855, 0 ,0.00012
 
     public static final double MAX_SPEED = 4;
     public static final double MAX_ACCELERATION = 2.5;
-    public static final double MAX_ANGULAR_VELO_RPS = 1;
-    public static final double MAX_ANGULAR_ACCEL_RPS_SQUARED = .5;
+    public static final double MAX_ANGULAR_VELO_RPS = 2; // 1
+    public static final double MAX_ANGULAR_ACCEL_RPS_SQUARED = 1; // 0.5
 
     public static final HolonomicPathFollowerConfig DRIVE_CONTROLLER_CONFIG = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                         Constants.Auton.TRANSLATION_PID_CONFIG, // Translation PID constants

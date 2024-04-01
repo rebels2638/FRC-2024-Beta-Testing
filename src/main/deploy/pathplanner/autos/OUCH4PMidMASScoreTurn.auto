@@ -52,7 +52,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromMidNoteToMid"
+                        "pathName": "Copy of FromMidNoteToMid"
                       }
                     }
                   ]
@@ -70,7 +70,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootNoteAuto"
+            "name": "VariableShoot"
           }
         },
         {

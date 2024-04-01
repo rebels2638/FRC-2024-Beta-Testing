@@ -15,6 +15,10 @@ public class Shooter extends SubsystemBase{
     private static Shooter instance = null;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
+    private boolean isVariable = false;
+    private double Top = 0; 
+    private double Bottom = 0;
+
     PIDController velocityFeedBackController;
     SimpleMotorFeedforward velocityFeedForwardController;
 
@@ -33,11 +37,14 @@ public class Shooter extends SubsystemBase{
         Logger.processInputs("Shooter", inputs);
 
         Logger.recordOutput("Shooter/desiredVelocityRadSec", desiredVelocityRadSec);
-        io.setVelocityRadSec(desiredVelocityRadSec);
+        io.setVelocityRadSec(desiredVelocityRadSec, isVariable, Bottom, Top);
     }
 
-    public void setVelocityRadSec(double velo) {
+    public void setVelocityRadSec(double velo, boolean isVar, double BottomWheel, double TopWheel) {
         desiredVelocityRadSec = velo;
+        isVariable = isVar;
+        Bottom = BottomWheel;
+        Top = TopWheel;
         return;
     }
 

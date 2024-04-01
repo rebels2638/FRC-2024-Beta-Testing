@@ -45,7 +45,7 @@ public class ShooterToggle extends Command {
                     break;
             }
             
-            shooterSubsystem.setVelocityRadSec(desiredSpeed);
+            shooterSubsystem.setVelocityRadSec(desiredSpeed, false, 0, 0);
         }
     }
 

@@ -91,14 +91,14 @@ public class AutoRunner {
         //4PMidMASScoreTurn
         //3PAmpAM << Amp Side 3 piece      
         //2PAmp << 2 piece Amp'
-        //TheFuckYouAuto << messes up midline
-        //TheFuckMeAuto << messes up midline
         //AmpMidlineDisrupt << Starts form AMp
         //3.5PMidMSFar1
         //3PAmpA1
         //3PMidMAScoreTurn
         //TT << turnTest
         //4PAmpA12
-        return new PathPlannerAuto("AmpMidlineDisrupt");
+        //OUCH4PMidMASScoreTurn
+        //OUCHOUCH4PMidMASScoreTurn
+        return new PathPlannerAuto("4PMidMASScoreTurn");
     }
 } 

@@ -32,6 +32,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
     private double distanceTolerance;
     private double currentVelocityRadPerSec = 0 ;
+    private double currentVelocityRadPerSec2 = 0; //Second motor, m_motor2
 
     private GenericEntry ShooterStatus;
 
@@ -67,6 +68,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
         inputs.velocityRadSec = m_motor1.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio; // we divide by 60 because the motor out is in RPM
+        currentVelocityRadPerSec2 = m_motor2.getEncoder().getVelocity() /60 * kMotorToOutputShaftRatio;
         currentVelocityRadPerSec = inputs.velocityRadSec;
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
         inputs.inShooter = isInShooter(); 
@@ -74,7 +76,31 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
     @Override
     // should be called periodically
-    public void setVelocityRadSec(double goalVelocityRadPerSec) {
+    public void setVelocityRadSec(double goalVelocityRadPerSec, boolean isVariable, double BottomSpeed, double TopSpeed) {
+        if(isVariable){
+            double ffVelo = 0;
+        if (BottomSpeed > currentVelocityRadPerSec) {
+            ffVelo = 1; 
+        }
+        else if (BottomSpeed < currentVelocityRadPerSec) {
+            ffVelo = -1; 
+        }
+            
+            double feedForwardVoltage = velocityFeedForwardController.calculate(BottomSpeed, ffVelo);
+            double outVoltage1 = feedForwardVoltage;
+                ffVelo = 0;
+        if (TopSpeed > currentVelocityRadPerSec) {
+            ffVelo = 1; 
+        }
+        else if (TopSpeed < currentVelocityRadPerSec) {
+            ffVelo = -1; 
+        }
+            feedForwardVoltage = velocityFeedForwardController.calculate(TopSpeed, ffVelo);
+            double outVoltage2 = feedForwardVoltage; 
+
+            m_motor1.setVoltage(outVoltage2);
+            m_motor2.setVoltage(outVoltage1);
+        }else{
         double ffVelo = 0;
         if (goalVelocityRadPerSec > currentVelocityRadPerSec) {
             ffVelo = 1; 
@@ -101,6 +127,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         m_motor2.setVoltage(outVoltage);
 
         ShooterStatus.setBoolean(currentVelocityRadPerSec > 60);
+        }
     } 
 
     @Override

@@ -21,7 +21,7 @@ public class ShooterWindup extends Command {
 
     @Override
     public void initialize(){
-        shooterSubsystem.setVelocityRadSec(velocitySetPoint);
+        shooterSubsystem.setVelocityRadSec(velocitySetPoint, false, 0, 0);
     }
 
     @Override

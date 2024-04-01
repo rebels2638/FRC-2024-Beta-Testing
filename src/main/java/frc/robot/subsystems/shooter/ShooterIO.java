@@ -16,7 +16,7 @@ public interface ShooterIO {
 
     public default void updateInputs(ShooterIOInputs inputs) {}
 
-    public default void setVelocityRadSec(double goalVelocityRadPerSec) {}
+    public default void setVelocityRadSec(double goalVelocityRadPerSec, boolean isVar, double Bot, double Top) {}
 
     public default void configureController(SimpleMotorFeedforward vff, PIDController vfb) {}
 

@@ -16,7 +16,7 @@ public class ShooterStop extends Command {
 
     @Override
     public void initialize(){
-        shooterSubsystem.setVelocityRadSec(0);
+        shooterSubsystem.setVelocityRadSec(0,false, 0, 0);
     }
 
     @Override
