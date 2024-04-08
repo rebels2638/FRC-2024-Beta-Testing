@@ -57,6 +57,8 @@ public class TalonFXSwerve extends SwerveMotor
     this.isDriveMotor = isDriveMotor;
     this.motor = motor;
 
+    this.motor.optimizeBusUtilization(); // TODO: NEW
+
     factoryDefaults();
     clearStickyFaults();
 
