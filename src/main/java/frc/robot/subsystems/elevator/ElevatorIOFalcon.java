@@ -50,6 +50,8 @@ public class ElevatorIOFalcon extends SubsystemBase implements ElevatorIO {
         m_motor1.setNeutralMode(NeutralModeValue.Brake);
         m_motor2.setNeutralMode(NeutralModeValue.Brake);
 
+        zeroHeight();
+
     }
 
     @Override

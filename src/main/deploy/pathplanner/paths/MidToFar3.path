@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.67,
+        "x": 1.3491521419562087,
         "y": 5.51843359236209
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4562089370466949,
-        "y": 5.524405677632315
+        "x": 3.7498736338414176,
+        "y": 5.527514849608872
       },
       "isLocked": false,
-      "linkedName": "StartMidMidNote"
+      "linkedName": "Mid"
     },
     {
       "anchor": {
-        "x": 1.3491521419562087,
-        "y": 5.51843359236209
+        "x": 7.860377261410728,
+        "y": 4.098792791023527
       },
       "prevControl": {
-        "x": 1.7591521419562088,
-        "y": 5.51843359236209
+        "x": 3.8669819992992345,
+        "y": 4.169057810298217
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 1.52,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 1.6,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 180.0
   },
@@ -43,10 +43,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "MidNote",
+  "folder": "Far3",
   "previewStartingState": {
     "rotation": 180.0,
-    "velocity": 0.2
+    "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

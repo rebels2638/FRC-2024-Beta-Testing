@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.35,
+      "x": 1.36,
       "y": 5.52
     },
     "rotation": 180.0
@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.7
           }
         },
         {
@@ -62,9 +62,41 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.3
+            "name": "ShootNoteAuto"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ToSourceNoteFromMidTrans"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FromSourceNoteToMidTrans"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -90,13 +122,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToAMPNoteFromMidTurn"
+                        "pathName": "ToAMPNoteFromMidTrans"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromAMPNoteToMid"
+                        "pathName": "FromAMPNoteToMidTrans"
                       }
                     }
                   ]
@@ -109,51 +141,6 @@
           "type": "named",
           "data": {
             "name": "ShootNoteAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.8
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "IntakeNote"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ToFar1FromMid"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromFar1ToMid"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
           }
         },
         {

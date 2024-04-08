@@ -31,14 +31,15 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     private static final double kMAX_VOLTAGE = 12;
 
     private static final double kMIN_CLIMBER_HEIGHT = 0;
-    private static final double kMAX_CLIMBER_HEIGHT = 0.36; //TODO: Alt. for man. 0.35 max as of 3/20/2024
+    private static final double kMAX_CLIMBER_HEIGHT = 0.36; //TODO: Alt. for man. 0.35 max as of 3/20/2024, .36
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
 
-    private double climberHeightMeters;
+    private double climberHeightMeters = 0;
     private double goalPositionMeters;
     double currentPositionMeters = climberHeightMeters;
+    double currentPositionMeters2 = climberHeightMeters;
 
  
     public ClimberIOFalcon() {
@@ -50,8 +51,8 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         m_motor1.clearStickyFaults();
         m_motor2.clearStickyFaults();
 
-        // m_motor1.optimizeBusUtilization();
-        // m_motor2.optimizeBusUtilization();
+        m_motor1.optimizeBusUtilization();
+        m_motor2.optimizeBusUtilization();
 
 
         
@@ -63,11 +64,16 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
 
     @Override
     public void updateInputs(ClimberIOInputs inputs) {
+        //motor1
         inputs.climberHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters;
         inputs.voltageOut = m_motor1.getDutyCycle().getValueAsDouble() * kMAX_VOLTAGE;
 
+
+
         climberHeightMeters = inputs.climberHeightMeters;
         currentPositionMeters = climberHeightMeters;
+
+        currentPositionMeters2 = m_motor2.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters;
         inputs.reachedSetpoint = positionFeedBackController.atSetpoint();
         inputs.goalPositionMeters = this.goalPositionMeters;    
 
@@ -82,22 +88,37 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         this.goalPositionMeters = goalPositionMeters;
         double currentPositionMeters = climberHeightMeters;
         
+        //Motor1
         positionFeedBackController.setSetpoint(goalPositionMeters);
         double feedBackControllerVoltage = positionFeedBackController.calculate(currentPositionMeters);
         double accel = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
         double feedForwardVoltage = positionFeedForwardController.calculate(goalPositionMeters, accel);
 
+        //Motor2
+        double feedBackControllerVoltage2 = positionFeedBackController.calculate(currentPositionMeters2);
+        double accel2 = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
+        double feedForwardVoltage2 = positionFeedForwardController.calculate(goalPositionMeters, accel2);
+
         double voltageOut = feedForwardVoltage + feedBackControllerVoltage;
         voltageOut = RebelUtil.constrain(voltageOut, -12, 12);
+
+        double voltageOut2 = feedBackControllerVoltage2 + feedForwardVoltage2;
+        voltageOut2 = RebelUtil.constrain(voltageOut, -12, 12);
+
 
         if ((currentPositionMeters > kMAX_CLIMBER_HEIGHT && voltageOut > 0) || 
             (currentPositionMeters < kMIN_CLIMBER_HEIGHT && voltageOut < 0) || 
             (goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT)) {
             voltageOut = 0;
         }
-        // Logger.recordOutput("Climber/voltageOut", voltageOut);
-        m_motor1.setVoltage(voltageOut);
-        m_motor2.setVoltage(voltageOut);
+        if ((currentPositionMeters2> kMAX_CLIMBER_HEIGHT && voltageOut > 0) || 
+            (currentPositionMeters2 < kMIN_CLIMBER_HEIGHT && voltageOut < 0) || 
+            (goalPositionMeters > kMAX_CLIMBER_HEIGHT || goalPositionMeters < kMIN_CLIMBER_HEIGHT)) {
+            voltageOut2 = 0;
+        }
+        // // Logger.recordOutput("Climber/voltageOut", voltageOut);
+        // m_motor1.setVoltage(voltageOut);
+        // m_motor2.setVoltage(voltageOut2);
     }
 
     public double getHeightMeters() {
@@ -110,7 +131,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
             voltage = 0;
         }
 
-       Logger.recordOutput("Climber/voltageOut", voltage);
+    //    Logger.recordOutput("Climber/voltageOut", voltage);
 
         m_motor1.setVoltage(voltage);
         m_motor2.setVoltage(voltage);

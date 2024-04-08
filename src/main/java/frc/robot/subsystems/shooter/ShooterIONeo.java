@@ -35,6 +35,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private double currentVelocityRadPerSec2 = 0; //Second motor, m_motor2
 
     private GenericEntry ShooterStatus;
+    private GenericEntry InShooter;
 
 
     private static final double kMAX_VOLTAGE = 12;
@@ -53,7 +54,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         lineBreakSensor = new DigitalInput(9);
 
         m_motor1.setInverted(false);
-        m_motor2.setInverted(false); // TODO: check inversions.. def wrong
+        m_motor2.setInverted(false); 
         // m_motor2.follow(m_motor1);
 
         // distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kInches, Rev2mDistanceSensor.RangeProfile.kDefault);
@@ -63,6 +64,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         // distanceSensor.setAutomaticMode(true);
         // distanceSensor.setEnabled(true);
         ShooterStatus = Shuffleboard.getTab("auto").add("SHOOTER STATUS", currentVelocityRadPerSec > 60).getEntry();
+        InShooter = Shuffleboard.getTab("auto").add("In Shooter", isInShooter()).getEntry();
     }
 
     @Override
@@ -128,6 +130,8 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
         ShooterStatus.setBoolean(currentVelocityRadPerSec > 60);
         }
+
+        InShooter.setBoolean(isInShooter());
     } 
 
     @Override

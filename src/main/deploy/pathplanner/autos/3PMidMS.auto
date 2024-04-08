@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.37,
+      "x": 1.34,
       "y": 5.51843359236209
     },
     "rotation": 180.0
@@ -103,6 +103,12 @@
           "type": "named",
           "data": {
             "name": "ShootNoteAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterStop"
           }
         }
       ]

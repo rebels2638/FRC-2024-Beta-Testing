@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.262597392527166,
-        "y": 6.335562571267796
+        "x": 2.0166698250657547,
+        "y": 5.234743935964334
       },
       "isLocked": false,
       "linkedName": "StartMidAmpNote"
@@ -20,8 +20,8 @@
         "y": 5.51843359236209
       },
       "prevControl": {
-        "x": 1.7590314210585614,
-        "y": 5.796864090161846
+        "x": 1.8175856037874687,
+        "y": 5.562647359246215
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,17 +32,17 @@
     {
       "waypointRelativePos": 0.1,
       "rotationDegrees": 180.0,
-      "rotateFast": false
+      "rotateFast": true
     }
   ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
       "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.15,
+      "maxWaypointRelativePos": 0.2,
       "constraints": {
-        "maxVelocity": 1.0,
-        "maxAcceleration": 0.25,
+        "maxVelocity": 2.0,
+        "maxAcceleration": 1.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 180.0
       }
@@ -50,8 +50,8 @@
   ],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 1.6,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 180.0
   },

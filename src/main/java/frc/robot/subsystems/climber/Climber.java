@@ -42,6 +42,7 @@ public class Climber extends SubsystemBase{
     }
 
     public void setHeightMeters(double goalPositionMeters) {
+        // 
         Logger.recordOutput("Climber/desiredClimberHeight");
         // io.setHeightMeters(goalPositionMeters); //Duplicate method call
         this.goalPositionMeters = goalPositionMeters;

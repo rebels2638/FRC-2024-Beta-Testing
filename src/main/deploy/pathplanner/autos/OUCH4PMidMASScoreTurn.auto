@@ -30,6 +30,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "VariableShoot"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -62,91 +68,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "RollIntakeIn"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 0.3
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "VariableShoot"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ToSourceNoteFromMid"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromSourceNoteToMid"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ToAMPNoteFromMidTurn"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromAMPNoteToMid"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteAuto"
           }
         },
         {

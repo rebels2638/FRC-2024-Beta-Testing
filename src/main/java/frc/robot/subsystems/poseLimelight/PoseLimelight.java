@@ -21,7 +21,7 @@ public class PoseLimelight extends SubsystemBase{
         io.updateInputs(inputs);
         Logger.processInputs("PoseLimelight", inputs);
 
-        Logger.recordOutput("PoseLimelight/estRobotPose", getEstimatedRobotPose());
+        // Logger.recordOutput("PoseLimelight/estRobotPose", getEstimatedRobotPose());
     }
 
     public boolean hasValidTargets() {

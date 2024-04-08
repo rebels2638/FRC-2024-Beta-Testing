@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9229831326995024,
-        "y": 7.670597937486888
+        "x": 1.7473205845127797,
+        "y": 7.026501927468906
       },
       "isLocked": false,
       "linkedName": "StartAMPAMPNote"
     },
     {
       "anchor": {
-        "x": 0.7050561319382253,
-        "y": 6.722020177278586
+        "x": 0.7,
+        "y": 6.7
       },
       "prevControl": {
-        "x": 0.9275620263080739,
-        "y": 7.366116187296568
+        "x": 1.2320437764983934,
+        "y": 7.0733452736520315
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,16 +29,28 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.3,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 360.0,
+        "maxAngularAcceleration": 180.0
+      }
+    }
+  ],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxVelocity": 4.0,
+    "maxAcceleration": 1.6,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 180.0
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": -120.0,
     "rotateFast": false
   },
@@ -48,5 +60,5 @@
     "rotation": -160.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

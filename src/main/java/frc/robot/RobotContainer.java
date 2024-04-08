@@ -47,6 +47,7 @@ import frc.robot.Utils.Constants.OperatorConstants;
 // import frc.robot.commands.pivot.RollIntake;
 import frc.robot.commands.AutoRunner;
 import frc.robot.commands.LEDController;
+import frc.robot.commands.Intake.InIntake;
 import frc.robot.commands.Intake.RollIntakeEject;
 import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.Intake.RollIntakeInSlow;
@@ -199,7 +200,7 @@ public class RobotContainer {
 
         break;
     }
-            poseLimelight = new PoseLimelight(new PoseLimelightIOReal());
+    poseLimelight = new PoseLimelight(new PoseLimelightIOReal());
 
     autoRunner = new AutoRunner(swerveSubsystem);
 
@@ -232,6 +233,7 @@ public class RobotContainer {
                                                         new StopIntake(),
                                                         new ShooterStop()));
     NamedCommands.registerCommand("VariableShoot", new InstantCommand(() -> Shooter.getInstance().setVelocityRadSec(0, true, 65, 17.5)));
+    NamedCommands.registerCommand("InIntake", new InIntake());
 
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
@@ -239,7 +241,7 @@ public class RobotContainer {
     // xboxTester.getAButton().onTrue(new PivotToTorus());
     // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
     // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
-    // xboxTester.getAButton().onTrue(new LEDController(0.91));
+    // xboxTester.getAButton().onTrue(new LEDController(0.91));p
 
     // // xboxTester.getXButton().onTrue(new PivotTurtle());
     // xboxTester.getXButton().onTrue(new MoveClimberDown());
@@ -249,8 +251,8 @@ public class RobotContainer {
     // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
     // xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
 
-    this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
-    this.xboxDriver.getAButton().onTrue(new MoveClimberDown()); // TODO: recomment
+    // this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
+    // this.xboxDriver.getAButton().onTrue(new MoveClimberDown()); // TODO: recomment
 
     
     // //Michaelangelo controls
@@ -258,9 +260,10 @@ public class RobotContainer {
     this.xboxOperator.getXButton().onTrue(new MoveElevatorToggle());
     this.xboxOperator.getYButton().onTrue(new ScoreAMP()); // changed
     this.xboxOperator.getAButton().onTrue(new ShootNoteTele()); // change back to shootNoteTele
-    this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());
+    this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());  
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(feedHold));
     this.xboxOperator.getRightMiddleButton().onTrue(new ParallelCommandGroup(new MoveElevatorAMP(), new IntakeNote()));
+    this.xboxOperator.getLeftMiddleButton().onTrue(new InstantCommand(() -> Shooter.getInstance().setVelocityRadSec(0, true, 65, 17.5)));
 
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
         //TrevorBallshack Controls
@@ -270,16 +273,16 @@ public class RobotContainer {
     // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
     this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
     this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
-    this.xboxDriver.getYButton().onTrue(new Climb());
+    // this.xboxDriver.get'YButton().onTrue(new Climb());
     Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
-    this.xboxDriver.getAButton().onTrue(new PivotTurtle());
+    // this.xboxDriver.getAButton().onTrue(new PivotTurtle());
     // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());  
 
-    this.xboxDriver.getRightMiddleButton().onTrue(new PivotToTorus());
-    this.xboxTester.getRightMiddleButton().onTrue(new InstantCommand(() -> Shooter.getInstance().setVelocityRadSec(0, true, 65, 17))); //65, 17, for 2.08m out of the center of speaker. 
-    this.xboxTester.getRightBumper().onTrue(new StopIntake());
-    this.xboxTester.getLeftBumper().onTrue(new ShooterStop());
-    this.xboxTester.getAButton().onTrue(new RollIntakeIn());
+    // this.xboxDriver.getRightMiddleButton().onTrue(new PivotToTorus());
+    // this.xboxTester.getRightMiddleButton().onTrue(new InstantCommand(() -> Shooter.getInstance().setVelocityRadSec(0, true, 65, 17))); //65, 17, for 2.08m out of the center of speaker. 
+    // this.xboxTester.getRightBumper().onTrue(new StopIntake());
+    // this.xboxTester.getLeftBumper().onTrue(new ShooterStop());
+    // this.xboxTester.getAButton().onTrue(new RollIntakeIn());
   }
 
   public static RobotContainer getInstance() {

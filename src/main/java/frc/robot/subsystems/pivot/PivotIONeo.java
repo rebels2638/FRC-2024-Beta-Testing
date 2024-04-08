@@ -56,7 +56,7 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
         inputs.velocityDegSec = m_motor.getEncoder().getVelocity() / 60 * kMotorToOutputShaftRatio * 360;
 
         inputs.reachedSetpoint = reachedSetpoint(true);
-        Logger.recordOutput("pivotAbs", absEncoder.getDistance());
+        // Logger.recordOutput("pivotAbs", absEncoder.getDistance());
         // System.out.println("REV encoder: " + absEncoder.getDistance()); //0.692, 0.0146   
 
         // System.out.println("REV encoder: " + absEncoder.getAbsolutePosition()); //0.692, 0.0146   

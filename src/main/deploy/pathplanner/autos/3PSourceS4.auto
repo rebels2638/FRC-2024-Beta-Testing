@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.35,
-      "y": 5.52
+      "x": 0.72,
+      "y": 4.37
     },
-    "rotation": 180.0
+    "rotation": 120.0
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.7
           }
         },
         {
@@ -33,74 +33,30 @@
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SourceToFar4"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Far4ToSource"
+                      }
+                    }
+                  ]
+                }
+              },
               {
                 "type": "named",
                 "data": {
                   "name": "IntakeNote"
                 }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ToMidNoteFromMid"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromMidNoteToMid"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.3
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ToAMPNoteFromMidTurn"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromAMPNoteToMid"
-                      }
-                    }
-                  ]
-                }
               }
             ]
           }
@@ -120,34 +76,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.8
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "IntakeNote"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
                       "type": "path",
                       "data": {
-                        "pathName": "ToFar1FromMid"
+                        "pathName": "ToSourceNoteFromSource"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromFar1ToMid"
+                        "pathName": "FromSourceNoteToSource"
                       }
                     }
                   ]
@@ -159,12 +96,12 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterStop"
+            "name": "ShootNoteAuto"
           }
         }
       ]
     }
   },
-  "folder": "4P",
+  "folder": "3P",
   "choreoAuto": false
 }

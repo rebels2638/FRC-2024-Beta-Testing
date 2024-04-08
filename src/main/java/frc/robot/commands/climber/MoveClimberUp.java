@@ -13,7 +13,7 @@ public class MoveClimberUp extends Command {
     public void initialize() { 
     
     //    climberSubsystem.setHeightMeters(0.515);
-        climberSubsystem.setHeightMeters(0.33); //0.345
+        climberSubsystem.setHeightMeters(0.322); //0.345 //0.33
     }
     
     @Override

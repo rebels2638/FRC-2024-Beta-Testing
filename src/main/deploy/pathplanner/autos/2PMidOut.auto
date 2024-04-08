@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.7
           }
         },
         {
@@ -62,12 +62,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.3
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "ShootNoteAuto"
@@ -78,9 +72,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "IntakeNote"
+                  "pathName": "MidToFar3"
                 }
               },
               {
@@ -88,66 +82,28 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "ToAMPNoteFromMidTurn"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromAMPNoteToMid"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.8
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 6.0
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "IntakeNote"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ToFar1FromMid"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromFar1ToMid"
+                        "name": "CancelIntakeNote"
                       }
                     }
                   ]
@@ -165,6 +121,6 @@
       ]
     }
   },
-  "folder": "4P",
+  "folder": "2P",
   "choreoAuto": false
 }

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7050561319382253,
-      "y": 6.722020177278586
+      "x": 0.7,
+      "y": 6.7
     },
     "rotation": -120.13594030325343
   },
@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.9
+            "waitTime": 0.7
           }
         },
         {
@@ -88,9 +88,15 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "InIntake"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
-                        "pathName": "FromFar1ToAMP"
+                        "pathName": "ToAMPFromFar1"
                       }
                     }
                   ]

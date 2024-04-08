@@ -90,7 +90,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromFar1ToAMP"
+                        "pathName": "FromFar1ToAmp"
                       }
                     }
                   ]
@@ -116,7 +116,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of ToFar2FromAMP"
+                        "pathName": "FromFar2ToAmp"
                       }
                     },
                     {

@@ -98,7 +98,11 @@ public class AutoRunner {
         //TT << turnTest
         //4PAmpA12
         //OUCH4PMidMASScoreTurn
-        //OUCHOUCH4PMidMASScoreTurn
-        return new PathPlannerAuto("4PMidMASScoreTurn");
+        //3PMidAmpVariable
+        //4PMidMASScoreTrans
+        //2.5PAmpA1
+        //3PAmpA2 << FAR 2
+
+        return new PathPlannerAuto("4PMidMASScoreTrans");
     }
 } 

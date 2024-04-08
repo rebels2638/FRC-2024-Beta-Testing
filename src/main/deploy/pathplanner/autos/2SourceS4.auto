@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.7
           }
         },
         {
@@ -40,13 +40,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToFar5FromSource"
+                        "pathName": "SourceToFar4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromFar5ToSource"
+                        "pathName": "Far4ToSource"
                       }
                     }
                   ]
@@ -64,45 +64,13 @@
         {
           "type": "named",
           "data": {
-            "name": "CancelIntakeNote"
+            "name": "ShootNoteAuto"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootNoteAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ToSourceNoteFromSource"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FromSourceNoteToSource"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteAuto"
+            "name": "ShooterStop"
           }
         }
       ]

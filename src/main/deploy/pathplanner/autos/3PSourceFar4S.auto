@@ -46,13 +46,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "StartSourceFar4"
+                        "pathName": "SourceToFar4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromFar4ToSource"
+                        "pathName": "Far4ToSource"
                       }
                     }
                   ]

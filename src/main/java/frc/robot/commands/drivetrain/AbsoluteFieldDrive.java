@@ -76,14 +76,21 @@ public class AbsoluteFieldDrive extends Command
     // Get the desired chassis speeds based on a 2 joystick module.
     ChassisSpeeds desiredSpeeds;
     if (resetRotation) {
-      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble() * 1, vY.getAsDouble() * 1,
+      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
                                                          new Rotation2d(heading.getAsDouble() * Math.PI));
+    }
+    else if(cXboxController.getYButton().getAsBoolean()){
+       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
+                                                         new Rotation2d(Math.toRadians(180)));
     }
     else {
-        desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble() * 1, vY.getAsDouble() * 1,
+        desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
                                                          new Rotation2d(heading.getAsDouble() * Math.PI));
         desiredSpeeds.omegaRadiansPerSecond = heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY);
-    }
+    } 
+
+    
+    
 
     // Limit velocity to prevent tippy
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);

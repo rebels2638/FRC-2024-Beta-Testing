@@ -12,10 +12,10 @@ public class ShootNoteAuto extends SequentialCommandGroup {
     public ShootNoteAuto() {
         addCommands(
             // new WaitCommand(0.2),
-            // new PivotTurtle(),
-            new WaitCommand(0.25),
+           // new PivotTurtle(),
+            // new WaitCommand(0.25), unneeded
             new RollIntakeIn(),
-            new WaitCommand(0.3),
+            new WaitCommand(0.22),
             new StopIntake()
         );
     }

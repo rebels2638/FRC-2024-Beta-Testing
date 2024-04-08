@@ -1,3 +1,4 @@
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -11,6 +12,7 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -55,6 +57,7 @@ public class Robot extends LoggedRobot {
   String logPath = "/Users/conne/Downloads/"; // TODO: Remember to change this value guys (Edan)
   @Override
   public void robotInit() { 
+    SignalLogger.enableAutoLogging(false); // TODO: ABSOLUTELY NEED TO BE HERE FOR COMPS
     Pathfinding.setPathfinder(new LocalADStarAK());
 
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
@@ -64,7 +67,7 @@ public class Robot extends LoggedRobot {
       // Running on a real robot, log to a USB stick
       case REAL:
         // Logger.addDataReceiver(new WPILOGWriter("D:/"));
-        Logger.addDataReceiver(new NT4Publisher());
+        // Logger.addDataReceiver(new NT4Publisher());
         break;
 
       // Running a physics simulator, log to local folder
@@ -111,17 +114,13 @@ public class Robot extends LoggedRobot {
    public void autonomousInit() {
 
     // LEDSubsystem.getInstance().setColor(0.87);
-
      time.reset();
      time.start();
      
-     Pose2d currentPose = SwerveSubsystem.getInstance().getPose();
-     SwerveSubsystem.getInstance().resetOdometry(currentPose);
+    //  Pose2d currentPose = SwerveSubsystem.getInstance().getPose();
+    //  SwerveSubsystem.getInstance().resetOdometry(currentPose);
      
      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    //  SwerveSubsystem.getInstance().setGyro(180);
-     
      // schedule the autonomous command (example)
      if (m_autonomousCommand != null) {
       
@@ -171,7 +170,7 @@ public class Robot extends LoggedRobot {
     }
     LEDSubsystem.getInstance().setColor(0.77);
     //Reflect the angle for red only
-    var alliance = DriverStation.getAlliance(); 
+    // var alliance = DriverStation.getAlliance(); 
     // if(alliance.get() == DriverStation.Alliance.Red){
     //   yaw = yaw.plus(new Rotation2d(Math.PI));
     // }
