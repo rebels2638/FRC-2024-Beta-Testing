@@ -1,5 +1,6 @@
 package frc.robot.lib.swervelib.motors;
 
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -57,7 +58,8 @@ public class TalonFXSwerve extends SwerveMotor
     this.isDriveMotor = isDriveMotor;
     this.motor = motor;
 
-    this.motor.optimizeBusUtilization(); // TODO: NEW
+    // this.motor.optimizeBusUtilization(); // TODO: NEW
+    
 
     factoryDefaults();
     clearStickyFaults();

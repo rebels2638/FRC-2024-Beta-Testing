@@ -67,7 +67,7 @@ public class Robot extends LoggedRobot {
       // Running on a real robot, log to a USB stick
       case REAL:
         // Logger.addDataReceiver(new WPILOGWriter("D:/"));
-        // Logger.addDataReceiver(new NT4Publisher());
+        Logger.addDataReceiver(new NT4Publisher());
         break;
 
       // Running a physics simulator, log to local folder

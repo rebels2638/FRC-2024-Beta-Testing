@@ -103,6 +103,6 @@ public class AutoRunner {
         //2.5PAmpA1
         //3PAmpA2 << FAR 2
 
-        return new PathPlannerAuto("4PMidMASScoreTrans");
+        return new PathPlannerAuto("Copy of 4PMidMASScoreTurn");
     }
 } 
