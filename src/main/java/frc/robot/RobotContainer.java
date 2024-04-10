@@ -237,7 +237,7 @@ public class RobotContainer {
 
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    // climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester));
+    climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester)); // TODO: change controller back
     // xboxTester.getAButton().onTrue(new PivotToTorus());
     // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
     // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());

@@ -25,13 +25,13 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     ShuffleboardTab tab;
 
     // dont know device ID
-    private TalonFX m_motor1 = new TalonFX(19); 
-    private TalonFX m_motor2 = new TalonFX(20);
+    private TalonFX m_motor1 = new TalonFX(21); // 19
+    private TalonFX m_motor2 = new TalonFX(20); // dont change
     private static final double kMAX_CURRENT_AMPS = 35;
     private static final double kMAX_VOLTAGE = 12;
 
     private static final double kMIN_CLIMBER_HEIGHT = 0;
-    private static final double kMAX_CLIMBER_HEIGHT = 0.36; //TODO: Alt. for man. 0.35 max as of 3/20/2024, .36
+    private static final double kMAX_CLIMBER_HEIGHT = 0.36; // TODO: Alt. for man. 0.35 max as of 3/20/2024, .36
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ElevatorFeedforward positionFeedForwardController = new ElevatorFeedforward(0, 0, 0);
@@ -51,8 +51,8 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         m_motor1.clearStickyFaults();
         m_motor2.clearStickyFaults();
 
-        m_motor1.optimizeBusUtilization();
-        m_motor2.optimizeBusUtilization();
+        // m_motor1.optimizeBusUtilization();
+        // m_motor2.optimizeBusUtilization();
 
 
         
@@ -67,8 +67,6 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         //motor1
         inputs.climberHeightMeters = m_motor1.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters;
         inputs.voltageOut = m_motor1.getDutyCycle().getValueAsDouble() * kMAX_VOLTAGE;
-
-
 
         climberHeightMeters = inputs.climberHeightMeters;
         currentPositionMeters = climberHeightMeters;

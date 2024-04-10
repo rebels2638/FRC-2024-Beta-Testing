@@ -55,6 +55,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
 
         m_motor1.setInverted(false);
         m_motor2.setInverted(false); 
+
         // m_motor2.follow(m_motor1);
 
         // distanceSensor = new Rev2mDistanceSensor(Rev2mDistanceSensor.Port.kMXP, Rev2mDistanceSensor.Unit.kInches, Rev2mDistanceSensor.RangeProfile.kDefault);
