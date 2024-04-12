@@ -237,7 +237,7 @@ public class RobotContainer {
 
 
     // swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
-    climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester)); // TODO: change controller back
+    // climberSubsystem.setDefaultCommand(new MoveClimberRaw(climberSubsystem, xboxTester)); // TODO: change controller back
     // xboxTester.getAButton().onTrue(new PivotToTorus());
     // xboxTester.getBButton().onTrue(new MoveElevatorAMP());
     // xboxTester.getYButton().onTrue(new MoveElevatorTurtle());
@@ -251,8 +251,8 @@ public class RobotContainer {
     // xboxTester.getLeftBumper().onTrue(new InstantCommand(()-> climberSubsystem.zeroHeight()));
     // xboxTester.getRightBumper().onTrue(new InstantCommand(() -> elevatorSubsystem.zeroHeight()));
 
-    // this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
-    // this.xboxDriver.getAButton().onTrue(new MoveClimberDown()); // TODO: recomment
+    this.xboxDriver.getBButton().onTrue(new MoveClimberUp());
+    this.xboxDriver.getAButton().onTrue(new MoveClimberDown()); // TODO: recomment
 
     
     // //Michaelangelo controls
