@@ -2,6 +2,8 @@ package frc.robot.subsystems.swerve;
 
 
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 
 // import com.pathplanner.lib.PathConstraints;
@@ -17,6 +19,8 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
@@ -142,10 +146,13 @@ public class SwerveSubsystem extends SubsystemBase
 
     swerveDrive.updateOdometry();
 
-    // if (poseLimelightSubsystem.hasValidTargets()) {
-    //   Translation2d rawTranslation = poseLimelightSubsystem.getEstimatedRobotPose().getTranslation();
-    //  swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, getYaw()), poseLimelightSubsystem.getTimestampSeconds());
-    // }
+    Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.25,.25, 10);
+
+
+    if (poseLimelightSubsystem.hasValidTargets()) {
+      Translation2d rawTranslation = poseLimelightSubsystem.getEstimatedRobotPose().getTranslation();
+      swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, getYaw()), poseLimelightSubsystem.getTimestampSeconds(), visionMeasurementStdDevs);
+    }
 
     
     //log all tlemetry to a log file

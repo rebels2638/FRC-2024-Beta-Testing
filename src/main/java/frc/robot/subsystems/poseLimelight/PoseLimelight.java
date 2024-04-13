@@ -25,7 +25,7 @@ public class PoseLimelight extends SubsystemBase{
     }
 
     public boolean hasValidTargets() {
-        return inputs.tv == 1;
+        return inputs.tv >= 1;
     }
     
     public Pose2d getEstimatedRobotPose() {

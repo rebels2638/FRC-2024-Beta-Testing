@@ -15,5 +15,8 @@ public class PoseLimelightIOReal implements PoseLimelightIO {
         inputs.cl = llTable.getEntry("cl").getDouble(0);
         inputs.tv = llTable.getEntry("tv").getDouble(0);
     }
+    public double getTa(){
+         return llTable.getEntry("ta").getDouble(0);
+    }
 
 }

@@ -77,7 +77,7 @@ public final class Constants
     // Hold time on motor brakes when disabled
     public static final double WHEEL_LOCK_TIME = 1; // seconds
     public static final double MAX_TRANSLATIONAL_VELOCITY_METER_PER_SEC = 12; //11.5 // 9
-    public static final double MAX_DEG_SEC_ROTATIONAL_VELOCITY = 235; // TODO: 235
+    public static final double MAX_DEG_SEC_ROTATIONAL_VELOCITY = 360; // TODO: 235
   }
 
   public static class OperatorConstants

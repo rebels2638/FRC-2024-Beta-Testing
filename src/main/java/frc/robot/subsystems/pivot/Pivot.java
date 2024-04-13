@@ -28,9 +28,9 @@ public class Pivot extends SubsystemBase{
     double desiredDegAngle = 0;
     public Pivot(PivotIO io)  {
         Pivot.io = io;
-        upPositionFeedBackController = new PIDController(2, 0, 0.05); //0.04
+        upPositionFeedBackController = new PIDController(4, 0, 0.03); //0.04
         upPositionFeedBackController.setTolerance(kRadPositionTolerance);
-        upPositionFeedForwardController = new ArmFeedforward(0.0,0, 5); // 0,0,76
+        upPositionFeedForwardController = new ArmFeedforward(0.0,0,5); // 0,0,76
 
         downPositionFeedBackController = new PIDController(7, 0, 0);
         downPositionFeedBackController.setTolerance(kRadPositionTolerance);

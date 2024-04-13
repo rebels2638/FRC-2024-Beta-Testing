@@ -9,29 +9,20 @@ import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
-import org.littletonrobotics.junction.wpilog.WPILOGReader;
-import org.littletonrobotics.junction.wpilog.WPILOGWriter;
-
 import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Utils.Constants;
 import frc.robot.commands.autoAligment.LocalADStarAK;
-import frc.robot.commands.compositions.CancelIntakeNote;
-import frc.robot.lib.swervelib.SwerveDrive;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 
@@ -107,6 +98,12 @@ public class Robot extends LoggedRobot {
     
     Shuffleboard.getTab("auto").add("Angle Offset", gyroOffset);
 
+    // Make sure you only configure port forwarding once in your robot code.
+    // Do not place these function calls in any periodic functions
+    for (int port = 5800; port <= 5809; port++) {
+        PortForwarder.add(port, "limelight.local", port);
+    }
+
   }
 
    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -123,7 +120,6 @@ public class Robot extends LoggedRobot {
      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
      // schedule the autonomous command (example)
      if (m_autonomousCommand != null) {
-      
       m_autonomousCommand.schedule();
      }
    }

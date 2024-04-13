@@ -30,7 +30,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
     private static final double kMAX_CURRENT_AMPS = 35;
     private static final double kMAX_VOLTAGE = 12;
 
-    private static final double kMIN_CLIMBER_HEIGHT = 0;
+    private static final double kMIN_CLIMBER_HEIGHT = -2; // 0
     private static final double kMAX_CLIMBER_HEIGHT = 0.34; // TODO: Alt. for man. 0.35 max as of 3/20/2024, .36
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
@@ -76,6 +76,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
         inputs.goalPositionMeters = this.goalPositionMeters;    
 
         // System.out.println("ClimberHeightMeters : " + climberHeightMeters);
+        // System.out.println("ClimberHeightMeters2: " + m_motor2.getPosition().getValueAsDouble() * kMotorToOutputShaftRatio * Math.PI * kSproketDiameterMeters);
 
     }
 
@@ -94,7 +95,7 @@ public class ClimberIOFalcon extends SubsystemBase implements ClimberIO {
 
         //Motor2
         double feedBackControllerVoltage2 = positionFeedBackController.calculate(currentPositionMeters2);
-        double accel2 = feedBackControllerVoltage == 0 ? 0 : feedBackControllerVoltage < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
+        double accel2 = feedBackControllerVoltage2 == 0 ? 0 : feedBackControllerVoltage2 < 0 ? -1: 1; //Changes direction of accel given the feedbackcontroller voltage.
         double feedForwardVoltage2 = positionFeedForwardController.calculate(goalPositionMeters, accel2);
 
         double voltageOut = feedForwardVoltage + feedBackControllerVoltage;

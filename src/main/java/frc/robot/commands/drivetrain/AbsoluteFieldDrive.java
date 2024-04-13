@@ -11,9 +11,12 @@ import frc.robot.Utils.Constants;
 import frc.robot.lib.input.XboxController;
 import frc.robot.lib.swervelib.SwerveController;
 import frc.robot.lib.swervelib.math.SwerveMath;
+import frc.robot.Utils.RebelUtil;
 
 import java.util.List;
 import java.util.function.DoubleSupplier;
+
+import org.littletonrobotics.junction.Logger;
 
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 
@@ -31,6 +34,9 @@ public class AbsoluteFieldDrive extends Command
   private double lastTime = 0;
   private Rotation2d desiredHeading = new Rotation2d(0);
   PIDController translationPID = new PIDController(0,0, 0);
+
+  // private Rotation2d lastRef = new Rotation2d(0);
+  // private boolean reset = true;
   // PIDController translationPID = new PIDController(0,0, 0);
 
   /**
@@ -71,26 +77,43 @@ public class AbsoluteFieldDrive extends Command
   @Override
   public void execute()
   {
+    // System.out.println(heading.getAsDouble());
     // if(cXboxController.getLeftMiddleButton().)
 
     // Get the desired chassis speeds based on a 2 joystick module.
     ChassisSpeeds desiredSpeeds;
-    if (resetRotation) {
-      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
-    }
-    else if(cXboxController.getYButton().getAsBoolean()){
-       desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                                                         new Rotation2d(Math.toRadians(180)));
+
+    // Logger.recordOutput("AbsFeildDrive/reset", reset);
+    // Logger.recordOutput("AbsFeildDrive/refrenceAngleRad", lastRef.getRadians());
+
+    // if (Math.abs(heading.getAsDouble()) >= 0.05) {
+    //   reset = false;
+    // }
+
+    // if (!reset && Math.abs(heading.getAsDouble()) < 0.05) {
+    //   lastRef = swerve.getPose().getRotation();
+    //   reset = true;
+    // }
+
+    if(cXboxController.getYButton().getAsBoolean()){
+       desiredSpeeds = swerve.getTargetSpeeds(
+          vX.getAsDouble() *  
+            RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.1, 1), 
+          vY.getAsDouble() * 
+            RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.1, 1),
+           new Rotation2d(Math.toRadians(180)));
     }
     else {
-        desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
+        desiredSpeeds = swerve.getTargetSpeeds(
+            vX.getAsDouble() * 
+              RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.1, 1), 
+            vY.getAsDouble() * 
+              RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.1, 1),
+            new Rotation2d(heading.getAsDouble() * Math.PI));
+
         desiredSpeeds.omegaRadiansPerSecond = heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY);
     } 
 
-    
-    
 
     // Limit velocity to prevent tippy
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
