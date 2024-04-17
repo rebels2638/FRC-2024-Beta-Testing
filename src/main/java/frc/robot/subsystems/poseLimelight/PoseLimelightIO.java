@@ -9,6 +9,8 @@ public interface PoseLimelightIO {
         public double[] botpose_wpired;
         public double tv;
         public double cl;
+        public double ta;
+        public double ambiguity;
     }
 
     public default void updateInputs(PoseLimelightIOInputs inputs) {}

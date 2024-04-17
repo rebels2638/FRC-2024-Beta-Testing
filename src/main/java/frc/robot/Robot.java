@@ -64,7 +64,7 @@ public class Robot extends LoggedRobot {
       // Running a physics simulator, log to local folder
       case SIM:
         // Logger.addDataReceiver(new WPILOGWriter(logPath));
-        // Logger.addDataReceiver(new NT4Publisher());
+        Logger.addDataReceiver(new NT4Publisher());
         break;
 
       // Replaying a log, set up replay source

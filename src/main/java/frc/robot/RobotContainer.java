@@ -15,6 +15,7 @@ import edu.wpi.first.cscore.UsbCameraInfo;
 
 import java.io.File;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -27,6 +28,7 @@ import frc.robot.commands.pivot.PivotToTorus;
 import frc.robot.commands.pivot.PivotTurtle;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterWindup;
+import frc.robot.commands.shooter.ShooterWindupLob;
 import frc.robot.commands.shooter.ShooterWindReverse;
 import frc.robot.commands.compositions.Thing6;
 import edu.wpi.first.math.MathUtil;
@@ -36,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.lib.input.XboxController;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystemIO;
@@ -52,6 +55,7 @@ import frc.robot.commands.Intake.RollIntakeEject;
 import frc.robot.commands.Intake.RollIntakeIn;
 import frc.robot.commands.Intake.RollIntakeInSlow;
 import frc.robot.commands.Intake.StopIntake;
+import frc.robot.commands.autoAligment.AutoAlignTrap;
 import frc.robot.commands.climber.MoveClimberDown;
 import frc.robot.commands.climber.MoveClimberRaw;
 import frc.robot.commands.climber.MoveClimberUp;
@@ -134,7 +138,7 @@ public class RobotContainer {
   private final Pivot pivotSubsystem;
   private final Climber climberSubsystem;
 
-  private final PoseLimelight poseLimelight;
+  // private final PoseLimelight poseLimelight;
   // private HttpCamera limelightFeed;
 
   public RobotContainer() {
@@ -164,7 +168,7 @@ public class RobotContainer {
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIOSim()));
 
         visionSubsystem = new PoseLimelight(new PoseLimelightIOSim());
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon") /*, visionSubsystem*/);
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon") , visionSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
 
         break; // 2.43, 4.13
@@ -178,7 +182,7 @@ public class RobotContainer {
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIO(){}));
 
         visionSubsystem = new PoseLimelight(new PoseLimelightIO() {});
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* ,visionSubsystem*/);
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon") ,visionSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIO() {});
 
         break;
@@ -191,7 +195,7 @@ public class RobotContainer {
         climberSubsystem = Climber.setInstance(new Climber(new ClimberIOFalcon()));
 
         visionSubsystem = new PoseLimelight(new PoseLimelightIOReal());
-        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* , visionSubsystem*/);
+        swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon") , visionSubsystem);
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
         swerveSubsystem = SwerveSubsystem.setInstance(swerveSubsystem);
 
@@ -200,7 +204,7 @@ public class RobotContainer {
 
         break;
     }
-    poseLimelight = new PoseLimelight(new PoseLimelightIOReal());
+    // poseLimelight = new PoseLimelight(new PoseLimelightIOReal());
 
     autoRunner = new AutoRunner(swerveSubsystem);
 
@@ -263,16 +267,22 @@ public class RobotContainer {
     this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());  
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(feedHold));
     this.xboxOperator.getRightMiddleButton().onTrue(new ParallelCommandGroup(new MoveElevatorAMP(), new IntakeNote()));
-    this.xboxOperator.getLeftMiddleButton().onTrue(new InstantCommand(() -> Shooter.getInstance().setVelocityRadSec(0, true, 65, 17.5)));
-
+    this.xboxOperator.getLeftMiddleButton().onTrue(new ShooterWindupLob());
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
-        //TrevorBallshack Controls
+
+    //TrevorBallshack Controls
     swerveSubsystem.setDefaultCommand(closedFieldAbsoluteDrive);
     this.xboxDriver.getXButton().onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNote());
     // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
     this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
     this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
+
+    BooleanSupplier bs = () -> this.xboxDriver.getLeftTrigger() > .4;
+    Trigger lt = new Trigger(bs);
+
+    lt.whileTrue(new AutoAlignTrap(swerveSubsystem));
+
     // this.xboxDriver.get'YButton().onTrue(new Climb());
     Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     // this.xboxDriver.getAButton().onTrue(new PivotTurtle());

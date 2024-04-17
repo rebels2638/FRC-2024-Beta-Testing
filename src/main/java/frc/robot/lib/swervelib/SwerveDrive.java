@@ -21,6 +21,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.ArrayList;
@@ -582,7 +583,7 @@ public class SwerveDrive
   }
 
   /**
-   * Gets the current pose (position and rotation) of the robot, as reported by odometry.
+   * Gets the current pose (position and rotation) of the robot, as reported by odometry.x
    *
    * @return The robot's pose
    */
@@ -1044,9 +1045,16 @@ public class SwerveDrive
   public void addVisionMeasurement(Pose2d robotPose, double timestamp,
                                    Matrix<N3, N1> visionMeasurementStdDevs)
   {
+    System.out.println("AddingVisionMeasurement");
     odometryLock.lock();
-    swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    // swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),robotPose.getRotation());
+
     odometryLock.unlock();
+    // setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
+
+    resetOdometry(newOdometry);
+
   }
 
   /**
@@ -1059,14 +1067,15 @@ public class SwerveDrive
    */
   public void addVisionMeasurement(Pose2d robotPose, double timestamp)
   {
+    System.out.println("AddingVisionMeasurement");
     odometryLock.lock();
     swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp);
-//    Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),
-//                                    robotPose.getRotation());
+    Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),
+                                   robotPose.getRotation());
     odometryLock.unlock();
 
-//  setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
-//    resetOdometry(newOdometry);
+    // setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
+    resetOdometry(newOdometry);
   }
 
   /**

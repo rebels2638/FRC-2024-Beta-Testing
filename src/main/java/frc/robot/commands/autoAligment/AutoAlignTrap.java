@@ -1,10 +1,13 @@
 package frc.robot.commands.autoAligment;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Utils.Constants;
@@ -31,16 +34,22 @@ public class AutoAlignTrap extends Command {
         }
         
         followPathHolonomic = AutoBuilder.pathfindToPose(bestPose2d, new PathConstraints(Constants.Auton.MAX_SPEED, Constants.Auton.MAX_ACCELERATION, 
-            Constants.Auton.MAX_ANGULAR_VELO_RPS, Constants.Auton.MAX_ANGULAR_ACCEL_RPS_SQUARED));
+            Constants.Auton.MAX_ANGULAR_VELO_RPS, Constants.Auton.MAX_ANGULAR_ACCEL_RPS_SQUARED), 0, 0);
 
         CommandScheduler.getInstance().schedule(followPathHolonomic);
     }
 
     @Override   
     public boolean isFinished() {
-        System.out.println("AutoAlignTrap");
-        System.out.println(followPathHolonomic.isFinished());
+        Logger.recordOutput("AutoAlign/finished", followPathHolonomic.isFinished());
         return followPathHolonomic.isFinished();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        if (interrupted) {
+            followPathHolonomic.cancel();
+        }
     }
 
     private double calculateDistance(Pose2d p1, Pose2d p2) {

@@ -98,20 +98,20 @@ public class AbsoluteFieldDrive extends Command
     if(cXboxController.getYButton().getAsBoolean()){
        desiredSpeeds = swerve.getTargetSpeeds(
           vX.getAsDouble() *  
-            RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.1, 1), 
+            RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1), 
           vY.getAsDouble() * 
-            RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.1, 1),
+            RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1),
            new Rotation2d(Math.toRadians(180)));
     }
     else {
         desiredSpeeds = swerve.getTargetSpeeds(
             vX.getAsDouble() * 
-              RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.1, 1), 
+              RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1), 
             vY.getAsDouble() * 
-              RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.1, 1),
+              RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1),
             new Rotation2d(heading.getAsDouble() * Math.PI));
 
-        desiredSpeeds.omegaRadiansPerSecond = heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY);
+        desiredSpeeds.omegaRadiansPerSecond = heading.getAsDouble() * Math.toRadians(Constants.Drivebase.MAX_DEG_SEC_ROTATIONAL_VELOCITY) * RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.5, 1);
     } 
 
 

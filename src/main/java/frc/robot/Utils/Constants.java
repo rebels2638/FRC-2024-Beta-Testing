@@ -92,23 +92,13 @@ public final class Constants
   }
 
   public static final class FieldConstants {
-    public static final Translation2d[] autoAlignTranslationArr = 
-      { new Translation2d(1.77, 0.50),
-      new Translation2d(1.77, 1.07),
-      new Translation2d(1.77, 1.62),
-      new Translation2d(1.77, 2.18),
-      new Translation2d(1.77, 2.74),
-      new Translation2d(1.77, 3.30),
-      new Translation2d(1.77, 3.85),
-      new Translation2d(1.77, 4.42),
-      new Translation2d(1.77, 4.97) };
     public static final Pose2d autoAlignAMPPose = new Pose2d(new Translation2d(1.82, 7.33), new Rotation2d(Math.toRadians(90)));
     // public static final AprilTagFieldLayout aprilTagFieldLayout 
     // = new AprilTagFieldLayout();
 
-    public static final Pose2d[] autoAlignTrapPose = { new Pose2d(new Translation2d(4.31, 3.13), new Rotation2d(Math.toRadians(60))), 
-                                                       new Pose2d(new Translation2d(4.23, 5.18), new Rotation2d(Math.toRadians(-60.00))),
-                                                       new Pose2d(new Translation2d(6.08, 4.00), new Rotation2d(Math.toRadians(180.00))),
+    public static final Pose2d[] autoAlignTrapPose = { new Pose2d(new Translation2d(4.3, 5.05), new Rotation2d(Math.toRadians(-60))), 
+                                                       new Pose2d(new Translation2d(4.36, 3.14), new Rotation2d(Math.toRadians(60.00))),
+                                                       new Pose2d(new Translation2d(6.0, 4.1), new Rotation2d(Math.toRadians(180.00))),
 };
     
   }

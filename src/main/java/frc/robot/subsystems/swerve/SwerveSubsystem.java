@@ -40,6 +40,7 @@ import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry;
 import frc.robot.lib.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 // import frc.robot.subsystems.limelight.PoseLimelight;
 import frc.robot.subsystems.poseLimelight.PoseLimelight;
+import frc.robot.subsystems.poseLimelight.PoseLimelightIOReal;
 import frc.robot.subsystems.shooter.Shooter;
 
 
@@ -73,7 +74,7 @@ public class SwerveSubsystem extends SubsystemBase
 
   private static final PIDController translationPIDController = new PIDController(0.000, 0, 0);
 
-  public SwerveSubsystem(File directory /* , PoseLimelight poseLimelightSubsystem */) {
+  public SwerveSubsystem(File directory  , PoseLimelight poseLimelightSubsystem ) {
     
     // translationPIDController.setTolerance(0.06);
     this.poseLimelightSubsystem = poseLimelightSubsystem;
@@ -141,18 +142,25 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    
+    swerveDrive.updateOdometry();
     io.updateInputs(inputs);
     Logger.processInputs("swerve", inputs);
 
-    swerveDrive.updateOdometry();
+    // System.out.println(poseLimelightSubsystem.hasValidTargets());
 
-    Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.25,.25, 10);
+    // if (poseLimelightSubsystem.hasValidTargets() && 
+    //     this.getRobotVelocity().omegaRadiansPerSecond <= Math.toRadians(375) &&
+    //     poseLimelightSubsystem.getTargetArea() >= 10 &&
+    //     poseLimelightSubsystem.getAmbiguity() <= .7) {
 
+    //   Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.25,.25, 10);
 
-    if (poseLimelightSubsystem.hasValidTargets()) {
-      Translation2d rawTranslation = poseLimelightSubsystem.getEstimatedRobotPose().getTranslation();
-      swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, getYaw()), poseLimelightSubsystem.getTimestampSeconds(), visionMeasurementStdDevs);
-    }
+    //   Translation2d rawTranslation = poseLimelightSubsystem.getEstimatedRobotPose().getTranslation();
+    //   // swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, new Rotation2d(inputs.pose[2])), poseLimelightSubsystem.getTimestampSeconds(), visionMeasurementStdDevs);
+    //   swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, new Rotation2d(inputs.pose[2])), poseLimelightSubsystem.getTimestampSeconds());
+
+    // }
 
     
     //log all tlemetry to a log file
@@ -437,7 +445,7 @@ public class SwerveSubsystem extends SubsystemBase
   }
   public static SwerveSubsystem getInstance(){
     if(instance == null){
-      SwerveSubsystem swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon")/* ,visionSubsystem*/);
+      SwerveSubsystem swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "/swerve/falcon") ,new PoseLimelight(new PoseLimelightIOReal()));
         swerveSubsystem.setIO(new SwerveSubsystemIORunning(swerveSubsystem.getSwerveDrive()));
         instance = swerveSubsystem;
     }
