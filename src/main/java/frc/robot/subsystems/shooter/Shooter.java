@@ -79,5 +79,9 @@ public class Shooter extends SubsystemBase{
         return Shooter.instance;
     }
 
+    public double getDesiredVelocity() {
+        return inputs.desiredVelocityRadSec;
+    }
+
 
 }

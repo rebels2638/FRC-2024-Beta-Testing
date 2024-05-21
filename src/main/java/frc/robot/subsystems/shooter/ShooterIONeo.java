@@ -8,6 +8,7 @@ import org.littletonrobotics.junction.Logger;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.Rev2mDistanceSensor;
 import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 // import com.revrobotics.CANSparkMaxLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
@@ -25,7 +26,11 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
     private static final double kMotorToOutputShaftRatio = 1; //Last Checked 2/6/2024
     private double wheelVelo = 0.0;
     private CANSparkMax m_motor1 = new CANSparkMax(13, CANSparkMax.MotorType.kBrushless);
-    private CANSparkMax m_motor2 = new CANSparkMax(14, CANSparkMax.MotorType.kBrushless); 
+    private CANSparkMax m_motor2 = new CANSparkMax(14, CANSparkMax.MotorType.kBrushless);
+    // private CANSparkMax m_motor1 = new CANSparkMax(29, MotorType.kBrushless);
+    // private CANSparkMax m_motor2 = new CANSparkMax(23, MotorType.kBrushless);
+
+    private double goalVelocityRadPerSec = 0.0;
 
     private PIDController velocityFeedBackController = new PIDController(0, 0, 0);
     private SimpleMotorFeedforward velocityFeedForwardController = new SimpleMotorFeedforward(0, 0, 0);
@@ -74,12 +79,19 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         currentVelocityRadPerSec2 = m_motor2.getEncoder().getVelocity() /60 * kMotorToOutputShaftRatio;
         currentVelocityRadPerSec = inputs.velocityRadSec;
         inputs.reachedSetpoint = velocityFeedBackController.atSetpoint();
-        inputs.inShooter = isInShooter(); 
+        inputs.inShooter = isInShooter();
+       //  inputs.desiredVelocityRadSec = goalVelocityRadPerSec;
+    }
+
+    @Override
+    public double getDesiredVelocity() {
+        return goalVelocityRadPerSec;
     }
 
     @Override
     // should be called periodically
     public void setVelocityRadSec(double goalVelocityRadPerSec, boolean isVariable, double BottomSpeed, double TopSpeed) {
+        this.goalVelocityRadPerSec = goalVelocityRadPerSec;
         if(isVariable){
             double ffVelo = 0;
         if (BottomSpeed > currentVelocityRadPerSec) {
@@ -133,6 +145,7 @@ public class ShooterIONeo extends SubsystemBase implements ShooterIO {
         }
 
         InShooter.setBoolean(isInShooter());
+        this.goalVelocityRadPerSec = goalVelocityRadPerSec;
     } 
 
     @Override

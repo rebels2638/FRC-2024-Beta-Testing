@@ -23,6 +23,8 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
@@ -71,6 +73,8 @@ public class SwerveSubsystem extends SubsystemBase
   private PoseLimelight poseLimelightSubsystem;
   private SwerveSubsystemIO io;
   private SwerveSubsystemIOInputsAutoLogged inputs = new SwerveSubsystemIOInputsAutoLogged();
+  // private     Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.25,.25, 10);
+
 
   private static final PIDController translationPIDController = new PIDController(0.000, 0, 0);
 
@@ -142,25 +146,25 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    
-    swerveDrive.updateOdometry();
     io.updateInputs(inputs);
     Logger.processInputs("swerve", inputs);
 
+    swerveDrive.updateOdometry();
+
     // System.out.println(poseLimelightSubsystem.hasValidTargets());
 
-    // if (poseLimelightSubsystem.hasValidTargets() && 
-    //     this.getRobotVelocity().omegaRadiansPerSecond <= Math.toRadians(375) &&
-    //     poseLimelightSubsystem.getTargetArea() >= 10 &&
-    //     poseLimelightSubsystem.getAmbiguity() <= .7) {
+    if (poseLimelightSubsystem.hasValidTargets() && 
+        this.getRobotVelocity().omegaRadiansPerSecond <= Math.toRadians(375) &&
+        poseLimelightSubsystem.getTargetArea() >= 0.3 &&
+        poseLimelightSubsystem.getAmbiguity() <= 0.08  && RobotState.isTeleop())
+         {
 
-    //   Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.25,.25, 10);
 
-    //   Translation2d rawTranslation = poseLimelightSubsystem.getEstimatedRobotPose().getTranslation();
-    //   // swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, new Rotation2d(inputs.pose[2])), poseLimelightSubsystem.getTimestampSeconds(), visionMeasurementStdDevs);
-    //   swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, new Rotation2d(inputs.pose[2])), poseLimelightSubsystem.getTimestampSeconds());
+      Translation2d rawTranslation = poseLimelightSubsystem.getEstimatedRobotPose().getTranslation();
+      // swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, new Rotation2d(inputs.pose[2])), poseLimelightSubsystem.getTimestampSeconds(), visionMeasurementStdDevs);
+      swerveDrive.addVisionMeasurement(new Pose2d(rawTranslation, new Rotation2d(inputs.pose[2])), poseLimelightSubsystem.getTimestampSeconds());
 
-    // }
+    }
 
     
     //log all tlemetry to a log file

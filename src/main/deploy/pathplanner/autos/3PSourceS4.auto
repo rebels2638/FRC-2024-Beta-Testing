@@ -40,13 +40,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SourceToFar4"
+                        "pathName": "ToSourceNoteFromSource"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Far4ToSource"
+                        "pathName": "FromSourceNoteToSource"
                       }
                     }
                   ]
@@ -78,16 +78,22 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ToSourceNoteFromSource"
+                        "pathName": "SourceToFar4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FromSourceNoteToSource"
+                        "pathName": "Far4ToSource"
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
                 }
               }
             ]
@@ -97,6 +103,12 @@
           "type": "named",
           "data": {
             "name": "ShootNoteAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterStop"
           }
         }
       ]

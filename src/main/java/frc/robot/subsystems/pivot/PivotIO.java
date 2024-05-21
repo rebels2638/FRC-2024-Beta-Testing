@@ -32,5 +32,7 @@ public interface PivotIO {
     public static Pivot getInstance(){
         return null;
     }
+    public default void TorusAngleReset(){}
+
     
 }

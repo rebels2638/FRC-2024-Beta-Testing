@@ -11,7 +11,7 @@ public class ShootNoteTele extends SequentialCommandGroup {
         addCommands(
              //Modify this later on.
             new RollIntakeIn(),
-            new WaitCommand(0.5),
+            new WaitCommand(0.55),
             new StopIntake(),
             new ShooterStop()
         );

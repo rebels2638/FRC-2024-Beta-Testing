@@ -12,10 +12,11 @@ import frc.robot.commands.shooter.ShooterStop;
 
 public class FeedAndHoldNote extends SequentialCommandGroup {
     public FeedAndHoldNote() {
-        addCommands(
+        addCommands(                                                                                                                                                                                           
+
             new ShooterHold(),
-            new WaitCommand(0.5),
-            new RollIntakeInSlow(145),
+            new WaitCommand(0.48),
+            new RollIntakeInSlow(144),
             new ParallelCommandGroup(new OutIntake(), new InShooter()),
             new ParallelCommandGroup(new StopIntake(), new ShooterStop()));
     }

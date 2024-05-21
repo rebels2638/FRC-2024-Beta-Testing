@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 7.403731566014806
+        "x": 8.399075742516676,
+        "y": 7.424670370025476
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.9107473476485435,
-        "y": 7.341005451241672
+        "x": 7.309823090165219,
+        "y": 7.361944255252341
       },
       "isLocked": false,
       "linkedName": "Far1"
@@ -56,7 +56,7 @@
     "maxAngularAcceleration": 180.0
   },
   "goalEndState": {
-    "velocity": 0.5,
+    "velocity": 0.0,
     "rotation": -120.0,
     "rotateFast": false
   },

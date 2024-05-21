@@ -117,8 +117,8 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
  */
 public class RobotContainer {
   public static RobotContainer instance = null;
-  public Spark color1 = new Spark(6);
-  public Spark color2 = new Spark(7);
+  // public Spark color1 = new Spark(6);
+  // public Spark color2 = new Spark(7);
 
   // The robot's controllers
   private final XboxController xboxDriver;
@@ -266,7 +266,7 @@ public class RobotContainer {
     this.xboxOperator.getAButton().onTrue(new ShootNoteTele()); // change back to shootNoteTele
     this.xboxOperator.getBButton().onTrue(feedHold = new FeedAndHoldNote());  
     this.xboxOperator.getLeftBumper().onTrue(new ShooterStop(feedHold));
-    this.xboxOperator.getRightMiddleButton().onTrue(new ParallelCommandGroup(new MoveElevatorAMP(), new IntakeNote()));
+    // this.xboxOperator.getRightMiddleButton().onTrue(new ParallelCommandGroup(new MoveElevatorAMP(), new IntakeNote()));
     this.xboxOperator.getLeftMiddleButton().onTrue(new ShooterWindupLob());
     this.xboxOperator.getRightMiddleButton().onTrue(new RollIntakeEject());
 
@@ -277,18 +277,25 @@ public class RobotContainer {
     // this.xboxDriver.getLeftBumper().onTrue(intake = new IntakeNoteAuto());
     this.xboxDriver.getRightMiddleButton().onTrue(new RollIntakeEject());
     this.xboxDriver.getRightBumper().onTrue(new CancelIntakeNote(intake, feedHold));
+    this.xboxDriver.getLeftMiddleButton().onTrue(new InstantCommand(()-> pivotSubsystem.zeroAngle()));
+    this.xboxDriver.getYButton().onTrue(new InstantCommand(()-> Pivot.getInstance().TorusAngleReset()));
 
-    BooleanSupplier bs = () -> this.xboxDriver.getLeftTrigger() > .4;
-    Trigger lt = new Trigger(bs);
 
-    lt.whileTrue(new AutoAlignTrap(swerveSubsystem));
+
+    
+    // BooleanSupplier bs = () -> this.xboxDriver.getLeftTrigger() > .4;
+    // Trigger lt = new Trigger(bs);
+
+    // lt.whileTrue(new AutoAlignTrap(swerveSubsystem));
 
     // this.xboxDriver.get'YButton().onTrue(new Climb());
     Shuffleboard.getTab("Auto").add("Zero Swerve", new InstantCommand(() -> swerveSubsystem.zeroGyro()));
     // this.xboxDriver.getAButton().onTrue(new PivotTurtle());
     // this.xboxDriver.getLeftMiddleButton().onTrue(new StopIntake());  
 
-    // this.xboxDriver.getRightMiddleButton().onTrue(new PivotToTorus());
+    // this.xboxTester.getBButton().onTrue(new PivotToTorus());
+    // this.xboxTester.getAButton().onTrue(new PivotTurtle());
+    // this.xboxTester.getXButton().onTrue(new InstantCommand(()-> Pivot.getInstance().TorusAngleReset()));
     // this.xboxTester.getRightMiddleButton().onTrue(new InstantCommand(() -> Shooter.getInstance().setVelocityRadSec(0, true, 65, 17))); //65, 17, for 2.08m out of the center of speaker. 
     // this.xboxTester.getRightBumper().onTrue(new StopIntake());
     // this.xboxTester.getLeftBumper().onTrue(new ShooterStop());

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5410015435415498,
-        "y": 6.946327738809324
+        "x": 1.290597959227301,
+        "y": 7.155321129472502
       },
       "isLocked": false,
       "linkedName": "AMP"
@@ -20,20 +20,26 @@
         "y": 6.9679477447399965
       },
       "prevControl": {
-        "x": 1.807408999433385,
-        "y": 6.975928567241751
+        "x": 1.548236363234494,
+        "y": 7.167031966018283
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "StartAMPAMPNote"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": -160.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 12.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 8.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 180.0
   },
@@ -48,5 +54,5 @@
     "rotation": -120.75,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

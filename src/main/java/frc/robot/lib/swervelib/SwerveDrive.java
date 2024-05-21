@@ -1047,7 +1047,7 @@ public class SwerveDrive
   {
     System.out.println("AddingVisionMeasurement");
     odometryLock.lock();
-    // swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
     Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),robotPose.getRotation());
 
     odometryLock.unlock();

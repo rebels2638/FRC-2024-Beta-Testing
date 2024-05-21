@@ -10,6 +10,7 @@ public interface ShooterIO {
     @AutoLog
     public static class ShooterIOInputs {
         public double velocityRadSec;
+        public double desiredVelocityRadSec;
         public boolean reachedSetpoint;
         public boolean inShooter;
     }
@@ -17,6 +18,8 @@ public interface ShooterIO {
     public default void updateInputs(ShooterIOInputs inputs) {}
 
     public default void setVelocityRadSec(double goalVelocityRadPerSec, boolean isVar, double Bot, double Top) {}
+
+    public default double getDesiredVelocity() {return 0.0;}
 
     public default void configureController(SimpleMotorFeedforward vff, PIDController vfb) {}
 

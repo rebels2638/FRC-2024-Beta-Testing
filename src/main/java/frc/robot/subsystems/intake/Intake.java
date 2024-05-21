@@ -35,6 +35,7 @@ public class Intake extends SubsystemBase{
         Logger.processInputs("Intake", inputs);
 
         Logger.recordOutput("Intake/desiredVelocityRadSec", desiredVelocityRadSec);
+        
         io.setVelocityRadSec(desiredVelocityRadSec);
     }
 
@@ -62,6 +63,9 @@ public class Intake extends SubsystemBase{
 
     public boolean inIntake() {
         return inputs.inIntake;
+    }
+    public void setIntakeStatus(boolean s){
+
     }
     public static Intake getInstance(){
         if(Intake.instance == null){

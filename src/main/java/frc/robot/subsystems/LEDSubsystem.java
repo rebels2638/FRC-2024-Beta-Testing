@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 // import com.revrobotics.;
 
 public class LEDSubsystem extends SubsystemBase {
-public Spark colorBlinkin = new Spark(5); //8
+public Spark colorBlinkin = new Spark(8); //8
 // public DigitalOutput colorBlinkin = new DigitalOutput(6);
 
 public static LEDSubsystem instance = null;
@@ -53,13 +53,21 @@ double value;
         color = 0.77; // green
       }
 
-      else if (Shooter.getInstance().getVelocityRadSec() > 6.2 && Shooter.getInstance().getVelocityRadSec() <= 60) {
-        color = 0.15; // strobe
+      // if (Shooter.getInstance().getDesiredVelocity() > 6.2 && Shooter.getInstance().getVelocityRadSec() <= 60) {
+      //   color = 0.15; // strobe
+      // }
+
+      if (Shooter.getInstance().getDesiredVelocity() == 60 && Shooter.getInstance().getVelocityRadSec() < 60) {
+        color = 0.15; // strobe current color?
       }
 
-      // else if (Climber.getInstance().) {
-      //   color = ; // isClimbing strobe
-      // }
+      if (Shooter.getInstance().getDesiredVelocity() == 48 && Shooter.getInstance().getVelocityRadSec() < 48) {
+        color = -0.05; // strobe white
+      } 
+
+      if (Shooter.getInstance().getDesiredVelocity() == -24 && Shooter.getInstance().getVelocityRadSec() > -24) {
+        color = -0.07; // strobe gold
+      }
 
       else {
         color = 0.61; // red

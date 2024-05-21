@@ -93,7 +93,7 @@ public class AutoRunner {
         //2PAmp << 2 piece Amp'
         //AmpMidlineDisrupt << Starts form AMp
         //3.5PMidMSFar1
-        //3PAmpA1
+        //3PAmpA1 << Far 1 
         //3PMidMAScoreTurn
         //TT << turnTest
         //4PAmpA12
@@ -102,7 +102,10 @@ public class AutoRunner {
         //4PMidMASScoreTrans
         //2.5PAmpA1
         //3PAmpA2 << FAR 2
+        //3PMidMSTrans
+        //3PSourceS4
+        // 3PMidMSTrans
 
-        return new PathPlannerAuto("Copy of 4PMidMASScoreTrans");
-    }
-} 
+        return new PathPlannerAuto("4PMidMASScoreTrans");
+        }
+    } 

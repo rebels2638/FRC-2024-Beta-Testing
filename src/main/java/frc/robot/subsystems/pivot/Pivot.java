@@ -83,6 +83,9 @@ public class Pivot extends SubsystemBase{
     public void zeroAngle() {
         io.zeroAngle();
     }
+    public void TorusAngleReset(){
+        io.TorusAngleReset();
+    }
     public boolean reachedSetpoint() {
         return inputs.reachedSetpoint;
     }

@@ -95,15 +95,16 @@ public class AbsoluteFieldDrive extends Command
     //   reset = true;
     // }
 
-    if(cXboxController.getYButton().getAsBoolean()){
-       desiredSpeeds = swerve.getTargetSpeeds(
-          vX.getAsDouble() *  
-            RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1), 
-          vY.getAsDouble() * 
-            RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1),
-           new Rotation2d(Math.toRadians(180)));
-    }
-    else {
+    // if(cXboxController.getYButton().getAsBoolean()){
+    //    desiredSpeeds = swerve.getTargetSpeeds(
+    //       vX.getAsDouble() *  
+    //         RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1), 
+    //       vY.getAsDouble() * 
+    //         RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1),
+    //        new Rotation2d(Math.toRadians(180)));
+    // }
+    // else
+     {
         desiredSpeeds = swerve.getTargetSpeeds(
             vX.getAsDouble() * 
               RebelUtil.constrain((1 -cXboxController.getRightTrigger()), 0.3, 1), 

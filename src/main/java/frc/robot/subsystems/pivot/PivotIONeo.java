@@ -17,19 +17,19 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
 
     private PIDController positionFeedBackController = new PIDController(0, 0, 0);
     private ArmFeedforward positionFeedForwardController = new ArmFeedforward(0, 0, 0);
-    private static final double kMAX_POSITION_RAD = Math.toRadians(91); //Math.toRadians(91) // 1.9
-    private static final double kMIN_POSITION_RAD = Math.toRadians(-1); // -1 Math.toRadians(-1)
+    private static final double kMAX_POSITION_RAD = Math.toRadians(910); //Math.toRadians(91) // 1.9
+    private static final double kMIN_POSITION_RAD = Math.toRadians(-100); // -1 Math.toRadians(-1)
     private static final double kMAX_VOLTAGE = 12;
     private static double currentRadAngle;
     private static double currentVelocityRadPerSec;
 
-    private DutyCycleEncoder absEncoder = new DutyCycleEncoder(5);
+    // private DutyCycleEncoder absEncoder = new DutyCycleEncoder(5);
 
     public PivotIONeo() {
         m_motor.setIdleMode(CANSparkMax.IdleMode.kBrake); //This is desirable, trust me kBrake
         m_motor.clearFaults();
         m_motor.setInverted(true);
-        absEncoder.setDistancePerRotation(-2 * Math.PI  );
+        // absEncoder.setDistancePerRotation(-2 * Math.PI  );
         zeroAngle();
     }    
     
@@ -138,6 +138,10 @@ public class PivotIONeo extends SubsystemBase implements PivotIO {
     @Override
     public void zeroAngle() {
         m_motor.getEncoder().setPosition(0.0);
+    }
+    @Override
+    public void TorusAngleReset(){
+        m_motor.getEncoder().setPosition(39.7);
     }
 
 }

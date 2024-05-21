@@ -22,6 +22,7 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     // private Rev2mDistanceSensor distanceSensor;
     private double distanceTolerance;
     private double currentVelocityRadPerSec;
+    private boolean isIntaking;
     private DigitalInput lineBreakSensor; 
 
     private GenericEntry IntakeStatus;
@@ -54,7 +55,12 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
     @Override
     // should be called periodically
     public void setVelocityRadSec(double goalVelocityRadPerSec) {
+         if(!inIntake() && goalVelocityRadPerSec == 0){
+             goalVelocityRadPerSec = 2;
+        }
+
         double accel = 0;
+
         if (goalVelocityRadPerSec > currentVelocityRadPerSec) {
             accel = 1;
         }
@@ -62,12 +68,15 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
             accel = -1;
         }
 
+
+
         double feedForwardVoltage = velocityFeedForwardController.calculate(goalVelocityRadPerSec, accel);
         
         velocityFeedBackController.setSetpoint(goalVelocityRadPerSec);
         double feedBackControllerVoltage = velocityFeedBackController.calculate(currentVelocityRadPerSec);
 
         double outVoltage = feedForwardVoltage + feedBackControllerVoltage;
+
             
         if (outVoltage > kMAX_VOLTAGE) {
             outVoltage = 12;
@@ -99,6 +108,9 @@ public class IntakeIONeo extends SubsystemBase implements IntakeIO {
         velocityFeedBackController = vfb;
         velocityFeedForwardController = vff;
     }
+    public void setIntakeStatus(boolean s){
+        isIntaking = s;
+    }   
     
     public boolean inIntake() {
         //Valid range(?) check aka 2m or less
